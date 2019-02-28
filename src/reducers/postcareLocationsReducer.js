@@ -5,13 +5,23 @@ import {
   REMOVE_CHILD_FROM_GYM
 } from '../actions/postcareLocationsActions';
 
-export default function postcareLocations(state = {}, action) {
+const initialState = {
+  library: [],
+  gym: []
+};
+
+export default function postcareLocations(state = initialState, action) {
   switch (action.type) {
     case ADD_CHILD_TO_LIBRARY:
       return {
         ...state,
-
-        name: action.child.name
+        library: [
+          ...state.library,
+          {
+            name: action.child.name,
+            grade: action.child.grade
+          }
+        ]
       };
     default:
       return state;
