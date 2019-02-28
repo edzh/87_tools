@@ -19,9 +19,23 @@ export default function postcareLocations(state = initialState, action) {
           ...state.library,
           {
             name: action.child.name,
-            grade: action.child.grade
+            grade: action.child.grade,
+            present: true
           }
         ]
+      };
+    case REMOVE_CHILD_FROM_LIBRARY:
+      return {
+        ...state,
+        library: state.library.map(child => {
+          if (child.name === action.child.name) {
+            return {
+              ...child,
+              present: !child.present
+            };
+          }
+          return child;
+        })
       };
     default:
       return state;
