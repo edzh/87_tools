@@ -3,6 +3,12 @@ import ChildContainer from '../containers/ChildContainer';
 
 export default function ChildrenList(props) {
   const [query, setQuery] = useState('');
+  const [regex, setRegex] = useState();
+  const invalid = /[°"§%()\[\]{}=\\?´`'#<>|,;.:+_-]+/g;
+
+  useEffect(() => {
+    setRegex(new RegExp(query.replace(invalid, ''), 'gi'));
+  }, [query]);
 
   function onChange(e) {
     setQuery(e.target.value);
@@ -10,9 +16,15 @@ export default function ChildrenList(props) {
 
   return (
     <div>
-      <input value={query} onChange={onChange} type="text" />
+      <input
+        placeholder="search..."
+        value={query}
+        onChange={onChange}
+        type="text"
+      />
       {props.students
-        .filter(student => student.name.match(new RegExp(query, 'gi')))
+        .filter(student => student.grade)
+        .filter(student => student.name.match(regex))
         .map((student, index) => (
           <ChildContainer key={index} student={student} />
         ))}
