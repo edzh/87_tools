@@ -7,10 +7,12 @@ export default function LibraryList(props) {
       {props.library.map((student, index) => (
         <div key={index} onClick={() => props.removeChildFromLibrary(student)}>
           {student.present ? (
-            <p>{student.name}</p>
+            <p>
+              {student.name} {student.pin}
+            </p>
           ) : (
             <p>
-              <strike>{student.name}</strike>
+              <strike>{student.name}</strike> {student.pin}
             </p>
           )}
         </div>

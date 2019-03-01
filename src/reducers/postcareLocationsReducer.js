@@ -20,6 +20,7 @@ export default function postcareLocations(state = initialState, action) {
           {
             name: action.child.name,
             grade: action.child.grade,
+            pin: action.child.pin,
             present: true
           }
         ]
