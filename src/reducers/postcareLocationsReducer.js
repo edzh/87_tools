@@ -38,6 +38,33 @@ export default function postcareLocations(state = initialState, action) {
           return child;
         })
       };
+
+    case ADD_CHILD_TO_GYM:
+      return {
+        ...state,
+        gym: [
+          ...state.gym,
+          {
+            name: action.child.name,
+            grade: action.child.grade,
+            pin: action.child.pin,
+            present: true
+          }
+        ]
+      };
+    case REMOVE_CHILD_FROM_GYM:
+      return {
+        ...state,
+        gym: state.gym.map(child => {
+          if (child.name === action.child.name) {
+            return {
+              ...child,
+              present: !child.present
+            };
+          }
+          return child;
+        })
+      };
     default:
       return state;
   }

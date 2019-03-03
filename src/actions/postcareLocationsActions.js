@@ -17,3 +17,17 @@ export function removeChildFromLibrary(child) {
     child
   };
 }
+
+export function addChildToGym(child) {
+  return {
+    type: ADD_CHILD_TO_GYM,
+    child
+  };
+}
+
+export function removeChildFromGym(child) {
+  return {
+    type: REMOVE_CHILD_FROM_GYM,
+    child
+  };
+}

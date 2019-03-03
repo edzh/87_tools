@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <div className="App" style={{ fontFamily: ['Roboto', 'sans-serif'] }}>
           <Navbar />
           <Route exact path={'/postcare'} render={() => <Postcare />} />
         </div>
