@@ -16,7 +16,6 @@ export default function Clubs(props) {
     <div>
       {props.clubs
         .filter(club => {
-          console.log(props.day);
           if (props.day === 'all') {
             return true;
           }

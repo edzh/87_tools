@@ -1,23 +1,25 @@
 import React from 'react';
 
+import styles from './css/DayFilter.module.css';
+
 export default function DayList(props) {
   return [
-    <button value="all" onClick={props.onDayChange}>
+    <button className={styles.btn} value="all" onClick={props.onDayChange}>
       All
     </button>,
-    <button value="1" onClick={props.onDayChange}>
+    <button className={styles.btn} value="1" onClick={props.onDayChange}>
       Monday
     </button>,
-    <button value="2" onClick={props.onDayChange}>
+    <button className={styles.btn} value="2" onClick={props.onDayChange}>
       Tuesday
     </button>,
-    <button value="3" onClick={props.onDayChange}>
+    <button className={styles.btn} value="3" onClick={props.onDayChange}>
       Wednesday
     </button>,
-    <button value="4" onClick={props.onDayChange}>
+    <button className={styles.btn} value="4" onClick={props.onDayChange}>
       Thursday
     </button>,
-    <button value="5" onClick={props.onDayChange}>
+    <button className={styles.btn} value="5" onClick={props.onDayChange}>
       Friday
     </button>
   ];

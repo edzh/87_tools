@@ -5,11 +5,13 @@ import GymListContainer from '../containers/GymListContainer';
 
 import students from '../data/87AF_Spring2019_PINNED.json';
 
-export default function Postcare(props) {
+import styles from './css/PinLookup.module.css';
+
+export default function PinLookup(props) {
   return (
-    <div>
-      <LibraryListContainer />
-      <GymListContainer />
+    <div className={styles.container}>
+      {/*<LibraryListContainer />
+            <GymListContainer />*/}
       <ChildrenList students={students} />
     </div>
   );

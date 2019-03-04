@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Navbar from './components/navbar/Navbar';
-import Postcare from './components/Postcare';
+import PinLookup from './components/PinLookup';
 
 class App extends Component {
   render() {
@@ -10,7 +10,7 @@ class App extends Component {
       <Router>
         <div className="App" style={{ fontFamily: ['Roboto', 'sans-serif'] }}>
           <Navbar />
-          <Route exact path={'/postcare'} render={() => <Postcare />} />
+          <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
         </div>
       </Router>
     );

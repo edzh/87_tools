@@ -1,0 +1,45 @@
+.name {
+  color: #000;
+  width: 25%;
+}
+
+.pin {
+  width: 10%;
+}
+
+.grade {
+  width: 10%;
+}
+
+.club {
+  width: 35%;
+}
+
+.location {
+  width: 20%;
+}
+
+.row {
+  color: #666;
+}
+
+.row:hover {
+  color: #000;
+}
+
+.btn {
+  background-color: #55a;
+  color: #fff;
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background-color: #66b;
+}
+
+tr.borderBottom td {
+  border-bottom: 1px solid black;
+}

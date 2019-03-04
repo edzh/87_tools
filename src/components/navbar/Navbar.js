@@ -6,7 +6,7 @@ export default function Navbar(props) {
     <div>
       <ul>
         <li>
-          <NavLink to={'/postcare'}>Postcare</NavLink>
+          <NavLink to={'/pinlookup'}>Pin Lookup</NavLink>
         </li>
       </ul>
     </div>
