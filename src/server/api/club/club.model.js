@@ -9,7 +9,12 @@ const clubSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  students: [mongoose.Schema.Types.ObjectId]
+  students: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'student'
+    }
+  ]
 });
 
 export const Club = mongoose.model('club', clubSchema);

@@ -19,8 +19,9 @@ export const getOne = async (req, res) => {
 
 export const getMany = async (req, res) => {
   try {
-    const students = await Student.find({})
+    const students = await Student.find(req.query)
       .lean()
+      .populate('clubs')
       .exec();
 
     res.status(200).json({ data: students });
@@ -42,9 +43,17 @@ export const createOne = async (req, res) => {
 
 export const updateOne = async (req, res) => {
   try {
-    const updatedStudent = await Student.findOneAneUpdate(
+    const updatedStudent = await Student.findOneAndUpdate(
       { _id: req.params.id },
-      req.body,
+      {
+        // $set: {
+        //   name: req.body.name,
+        //   grade: req.body.grade,
+        //   pin: req.body.pin,
+        //   clubs: []
+        // }
+        $push: { clubs: [req.body.clubs] }
+      },
       { new: true }
     )
       .lean()

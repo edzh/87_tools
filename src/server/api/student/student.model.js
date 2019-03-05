@@ -9,7 +9,12 @@ const studentSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  clubs: [mongoose.Schema.Types.ObjectId],
+  clubs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'club'
+    }
+  ],
   pin: {
     type: Number,
     unique: true
