@@ -7,6 +7,7 @@ import { connect } from './utils/db';
 import config from './config';
 
 import studentRouter from './api/student/student.router';
+import clubRouter from './api/club/club.router';
 
 export const app = express();
 
@@ -17,6 +18,7 @@ app.use(morgan('dev'));
 app.set('json spaces', 2);
 
 app.use('/api/student', studentRouter);
+app.use('/api/club', clubRouter);
 
 export const start = async () => {
   try {
