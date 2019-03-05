@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import controller from './child.controller';
+import controller from './student.controller';
 
 const router = Router();
 

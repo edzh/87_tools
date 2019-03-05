@@ -1,9 +1,9 @@
 import React from 'react';
 import Clubs from './Clubs';
 
-import styles from './css/Child.module.css';
+import styles from './css/Student.module.css';
 
-export default function Child(props) {
+export default function Student(props) {
   return (
     <tr className={styles.row}>
       <td className={styles.name}>{props.student.name}</td>
@@ -13,10 +13,10 @@ export default function Child(props) {
         <Clubs clubs={props.student.clubs} day={props.day} />
       </td>
       {/*<td className={styles.location}>
-              <button className={styles.btn} onClick={() => props.addChildToLibrary(props.student)}>
+              <button className={styles.btn} onClick={() => props.addStudentToLibrary(props.student)}>
                 Library
               </button>
-              <button className={styles.btn} onClick={() => props.addChildToGym(props.student)}>Gym</button>
+              <button className={styles.btn} onClick={() => props.addStudentToGym(props.student)}>Gym</button>
             </td>*/}
     </tr>
   );

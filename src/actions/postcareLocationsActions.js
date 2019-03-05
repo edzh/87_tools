@@ -1,33 +1,33 @@
-export const ADD_CHILD_TO_LIBRARY = 'ADD_CHILD_TO_LIBRARY';
-export const REMOVE_CHILD_FROM_LIBRARY = 'REMOVE_CHILD_FROM_LIBRARY';
+export const ADD_STUDENT_TO_LIBRARY = 'ADD_STUDENT_TO_LIBRARY';
+export const REMOVE_STUDENT_FROM_LIBRARY = 'REMOVE_STUDENT_FROM_LIBRARY';
 
-export const ADD_CHILD_TO_GYM = 'ADD_CHILD_TO_GYM';
-export const REMOVE_CHILD_FROM_GYM = 'REMOVE_CHILD_FROM_GYM';
+export const ADD_STUDENT_TO_GYM = 'ADD_STUDENT_TO_GYM';
+export const REMOVE_STUDENT_FROM_GYM = 'REMOVE_STUDENT_FROM_GYM';
 
-export function addChildToLibrary(child) {
+export function addStudentToLibrary(student) {
   return {
-    type: ADD_CHILD_TO_LIBRARY,
-    child
+    type: ADD_STUDENT_TO_LIBRARY,
+    student
   };
 }
 
-export function removeChildFromLibrary(child) {
+export function removeStudentFromLibrary(student) {
   return {
-    type: REMOVE_CHILD_FROM_LIBRARY,
-    child
+    type: REMOVE_STUDENT_FROM_LIBRARY,
+    student
   };
 }
 
-export function addChildToGym(child) {
+export function addStudentToGym(student) {
   return {
-    type: ADD_CHILD_TO_GYM,
-    child
+    type: ADD_STUDENT_TO_GYM,
+    student
   };
 }
 
-export function removeChildFromGym(child) {
+export function removeStudentFromGym(student) {
   return {
-    type: REMOVE_CHILD_FROM_GYM,
-    child
+    type: REMOVE_STUDENT_FROM_GYM,
+    student
   };
 }

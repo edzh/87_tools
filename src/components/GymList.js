@@ -5,7 +5,7 @@ export default function GymList(props) {
     <div>
       <h3>Gym</h3>
       {props.gym.map((student, index) => (
-        <div key={index} onClick={() => props.removeChildFromGym(student)}>
+        <div key={index} onClick={() => props.removeStudentFromGym(student)}>
           {student.present ? (
             <p>
               {student.name} {student.pin}

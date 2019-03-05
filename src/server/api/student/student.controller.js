@@ -1,16 +1,16 @@
-import { Child } from './child.model';
+import { Student } from './student.model';
 
 export const getOne = async (req, res) => {
   try {
-    const child = await Child.findOne({ _id: req.params.id })
+    const student = await Student.findOne({ _id: req.params.id })
       .lean()
       .exec();
 
-    if (!child) {
+    if (!student) {
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: child });
+    res.status(200).json({ data: student });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -19,11 +19,11 @@ export const getOne = async (req, res) => {
 
 export const getMany = async (req, res) => {
   try {
-    const children = await Child.find({})
+    const students = await Student.find({})
       .lean()
       .exec();
 
-    res.status(200).json({ data: children });
+    res.status(200).json({ data: students });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -32,8 +32,8 @@ export const getMany = async (req, res) => {
 
 export const createOne = async (req, res) => {
   try {
-    const child = await Child.create({ ...req.body });
-    res.status(201).json({ data: child });
+    const student = await Student.create({ ...req.body });
+    res.status(201).json({ data: student });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -42,18 +42,18 @@ export const createOne = async (req, res) => {
 
 export const updateOne = async (req, res) => {
   try {
-    const updatedChild = await Child.findOneAneUpdate(
+    const updatedStudent = await Student.findOneAneUpdate(
       { _id: req.params.id },
       req.body
     )
       .lean()
       .exec();
 
-    if (!updatedChild) {
+    if (!updatedStudent) {
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: updatedChild });
+    res.status(200).json({ data: updatedStudent });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -62,7 +62,7 @@ export const updateOne = async (req, res) => {
 
 export const removeOne = async (req, res) => {
   try {
-    const removed = await Child.findOneAndRemove({ _id: req.params.id });
+    const removed = await Student.findOneAndRemove({ _id: req.params.id });
 
     if (!removed) {
       return res.status(400).end();

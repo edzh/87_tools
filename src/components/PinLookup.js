@@ -1,5 +1,5 @@
 import React from 'react';
-import ChildrenList from './Children/ChildrenList';
+import StudentsList from './Student/StudentList';
 import LibraryListContainer from '../containers/LibraryListContainer';
 import GymListContainer from '../containers/GymListContainer';
 
@@ -12,7 +12,7 @@ export default function PinLookup(props) {
     <div className={styles.container}>
       {/*<LibraryListContainer />
             <GymListContainer />*/}
-      <ChildrenList students={students} />
+      <StudentsList students={students} />
     </div>
   );
 }

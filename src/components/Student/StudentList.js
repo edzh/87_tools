@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import styles from './css/ChildrenList.module.css';
+import styles from './css/Student.module.css';
 
-import ChildContainer from '../../containers/ChildContainer';
+import StudentContainer from '../../containers/StudentContainer';
 import DayFilter from './DayFilter';
 import NameFilter from './NameFilter';
 
-export default function ChildrenList(props) {
+export default function Student(props) {
   const [query, setQuery] = useState('');
   const [regex, setRegex] = useState();
   const [currentQuery, setCurrentQuery] = useState('');
@@ -63,7 +63,7 @@ export default function ChildrenList(props) {
             })
             .filter(student => student.name.match(regex))
             .map((student, index) => (
-              <ChildContainer key={index} student={student} day={day} />
+              <StudentContainer key={index} student={student} day={day} />
             ))}
         </tbody>
       </table>

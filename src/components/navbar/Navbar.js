@@ -8,6 +8,9 @@ export default function Navbar(props) {
         <li>
           <NavLink to={'/pinlookup'}>Pin Lookup</NavLink>
         </li>
+        <li>
+          <NavLink to={'/addstudent'}>Add Student</NavLink>
+        </li>
       </ul>
     </div>
   );

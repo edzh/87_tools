@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { removeChildFromGym } from '../actions/postcareLocationsActions';
+import { removeStudentFromGym } from '../actions/postcareLocationsActions';
 
 import GymList from '../components/GymList';
 
@@ -12,8 +12,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeChildFromGym: child => {
-      dispatch(removeChildFromGym(child));
+    removeStudentFromGym: student => {
+      dispatch(removeStudentFromGym(student));
     }
   };
 };

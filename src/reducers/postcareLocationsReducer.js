@@ -1,8 +1,8 @@
 import {
-  ADD_CHILD_TO_LIBRARY,
-  REMOVE_CHILD_FROM_LIBRARY,
-  ADD_CHILD_TO_GYM,
-  REMOVE_CHILD_FROM_GYM
+  ADD_STUDENT_TO_LIBRARY,
+  REMOVE_STUDENT_FROM_LIBRARY,
+  ADD_STUDENT_TO_GYM,
+  REMOVE_STUDENT_FROM_GYM
 } from '../actions/postcareLocationsActions';
 
 const initialState = {
@@ -12,57 +12,57 @@ const initialState = {
 
 export default function postcareLocations(state = initialState, action) {
   switch (action.type) {
-    case ADD_CHILD_TO_LIBRARY:
+    case ADD_STUDENT_TO_LIBRARY:
       return {
         ...state,
         library: [
           ...state.library,
           {
-            name: action.child.name,
-            grade: action.child.grade,
-            pin: action.child.pin,
+            name: action.student.name,
+            grade: action.student.grade,
+            pin: action.student.pin,
             present: true
           }
         ]
       };
-    case REMOVE_CHILD_FROM_LIBRARY:
+    case REMOVE_STUDENT_FROM_LIBRARY:
       return {
         ...state,
-        library: state.library.map(child => {
-          if (child.name === action.child.name) {
+        library: state.library.map(student => {
+          if (student.name === action.student.name) {
             return {
-              ...child,
-              present: !child.present
+              ...student,
+              present: !student.present
             };
           }
-          return child;
+          return student;
         })
       };
 
-    case ADD_CHILD_TO_GYM:
+    case ADD_STUDENT_TO_GYM:
       return {
         ...state,
         gym: [
           ...state.gym,
           {
-            name: action.child.name,
-            grade: action.child.grade,
-            pin: action.child.pin,
+            name: action.student.name,
+            grade: action.student.grade,
+            pin: action.student.pin,
             present: true
           }
         ]
       };
-    case REMOVE_CHILD_FROM_GYM:
+    case REMOVE_STUDENT_FROM_GYM:
       return {
         ...state,
-        gym: state.gym.map(child => {
-          if (child.name === action.child.name) {
+        gym: state.gym.map(student => {
+          if (student.name === action.student.name) {
             return {
-              ...child,
-              present: !child.present
+              ...student,
+              present: !student.present
             };
           }
-          return child;
+          return student;
         })
       };
     default:
