@@ -5,6 +5,7 @@ import styles from './css/Student.module.css';
 import StudentContainer from '../../containers/StudentContainer';
 import DayFilter from './DayFilter';
 import NameFilter from './NameFilter';
+import LetterFilter from './LetterFilter';
 
 export default function Student(props) {
   const [query, setQuery] = useState('');
@@ -23,6 +24,12 @@ export default function Student(props) {
     setRegex(new RegExp(query.replace(invalid, ''), 'gi'));
   }
 
+  function filterLetter(e) {
+    e.preventDefault();
+    setCurrentQuery(e.target.value);
+    setRegex(new RegExp(`^${e.target.value}`, 'gi'));
+  }
+
   function onDayChange(e) {
     setDay(e.target.value);
   }
@@ -36,6 +43,7 @@ export default function Student(props) {
         query={query}
         onChange={onChange}
       />
+      <LetterFilter filterLetter={filterLetter} />
       <table>
         <thead>
           <tr className={styles.tableHeader}>
