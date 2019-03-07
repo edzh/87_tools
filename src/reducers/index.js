@@ -1,4 +1,10 @@
 import { combineReducers } from 'redux';
-import postcareLocationsReducer from './postcareLocationsReducer';
+import postcareLocations from './postcareLocationsReducer';
+import pinLookup from './pinLookupReducer';
+import timesheets from './timesheetReducer';
 
-export default postcareLocationsReducer;
+export default combineReducers({
+  postcareLocations,
+  pinLookup,
+  timesheets
+});

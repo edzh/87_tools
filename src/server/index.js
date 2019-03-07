@@ -6,8 +6,9 @@ import cors from 'cors';
 import { connect } from './utils/db';
 import config from './config';
 
-import studentRouter from './api/student/student.router';
 import clubRouter from './api/club/club.router';
+import studentRouter from './api/student/student.router';
+import timesheetRouter from './api/timesheet/timesheet.router';
 
 export const app = express();
 
@@ -17,8 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.set('json spaces', 2);
 
-app.use('/api/student', studentRouter);
 app.use('/api/club', clubRouter);
+app.use('/api/student', studentRouter);
+app.use('/api/timesheet', timesheetRouter);
 
 export const start = async () => {
   try {

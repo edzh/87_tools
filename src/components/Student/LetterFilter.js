@@ -7,8 +7,8 @@ console.log(alphabet);
 export default function LetterFilter(props) {
   return (
     <div>
-      {alphabet.map(letter => (
-        <button value={letter} onClick={props.filterLetter}>
+      {alphabet.map((letter, index) => (
+        <button key={index} value={letter} onClick={props.filterLetter}>
           {letter}
         </button>
       ))}

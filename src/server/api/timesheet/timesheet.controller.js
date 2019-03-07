@@ -1,17 +1,16 @@
-import { Student } from './student.model';
+import { Timesheet } from './timesheet.model';
 
 export const getOne = async (req, res) => {
   try {
-    const student = await Student.findOne({ _id: req.params.id })
+    const timesheet = await Timesheet.findOne({ _id: req.params.id })
       .lean()
-      .populate('clubs', '-_id -__v')
       .exec();
 
-    if (!student) {
+    if (!timesheet) {
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: student });
+    res.status(200).json({ data: timesheet });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -20,12 +19,12 @@ export const getOne = async (req, res) => {
 
 export const getMany = async (req, res) => {
   try {
-    const students = await Student.find(req.query)
+    const timesheets = await Timesheet.find(req.query)
       .lean()
-      .populate('clubs', '-_id -__v -students')
+      .populate('students')
       .exec();
 
-    res.status(200).json({ data: students });
+    res.status(200).json({ data: timesheets });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -34,8 +33,8 @@ export const getMany = async (req, res) => {
 
 export const createOne = async (req, res) => {
   try {
-    const student = await Student.create({ ...req.body });
-    res.status(201).json({ data: student });
+    const timesheet = await Timesheet.create({ ...req.body });
+    res.status(201).json({ data: timesheet });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -44,27 +43,20 @@ export const createOne = async (req, res) => {
 
 export const updateOne = async (req, res) => {
   try {
-    const updatedStudent = await Student.findOneAndUpdate(
+    const updatedTimesheet = await Timesheet.findOneAndUpdate(
       { _id: req.params.id },
-      {
-        // $set: {
-        //   name: req.body.name,
-        //   grade: req.body.grade,
-        //   pin: req.body.pin,
-        //   clubs: []
-        // }
-        $push: { clubs: [req.body.clubs] }
-      },
-      { new: true }
+      // req.body,
+      { $push: { students: [req.body.students] } },
+      { new: true, upsert: true, safe: true }
     )
       .lean()
       .exec();
 
-    if (!updatedStudent) {
+    if (!updatedTimesheet) {
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: updatedStudent });
+    res.status(200).json({ data: updatedTimesheet });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -73,7 +65,7 @@ export const updateOne = async (req, res) => {
 
 export const removeOne = async (req, res) => {
   try {
-    const removed = await Student.findOneAndRemove({ _id: req.params.id });
+    const removed = await Timesheet.findOneAndRemove({ _id: req.params.id });
 
     if (!removed) {
       return res.status(400).end();

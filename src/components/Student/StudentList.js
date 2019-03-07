@@ -34,6 +34,10 @@ export default function Student(props) {
     setDay(e.target.value);
   }
 
+  if (props.isFetching && props.students === null) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div>
       <DayFilter onDayChange={onDayChange} />
@@ -56,23 +60,42 @@ export default function Student(props) {
         </thead>
         <tbody>
           {props.students
-            .filter(student => student.grade)
+            // .filter(student => student.grade)
             .filter(student => {
               let condition;
+
               if (day === 'all') {
                 return true;
               }
+
               student.clubs.forEach(club => {
-                if (club.day === day) {
+                if (`${club.day}` === day) {
                   condition = true;
                 }
               });
+
               return condition;
             })
             .filter(student => student.name.match(regex))
-            .map((student, index) => (
-              <StudentContainer key={index} student={student} day={day} />
-            ))}
+            .sort((a, b) => {
+              const nameA = a.name.toUpperCase();
+              const nameB = b.name.toUpperCase();
+
+              if (nameA < nameB) {
+                return -1;
+              }
+
+              if (nameA > nameB) {
+                return 1;
+              }
+
+              return 0;
+            })
+            .map((student, index) => {
+              return (
+                <StudentContainer key={index} student={student} day={day} />
+              );
+            })}
         </tbody>
       </table>
     </div>

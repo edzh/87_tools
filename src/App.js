@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Navbar from './components/navbar/Navbar';
-import PinLookup from './components/PinLookup';
+import Navbar from './components/Navbar/Navbar';
+import PinLookup from './containers/PinLookup';
 import AddStudent from './components/Student/AddStudent';
+import Timesheet from './containers/Timesheet';
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
           <Navbar />
           <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
           <Route exact path={'/addstudent'} render={() => <AddStudent />} />
+          <Route exact path={'/timesheet/'} render={() => <Timesheet />} />
         </div>
       </Router>
     );
