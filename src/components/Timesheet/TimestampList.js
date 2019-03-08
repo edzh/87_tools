@@ -13,8 +13,6 @@ export default function TimestampList(props) {
       });
   }, [props.refresh]);
 
-  console.log(timestamps);
-
   return (
     <ul>
       {timestamps.map((timestamp, index) => (
