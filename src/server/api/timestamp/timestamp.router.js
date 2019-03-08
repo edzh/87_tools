@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import User from '../student/student.model';
-import controller from './timesheet.controller';
+import User from './timestamp.model';
+import controller from './timestamp.controller';
 
 const router = Router();
 

@@ -2,8 +2,6 @@ import React from 'react';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
-console.log(alphabet);
-
 export default function LetterFilter(props) {
   return (
     <div>

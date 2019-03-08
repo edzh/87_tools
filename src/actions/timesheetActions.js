@@ -34,3 +34,10 @@ export function fetchTimesheets() {
       });
   };
 }
+
+export function setTimesheet(timesheet) {
+  return {
+    type: types.SET_TIMESHEET,
+    timesheet
+  };
+}

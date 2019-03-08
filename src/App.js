@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import PinLookup from './containers/PinLookup';
 import AddStudent from './components/Student/AddStudent';
+import TimesheetForm from './components/Timesheet/TimesheetForm';
 import Timesheet from './containers/Timesheet';
+import Timeclock from './containers/Timeclock';
 
 class App extends Component {
   render() {
@@ -15,6 +17,16 @@ class App extends Component {
           <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
           <Route exact path={'/addstudent'} render={() => <AddStudent />} />
           <Route exact path={'/timesheet/'} render={() => <Timesheet />} />
+          <Route
+            exact
+            path={'/timesheet/new'}
+            render={() => <TimesheetForm />}
+          />
+          <Route
+            exact
+            path={'/timesheet/id/:id'}
+            render={({ match }) => <Timeclock timesheet={match.params.id} />}
+          />
         </div>
       </Router>
     );

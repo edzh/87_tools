@@ -1,30 +1,16 @@
-import { Timesheet } from './timesheet.model';
+import { Timestamp } from './timestamp.model';
 
 export const getOne = async (req, res) => {
   try {
-    const timesheet = await Timesheet.findOne({ _id: req.params.id })
+    const timestamp = await Timestamp.findOne({ _id: req.params.id })
       .lean()
-      .populate({
-        path: 'timestamp',
-        select: '-_id -__v -timesheet',
-        populate: {
-          path: 'student',
-          select: 'name -_id clubs',
-          model: 'student',
-          populate: {
-            path: 'clubs',
-            select: 'name day -_id',
-            model: 'club'
-          }
-        }
-      })
       .exec();
 
-    if (!timesheet) {
+    if (!timestamp) {
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: timesheet });
+    res.status(200).json({ data: timestamp });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -33,11 +19,11 @@ export const getOne = async (req, res) => {
 
 export const getMany = async (req, res) => {
   try {
-    const timesheets = await Timesheet.find(req.query)
+    const timestamps = await Timestamp.find(req.query)
       .lean()
       .exec();
 
-    res.status(200).json({ data: timesheets });
+    res.status(200).json({ data: timestamps });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -46,8 +32,8 @@ export const getMany = async (req, res) => {
 
 export const createOne = async (req, res) => {
   try {
-    const timesheet = await Timesheet.create({ ...req.body });
-    res.status(201).json({ data: timesheet });
+    const timestamp = await Timestamp.create({ ...req.body });
+    res.status(201).json({ data: timestamp });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -56,20 +42,19 @@ export const createOne = async (req, res) => {
 
 export const updateOne = async (req, res) => {
   try {
-    const updatedTimesheet = await Timesheet.findOneAndUpdate(
+    const updatedTimestamp = await Timestamp.findOneAndUpdate(
       { _id: req.params.id },
-      // req.body,
-      { $push: { timestamp: [req.body.timestamp] } },
+      req.body,
       { new: true, upsert: true, safe: true }
     )
       .lean()
       .exec();
 
-    if (!updatedTimesheet) {
+    if (!updatedTimestamp) {
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: updatedTimesheet });
+    res.status(200).json({ data: updatedTimestamp });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -78,7 +63,7 @@ export const updateOne = async (req, res) => {
 
 export const removeOne = async (req, res) => {
   try {
-    const removed = await Timesheet.findOneAndRemove({ _id: req.params.id });
+    const removed = await Timestamp.findOneAndRemove({ _id: req.params.id });
 
     if (!removed) {
       return res.status(400).end();

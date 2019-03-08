@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router';
+import moment from 'moment';
 
 export default function Timesheet() {
   const io = useFormInput('');
-  const date = useFormInput(Date.now());
+  const [toTimesheets, setToTimesheets] = useState(false);
+  const date = useFormInput(moment().format('YYYY-MM-DD'));
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,9 +19,15 @@ export default function Timesheet() {
         io: io.value,
         date: date.value
       })
+    }).then(() => {
+      setToTimesheets(true);
     });
   }
-  console.log(date);
+
+  if (toTimesheets === true) {
+    return <Redirect to="/timesheet" />;
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <input type="date" {...date} />

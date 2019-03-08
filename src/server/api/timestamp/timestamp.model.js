@@ -3,12 +3,13 @@ import mongoose from 'mongoose';
 const timestampSchema = new mongoose.Schema({
   datetime: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
     required: true
   },
   student: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'student',
+    unique: true,
     required: true
   },
   timesheet: {

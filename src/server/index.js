@@ -9,6 +9,7 @@ import config from './config';
 import clubRouter from './api/club/club.router';
 import studentRouter from './api/student/student.router';
 import timesheetRouter from './api/timesheet/timesheet.router';
+import timestampRouter from './api/timestamp/timestamp.router';
 
 export const app = express();
 
@@ -21,6 +22,7 @@ app.set('json spaces', 2);
 app.use('/api/club', clubRouter);
 app.use('/api/student', studentRouter);
 app.use('/api/timesheet', timesheetRouter);
+app.use('/api/timestamp', timestampRouter);
 
 export const start = async () => {
   try {
