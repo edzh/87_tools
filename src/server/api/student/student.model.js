@@ -18,6 +18,10 @@ const studentSchema = new mongoose.Schema({
   pin: {
     type: Number,
     unique: true
+  },
+  family: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'family'
   }
 });
 

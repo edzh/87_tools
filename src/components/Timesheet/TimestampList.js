@@ -8,7 +8,7 @@ export default function TimestampList(props) {
     fetch(`http://localhost:3001/api/timesheet/${props.timesheet}`)
       .then(response => response.json())
       .then(json => {
-        setTimestamps(json.data.timestamp);
+        setTimestamps(json.data.timestamp.sort(() => -1));
         props.setRefresh(false);
       });
   }, [props.refresh]);

@@ -9,6 +9,7 @@ function Timeclock(props) {
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
   const [refresh, setRefresh] = useState(false);
+  const [family, setFamily] = useState([]);
 
   useEffect(() => {
     props.setTimesheet(props.timesheet);
@@ -17,13 +18,22 @@ function Timeclock(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetchStudentWithPin(pin)
+    getStudentWithPin(pin)
       .then(response => postTimestamp(response))
       .then(response => addTimestampToTimesheet(response))
-      // .then(() => setError(''))
+      .then(() => setError(''))
       .catch(err => setError(err.message));
 
     setPin('');
+  }
+
+  function handleFamily(student) {
+    console.log(student);
+    postTimestamp(student)
+      .then(response => addTimestampToTimesheet(response))
+      .catch(err => setError(err.message));
+
+    setFamily([]);
   }
 
   const addTimestampToTimesheet = async timestamp => {
@@ -63,7 +73,6 @@ function Timeclock(props) {
       })
         .then(response => response.json())
         .then(json => json.data);
-      // .catch(err => setError('Already signed in!'));
 
       if (!timestamp) {
         return Promise.reject(new Error('Already signed in!'));
@@ -75,7 +84,9 @@ function Timeclock(props) {
     }
   };
 
-  const fetchStudentWithPin = async pin => {
+  // Will attempt to match pin with student. If student not found, fallback
+  // to searching family pins
+  const getStudentWithPin = async pin => {
     try {
       const student = await fetch(
         `http://localhost:3001/api/student?pin=${pin}`
@@ -84,8 +95,19 @@ function Timeclock(props) {
         .then(json => json.data[0]);
 
       if (!student) {
-        setError('Student not found!');
-        return Promise.reject(new Error('Student not found!'));
+        const familyPins = await fetch(`http://localhost:3001/api/pin/${pin}`)
+          .then(response => response.json())
+          .then(json => json.data);
+
+        if (!familyPins) {
+          return Promise.reject(new Error('Student not found!'));
+        }
+        // console.log(familyPins.students.length)
+        if (familyPins.students.length === 1) {
+          return familyPins.students[0];
+        }
+        setFamily(familyPins.students);
+        return Promise.reject(new Error(`${pin} is a family pin!`));
       }
       return student;
     } catch (e) {
@@ -104,6 +126,11 @@ function Timeclock(props) {
         <button type="submit">Submit</button>
       </form>
       {error && <p>{error}</p>}
+      {family.map((student, index) => (
+        <button key={index} onClick={() => handleFamily(student)}>
+          {student.name}
+        </button>
+      ))}
       <TimestampList
         refresh={refresh}
         setRefresh={setRefresh}

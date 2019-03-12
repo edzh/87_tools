@@ -1,18 +1,17 @@
-import { Student } from './student.model';
+import { Family } from './family.model';
 
 export const getOne = async (req, res) => {
   try {
-    const student = await Student.findOne({ _id: req.params.id })
+    const family = await Family.findOne({ _id: req.params.id })
       .lean()
       .populate('clubs', '-_id -__v')
-      .populate('family', '-students -_id -__v')
       .exec();
 
-    if (!student) {
+    if (!family) {
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: student });
+    res.status(200).json({ data: family });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -21,12 +20,12 @@ export const getOne = async (req, res) => {
 
 export const getMany = async (req, res) => {
   try {
-    const students = await Student.find(req.query)
+    const families = await Family.find(req.query)
       .lean()
-      .populate('clubs', '-_id -__v -students')
+      .populate('clubs', '-_id -__v -families')
       .exec();
 
-    res.status(200).json({ data: students });
+    res.status(200).json({ data: families });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -35,8 +34,8 @@ export const getMany = async (req, res) => {
 
 export const createOne = async (req, res) => {
   try {
-    const student = await Student.create({ ...req.body });
-    res.status(201).json({ data: student });
+    const family = await Family.create({ ...req.body });
+    res.status(201).json({ data: family });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -45,28 +44,29 @@ export const createOne = async (req, res) => {
 
 export const updateOne = async (req, res) => {
   try {
-    const updatedStudent = await Student.findOneAndUpdate(
+    const updatedFamily = await Family.findOneAndUpdate(
       { _id: req.params.id },
-      {
-        // $set: {
-        //   name: req.body.name,
-        //   grade: req.body.grade,
-        //   pin: req.body.pin,
-        //   clubs: []
-        // }
-        // $push: { clubs: [req.body.clubs] }
-        $set: { family: req.body.family }
-      },
+      // req.body,
+      { $push: { students: [req.body.student] } },
+      // {
+      //   // $set: {
+      //   //   name: req.body.name,
+      //   //   grade: req.body.grade,
+      //   //   pin: req.body.pin,
+      //   //   clubs: []
+      //   // }
+      //   $push: { clubs: [req.body.clubs] }
+      // },
       { new: true }
     )
       .lean()
       .exec();
 
-    if (!updatedStudent) {
+    if (!updatedFamily) {
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: updatedStudent });
+    res.status(200).json({ data: updatedFamily });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -75,7 +75,7 @@ export const updateOne = async (req, res) => {
 
 export const removeOne = async (req, res) => {
   try {
-    const removed = await Student.findOneAndRemove({ _id: req.params.id });
+    const removed = await Family.findOneAndRemove({ _id: req.params.id });
 
     if (!removed) {
       return res.status(400).end();
