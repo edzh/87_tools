@@ -7,6 +7,7 @@ import AddStudent from './components/Student/AddStudent';
 import TimesheetForm from './components/Timesheet/TimesheetForm';
 import Timesheet from './containers/Timesheet';
 import Timeclock from './containers/Timeclock';
+import Family from './containers/FamilyContainer';
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
             path={'/timesheet/id/:id'}
             render={({ match }) => <Timeclock timesheet={match.params.id} />}
           />
+          <Route exact path={'/family'} render={() => <Family />} />
         </div>
       </Router>
     );

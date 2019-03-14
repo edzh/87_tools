@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import moment from 'moment';
+import { format } from 'date-fns';
 
 export default function Timesheet() {
   const io = useFormInput('');
   const [toTimesheets, setToTimesheets] = useState(false);
-  const date = useFormInput(moment().format('YYYY-MM-DD'));
+  const date = useFormInput(format(new Date(), 'YYYY-MM-DD'));
 
   function handleSubmit(e) {
     e.preventDefault();

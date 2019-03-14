@@ -102,7 +102,7 @@ function Timeclock(props) {
         if (!familyPins) {
           return Promise.reject(new Error('Student not found!'));
         }
-        // console.log(familyPins.students.length)
+
         if (familyPins.students.length === 1) {
           return familyPins.students[0];
         }
@@ -122,7 +122,12 @@ function Timeclock(props) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="number" value={pin} onChange={handleChange} />
+        <input
+          type="number"
+          autofocus="true"
+          value={pin}
+          onChange={handleChange}
+        />
         <button type="submit">Submit</button>
       </form>
       {error && <p>{error}</p>}

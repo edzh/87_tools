@@ -14,6 +14,9 @@ export default function Navbar(props) {
         <li>
           <NavLink to={'/timesheet'}>Timesheet</NavLink>
         </li>
+        <li>
+          <NavLink to={'/family'}>Family</NavLink>
+        </li>
       </ul>
     </div>
   );

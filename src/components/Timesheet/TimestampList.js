@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
 
 export default function TimestampList(props) {
   const [timestamps, setTimestamps] = useState([]);
