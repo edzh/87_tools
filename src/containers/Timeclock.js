@@ -124,7 +124,7 @@ function Timeclock(props) {
       <form onSubmit={handleSubmit}>
         <input
           type="number"
-          autofocus="true"
+          autoFocus="true"
           value={pin}
           onChange={handleChange}
         />

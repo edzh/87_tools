@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 
 export default function TimesheetList(props) {
   if (props.isFetching && props.timesheets === null) {
@@ -7,12 +8,25 @@ export default function TimesheetList(props) {
   }
 
   return (
-    <ul>
-      {props.timesheets.map((timesheet, index) => (
-        <li key={index}>
-          <Link to={`/timesheet/id/${timesheet._id}`}>{timesheet.date}</Link>
-        </li>
-      ))}
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {props.timesheets.map((timesheet, index) => (
+          <tr key={index}>
+            <td>
+              <Link to={`/timesheet/id/${timesheet._id}`}>
+                {format(new Date(timesheet.date), 'MMMM DD')}
+              </Link>
+            </td>
+            <td>{timesheet.io === 'in' ? 'Sign In' : 'Sign Out'}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }

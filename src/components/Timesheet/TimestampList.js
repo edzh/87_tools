@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { format } from 'date-fns';
 
 export default function TimestampList(props) {
   const [timestamps, setTimestamps] = useState([]);
@@ -13,13 +14,30 @@ export default function TimestampList(props) {
   }, [props.refresh]);
 
   return (
-    <ul>
-      {timestamps.map((timestamp, index) => (
-        <li key={index}>
-          <p>{timestamp.datetime}</p>
-          <p>{timestamp.student.name}</p>
-        </li>
-      ))}
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Club</th>
+        </tr>
+      </thead>
+      <tbody>
+        {timestamps.map((timestamp, index) => (
+          <tr key={index}>
+            <td>{format(new Date(timestamp.datetime), 'hh:mm a')}</td>
+            <td>{timestamp.student.name}</td>
+            <td>
+              {timestamp.student.clubs.map(club =>
+                club.day ===
+                parseInt(format(new Date(timestamp.datetime), 'E')) - 1
+                  ? club.name
+                  : null
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }

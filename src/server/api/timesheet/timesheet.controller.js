@@ -14,7 +14,10 @@ export const getOne = async (req, res) => {
           populate: {
             path: 'clubs',
             select: 'name day -_id',
-            model: 'club'
+            model: 'club',
+            options: {
+              sort: { day: 1 }
+            }
           }
         }
       })

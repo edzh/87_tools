@@ -17,7 +17,7 @@ export default function Timesheet() {
       },
       body: JSON.stringify({
         io: io.value,
-        date: date.value
+        date: `${date.value}T04:00:00.000Z`
       })
     }).then(() => {
       setToTimesheets(true);
