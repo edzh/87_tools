@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 
+import styles from './css/TimestampList.module.css';
+
 export default function TimestampList(props) {
   const [timestamps, setTimestamps] = useState([]);
 
@@ -14,10 +16,11 @@ export default function TimestampList(props) {
   }, [props.refresh]);
 
   return (
-    <table>
-      <thead>
+    <table className={styles.table}>
+      <thead className={styles.header}>
         <tr>
           <th>Date</th>
+          <th>Time</th>
           <th>Name</th>
           <th>Club</th>
         </tr>
@@ -25,6 +28,7 @@ export default function TimestampList(props) {
       <tbody>
         {timestamps.map((timestamp, index) => (
           <tr key={index}>
+            <td>{format(new Date(timestamp.datetime), 'MMMM DD')}</td>
             <td>{format(new Date(timestamp.datetime), 'hh:mm a')}</td>
             <td>{timestamp.student.name}</td>
             <td>

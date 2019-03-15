@@ -2,13 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
+import styles from './css/TimesheetList.module.css';
+
 export default function TimesheetList(props) {
   if (props.isFetching && props.timesheets === null) {
     return <p>Loading...</p>;
   }
 
   return (
-    <table>
+    <table className={styles.table}>
       <thead>
         <tr>
           <th>Date</th>

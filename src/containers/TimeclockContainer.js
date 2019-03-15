@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 
 import { setTimesheet } from '../actions/timesheetActions';
 
-import TimestampList from '../components/Timesheet/TimestampList';
+import TimestampList from '../components/Timeclock/TimestampList';
+import PinInput from '../components/Timeclock/PinInput';
+import ManualInput from '../components/Timeclock/ManualInput';
+
+import styles from './css/Timeclock.module.css';
 
 function Timeclock(props) {
   const [pin, setPin] = useState('');
@@ -74,13 +78,9 @@ function Timeclock(props) {
         .then(response => response.json())
         .then(json => json.data);
 
-      if (!timestamp) {
-        return Promise.reject(new Error('Already signed in!'));
-      }
-
       return timestamp;
     } catch (e) {
-      return Promise.reject(new Error('Already signed in!'));
+      return Promise.reject(new Error(`Already signed in! ${e}`));
     }
   };
 
@@ -115,32 +115,26 @@ function Timeclock(props) {
     }
   };
 
-  function handleChange(e) {
-    setPin(e.target.value);
-  }
-
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="number"
-          autoFocus="true"
-          value={pin}
-          onChange={handleChange}
-        />
-        <button type="submit">Submit</button>
-      </form>
-      {error && <p>{error}</p>}
-      {family.map((student, index) => (
-        <button key={index} onClick={() => handleFamily(student)}>
-          {student.name}
-        </button>
-      ))}
-      <TimestampList
-        refresh={refresh}
-        setRefresh={setRefresh}
-        timesheet={props.timesheet}
+    <div className={styles.container}>
+      <PinInput
+        pin={pin}
+        setPin={setPin}
+        handleSubmit={handleSubmit}
+        error={error}
+        family={family}
+        handleFamily={handleFamily}
       />
+      <div>
+        <h2>Signed In</h2>
+        <TimestampList
+          className={styles.studentList}
+          refresh={refresh}
+          setRefresh={setRefresh}
+          timesheet={props.timesheet}
+        />
+      </div>
+      <ManualInput />
     </div>
   );
 }

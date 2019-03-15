@@ -1,0 +1,12 @@
+.table {
+  width: 100%;
+}
+
+.header {
+  text-align: left;
+}
+
+.table > tr {
+  display: grid;
+  grid-template-columns: 15% 35% 50%;
+}

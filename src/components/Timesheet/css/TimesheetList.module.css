@@ -1,0 +1,9 @@
+.table {
+  width: 100%;
+  text-align: left;
+}
+
+.table > tr {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}

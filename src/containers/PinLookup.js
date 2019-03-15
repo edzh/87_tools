@@ -13,6 +13,7 @@ function PinLookup(props) {
 
   return (
     <div className={styles.container}>
+      <h2>Pin Lookup</h2>
       <StudentsList students={props.students} isFetching={props.isFetching} />
     </div>
   );
