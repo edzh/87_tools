@@ -19,7 +19,7 @@ function ClubPage(props) {
 
   return (
     <div>
-      {club.name}
+      <h2>{club.name}</h2>
       <ClubStudentList club={club} />
     </div>
   );

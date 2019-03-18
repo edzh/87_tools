@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
 import styles from './css/TimestampList.module.css';
@@ -29,7 +30,11 @@ export default function TimestampList(props) {
       <tbody>
         {timestamps.map((timestamp, index) => (
           <tr key={index}>
-            <td>{timestamp.student.name}</td>
+            <td>
+              <Link to={`/student/${timestamp.student._id}`}>
+                {timestamp.student.name}
+              </Link>
+            </td>
             <td>
               {timestamp.student.clubs.map(club =>
                 club.day === parseInt(format(new Date(timestamp.datetime), 'E'))

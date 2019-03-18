@@ -24,16 +24,20 @@ function StudentPage(props) {
       <ul>
         <li>{student.name}</li>
         <li>{intToGrade[student.grade]}</li>
-        <li>{student.family.name}</li>
-        <li>
-          Pickups
-          {student.family.pickups.map(pickup => (
-            <ul>
-              <li>{pickup.name}</li>
-              <li>{pickup.pin}</li>
-            </ul>
-          ))}
-        </li>
+        {student.family && (
+          <div>
+            <li>{student.family.name}</li>
+            <li>
+              Pickups
+              {student.family.pickups.map(pickup => (
+                <ul>
+                  <li>{pickup.name}</li>
+                  <li>{pickup.pin}</li>
+                </ul>
+              ))}
+            </li>
+          </div>
+        )}
         <li>
           Clubs
           {student.clubs
