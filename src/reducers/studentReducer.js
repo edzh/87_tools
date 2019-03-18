@@ -5,7 +5,7 @@ const initialState = {
   students: []
 };
 
-export default function pinLookup(state = initialState, action) {
+export default function student(state = initialState, action) {
   switch (action.type) {
     case types.FETCH_STUDENTS_REQUEST:
       return {
@@ -22,6 +22,11 @@ export default function pinLookup(state = initialState, action) {
       return {
         ...state,
         isFetching: false
+      };
+    case types.SET_STUDENT:
+      return {
+        ...state,
+        id: action.student
       };
     default:
       return state;

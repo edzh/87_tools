@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 import postcareLocations from './postcareLocationsReducer';
-import pinLookup from './pinLookupReducer';
+import student from './studentReducer';
 import timesheets from './timesheetReducer';
 import family from './familyReducer';
+import club from './clubReducer';
 
 export default combineReducers({
   postcareLocations,
-  pinLookup,
+  student,
   timesheets,
-  family
+  family,
+  club
 });

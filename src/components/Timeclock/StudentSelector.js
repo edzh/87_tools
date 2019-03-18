@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function PickStudent(props) {
+export default function StudentSelector(props) {
   return (
     <div>
       {props.family.map((student, index) => (

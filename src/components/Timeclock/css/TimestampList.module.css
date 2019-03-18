@@ -1,12 +1,39 @@
 .table {
   width: 100%;
 }
-
-.header {
-  text-align: left;
+/*
+.table thead {
+  width: 100%;
+}*/
+.table tbody {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  height: 540px;
 }
 
-.table > tr {
+.table thead tr {
+  display: block;
+}
+
+.table thead tr,
+.table tbody tr {
   display: grid;
-  grid-template-columns: 15% 35% 50%;
+  grid-template-columns: 30% 44% 13% 13%;
+}
+
+.table thead tr {
+  padding: 5px 0;
+  margin: 0;
+  border-bottom: 1px #ddd solid;
+}
+
+.table tbody tr {
+  border-bottom: 1px #ddd solid;
+  padding: 5px 0;
+}
+
+.table thead tr th,
+.table tbody tr td {
+  margin: 0 5px;
 }

@@ -1,8 +1,7 @@
-th {
+.container th {
   text-align: left;
 }
 
-table {
-  margin: auto;
+.container table {
   width: 1024px;
 }

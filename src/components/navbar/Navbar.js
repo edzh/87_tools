@@ -19,6 +19,9 @@ export default function Navbar(props) {
       <NavLink className={styles.link} to={'/family'}>
         Family
       </NavLink>
+      <NavLink className={styles.link} to={'/club'}>
+        Club
+      </NavLink>
     </nav>
   );
 }

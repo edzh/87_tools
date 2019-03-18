@@ -1,8 +1,9 @@
 .input {
   grid-column-start: 1;
   grid-column-end: 2;
-  margin-left: auto;
-  margin-right: auto;
+  /*margin-left: auto;*/
+  padding: 0 1em;
+  border: 1px solid #ddd;
 }
 .btn {
   padding: 1em;

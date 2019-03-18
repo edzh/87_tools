@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { setTimesheet } from '../actions/timesheetActions';
+import { fetchStudents } from '../actions/studentActions';
 
 import TimestampList from '../components/Timeclock/TimestampList';
 import PinInput from '../components/Timeclock/PinInput';
-import ManualInput from '../components/Timeclock/ManualInput';
+import ManualEntry from '../components/Timeclock/ManualEntry';
+import PinLookup from './PinLookup';
 
 import styles from './css/Timeclock.module.css';
 
@@ -80,7 +82,7 @@ function Timeclock(props) {
 
       return timestamp;
     } catch (e) {
-      return Promise.reject(new Error(`Already signed in! ${e}`));
+      return Promise.reject(new Error(`${student.name} already signed in!`));
     }
   };
 
@@ -97,7 +99,8 @@ function Timeclock(props) {
       if (!student) {
         const familyPins = await fetch(`http://localhost:3001/api/pin/${pin}`)
           .then(response => response.json())
-          .then(json => json.data);
+          .then(json => json.data)
+          .catch(err => console.error(err));
 
         if (!familyPins) {
           return Promise.reject(new Error('Student not found!'));
@@ -125,23 +128,31 @@ function Timeclock(props) {
         family={family}
         handleFamily={handleFamily}
       />
-      <div>
+      <div className={styles.studentList}>
         <h2>Signed In</h2>
-        <TimestampList
-          className={styles.studentList}
-          refresh={refresh}
-          setRefresh={setRefresh}
-          timesheet={props.timesheet}
-        />
+        <div className={styles.list}>
+          <TimestampList
+            refresh={refresh}
+            setRefresh={setRefresh}
+            timesheet={props.timesheet}
+          />
+        </div>
       </div>
-      <ManualInput />
+      <ManualEntry
+        students={props.students}
+        fetchStudents={props.fetchStudents}
+        postTimestamp={postTimestamp}
+        addTimestampToTimesheet={addTimestampToTimesheet}
+        setError={setError}
+      />
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    timesheet: ownProps.timesheet
+    timesheet: ownProps.timesheet,
+    students: state.student.students
   };
 };
 
@@ -149,6 +160,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setTimesheet: timesheet => {
       dispatch(setTimesheet(timesheet));
+    },
+    fetchStudents: () => {
+      dispatch(fetchStudents());
     }
   };
 };

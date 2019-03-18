@@ -4,6 +4,7 @@ export const getOne = async (req, res) => {
   try {
     const club = await Club.findOne({ _id: req.params.id })
       .lean()
+      .populate('students')
       .exec();
 
     if (!club) {
@@ -21,7 +22,6 @@ export const getMany = async (req, res) => {
   try {
     const clubs = await Club.find(req.query)
       .lean()
-      .populate('students')
       .exec();
 
     res.status(200).json({ data: clubs });

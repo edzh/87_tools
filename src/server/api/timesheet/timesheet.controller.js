@@ -9,7 +9,7 @@ export const getOne = async (req, res) => {
         select: '-_id -__v -timesheet',
         populate: {
           path: 'student',
-          select: 'name -_id clubs',
+          select: 'name -_id pin clubs',
           model: 'student',
           populate: {
             path: 'clubs',

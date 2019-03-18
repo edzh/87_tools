@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import styles from './css/Student.module.css';
+import styles from './css/StudentList.module.css';
 
 import StudentContainer from '../../containers/StudentContainer';
 import DayFilter from './DayFilter';
@@ -39,7 +39,7 @@ export default function Student(props) {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <DayFilter onDayChange={onDayChange} />
       <NameFilter
         filterName={filterName}

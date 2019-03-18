@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import styles from './App.css';
+import styles from './App.module.css';
 
 import Navbar from './components/Navbar/Navbar';
 import PinLookup from './containers/PinLookup';
@@ -10,30 +10,46 @@ import TimesheetForm from './components/Timesheet/TimesheetForm';
 import Timesheet from './containers/Timesheet';
 import Timeclock from './containers/TimeclockContainer';
 import Family from './containers/FamilyContainer';
+import StudentPage from './containers/StudentPageContainer';
+import Club from './containers/ClubContainer';
+import ClubPage from './containers/ClubPageContainer';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div
-          className="container"
+          className={styles.container}
           style={{ fontFamily: ['Roboto', 'sans-serif'] }}
         >
           <Navbar className="nav" />
-          <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
-          <Route exact path={'/addstudent'} render={() => <AddStudent />} />
-          <Route exact path={'/timesheet/'} render={() => <Timesheet />} />
-          <Route
-            exact
-            path={'/timesheet/new'}
-            render={() => <TimesheetForm />}
-          />
-          <Route
-            exact
-            path={'/timesheet/id/:id'}
-            render={({ match }) => <Timeclock timesheet={match.params.id} />}
-          />
-          <Route exact path={'/family'} render={() => <Family />} />
+          <div className={styles.content}>
+            <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
+            <Route exact path={'/addstudent'} render={() => <AddStudent />} />
+            <Route exact path={'/timesheet/'} render={() => <Timesheet />} />
+            <Route
+              exact
+              path={'/timesheet/new'}
+              render={() => <TimesheetForm />}
+            />
+            <Route
+              exact
+              path={'/timesheet/id/:id'}
+              render={({ match }) => <Timeclock timesheet={match.params.id} />}
+            />
+            <Route exact path={'/family'} render={() => <Family />} />
+            <Route
+              exact
+              path={'/student/:id'}
+              render={({ match }) => <StudentPage student={match.params.id} />}
+            />
+            <Route exact path={'/club'} render={() => <Club />} />
+            <Route
+              exact
+              path={'/club/:id'}
+              render={({ match }) => <ClubPage club={match.params.id} />}
+            />
+          </div>
         </div>
       </Router>
     );

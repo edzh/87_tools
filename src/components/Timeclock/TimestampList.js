@@ -17,28 +17,29 @@ export default function TimestampList(props) {
 
   return (
     <table className={styles.table}>
-      <thead className={styles.header}>
+      <thead>
         <tr>
-          <th>Date</th>
-          <th>Time</th>
           <th>Name</th>
           <th>Club</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>PIN</th>
         </tr>
       </thead>
       <tbody>
         {timestamps.map((timestamp, index) => (
           <tr key={index}>
-            <td>{format(new Date(timestamp.datetime), 'MMMM DD')}</td>
-            <td>{format(new Date(timestamp.datetime), 'hh:mm a')}</td>
             <td>{timestamp.student.name}</td>
             <td>
               {timestamp.student.clubs.map(club =>
-                club.day ===
-                parseInt(format(new Date(timestamp.datetime), 'E')) - 1
+                club.day === parseInt(format(new Date(timestamp.datetime), 'E'))
                   ? club.name
                   : null
               )}
             </td>
+            <td>{format(new Date(timestamp.datetime), 'MMMM DD')}</td>
+            <td>{format(new Date(timestamp.datetime), 'hh:mm a')}</td>
+            <td>{timestamp.student.pin}</td>
           </tr>
         ))}
       </tbody>

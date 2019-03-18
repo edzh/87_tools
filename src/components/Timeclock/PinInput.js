@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import TimeclockError from './TimeclockError';
-import PickStudent from './PickStudent';
+import StudentSelector from './StudentSelector';
 
 import styles from './css/PinInput.module.css';
 
@@ -29,7 +29,7 @@ export default function PinInput(props) {
         </button>
       </form>
       <TimeclockError error={error} />
-      <PickStudent family={family} handleFamily={handleFamily} />
+      <StudentSelector family={family} handleFamily={handleFamily} />
     </div>
   );
 }

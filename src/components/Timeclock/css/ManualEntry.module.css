@@ -1,0 +1,51 @@
+.container {
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.container h2 {
+  margin: 1em 10px;
+}
+
+.container table {
+  width: 100%;
+}
+
+.container table tbody {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  height: 330px;
+}
+
+.container table thead tr,
+.container table tbody tr {
+  display: block;
+}
+
+.container table thead tr {
+  padding: 5px 0;
+  margin: 0;
+  border-bottom: 1px #ddd solid;
+}
+
+.container table tbody tr {
+  border-bottom: 1px #ddd solid;
+  padding: 5px 0;
+}
+
+.name {
+  width: 100%;
+}
+
+.btn {
+  border: none;
+  background-color: #ddd;
+  border-radius: 5px;
+  padding: 5px;
+  width: 72px;
+}
+
+.btn:hover {
+  background-color: #eee;
+}

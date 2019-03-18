@@ -34,3 +34,10 @@ export function fetchStudents() {
       });
   };
 }
+
+export function setStudent(student) {
+  return {
+    type: types.SET_STUDENT,
+    student
+  };
+}

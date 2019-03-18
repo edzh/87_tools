@@ -17,3 +17,7 @@ body {
 tr {
   text-align: left;
 }
+
+.content {
+  padding: 1em;
+}
