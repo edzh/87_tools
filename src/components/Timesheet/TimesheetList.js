@@ -14,6 +14,7 @@ export default function TimesheetList(props) {
       <thead>
         <tr>
           <th>Date</th>
+          <th>Quantity</th>
           <th>Type</th>
         </tr>
       </thead>
@@ -25,6 +26,7 @@ export default function TimesheetList(props) {
                 {format(new Date(timesheet.date), 'MMMM DD')}
               </Link>
             </td>
+            <td>{timesheet.timestamp.length}</td>
             <td>{timesheet.io === 'in' ? 'Sign In' : 'Sign Out'}</td>
           </tr>
         ))}

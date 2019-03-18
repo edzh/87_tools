@@ -11,11 +11,11 @@ export default function ClubList(props) {
           <Link to={`/club/${club._id}`}>
             {club.name} {daysOfWeek[club.day]}
           </Link>
-          <ul>
+          {/*          <ul>
             {club.students.map(student => (
               <li>{student.name}</li>
             ))}
-          </ul>
+          </ul>*/}
         </li>
       ))}
     </ul>

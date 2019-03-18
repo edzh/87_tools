@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 
 import { setClub } from '../actions/clubActions';
+import ClubStudentList from '../components/Club/ClubStudentList';
 
 function ClubPage(props) {
   const [club, setClub] = useState(null);
@@ -16,7 +17,12 @@ function ClubPage(props) {
 
   if (!club) return null;
 
-  return <div>{club.name}</div>;
+  return (
+    <div>
+      {club.name}
+      <ClubStudentList club={club} />
+    </div>
+  );
 }
 
 const mapStateToProps = (state, ownProps) => {
