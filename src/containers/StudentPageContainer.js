@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { setStudent } from '../actions/studentActions';
 
-const intToGrade = ['K', '1st', '2nd', '3rd', '4th', '5th'];
+import StudentDetails from '../components/Student/StudentDetails';
+import EditStudent from '../components/Student/EditStudent';
 
 function StudentPage(props) {
   const [student, setStudent] = useState(null);
@@ -13,7 +14,7 @@ function StudentPage(props) {
     fetch(`http://localhost:3001/api/student/${props.student}`)
       .then(response => response.json())
       .then(json => setStudent(json.data));
-  }, []);
+  }, [edit]);
 
   if (!student) {
     return null;
@@ -21,35 +22,12 @@ function StudentPage(props) {
 
   return (
     <div>
-      <ul>
-        <li>{student.name}</li>
-        <li>{intToGrade[student.grade]}</li>
-        {student.family && (
-          <div>
-            <li>{student.family.name}</li>
-            <li>
-              Pickups
-              {student.family.pickups.map(pickup => (
-                <ul>
-                  <li>{pickup.name}</li>
-                  <li>{pickup.pin}</li>
-                </ul>
-              ))}
-            </li>
-          </div>
-        )}
-        <li>
-          Clubs
-          {student.clubs
-            .sort((a, b) => a.day - b.day)
-            .map(club => (
-              <ul>
-                <li>{club.name}</li>
-                <li>{club.day}</li>
-              </ul>
-            ))}
-        </li>
-      </ul>
+      <button onClick={() => setEdit(!edit)}>Edit</button>
+      {edit ? (
+        <EditStudent student={student} />
+      ) : (
+        <StudentDetails student={student} />
+      )}
     </div>
   );
 }
