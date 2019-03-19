@@ -41,7 +41,7 @@ export default function AddStudent() {
   );
 }
 
-function useFormInput(initialValue) {
+export function useFormInput(initialValue) {
   const [value, setValue] = useState(initialValue);
 
   function handleChange(e) {

@@ -47,16 +47,17 @@ export const updateOne = async (req, res) => {
   try {
     const updatedStudent = await Student.findOneAndUpdate(
       { _id: req.params.id },
-      {
-        // $set: {
-        //   name: req.body.name,
-        //   grade: req.body.grade,
-        //   pin: req.body.pin,
-        //   clubs: []
-        // }
-        // $push: { clubs: [req.body.clubs] }
-        $set: { family: req.body.family }
-      },
+      // {
+      // $set: {
+      //   name: req.body.name,
+      //   grade: req.body.grade,
+      //   pin: req.body.pin,
+      //   clubs: []
+      // }
+      // $push: { clubs: [req.body.clubs] }
+      // $set: { family: req.body.family }
+      // },
+      req.body,
       { new: true }
     )
       .lean()
