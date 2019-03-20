@@ -4,8 +4,8 @@ export const getOne = async (req, res) => {
   try {
     const student = await Student.findOne({ _id: req.params.id })
       .lean()
-      .populate('clubs', '-_id -__v')
-      .populate('family', '-students -_id -__v')
+      .populate('clubs', '-__v')
+      .populate('family', '-students -__v')
       .exec();
 
     if (!student) {
@@ -23,7 +23,7 @@ export const getMany = async (req, res) => {
   try {
     const students = await Student.find(req.query)
       .lean()
-      .populate('clubs', '-_id -__v -students')
+      .populate('clubs', '-__v -students')
       .exec();
 
     res.status(200).json({ data: students });

@@ -20,6 +20,8 @@ function StudentPage(props) {
     return null;
   }
 
+  console.log(student);
+
   return (
     <div>
       <button onClick={() => setEdit(!edit)}>Edit</button>
