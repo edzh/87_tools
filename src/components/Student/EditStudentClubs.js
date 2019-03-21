@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 export default function EditStudentClubs(props) {
+  function handleChange(e) {
+    props.handleChange(props.day - 1, e.target.value);
+  }
+
   return (
-    <select
-      value={props.club}
-      onChange={e => props.handleChange(props.day - 1, e.target.value)}
-    >
+    <select value={props.club} onChange={handleChange}>
       <option value="">---</option>
       {props.clubsByDay
         .filter(club => club.day === props.day)

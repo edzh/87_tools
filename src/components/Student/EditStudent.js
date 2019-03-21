@@ -12,6 +12,7 @@ export default function EditStudent(props) {
   const family = useFormInput(student.family ? student.family._id : '');
   const [fetchedClubs, setFetchedClubs] = useState([]);
 
+  const [initialClubs, setInitialClubs] = useState([]);
   const [clubs, setClubs] = useState([]);
 
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function EditStudent(props) {
     );
 
     setClubs(studentClubs);
+    setInitialClubs(studentClubs);
   }, []);
 
   useEffect(() => {
@@ -45,6 +47,10 @@ export default function EditStudent(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    const diffClubs = initialClubs.filter(club => !clubs.includes(club));
+    // .concat(clubs.filter(club => !initialClubs.includes(club)))
+    console.log(diffClubs);
+
     fetch(`http://localhost:3001/api/student/${student._id}`, {
       method: 'PUT',
       headers: {
@@ -56,7 +62,9 @@ export default function EditStudent(props) {
         pin: pin.value,
         clubs: clubs.filter(club => club !== '')
       })
-    });
+    })
+      .then(response => response.json())
+      .then();
   }
 
   // function handleClubSubmit(e) {
@@ -69,8 +77,11 @@ export default function EditStudent(props) {
 
   function handleClubChange(day, club) {
     const newClub = [...clubs];
+    const oldOrNew = [club[day], club];
     newClub[day] = club;
+
     setClubs(newClub);
+    return oldOrNew;
   }
 
   return (
