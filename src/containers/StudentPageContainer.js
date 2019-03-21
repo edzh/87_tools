@@ -4,6 +4,7 @@ import { setStudent } from '../actions/studentActions';
 
 import StudentDetails from '../components/Student/StudentDetails';
 import EditStudent from '../components/Student/EditStudent';
+import { apiUrl } from 'config';
 
 function StudentPage(props) {
   const [student, setStudent] = useState(null);
@@ -11,7 +12,7 @@ function StudentPage(props) {
   useEffect(() => {
     props.setStudent(props.student);
 
-    fetch(`http://localhost:3001/api/student/${props.student}`)
+    fetch(`${apiUrl}/api/student/${props.student}`)
       .then(response => response.json())
       .then(json => setStudent(json.data));
   }, [edit]);

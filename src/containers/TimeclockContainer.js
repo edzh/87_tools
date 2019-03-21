@@ -8,7 +8,7 @@ import TimestampList from '../components/Timeclock/TimestampList';
 import PinInput from '../components/Timeclock/PinInput';
 import ManualEntry from '../components/Timeclock/ManualEntry';
 import PinLookup from './PinLookup';
-
+import { apiUrl } from 'config';
 import styles from './css/Timeclock.module.css';
 
 function Timeclock(props) {
@@ -44,16 +44,13 @@ function Timeclock(props) {
 
   const addTimestampToTimesheet = async timestamp => {
     try {
-      const timesheet = fetch(
-        `http://localhost:3001/api/timesheet/${props.timesheet}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ timestamp })
-        }
-      )
+      const timesheet = fetch(`${apiUrl}/api/timesheet/${props.timesheet}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ timestamp })
+      })
         .then(() => {
           setRefresh(true);
         })
@@ -67,7 +64,7 @@ function Timeclock(props) {
 
   const postTimestamp = async student => {
     try {
-      const timestamp = await fetch('http://localhost:3001/api/timestamp', {
+      const timestamp = await fetch(`${apiUrl}/api/timestamp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -90,14 +87,12 @@ function Timeclock(props) {
   // to searching family pins
   const getStudentWithPin = async pin => {
     try {
-      const student = await fetch(
-        `http://localhost:3001/api/student?pin=${pin}`
-      )
+      const student = await fetch(`${apiUrl}/api/student?pin=${pin}`)
         .then(response => response.json())
         .then(json => json.data[0]);
 
       if (!student) {
-        const familyPins = await fetch(`http://localhost:3001/api/pin/${pin}`)
+        const familyPins = await fetch(`${apiUrl}/api/pin/${pin}`)
           .then(response => response.json())
           .then(json => json.data)
           .catch(err => console.error(err));

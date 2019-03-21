@@ -1,6 +1,7 @@
 import 'cross-fetch';
 
 import * as types from './studentTypes';
+import { apiUrl } from 'config';
 
 function fetchStudentsRequest() {
   return {
@@ -24,7 +25,7 @@ function fetchStudentsFailure() {
 export function fetchStudents() {
   return dispatch => {
     dispatch(fetchStudentsRequest());
-    return fetch(`http://localhost:3001/api/student`)
+    return fetch(`${apiUrl}/api/student`)
       .then(response => response.json())
       .then(json => {
         dispatch(fetchStudentsSuccess(json.data));

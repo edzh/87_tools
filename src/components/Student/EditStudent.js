@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFormInput } from './AddStudent';
+import { apiUrl } from 'config';
 
 import SelectClub from './EditStudentClubs';
 
@@ -30,7 +31,7 @@ export default function EditStudent(props) {
 
   useEffect(() => {
     const fetchClubs = async () => {
-      const result = await fetch(`http://localhost:3001/api/club`)
+      const result = await fetch(`${apiUrl}/api/club`)
         .then(response => response.json())
         .then(json => json.data);
 
@@ -51,7 +52,7 @@ export default function EditStudent(props) {
     // .concat(clubs.filter(club => !initialClubs.includes(club)))
     console.log(diffClubs);
 
-    fetch(`http://localhost:3001/api/student/${student._id}`, {
+    fetch(`${apiUrl}/student/${student._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

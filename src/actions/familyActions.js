@@ -1,6 +1,7 @@
 import 'cross-fetch';
 
 import * as types from './familyTypes';
+import { apiUrl } from 'config';
 
 function fetchFamiliesRequest() {
   return {
@@ -24,7 +25,7 @@ function fetchFamiliesFailure() {
 export function fetchFamilies() {
   return dispatch => {
     dispatch(fetchFamiliesRequest());
-    return fetch(`http://localhost:3001/api/family`)
+    return fetch(`${apiUrl}/api/family`)
       .then(response => response.json())
       .then(json => {
         dispatch(fetchFamiliesSuccess(json.data));

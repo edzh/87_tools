@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
 import styles from './css/TimestampList.module.css';
+import { apiUrl } from 'config';
 
 export default function TimestampList(props) {
   const [timestamps, setTimestamps] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/timesheet/${props.timesheet}`)
+    fetch(`${apiUrl}/api/timesheet/${props.timesheet}`)
       .then(response => response.json())
       .then(json => {
         setTimestamps(json.data.timestamp.sort(() => -1));

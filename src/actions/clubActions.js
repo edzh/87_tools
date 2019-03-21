@@ -1,4 +1,5 @@
 import * as types from './clubTypes';
+import { apiUrl } from 'config';
 
 function fetchClubsRequest() {
   return {
@@ -23,7 +24,7 @@ function fetchClubsFailure(err) {
 export function fetchClubs() {
   return dispatch => {
     dispatch(fetchClubsRequest());
-    return fetch(`http://localhost:3001/api/club`)
+    return fetch(`${apiUrl}/api/club`)
       .then(response => response.json())
       .then(json => {
         dispatch(fetchClubsSuccess(json.data));

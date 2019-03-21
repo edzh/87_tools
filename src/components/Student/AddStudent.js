@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiUrl } from 'config';
 
 export default function AddStudent() {
   const name = useFormInput('');
@@ -8,7 +9,7 @@ export default function AddStudent() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch('http://localhost:3001/api/student', {
+    fetch(`${apiUrl}/api/student`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

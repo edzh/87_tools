@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-
+import { apiUrl } from 'config';
 import { setClub } from '../actions/clubActions';
 import ClubStudentList from '../components/Club/ClubStudentList';
 
@@ -10,7 +10,7 @@ function ClubPage(props) {
   useEffect(() => {
     props.setClub(props.club);
 
-    fetch(`http://localhost:3001/api/club/${props.club}`)
+    fetch(`${apiUrl}/api/club/${props.club}`)
       .then(response => response.json())
       .then(json => setClub(json.data));
   }, []);

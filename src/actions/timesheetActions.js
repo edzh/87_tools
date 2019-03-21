@@ -1,6 +1,7 @@
 import 'cross-fetch';
 
 import * as types from './timesheetTypes';
+import { apiUrl } from 'config';
 
 function fetchTimesheetsRequest() {
   return {
@@ -24,7 +25,7 @@ function fetchTimesheetsFailure() {
 export function fetchTimesheets() {
   return dispatch => {
     dispatch(fetchTimesheetsRequest());
-    return fetch(`http://localhost:3001/api/timesheet`)
+    return fetch(`${apiUrl}/api/timesheet`)
       .then(response => response.json())
       .then(json => {
         dispatch(fetchTimesheetsSuccess(json.data));
