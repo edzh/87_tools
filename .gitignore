@@ -1,4 +1,4 @@
-data/*.json
+/src/data/*.json
 
 # Logs
 logs

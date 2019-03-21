@@ -46,7 +46,7 @@ export const updateOne = async (req, res) => {
     const updatedClub = await Club.findOneAndUpdate(
       { _id: req.params.id },
       // req.body,
-      { $push: { students: [req.body.students] } },
+      { students: req.body.students },
       { new: true, upsert: true, safe: true }
     )
       .lean()

@@ -41,18 +41,20 @@ export default function EditStudent(props) {
     fetchClubs();
   }, []);
 
-  useEffect(() => {
-    console.log(clubs.filter(club => club !== ''));
-  }, [clubs]);
+  // useEffect(() => {
+  //   console.log(clubs.filter(club => club !== ''));
+  // }, [clubs]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    const diffClubs = initialClubs.filter(club => !clubs.includes(club));
+    const removeClubs = initialClubs.filter(club => !clubs.includes(club));
+    const addClubs = clubs.filter(club => !initialClubs.includes(club));
     // .concat(clubs.filter(club => !initialClubs.includes(club)))
-    console.log(diffClubs);
+    console.log(removeClubs, addClubs);
+    swapStudentFromClubs(student._id, removeClubs, addClubs);
 
-    fetch(`${apiUrl}/student/${student._id}`, {
+    fetch(`${apiUrl}/api/student/${student._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -63,9 +65,55 @@ export default function EditStudent(props) {
         pin: pin.value,
         clubs: clubs.filter(club => club !== '')
       })
-    })
-      .then(response => response.json())
-      .then();
+    }).then(setInitialClubs(clubs));
+  }
+
+  function swapStudentFromClubs(student, oldClubs, newClubs) {
+    oldClubs.forEach(async club => {
+      const clubStudents = await fetch(`${apiUrl}/api/club/${club}`)
+        .then(response => response.json())
+        .then(json => json.data.students);
+
+      console.log(
+        `${student}`,
+        clubStudents
+          .map(clubStudent => clubStudent._id)
+          .filter(clubStudent => clubStudent !== student)
+      );
+      fetch(`${apiUrl}/api/club/${club}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          students: clubStudents
+            .map(clubStudent => clubStudent._id)
+            .filter(clubStudent => clubStudent !== student)
+        })
+      });
+    });
+
+    newClubs.forEach(async club => {
+      const clubStudents = await fetch(`${apiUrl}/api/club/${club}`)
+        .then(response => response.json())
+        .then(json => json.data.students);
+
+      // console.log(clubStudents.map(clubStudent => clubStudent._id).filter(clubStudent => clubStudent === "5c7ebf7e70913a3fec27e94e"))
+      console.log(
+        clubStudents.map(clubStudent => clubStudent._id).concat(student)
+      );
+      fetch(`${apiUrl}/api/club/${club}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          students: clubStudents
+            ? clubStudents.map(clubStudent => clubStudent._id).concat(student)
+            : [student]
+        })
+      });
+    });
   }
 
   // function handleClubSubmit(e) {
@@ -78,11 +126,8 @@ export default function EditStudent(props) {
 
   function handleClubChange(day, club) {
     const newClub = [...clubs];
-    const oldOrNew = [club[day], club];
     newClub[day] = club;
-
     setClubs(newClub);
-    return oldOrNew;
   }
 
   return (
@@ -98,9 +143,6 @@ export default function EditStudent(props) {
           <option value="5">5</option>
         </select>
         <input type="number" {...pin} />
-        <button type="submit">Save</button>
-      </form>
-      <form>
         {clubs.map((club, index) => {
           const day = index + 1;
           const clubsByDay = fetchedClubs.filter(
@@ -117,6 +159,7 @@ export default function EditStudent(props) {
             />
           );
         })}
+        <button type="submit">Save</button>
       </form>
     </div>
   );
