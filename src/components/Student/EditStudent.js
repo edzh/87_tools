@@ -4,38 +4,27 @@ import { useFormInput } from './AddStudent';
 import SelectClub from './EditStudentClubs';
 
 export default function EditStudent(props) {
-  const name = useFormInput(props.student.name);
-  const grade = useFormInput(props.student.grade);
-  const pin = useFormInput(props.student.pin);
-  const family = useFormInput(props.student.family._id);
+  const { student } = props;
+
+  const name = useFormInput(student.name);
+  const grade = useFormInput(student.grade);
+  const pin = useFormInput(student.pin);
+  const family = useFormInput(student.family ? student.family._id : '');
   const [fetchedClubs, setFetchedClubs] = useState([]);
-  const clubs = [
-    useFormInput(
-      props.student.clubs.filter(club => club.day === 1)[0]
-        ? props.student.clubs.filter(club => club.day === 1)[0]._id
-        : ''
-    ),
-    useFormInput(
-      props.student.clubs.filter(club => club.day === 2)[0]
-        ? props.student.clubs.filter(club => club.day === 2)[0]._id
-        : ''
-    ),
-    useFormInput(
-      props.student.clubs.filter(club => club.day === 3)[0]
-        ? props.student.clubs.filter(club => club.day === 3)[0]._id
-        : ''
-    ),
-    useFormInput(
-      props.student.clubs.filter(club => club.day === 4)[0]
-        ? props.student.clubs.filter(club => club.day === 4)[0]._id
-        : ''
-    ),
-    useFormInput(
-      props.student.clubs.filter(club => club.day === 5)[0]
-        ? props.student.clubs.filter(club => club.day === 5)[0]._id
-        : ''
-    )
-  ];
+
+  const [clubs, setClubs] = useState([]);
+
+  useEffect(() => {
+    const studentClubs = student.clubs.reduce(
+      (club, line) => {
+        club[line.day - 1] = line._id;
+        return club;
+      },
+      ['', '', '', '', '']
+    );
+
+    setClubs(studentClubs);
+  }, []);
 
   useEffect(() => {
     const fetchClubs = async () => {
@@ -50,13 +39,13 @@ export default function EditStudent(props) {
   }, []);
 
   useEffect(() => {
-    console.log(clubs);
+    console.log(clubs.filter(club => club !== ''));
   }, [clubs]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`http://localhost:3001/api/student/${props.student._id}`, {
+    fetch(`http://localhost:3001/api/student/${student._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -64,10 +53,26 @@ export default function EditStudent(props) {
       body: JSON.stringify({
         name: name.value,
         grade: grade.value,
-        pin: pin.value
+        pin: pin.value,
+        clubs: clubs.filter(club => club !== '')
       })
     });
   }
+
+  // function handleClubSubmit(e) {
+  //   e.preventDefault();
+
+  //   fetch(`http://localhost:3001/api/student${props.student._id}`, {
+  //     method: 'PUT',
+  //   })
+  // }
+
+  function handleClubChange(day, club) {
+    const newClub = [...clubs];
+    newClub[day] = club;
+    setClubs(newClub);
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -89,13 +94,14 @@ export default function EditStudent(props) {
           const clubsByDay = fetchedClubs.filter(
             fetchedClub => fetchedClub.day === day
           );
+
           return (
             <SelectClub
               key={index}
               day={day}
-              club={club.value}
-              clubs={clubsByDay}
-              handleChange={club.onChange}
+              club={club}
+              clubsByDay={clubsByDay}
+              handleChange={handleClubChange}
             />
           );
         })}

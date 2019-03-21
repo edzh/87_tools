@@ -15,8 +15,8 @@ export default function StudentDetails(props) {
           <li>{student.family.name}</li>
           <li>
             Pickups
-            {student.family.pickups.map(pickup => (
-              <ul>
+            {student.family.pickups.map((pickup, index) => (
+              <ul key={index}>
                 <li>{pickup.name}</li>
                 <li>{pickup.pin}</li>
               </ul>
@@ -28,8 +28,8 @@ export default function StudentDetails(props) {
         Clubs
         {student.clubs
           .sort((a, b) => a.day - b.day)
-          .map(club => (
-            <ul>
+          .map((club, index) => (
+            <ul key={index}>
               <li>{club.name}</li>
               <li>{club.day}</li>
             </ul>
