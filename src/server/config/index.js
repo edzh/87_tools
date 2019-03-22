@@ -8,7 +8,8 @@ const baseConfig = {
     jwtExp: '100d',
     jwt: 'default'
   },
-  dbUrl: 'mongodb://10.5.7.5:27017/87attendance'
+  // dbUrl: 'mongodb://10.5.7.5:27017/87attendance'
+  dbUrl: 'mongodb://localhost:27017/87attendance'
 };
 
 export default baseConfig;

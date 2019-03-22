@@ -10,6 +10,7 @@ import TimesheetForm from './components/Timesheet/TimesheetForm';
 import Timesheet from './containers/Timesheet';
 import Timeclock from './containers/TimeclockContainer';
 import Family from './containers/FamilyContainer';
+import FamilyPage from './containers/FamilyPageContainer';
 import StudentPage from './containers/StudentPageContainer';
 import Club from './containers/ClubContainer';
 import ClubPage from './containers/ClubPageContainer';
@@ -38,6 +39,11 @@ class App extends Component {
               render={({ match }) => <Timeclock timesheet={match.params.id} />}
             />
             <Route exact path={'/family'} render={() => <Family />} />
+            <Route
+              exact
+              path={'/family/:id'}
+              render={({ match }) => <FamilyPage family={match.params.id} />}
+            />
             <Route
               exact
               path={'/student/:id'}

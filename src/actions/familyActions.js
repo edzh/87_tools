@@ -35,3 +35,10 @@ export function fetchFamilies() {
       });
   };
 }
+
+export function setFamily(family) {
+  return {
+    type: types.SET_FAMILY,
+    family
+  };
+}

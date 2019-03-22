@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchFamilies } from '../actions/familyActions';
 
 import FamilyList from '../components/Family/FamilyList';
+import FamilyForm from '../components/Family/FamilyForm';
 
 function Family(props) {
   useEffect(() => {
@@ -12,6 +13,7 @@ function Family(props) {
 
   return (
     <div>
+      <FamilyForm />
       <FamilyList isFetching={props.isFetching} families={props.families} />
     </div>
   );

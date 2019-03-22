@@ -5,6 +5,7 @@ export const getOne = async (req, res) => {
     const family = await Family.findOne({ _id: req.params.id })
       .lean()
       .populate('clubs', '-_id -__v')
+      .populate('students', '-clubs')
       .exec();
 
     if (!family) {

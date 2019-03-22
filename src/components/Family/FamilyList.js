@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function FamilyList(props) {
   return (
@@ -11,7 +12,9 @@ export default function FamilyList(props) {
       <tbody>
         {props.families.map((family, index) => (
           <tr key={index}>
-            <td>{family.name}</td>
+            <td>
+              <Link to={`/family/${family._id}`}>{family.name}</Link>
+            </td>
           </tr>
         ))}
       </tbody>

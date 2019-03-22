@@ -23,6 +23,11 @@ export default function family(state = initialState, action) {
         ...state,
         isFetching: false
       };
+    case types.SET_FAMILY:
+      return {
+        ...state,
+        id: action.family
+      };
     default:
       return state;
   }
