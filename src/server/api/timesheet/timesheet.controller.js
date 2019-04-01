@@ -7,7 +7,7 @@ export const getOne = async (req, res) => {
       .lean()
       .populate({
         path: 'timestamp',
-        select: '-_id -__v -timesheet',
+        select: '-__v -timesheet',
         populate: {
           path: 'student',
           select: 'name pin clubs',

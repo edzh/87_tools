@@ -77,6 +77,12 @@ export const removeOne = async (req, res) => {
   try {
     const removed = await Timestamp.findOneAndRemove({ _id: req.params.id });
 
+    const updatedTimesheet = await Timesheet.findOneAndUpdate(
+      { _id: removed.timesheet },
+      { $pull: { timestamp: [removed._id] } },
+      { new: true }
+    );
+
     if (!removed) {
       return res.status(400).end();
     }

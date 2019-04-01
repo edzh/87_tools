@@ -17,6 +17,20 @@ export default function TimestampList(props) {
       });
   }, [props.refresh]);
 
+  const removeTimestamp = async timestampId => {
+    try {
+      const timestamp = await fetch(`${apiUrl}/api/timestamp/${timestampId}`, {
+        method: 'DELETE'
+      }).then(() => {
+        props.setRefresh(true);
+      });
+
+      return timestamp;
+    } catch (e) {
+      return Promise.reject();
+    }
+  };
+
   return (
     <table className={styles.table}>
       <thead>
@@ -26,6 +40,7 @@ export default function TimestampList(props) {
           <th>Date</th>
           <th>Time</th>
           <th>PIN</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -46,6 +61,9 @@ export default function TimestampList(props) {
             <td>{format(new Date(timestamp.datetime), 'MMMM DD')}</td>
             <td>{format(new Date(timestamp.datetime), 'hh:mm a')}</td>
             <td>{timestamp.student.pin}</td>
+            <td>
+              <button onClick={() => removeTimestamp(timestamp._id)}>x</button>
+            </td>
           </tr>
         ))}
       </tbody>
