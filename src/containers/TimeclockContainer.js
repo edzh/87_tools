@@ -26,7 +26,6 @@ function Timeclock(props) {
 
     getStudentWithPin(pin)
       .then(response => postTimestamp(response))
-      .then(response => addTimestampToTimesheet(response))
       .then(() => setError(''))
       .catch(err => setError(err.message));
 
@@ -35,32 +34,10 @@ function Timeclock(props) {
 
   function handleFamily(student) {
     console.log(student);
-    postTimestamp(student)
-      .then(response => addTimestampToTimesheet(response))
-      .catch(err => setError(err.message));
+    postTimestamp(student).catch(err => setError(err.message));
 
     setFamily([]);
   }
-
-  const addTimestampToTimesheet = async timestamp => {
-    try {
-      const timesheet = fetch(`${apiUrl}/api/timesheet/${props.timesheet}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ timestamp })
-      })
-        .then(() => {
-          setRefresh(true);
-        })
-        .catch(err => console.error('err', err));
-
-      return timesheet;
-    } catch (e) {
-      console.error(e, 'output');
-    }
-  };
 
   const postTimestamp = async student => {
     try {
@@ -75,7 +52,10 @@ function Timeclock(props) {
         })
       })
         .then(response => response.json())
-        .then(json => json.data);
+        .then(json => json.data)
+        .then(() => {
+          setRefresh(true);
+        });
 
       return timestamp;
     } catch (e) {
@@ -137,7 +117,6 @@ function Timeclock(props) {
         students={props.students}
         fetchStudents={props.fetchStudents}
         postTimestamp={postTimestamp}
-        addTimestampToTimesheet={addTimestampToTimesheet}
         setError={setError}
       />
     </div>

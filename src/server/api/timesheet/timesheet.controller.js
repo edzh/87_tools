@@ -1,4 +1,5 @@
 import { Timesheet } from './timesheet.model';
+import { Timestamp } from '../timestamp/timestamp.model';
 
 export const getOne = async (req, res) => {
   try {
@@ -61,8 +62,7 @@ export const updateOne = async (req, res) => {
   try {
     const updatedTimesheet = await Timesheet.findOneAndUpdate(
       { _id: req.params.id },
-      // req.body,
-      { $push: { timestamp: [req.body.timestamp] } },
+      req.body,
       { new: true, upsert: true, safe: true }
     )
       .lean()
@@ -82,6 +82,9 @@ export const updateOne = async (req, res) => {
 export const removeOne = async (req, res) => {
   try {
     const removed = await Timesheet.findOneAndRemove({ _id: req.params.id });
+    const removedTimestamps = await Timestamp.deleteMany({
+      timesheet: removed._id
+    });
 
     if (!removed) {
       return res.status(400).end();

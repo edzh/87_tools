@@ -10,7 +10,6 @@ export default function ManualEntry(props) {
   const handleInput = student => {
     props
       .postTimestamp(student)
-      .then(response => props.addTimestampToTimesheet(response))
       .then(() => props.setError(''))
       .catch(err => props.setError(err.message));
   };
