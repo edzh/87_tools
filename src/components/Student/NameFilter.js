@@ -15,6 +15,11 @@ export default function NameFilter(props) {
       <button className={styles.btn} onClick={props.filterName}>
         Search
       </button>
+      {props.currentQuery && (
+        <button value="" onClick={props.onChange}>
+          Clear
+        </button>
+      )}
       {props.currentQuery && <p>Searching for {props.currentQuery}</p>}
     </form>
   );

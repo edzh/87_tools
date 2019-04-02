@@ -33,22 +33,25 @@ export default function TimesheetList(props) {
         </tr>
       </thead>
       <tbody>
-        {props.timesheets.map((timesheet, index) => (
-          <tr key={index}>
-            <td>
-              <Link to={`/timesheet/id/${timesheet._id}`}>
-                {format(new Date(timesheet.date), 'MMMM DD')}
-              </Link>
-            </td>
-            <td>{timesheet.timestamp.length}</td>
-            <td>{timesheet.io === 'in' ? 'Sign In' : 'Sign Out'}</td>
-            <td>
-              <button onClick={() => deleteTimesheet(timesheet._id)}>
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
+        {props.timesheets.map((timesheet, index) => {
+          console.log(timesheet);
+          return (
+            <tr key={index}>
+              <td>
+                <Link to={`/timesheet/id/${timesheet._id}`}>
+                  {format(new Date(timesheet.date), 'MMMM DD')}
+                </Link>
+              </td>
+              <td>{timesheet.timestamp.length}</td>
+              <td>{timesheet.io === 'in' ? 'Sign In' : 'Sign Out'}</td>
+              <td>
+                <button onClick={() => deleteTimesheet(timesheet._id)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

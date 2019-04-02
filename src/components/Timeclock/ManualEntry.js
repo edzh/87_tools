@@ -1,11 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import styles from './css/ManualEntry.module.css';
+import NameFilter from '../Student/NameFilter';
 
 export default function ManualEntry(props) {
+  const [query, setQuery] = useState('');
+  const [regex, setRegex] = useState();
+  const [currentQuery, setCurrentQuery] = useState('');
+  const invalid = /[°"§%()\[\]{}=\\?´`'#<>|,;.:+_-]+/g;
+
   useEffect(() => {
     props.fetchStudents();
   }, []);
+
+  function onChange(e) {
+    setQuery(e.target.value);
+  }
+
+  function filterName(e) {
+    e.preventDefault();
+    setCurrentQuery(query);
+    setRegex(new RegExp(query.replace(invalid, ''), 'gi'));
+  }
 
   const handleInput = student => {
     props
@@ -17,6 +33,12 @@ export default function ManualEntry(props) {
   return (
     <div className={styles.container}>
       <h2>Manual Entry</h2>
+      <NameFilter
+        filterName={filterName}
+        currentQuery={currentQuery}
+        query={query}
+        onChange={onChange}
+      />
       <table>
         <thead>
           <tr>
@@ -24,19 +46,35 @@ export default function ManualEntry(props) {
           </tr>
         </thead>
         <tbody>
-          {props.students.map((student, index) => (
-            <tr key={index}>
-              <td className={styles.name}>{student.name}</td>
-              <td>
-                <button
-                  className={styles.btn}
-                  onClick={() => handleInput(student)}
-                >
-                  Sign In
-                </button>
-              </td>
-            </tr>
-          ))}
+          {props.students
+            .filter(student => student.name.match(regex))
+            .sort((a, b) => {
+              const nameA = a.name.toUpperCase();
+              const nameB = b.name.toUpperCase();
+
+              if (nameA < nameB) {
+                return -1;
+              }
+
+              if (nameA > nameB) {
+                return 1;
+              }
+
+              return 0;
+            })
+            .map((student, index) => (
+              <tr key={index}>
+                <td className={styles.name}>{student.name}</td>
+                <td>
+                  <button
+                    className={styles.btn}
+                    onClick={() => handleInput(student)}
+                  >
+                    Sign In
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

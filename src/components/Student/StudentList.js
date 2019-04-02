@@ -40,14 +40,14 @@ export default function Student(props) {
 
   return (
     <div className={styles.container}>
-      <DayFilter onDayChange={onDayChange} />
+      {/*<DayFilter onDayChange={onDayChange} />*/}
       <NameFilter
         filterName={filterName}
         currentQuery={currentQuery}
         query={query}
         onChange={onChange}
       />
-      <LetterFilter filterLetter={filterLetter} />
+      {/*<LetterFilter filterLetter={filterLetter} />*/}
       <table>
         <thead>
           <tr className={styles.tableHeader}>
