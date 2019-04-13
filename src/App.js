@@ -7,7 +7,7 @@ import Navbar from './components/Navbar/Navbar';
 import PinLookup from './containers/PinLookup';
 import AddStudent from './components/Student/AddStudent';
 import TimesheetForm from './components/Timesheet/TimesheetForm';
-import Timesheet from './containers/Timesheet';
+import Timesheet from './containers/TimesheetContainer';
 import Timeclock from './containers/TimeclockContainer';
 import Family from './containers/FamilyContainer';
 import FamilyPage from './containers/FamilyPageContainer';

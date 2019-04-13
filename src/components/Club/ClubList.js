@@ -7,7 +7,7 @@ export default function ClubList(props) {
   return (
     <ul>
       {props.clubs.map(club => (
-        <li>
+        <li key={club._id}>
           <Link to={`/club/${club._id}`}>
             {club.name} {daysOfWeek[club.day]}
           </Link>

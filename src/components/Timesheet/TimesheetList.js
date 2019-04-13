@@ -34,7 +34,6 @@ export default function TimesheetList(props) {
       </thead>
       <tbody>
         {props.timesheets.map((timesheet, index) => {
-          console.log(timesheet);
           return (
             <tr key={index}>
               <td>

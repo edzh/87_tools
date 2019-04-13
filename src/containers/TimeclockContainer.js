@@ -93,6 +93,8 @@ function Timeclock(props) {
     }
   };
 
+  console.log(props.timesheet);
+
   return (
     <div className={styles.container}>
       <PinInput
@@ -104,7 +106,6 @@ function Timeclock(props) {
         handleFamily={handleFamily}
       />
       <div className={styles.studentList}>
-        <h2>Signed In</h2>
         <div className={styles.list}>
           <TimestampList
             refresh={refresh}

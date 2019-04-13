@@ -98,7 +98,6 @@ export default function EditStudent(props) {
         .then(response => response.json())
         .then(json => json.data.students);
 
-      // console.log(clubStudents.map(clubStudent => clubStudent._id).filter(clubStudent => clubStudent === "5c7ebf7e70913a3fec27e94e"))
       console.log(
         clubStudents.map(clubStudent => clubStudent._id).concat(student)
       );
@@ -115,14 +114,6 @@ export default function EditStudent(props) {
       });
     });
   }
-
-  // function handleClubSubmit(e) {
-  //   e.preventDefault();
-
-  //   fetch(`http://localhost:3001/api/student${props.student._id}`, {
-  //     method: 'PUT',
-  //   })
-  // }
 
   function handleClubChange(day, club) {
     const newClub = [...clubs];
