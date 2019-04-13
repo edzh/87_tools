@@ -13,8 +13,8 @@ export default function TimestampList(props) {
       .then(response => response.json())
       .then(json => {
         setTimesheet(json.data);
-        props.setRefresh(false);
-      });
+      })
+      .then(() => props.setRefresh(false));
   }, [props.refresh]);
 
   const removeTimestamp = async timestampId => {
@@ -51,34 +51,31 @@ export default function TimestampList(props) {
         </thead>
         <tbody>
           {timesheet.timestamp &&
-            timesheet.timestamp
-              .sort(() => -1)
-              .map((timestamp, index) => (
-                <tr key={index}>
-                  <td>
-                    <Link to={`/student/${timestamp.student._id}`}>
-                      {timestamp.student.name}
-                    </Link>
-                  </td>
-                  <td>
-                    {timestamp.student.clubs.map(club =>
-                      club.day ===
-                      parseInt(format(new Date(timesheet.date), 'E'))
-                        ? club.name
-                        : null
-                    )}
-                  </td>
-                  <td>{format(new Date(timestamp.datetime), 'MMMM DD')}</td>
-                  <td>{format(new Date(timestamp.datetime), 'hh:mm a')}</td>
-                  <td>{timestamp.student.pin}</td>
-                  <td>
-                    <button onClick={() => removeTimestamp(timestamp._id)}>
-                      x
-                    </button>
-                  </td>
-                  <td>{timestamp.fobStatus}</td>
-                </tr>
-              ))}
+            timesheet.timestamp.map((timestamp, index) => (
+              <tr key={index}>
+                <td>
+                  <Link to={`/student/${timestamp.student._id}`}>
+                    {timestamp.student.name}
+                  </Link>
+                </td>
+                <td>
+                  {timestamp.student.clubs.map(club =>
+                    club.day === parseInt(format(new Date(timesheet.date), 'E'))
+                      ? club.name
+                      : null
+                  )}
+                </td>
+                <td>{format(new Date(timestamp.datetime), 'MMMM DD')}</td>
+                <td>{format(new Date(timestamp.datetime), 'hh:mm a')}</td>
+                <td>{timestamp.student.pin}</td>
+                <td>
+                  <button onClick={() => removeTimestamp(timestamp._id)}>
+                    x
+                  </button>
+                </td>
+                <td>{timestamp.fobStatus}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </>

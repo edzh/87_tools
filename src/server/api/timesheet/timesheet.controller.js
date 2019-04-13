@@ -8,6 +8,9 @@ export const getOne = async (req, res) => {
       .populate({
         path: 'timestamp',
         select: '-__v -timesheet',
+        options: {
+          sort: { datetime: -1 }
+        },
         populate: {
           path: 'student',
           select: 'name pin clubs',
