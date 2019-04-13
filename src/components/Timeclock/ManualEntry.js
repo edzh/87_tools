@@ -23,9 +23,9 @@ export default function ManualEntry(props) {
     setRegex(new RegExp(query.replace(invalid, ''), 'gi'));
   }
 
-  const handleInput = student => {
+  const handleInput = (student, fobStatus) => {
     props
-      .postTimestamp(student)
+      .postTimestamp(student, fobStatus)
       .then(() => props.setError(''))
       .catch(err => props.setError(err.message));
   };
@@ -68,9 +68,15 @@ export default function ManualEntry(props) {
                 <td>
                   <button
                     className={styles.btn}
-                    onClick={() => handleInput(student)}
+                    onClick={() => handleInput(student, 'Lost')}
                   >
-                    Sign In
+                    Lost
+                  </button>
+                  <button
+                    className={styles.btn}
+                    onClick={() => handleInput(student, 'Damaged')}
+                  >
+                    Damaged
                   </button>
                 </td>
               </tr>

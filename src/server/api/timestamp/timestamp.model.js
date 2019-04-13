@@ -16,6 +16,9 @@ const timestampSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'timesheet',
     required: true
+  },
+  fobStatus: {
+    type: String
   }
 });
 

@@ -46,6 +46,7 @@ export default function TimestampList(props) {
             <th>Time</th>
             <th>PIN</th>
             <th>Delete</th>
+            <th>Fob</th>
           </tr>
         </thead>
         <tbody>
@@ -75,6 +76,7 @@ export default function TimestampList(props) {
                       x
                     </button>
                   </td>
+                  <td>{timestamp.fobStatus}</td>
                 </tr>
               ))}
         </tbody>

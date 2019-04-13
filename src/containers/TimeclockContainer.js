@@ -39,7 +39,7 @@ function Timeclock(props) {
     setFamily([]);
   }
 
-  const postTimestamp = async student => {
+  const postTimestamp = async (student, fobStatus) => {
     try {
       const timestamp = await fetch(`${apiUrl}/api/timestamp`, {
         method: 'POST',
@@ -48,7 +48,8 @@ function Timeclock(props) {
         },
         body: JSON.stringify({
           student: student._id,
-          timesheet: props.timesheet
+          timesheet: props.timesheet,
+          fobStatus
         })
       })
         .then(response => response.json())
