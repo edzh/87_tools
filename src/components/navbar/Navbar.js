@@ -5,16 +5,13 @@ import styles from './Navbar.module.css';
 
 export default function Navbar(props) {
   return (
-    <nav>
+    <nav className="btn">
       <h1 className={styles.logo}>87</h1>
-      <NavLink className={styles.link} to={'/pinlookup'}>
-        Pin Lookup
-      </NavLink>
       <NavLink className={styles.link} to={'/addstudent'}>
         Add Student
       </NavLink>
       <NavLink className={styles.link} to={'/timesheet'}>
-        Timesheet
+        Timesheets
       </NavLink>
       <NavLink className={styles.link} to={'/family'}>
         Family

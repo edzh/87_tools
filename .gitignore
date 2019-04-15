@@ -1,4 +1,7 @@
-/src/data/*.json
+tailwind.js
+src/index.css
+
+src/data/*.json
 
 # Logs
 logs
