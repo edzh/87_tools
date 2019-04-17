@@ -25,7 +25,7 @@ export default function Clubs(props) {
           return `${club.day}` === props.day;
         })
         .map((club, index) => (
-          <div key={index}>
+          <div key={club._id}>
             {daysOfWeek[club.day]}: {club.name}
           </div>
         ))}

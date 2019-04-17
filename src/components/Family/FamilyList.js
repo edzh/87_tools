@@ -11,7 +11,7 @@ export default function FamilyList(props) {
       </thead>
       <tbody>
         {props.families.map((family, index) => (
-          <tr key={index}>
+          <tr key={family._id}>
             <td>
               <Link to={`/family/${family._id}`}>{family.name}</Link>
             </td>

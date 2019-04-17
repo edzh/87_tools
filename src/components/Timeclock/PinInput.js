@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import TimeclockError from './TimeclockError';
 import StudentSelector from './StudentSelector';
 
-import styles from './css/PinInput.module.css';
-
 export default function PinInput(props) {
   const { error, family, handleFamily, handleSubmit, pin, setPin } = props;
 
@@ -13,18 +11,18 @@ export default function PinInput(props) {
   }
 
   return (
-    <div className={styles.input}>
-      <h2>Timeclock</h2>
+    <div className="p-4 border w-1/3 rounded">
+      <h2 className="mb-4">Timeclock</h2>
       <form onSubmit={handleSubmit}>
         <input
-          className={styles.pin}
+          className="bg-grey-lighter p-4 rounded-l"
           placeholder="PIN"
           type="number"
           autoFocus={true}
           value={pin}
           onChange={handleChange}
         />
-        <button className={styles.btn} type="submit">
+        <button className="bg-grey-light p-4 rounded-r" type="submit">
           Submit
         </button>
       </form>

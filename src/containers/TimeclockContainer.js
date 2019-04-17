@@ -16,10 +16,20 @@ function Timeclock(props) {
   const [error, setError] = useState('');
   const [refresh, setRefresh] = useState(false);
   const [family, setFamily] = useState([]);
+  const [fetchedTimesheet, setFetchedTimesheet] = useState([]);
 
   useEffect(() => {
     props.setTimesheet(props.timesheet);
   });
+
+  useEffect(() => {
+    fetch(`${apiUrl}/api/timesheet/${props.timesheet}`)
+      .then(response => response.json())
+      .then(json => {
+        setFetchedTimesheet(json.data);
+      })
+      .then(() => setRefresh(false));
+  }, [refresh]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,14 +37,16 @@ function Timeclock(props) {
     getStudentWithPin(pin)
       .then(response => postTimestamp(response))
       .then(() => setError(''))
-      .catch(err => setError(err.message));
-
-    setPin('');
+      .catch(err => setError(err.message))
+      .finally(() => setPin(''));
   }
 
-  function handleFamily(student) {
-    console.log(student);
-    postTimestamp(student).catch(err => setError(err.message));
+  function handleFamily(students) {
+    console.log(students);
+    students.forEach(student => {
+      postTimestamp(student).catch(err => setError(err.message));
+    });
+    // postTimestamp(student).catch(err => setError(err.message));
 
     setFamily([]);
   }
@@ -97,7 +109,7 @@ function Timeclock(props) {
   console.log(props.timesheet);
 
   return (
-    <div className={styles.container}>
+    <div className="p-2">
       <PinInput
         pin={pin}
         setPin={setPin}
@@ -111,7 +123,7 @@ function Timeclock(props) {
           <TimestampList
             refresh={refresh}
             setRefresh={setRefresh}
-            timesheet={props.timesheet}
+            timesheet={fetchedTimesheet}
           />
         </div>
       </div>

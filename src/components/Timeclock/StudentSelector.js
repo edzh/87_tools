@@ -4,9 +4,13 @@ export default function StudentSelector(props) {
   return (
     <div>
       {props.family.map((student, index) => (
-        <button key={index} onClick={() => props.handleFamily(student)}>
+        <input
+          type="checkbox"
+          key={index}
+          onClick={() => props.handleFamily(student)}
+        >
           {student.name}
-        </button>
+        </input>
       ))}
     </div>
   );

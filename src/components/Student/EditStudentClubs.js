@@ -11,7 +11,7 @@ export default function EditStudentClubs(props) {
       {props.clubsByDay
         .filter(club => club.day === props.day)
         .map((club, index) => (
-          <option key={index} value={club._id}>
+          <option key={club._id} value={club._id}>
             {club.name}
           </option>
         ))}

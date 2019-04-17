@@ -142,7 +142,7 @@ export default function EditStudent(props) {
 
           return (
             <SelectClub
-              key={index}
+              key={club._id}
               day={day}
               club={club}
               clubsByDay={clubsByDay}

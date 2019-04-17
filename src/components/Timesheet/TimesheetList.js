@@ -3,6 +3,8 @@ import { apiUrl } from 'config';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
+import MakePdf from 'data/MakePdf';
+
 import styles from './css/TimesheetList.module.css';
 
 export default function TimesheetList(props) {
@@ -47,6 +49,9 @@ export default function TimesheetList(props) {
                 <button onClick={() => deleteTimesheet(timesheet._id)}>
                   Delete
                 </button>
+              </td>
+              <td>
+                <MakePdf timesheetId={timesheet._id} />
               </td>
             </tr>
           );
