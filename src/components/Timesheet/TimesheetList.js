@@ -24,19 +24,77 @@ export default function TimesheetList(props) {
     }
   };
 
+  const indexedTimesheets = props.timesheets.reduce(
+    (timesheetByDay, timesheet) => {
+      timesheetByDay[timesheet.date] = timesheetByDay[timesheet.date] || [];
+      timesheetByDay[timesheet.date].push({
+        _id: timesheet._id,
+        io: timesheet.io
+      });
+
+      return timesheetByDay;
+    },
+    {}
+  );
+
+  const timesheetsByDate = Object.keys(indexedTimesheets)
+    .map(key => {
+      return {
+        date: key,
+        timesheets: indexedTimesheets[key]
+      };
+    })
+    .sort((a, b) => {
+      return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+    });
+
+  console.log(indexedTimesheets);
+  console.log(timesheetsByDate);
+
   return (
-    <table className="overflow-auto w-full block">
-      <thead>
-        <tr className="border-b border-grey-light">
-          <th className="py-1 pl-2">Date</th>
-          <th className="py-1 pl-2">Quantity</th>
-          <th className="py-1 pl-2">Type</th>
-          <th className="py-1 pl-2">Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.timesheets.map((timesheet, index) => {
-          return (
+    <div className="">
+      <h2 className="m-2">Timesheets</h2>
+      <table className="m-2 border rounded overflow-auto block w-1/4">
+        <thead>
+          <tr className="border-b border-grey-light">
+            <th className="py-1 pl-2 w-32">Date</th>
+            <th className="py-1 pl-2 w-64">Type</th>
+          </tr>
+        </thead>
+        <tbody className="block" style={{ height: '480px' }}>
+          {timesheetsByDate.map((timesheetsDate, index) => {
+            return (
+              <tr
+                key={timesheetsDate.date}
+                className="group bg-transparent border-b border-grey-light"
+              >
+                <td className="pl-2 py-4 w-32">
+                  {format(timesheetsDate.date, 'MMMM DD')}
+                </td>
+                <td className="pl-2 py-4 w-64">
+                  {timesheetsDate.timesheets.map(timesheet => {
+                    return (
+                      <Link
+                        key={timesheet._id}
+                        className="p-2 mr-2 no-underline border rounded hover:bg-grey-lighter"
+                        to={`/timesheet/id/${timesheet._id}`}
+                      >
+                        {`${timesheet.io === 'in' ? 'Sign in' : 'Sign out'}`}
+                      </Link>
+                    );
+                  })}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+{
+  /*          return (
             <tr
               key={timesheet._id}
               className="group bg-transparent hover:bg-grey-lighter border-b border-grey-light"
@@ -63,8 +121,5 @@ export default function TimesheetList(props) {
               </td>
             </tr>
           );
-        })}
-      </tbody>
-    </table>
-  );
+*/
 }
