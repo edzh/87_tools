@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
 import { setTimesheet } from '../actions/timesheetActions';
@@ -17,6 +18,21 @@ function Timeclock(props) {
   const [refresh, setRefresh] = useState(false);
   const [family, setFamily] = useState([]);
   const [fetchedTimesheet, setFetchedTimesheet] = useState([]);
+  const [toTimesheets, setToTimesheets] = useState(false);
+
+  const deleteTimesheet = async timesheetId => {
+    try {
+      const timesheet = await fetch(`${apiUrl}/api/timesheet/${timesheetId}`, {
+        method: 'DELETE'
+      }).then(() => {
+        setToTimesheets(true);
+      });
+
+      return timesheet;
+    } catch (e) {
+      return Promise.reject();
+    }
+  };
 
   useEffect(() => {
     props.setTimesheet(props.timesheet);
@@ -108,6 +124,10 @@ function Timeclock(props) {
 
   console.log(props.timesheet);
 
+  if (toTimesheets === true) {
+    return <Redirect to="/timesheet" />;
+  }
+
   return (
     <div className="flex p-2">
       <div className="w-1/3">
@@ -126,11 +146,19 @@ function Timeclock(props) {
           setError={setError}
         />
       </div>
-      <TimestampList
-        refresh={refresh}
-        setRefresh={setRefresh}
-        timesheet={fetchedTimesheet}
-      />
+      <div className="w-2/3">
+        <TimestampList
+          refresh={refresh}
+          setRefresh={setRefresh}
+          timesheet={fetchedTimesheet}
+        />
+        <button
+          className="p-2 ml-4 border rounded hover:bg-red hover:text-white"
+          onClick={() => deleteTimesheet(props.timesheet)}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 }

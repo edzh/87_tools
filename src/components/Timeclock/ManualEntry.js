@@ -45,7 +45,7 @@ export default function ManualEntry(props) {
             <th className="py-1 pl-2">Name</th>
           </tr>
         </thead>
-        <tbody className="block" style={{ height: '410px' }}>
+        <tbody className="block" style={{ height: '390px' }}>
           {props.students
             .filter(student => student.name.match(regex))
             .sort((a, b) => {

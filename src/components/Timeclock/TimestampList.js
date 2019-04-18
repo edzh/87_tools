@@ -21,7 +21,7 @@ export default function TimestampList(props) {
   };
 
   return (
-    <div className="ml-4 border rounded w-2/3 py-4">
+    <div className="ml-4 mb-3 border rounded py-4">
       <h2 className="px-2 pb-4 border-b">
         {timesheet.io === 'in' ? 'Sign In' : 'Sign Out'} -{' '}
         {format(timesheet.date, 'dddd, MMMM D')}
@@ -36,7 +36,7 @@ export default function TimestampList(props) {
             <th className="py-1 pl-2 w-64">Option</th>
           </tr>
         </thead>
-        <tbody className="block" style={{ height: '540px' }}>
+        <tbody className="block" style={{ height: '520px' }}>
           {timesheet.timestamp &&
             timesheet.timestamp.map((timestamp, index) => (
               <tr

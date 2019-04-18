@@ -12,18 +12,6 @@ export default function TimesheetList(props) {
     return <p>Loading...</p>;
   }
 
-  const deleteTimesheet = async timesheetId => {
-    try {
-      const timesheet = await fetch(`${apiUrl}/api/timesheet/${timesheetId}`, {
-        method: 'DELETE'
-      });
-
-      return timesheet;
-    } catch (e) {
-      return Promise.reject();
-    }
-  };
-
   const indexedTimesheets = props.timesheets.reduce(
     (timesheetByDay, timesheet) => {
       timesheetByDay[timesheet.date] = timesheetByDay[timesheet.date] || [];
