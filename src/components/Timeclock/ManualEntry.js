@@ -31,21 +31,21 @@ export default function ManualEntry(props) {
   };
 
   return (
-    <div className={styles.container}>
-      <h2>Manual Entry</h2>
+    <div className="border rounded py-4 mt-4">
+      <h2 className="py-1 pl-2">Manual Entry</h2>
       <NameFilter
         filterName={filterName}
         currentQuery={currentQuery}
         query={query}
         onChange={onChange}
       />
-      <table>
+      <table className="overflow-auto w-full block">
         <thead>
           <tr>
-            <th>Name</th>
+            <th className="py-1 pl-2">Name</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="block" style={{ height: '410px' }}>
           {props.students
             .filter(student => student.name.match(regex))
             .sort((a, b) => {
@@ -63,17 +63,17 @@ export default function ManualEntry(props) {
               return 0;
             })
             .map((student, index) => (
-              <tr key={index}>
-                <td className={styles.name}>{student.name}</td>
+              <tr key={student._id} className="border-b">
+                <td className="pl-2 py-1">{student.name}</td>
                 <td>
                   <button
-                    className={styles.btn}
+                    className="bg-grey-light hover:bg-grey p-1 mr-1 rounded"
                     onClick={() => handleInput(student, 'Lost')}
                   >
                     Lost
                   </button>
                   <button
-                    className={styles.btn}
+                    className="bg-grey-light hover:bg-grey p-1 mr-1 rounded"
                     onClick={() => handleInput(student, 'Damaged')}
                   >
                     Damaged

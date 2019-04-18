@@ -25,28 +25,36 @@ export default function TimesheetList(props) {
   };
 
   return (
-    <table className={styles.table}>
+    <table className="overflow-auto w-full block">
       <thead>
-        <tr>
-          <th>Date</th>
-          <th>Quantity</th>
-          <th>Type</th>
-          <th>Delete</th>
+        <tr className="border-b border-grey-light">
+          <th className="py-1 pl-2">Date</th>
+          <th className="py-1 pl-2">Quantity</th>
+          <th className="py-1 pl-2">Type</th>
+          <th className="py-1 pl-2">Delete</th>
         </tr>
       </thead>
       <tbody>
         {props.timesheets.map((timesheet, index) => {
           return (
-            <tr key={index}>
-              <td>
+            <tr
+              key={timesheet._id}
+              className="group bg-transparent hover:bg-grey-lighter border-b border-grey-light"
+            >
+              <td className="py-1 pl-2">
                 <Link to={`/timesheet/id/${timesheet._id}`}>
                   {format(new Date(timesheet.date), 'MMMM DD')}
                 </Link>
               </td>
-              <td>{timesheet.timestamp.length}</td>
-              <td>{timesheet.io === 'in' ? 'Sign In' : 'Sign Out'}</td>
-              <td>
-                <button onClick={() => deleteTimesheet(timesheet._id)}>
+              <td className="py-1 pl-2">{timesheet.timestamp.length}</td>
+              <td className="py-1 pl-2">
+                {timesheet.io === 'in' ? 'Sign In' : 'Sign Out'}
+              </td>
+              <td className="py-1 pl-2">
+                <button
+                  className="group-hover:visible invisible"
+                  onClick={() => deleteTimesheet(timesheet._id)}
+                >
                   Delete
                 </button>
               </td>

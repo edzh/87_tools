@@ -109,29 +109,27 @@ function Timeclock(props) {
   console.log(props.timesheet);
 
   return (
-    <div className="p-2">
-      <PinInput
-        pin={pin}
-        setPin={setPin}
-        handleSubmit={handleSubmit}
-        error={error}
-        family={family}
-        handleFamily={handleFamily}
-      />
-      <div className={styles.studentList}>
-        <div className={styles.list}>
-          <TimestampList
-            refresh={refresh}
-            setRefresh={setRefresh}
-            timesheet={fetchedTimesheet}
-          />
-        </div>
+    <div className="flex p-2">
+      <div className="w-1/3">
+        <PinInput
+          pin={pin}
+          setPin={setPin}
+          handleSubmit={handleSubmit}
+          error={error}
+          family={family}
+          handleFamily={handleFamily}
+        />
+        <ManualEntry
+          students={props.students}
+          fetchStudents={props.fetchStudents}
+          postTimestamp={postTimestamp}
+          setError={setError}
+        />
       </div>
-      <ManualEntry
-        students={props.students}
-        fetchStudents={props.fetchStudents}
-        postTimestamp={postTimestamp}
-        setError={setError}
+      <TimestampList
+        refresh={refresh}
+        setRefresh={setRefresh}
+        timesheet={fetchedTimesheet}
       />
     </div>
   );

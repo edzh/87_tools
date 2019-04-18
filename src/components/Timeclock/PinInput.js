@@ -11,7 +11,7 @@ export default function PinInput(props) {
   }
 
   return (
-    <div className="p-4 border w-1/3 rounded">
+    <div className="p-4 border rounded">
       <h2 className="mb-4">Timeclock</h2>
       <form onSubmit={handleSubmit}>
         <input

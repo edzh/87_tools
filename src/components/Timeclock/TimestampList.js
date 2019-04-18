@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
-
-import styles from './css/TimestampList.module.css';
 import { apiUrl } from 'config';
 
 export default function TimestampList(props) {
@@ -22,51 +20,61 @@ export default function TimestampList(props) {
     }
   };
 
-  return [
-    <h2>
-      {timesheet.io === 'in' ? 'Sign In' : 'Sign Out'} -{' '}
-      {format(timesheet.date, 'dddd')}
-    </h2>,
-    <table className="w-2/3">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Club</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>PIN</th>
-          <th>Delete</th>
-          <th>Fob</th>
-        </tr>
-      </thead>
-      <tbody>
-        {timesheet.timestamp &&
-          timesheet.timestamp.map((timestamp, index) => (
-            <tr key={index}>
-              <td>
-                <Link to={`/student/${timestamp.student._id}`}>
-                  {timestamp.student.name}
-                </Link>
-              </td>
-              <td>
-                {timestamp.student.clubs.map(club =>
-                  club.day === parseInt(format(new Date(timesheet.date), 'E'))
-                    ? club.name
-                    : null
-                )}
-              </td>
-              <td>{format(new Date(timestamp.datetime), 'MMMM DD')}</td>
-              <td>{format(new Date(timestamp.datetime), 'hh:mm a')}</td>
-              <td>{timestamp.student.pin}</td>
-              <td>
-                <button onClick={() => removeTimestamp(timestamp._id)}>
-                  x
-                </button>
-              </td>
-              <td>{timestamp.fobStatus}</td>
-            </tr>
-          ))}
-      </tbody>
-    </table>
-  ];
+  return (
+    <div className="ml-4 border rounded w-2/3 py-4">
+      <h2 className="px-2 pb-4 border-b">
+        {timesheet.io === 'in' ? 'Sign In' : 'Sign Out'} -{' '}
+        {format(timesheet.date, 'dddd, MMMM D')}
+      </h2>
+      <table className="overflow-auto w-full block">
+        <thead>
+          <tr className="border-b border-grey-light">
+            <th className="py-1 pl-2 w-64">Name</th>
+            <th className="py-1 pl-2 w-64">Club</th>
+            <th className="py-1 pl-2 w-24">Time</th>
+            {/*<th className="py-1 pl-2">PIN</th>*/}
+            <th className="py-1 pl-2 w-64">Option</th>
+          </tr>
+        </thead>
+        <tbody className="block" style={{ height: '540px' }}>
+          {timesheet.timestamp &&
+            timesheet.timestamp.map((timestamp, index) => (
+              <tr
+                key={timestamp._id}
+                className="bg-transparent hover:bg-grey-lighter border-b border-grey-light"
+              >
+                <td className="py-1 pl-2 w-64">
+                  <Link
+                    className="no-underline"
+                    to={`/student/${timestamp.student._id}`}
+                  >
+                    {timestamp.student.name}
+                  </Link>
+                </td>
+                <td className="py-1 pl-2 w-64">
+                  {timestamp.student.clubs.map(club =>
+                    club.day === parseInt(format(new Date(timesheet.date), 'E'))
+                      ? club.name
+                      : null
+                  )}
+                </td>
+                <td className="py-1 pl-2 w-24">
+                  {format(new Date(timestamp.datetime), 'hh:mm a')}
+                </td>
+                {/*<td className="py-1 pl-2">{timestamp.student.pin}</td>*/}
+                <td className="py-1 pl-2 w-64 flex">
+                  <button
+                    className="bg-grey-light hover:bg-grey p-1 mr-1 rounded"
+                    onClick={() => removeTimestamp(timestamp._id)}
+                  >
+                    Remove
+                  </button>
+                  <p className="mx-1 p-1">{timestamp.fobStatus}</p>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
