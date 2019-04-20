@@ -17,7 +17,8 @@ export default function TimesheetList(props) {
       timesheetByDay[timesheet.date] = timesheetByDay[timesheet.date] || [];
       timesheetByDay[timesheet.date].push({
         _id: timesheet._id,
-        io: timesheet.io
+        io: timesheet.io,
+        amount: timesheet.timestamp.length
       });
 
       return timesheetByDay;
@@ -42,11 +43,12 @@ export default function TimesheetList(props) {
   return (
     <div className="">
       <h2 className="m-2">Timesheets</h2>
-      <table className="m-2 border rounded overflow-auto block w-1/4">
+      <table className="m-2 border rounded overflow-auto block w-1/3">
         <thead>
           <tr className="border-b border-grey-light">
             <th className="py-1 pl-2 w-32">Date</th>
             <th className="py-1 pl-2 w-64">Type</th>
+            <th className="py-1 pl-2 w-32"># of Students</th>
           </tr>
         </thead>
         <tbody className="block" style={{ height: '480px' }}>
@@ -71,6 +73,13 @@ export default function TimesheetList(props) {
                       </Link>
                     );
                   })}
+                </td>
+                <td className="pl-2 py-4 w-32 text-left">
+                  {
+                    timesheetsDate.timesheets.find(
+                      timesheet => timesheet.io === 'in'
+                    ).amount
+                  }
                 </td>
               </tr>
             );

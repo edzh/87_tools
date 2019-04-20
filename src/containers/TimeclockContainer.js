@@ -10,6 +10,7 @@ import PinInput from '../components/Timeclock/PinInput';
 import ManualEntry from '../components/Timeclock/ManualEntry';
 import PinLookup from './PinLookup';
 import { apiUrl } from 'config';
+import MakePdf from 'data/MakePdf';
 import styles from './css/Timeclock.module.css';
 
 function Timeclock(props) {
@@ -58,11 +59,9 @@ function Timeclock(props) {
   }
 
   function handleFamily(students) {
-    console.log(students);
     students.forEach(student => {
       postTimestamp(student).catch(err => setError(err.message));
     });
-    // postTimestamp(student).catch(err => setError(err.message));
 
     setFamily([]);
   }
@@ -122,8 +121,6 @@ function Timeclock(props) {
     }
   };
 
-  console.log(props.timesheet);
-
   if (toTimesheets === true) {
     return <Redirect to="/timesheet" />;
   }
@@ -152,12 +149,15 @@ function Timeclock(props) {
           setRefresh={setRefresh}
           timesheet={fetchedTimesheet}
         />
-        <button
-          className="p-2 ml-4 border rounded hover:bg-red hover:text-white"
-          onClick={() => deleteTimesheet(props.timesheet)}
-        >
-          Delete
-        </button>
+        <div className="flex">
+          <button
+            className="p-2 ml-4 border rounded hover:bg-red hover:text-white"
+            onClick={() => deleteTimesheet(props.timesheet)}
+          >
+            Delete
+          </button>
+          {<MakePdf timesheetId={props.timesheet} />}
+        </div>
       </div>
     </div>
   );

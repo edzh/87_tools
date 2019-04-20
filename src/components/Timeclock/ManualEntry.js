@@ -31,14 +31,16 @@ export default function ManualEntry(props) {
   };
 
   return (
-    <div className="border rounded py-4 mt-4">
-      <h2 className="py-1 pl-2">Manual Entry</h2>
-      <NameFilter
-        filterName={filterName}
-        currentQuery={currentQuery}
-        query={query}
-        onChange={onChange}
-      />
+    <div className="border rounded pt-4 mt-4">
+      <div className="border-b">
+        <h2 className="py-1 pl-2">Manual Entry</h2>
+        <NameFilter
+          filterName={filterName}
+          currentQuery={currentQuery}
+          query={query}
+          onChange={onChange}
+        />
+      </div>
       <table className="overflow-auto w-full block">
         <thead>
           <tr>

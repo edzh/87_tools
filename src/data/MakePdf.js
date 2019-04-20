@@ -125,11 +125,14 @@ function MakePdf(props) {
     }
   };
 
-  // insertHeader(doc) {
-  //   doc.text('Name', 10, 10);
-  //   doc.text('Club', 100, 10);
-  // }
-  return <button onClick={generatePdf}>Print</button>;
+  return (
+    <button
+      className="p-2 mx-2 border rounded hover:bg-grey-lighter"
+      onClick={generatePdf}
+    >
+      Print
+    </button>
+  );
 }
 
 export default MakePdf;
