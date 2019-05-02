@@ -4,6 +4,7 @@ import { apiUrl } from 'config';
 import { format } from 'date-fns';
 import {
   addTimesheetHeader,
+  addColumnNames,
   studentSignInList,
   studentClassList
 } from './PDFTemplate';
@@ -33,16 +34,18 @@ function MakePdf(props) {
     const spacing = 0.2;
     const lines = 52;
 
-    doc.setFontSize(10);
-    doc.setFillColor(0.2);
-    doc.setTextColor(0.5);
+    // addColumnNames(doc, 1, timesheet);
 
-    addTimesheetHeader(doc, timesheet);
-    // studentSignInList(doc, timesheet);
-    studentClassList(doc, timesheet);
+    if (type === 'signin') {
+      studentSignInList(doc, timesheet);
+    }
 
-    doc.save('log.pdf');
-    console.log('pdf made');
+    // if (type === 'class') {
+    //   studentClassList(doc, timesheet);
+    // }
+
+    // doc.save(`${Date.now()}-log.pdf`);
+    doc.output('dataurlnewwindow');
 
     function clubNameByDay(clubs, day) {
       return clubs.find(club => club.day === day)
@@ -52,12 +55,20 @@ function MakePdf(props) {
   };
 
   return (
-    <button
-      className="p-2 mx-2 border rounded hover:bg-grey-lighter"
-      onClick={generateAllStudentsPdf}
-    >
-      Print
-    </button>
+    <>
+      <button
+        className="p-2 mx-2 border rounded hover:bg-grey-lighter"
+        onClick={() => generateAllStudentsPdf('signin')}
+      >
+        Print Sign In
+      </button>
+      <button
+        className="p-2 mx-2 border rounded hover:bg-grey-lighter"
+        onClick={() => generateAllStudentsPdf('class')}
+      >
+        Print Class
+      </button>
+    </>
   );
 }
 
