@@ -57,7 +57,7 @@ export function addColumnNames(doc, line, timesheet) {
 export function studentSignInList(doc, timesheet) {
   const timesheetDay = parseInt(format(timesheet.date, 'E'));
   timesheet.timestamp
-    .sort((a, b) => sortByName(a, b))
+    .sort((a, b) => sortByName(a.student, b.student))
     .forEach((timestamp, index) => {
       const {
         datetime,
@@ -104,7 +104,7 @@ export function studentSignInList(doc, timesheet) {
 export function studentClassList(doc, timesheet, clubList) {
   const timesheetDay = parseInt(format(timesheet.date, 'E'));
 
-  const reduced = clubList
+  const clubsAttendance = clubList
     .reduce((child, club) => {
       const students = club.students.reduce((studentList, student) => {
         const isSignedIn = timesheet.timestamp.find(
@@ -114,6 +114,7 @@ export function studentClassList(doc, timesheet, clubList) {
         studentList.push({
           _id: student._id,
           name: student.name,
+          grade: student.grade,
           signedIn: isSignedIn ? true : false
         });
 
@@ -131,66 +132,53 @@ export function studentClassList(doc, timesheet, clubList) {
     }, [])
     .filter(club => club.day === timesheetDay);
 
-  console.log(reduced);
-  let row = 1;
+  clubsAttendance.forEach((club, index) => {
+    let row = 1;
 
-  // timesheet.timestamp
-  //   .sort((a, b) => sortByClub(a, b, timesheetDay))
-  //   .forEach((timestamp, index) => {
-  //     const {
-  //       datetime,
-  //       student: { clubs, name }
-  //     } = timestamp;
-  //     const clubByDay = clubs.find(club => club.day === timesheetDay);
-  //     const nextClubByDay = timesheet.timestamp[index + 1]
-  //       ? timesheet.timestamp[index + 1].student.clubs.find(
-  //           club => club.day === timesheetDay
-  //         )
-  //       : undefined;
-  //     const clubName = clubByDay ? clubByDay.name : 'Drop In';
-  //     const nextClubName = nextClubByDay ? nextClubByDay.name : 'Drop In';
-  //     const line = index % lines;
+    addTimesheetHeader(doc, timesheet);
+    doc.setFontSize(12);
+    doc.text(club.name, column[0], headerOffset);
+    doc.setFontSize(10);
 
-  //     if (line === 0) {
-  //       //If first page don't add page
-  //       if (index !== 0) {
-  //         doc.addPage();
-  //       }
-  //       addTimesheetHeader(doc, timesheet);
-  //       doc.setFontSize(12);
+    club.students
+      .sort((a, b) => sortByName(a, b))
+      .forEach((student, index) => {
+        if (index % (lines - 1) === 0) {
+          if (index !== 0) {
+            doc.addPage();
+            row = 1;
+            doc.setFontSize(12);
+            doc.text(club.name, column[0], headerOffset);
+          }
 
-  //       doc.setFontStyle('bold');
-  //       doc.text('Name', column[0], spacing * line + headerOffset);
-  //       doc.text('Club', column[5], spacing * line + headerOffset);
-  //       doc.text('Time', column[14], spacing * line + headerOffset, {
-  //         align: 'left'
-  //       });
+          addTimesheetHeader(doc, timesheet);
+          doc.setFontSize(12);
+          doc.setFontStyle('bold');
+          doc.text('Name', column[0], spacing * row + headerOffset);
+          doc.text('Grade', column[5], spacing * row + headerOffset);
 
-  //       doc.setFontSize(10);
-  //       doc.setFontStyle('normal');
-  //     }
+          doc.setFontSize(10);
+          doc.setFontStyle('normal');
+        }
 
-  //     console.log(clubList);
+        doc.text(student.name, column[0], spacing * (row + 1) + headerOffset);
+        doc.text(
+          `${student.grade === 0 ? 'K' : student.grade}`,
+          column[5],
+          spacing * (row + 1) + headerOffset
+        );
+        doc.text(
+          `${student.signedIn ? 'Present' : ''}`,
+          column[15],
+          spacing * (row + 1) + headerOffset,
+          { align: 'right' }
+        );
+        addLine(doc, row);
+        row++;
+      });
 
-  //     addLine(doc, line);
-
-  //     // if (clubName !== nextClubName) {
-  //     //   doc.text(clubName, spacing, spacing * 2);
-  //     //   doc.addPage();
-  //     //   addTimesheetHeader(doc, timesheet);
-  //     //   addColumnNames(doc, 1, timesheet);
-  //     //   row = 0;
-  //     // }
-
-  //     // if (row === lines - 1) {
-  //     //   doc.addPage();
-  //     //   row = 1;
-  //     //   addTimesheetHeader(doc, timesheet);
-  //     //   addColumnNames(doc, 1, timesheet);
-  //     // }
-
-  //     // row++;
-  //   });
+    doc.addPage();
+  });
 }
 
 function clubNameByDay(clubs, day) {
@@ -200,8 +188,8 @@ function clubNameByDay(clubs, day) {
 }
 
 function sortByName(a, b) {
-  const nameA = a.student.name.toUpperCase();
-  const nameB = b.student.name.toUpperCase();
+  const nameA = a.name.toUpperCase();
+  const nameB = b.name.toUpperCase();
 
   if (nameA < nameB) return -1;
   if (nameA > nameB) return 1;
