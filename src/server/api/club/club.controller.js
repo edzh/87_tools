@@ -22,6 +22,7 @@ export const getMany = async (req, res) => {
   try {
     const clubs = await Club.find(req.query)
       .lean()
+      .populate('students')
       .exec();
 
     res.status(200).json({ data: clubs });

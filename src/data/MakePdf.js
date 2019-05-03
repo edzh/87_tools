@@ -11,6 +11,7 @@ import {
 
 function MakePdf(props) {
   const [timesheet, setTimesheet] = useState([]);
+  const [clubs, setClubs] = useState([]);
   const timesheetDay = parseInt(format(timesheet.date, 'E'));
 
   useEffect(() => {
@@ -22,7 +23,16 @@ function MakePdf(props) {
       setTimesheet(result);
     };
 
+    const fetchClubs = async () => {
+      const result = await fetch(`${apiUrl}/api/club`)
+        .then(response => response.json())
+        .then(json => json.data);
+
+      setClubs(result);
+    };
+
     fetchTimesheet();
+    fetchClubs();
   }, []);
 
   const generateAllStudentsPdf = type => {
@@ -40,9 +50,9 @@ function MakePdf(props) {
       studentSignInList(doc, timesheet);
     }
 
-    // if (type === 'class') {
-    //   studentClassList(doc, timesheet);
-    // }
+    if (type === 'class') {
+      studentClassList(doc, timesheet, clubs);
+    }
 
     // doc.save(`${Date.now()}-log.pdf`);
     doc.output('dataurlnewwindow');

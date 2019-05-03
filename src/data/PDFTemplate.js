@@ -101,42 +101,96 @@ export function studentSignInList(doc, timesheet) {
     });
 }
 
-export function studentClassList(doc, timesheet) {
+export function studentClassList(doc, timesheet, clubList) {
   const timesheetDay = parseInt(format(timesheet.date, 'E'));
+
+  const reduced = clubList
+    .reduce((child, club) => {
+      const students = club.students.reduce((studentList, student) => {
+        const isSignedIn = timesheet.timestamp.find(
+          timestamp => timestamp.student._id === student._id
+        );
+
+        studentList.push({
+          _id: student._id,
+          name: student.name,
+          signedIn: isSignedIn ? true : false
+        });
+
+        return studentList;
+      }, []);
+
+      child.push({
+        _id: club._id,
+        name: club.name,
+        day: club.day,
+        students
+      });
+
+      return child;
+    }, [])
+    .filter(club => club.day === timesheetDay);
+
+  console.log(reduced);
   let row = 1;
-  timesheet.timestamp
-    .sort((a, b) => sortByClub(a, b, timesheetDay))
-    .forEach((timestamp, index) => {
-      const {
-        datetime,
-        student: { clubs, name }
-      } = timestamp;
-      const clubByDay = clubs.find(club => club.day === timesheetDay);
-      const nextClubByDay = timesheet.timestamp[index + 1]
-        ? timesheet.timestamp[index + 1].student.clubs.find(
-            club => club.day === timesheetDay
-          )
-        : undefined;
-      const clubName = clubByDay ? clubByDay.name : 'Drop In';
-      const nextClubName = nextClubByDay ? nextClubByDay.name : 'Drop In';
 
-      if (clubName !== nextClubName) {
-        doc.text(clubName, spacing, spacing * 2);
-        doc.addPage();
-        addTimesheetHeader(doc, timesheet);
-        addColumnNames(doc, 1, timesheet);
-        row = 0;
-      }
+  // timesheet.timestamp
+  //   .sort((a, b) => sortByClub(a, b, timesheetDay))
+  //   .forEach((timestamp, index) => {
+  //     const {
+  //       datetime,
+  //       student: { clubs, name }
+  //     } = timestamp;
+  //     const clubByDay = clubs.find(club => club.day === timesheetDay);
+  //     const nextClubByDay = timesheet.timestamp[index + 1]
+  //       ? timesheet.timestamp[index + 1].student.clubs.find(
+  //           club => club.day === timesheetDay
+  //         )
+  //       : undefined;
+  //     const clubName = clubByDay ? clubByDay.name : 'Drop In';
+  //     const nextClubName = nextClubByDay ? nextClubByDay.name : 'Drop In';
+  //     const line = index % lines;
 
-      if (row === lines - 1) {
-        doc.addPage();
-        row = 1;
-        addTimesheetHeader(doc, timesheet);
-        addColumnNames(doc, 1, timesheet);
-      }
+  //     if (line === 0) {
+  //       //If first page don't add page
+  //       if (index !== 0) {
+  //         doc.addPage();
+  //       }
+  //       addTimesheetHeader(doc, timesheet);
+  //       doc.setFontSize(12);
 
-      row++;
-    });
+  //       doc.setFontStyle('bold');
+  //       doc.text('Name', column[0], spacing * line + headerOffset);
+  //       doc.text('Club', column[5], spacing * line + headerOffset);
+  //       doc.text('Time', column[14], spacing * line + headerOffset, {
+  //         align: 'left'
+  //       });
+
+  //       doc.setFontSize(10);
+  //       doc.setFontStyle('normal');
+  //     }
+
+  //     console.log(clubList);
+
+  //     addLine(doc, line);
+
+  //     // if (clubName !== nextClubName) {
+  //     //   doc.text(clubName, spacing, spacing * 2);
+  //     //   doc.addPage();
+  //     //   addTimesheetHeader(doc, timesheet);
+  //     //   addColumnNames(doc, 1, timesheet);
+  //     //   row = 0;
+  //     // }
+
+  //     // if (row === lines - 1) {
+  //     //   doc.addPage();
+  //     //   row = 1;
+  //     //   addTimesheetHeader(doc, timesheet);
+  //     //   addColumnNames(doc, 1, timesheet);
+  //     // }
+
+  //     // row++;
+  //   });
 }
 
 function clubNameByDay(clubs, day) {

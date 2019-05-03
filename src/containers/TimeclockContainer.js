@@ -151,7 +151,7 @@ function Timeclock(props) {
         />
         <div className="flex">
           <button
-            className="p-2 ml-4 border rounded hover:bg-red hover:text-white"
+            className="p-2 ml-4 border rounded hover:bg-red hover:text-white hidden"
             onClick={() => deleteTimesheet(props.timesheet)}
           >
             Delete
