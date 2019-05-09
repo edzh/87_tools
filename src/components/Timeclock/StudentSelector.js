@@ -53,17 +53,4 @@ export default function StudentSelector(props) {
       </button>
     </div>
   );
-  // return (
-  //   <div>
-  //     {props.family.map((student, index) => (
-  //       <button
-  //         className="p-2 m-2 border rounded"
-  //         key={index}
-  //         onClick={() => props.handleFamily(student)}
-  //       >
-  //         {student.name}
-  //       </button>
-  //     ))}
-  //   </div>
-  // );
 }

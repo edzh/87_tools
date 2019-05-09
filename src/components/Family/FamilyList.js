@@ -10,13 +10,15 @@ export default function FamilyList(props) {
         </tr>
       </thead>
       <tbody>
-        {props.families.map((family, index) => (
-          <tr key={family._id}>
-            <td>
-              <Link to={`/family/${family._id}`}>{family.name}</Link>
-            </td>
-          </tr>
-        ))}
+        {props.families
+          // .sort((a, b) => {})
+          .map((family, index) => (
+            <tr key={family._id}>
+              <td>
+                <Link to={`/family/${family._id}`}>{family.name}</Link>
+              </td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

@@ -156,6 +156,9 @@ export function studentClassList(doc, timesheet, clubList) {
           doc.setFontStyle('bold');
           doc.text('Name', column[0], spacing * row + headerOffset);
           doc.text('Grade', column[5], spacing * row + headerOffset);
+          doc.text('Status', column[15], spacing * row + headerOffset, {
+            align: 'right'
+          });
 
           doc.setFontSize(10);
           doc.setFontStyle('normal');
@@ -165,7 +168,8 @@ export function studentClassList(doc, timesheet, clubList) {
         doc.text(
           `${student.grade === 0 ? 'K' : student.grade}`,
           column[5],
-          spacing * (row + 1) + headerOffset
+          spacing * (row + 1) + headerOffset,
+          { align: 'left' }
         );
         doc.text(
           `${student.signedIn ? 'Present' : ''}`,

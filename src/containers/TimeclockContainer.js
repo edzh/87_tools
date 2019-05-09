@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
+import { apiUrl } from 'config';
 
 import { setTimesheet } from '../actions/timesheetActions';
 import { fetchStudents } from '../actions/studentActions';
 
-import TimestampList from '../components/Timeclock/TimestampList';
-import PinInput from '../components/Timeclock/PinInput';
 import ManualEntry from '../components/Timeclock/ManualEntry';
+import PinInput from '../components/Timeclock/PinInput';
 import PinLookup from './PinLookup';
-import { apiUrl } from 'config';
+import TimestampList from '../components/Timeclock/TimestampList';
 import MakePdf from 'data/MakePdf';
-import styles from './css/Timeclock.module.css';
 
 function Timeclock(props) {
   const [pin, setPin] = useState('');
