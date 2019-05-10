@@ -25,7 +25,7 @@ export default function TimestampList(props) {
   }
 
   return (
-    <div className="ml-4 mb-3 border rounded pt-4">
+    <div className="mb-3 border rounded pt-4 mt-4 lg:mt-0">
       <h2 className="px-2 pb-4 border-b">
         {timesheet.io === 'in' ? 'Sign In' : 'Sign Out'} -{' '}
         {format(timesheet.date, 'dddd, MMMM D')}
@@ -44,9 +44,9 @@ export default function TimestampList(props) {
           {timesheet.timestamp.map((timestamp, index) => (
             <tr
               key={timestamp._id}
-              className="bg-transparent hover:bg-grey-lighter border-b border-grey-light"
+              className="text-sm bg-transparent hover:bg-grey-lighter border-b border-grey-light"
             >
-              <td className="py-1 pl-2 w-64">
+              <td className="pl-2 w-64">
                 <Link
                   className="no-underline"
                   to={`/student/${timestamp.student._id}`}
@@ -54,26 +54,26 @@ export default function TimestampList(props) {
                   {timestamp.student.name}
                 </Link>
               </td>
-              <td className="py-1 pl-2 w-64">
+              <td className="pl-2 w-64">
                 {timestamp.student.clubs.map(club =>
                   club.day === parseInt(format(new Date(timesheet.date), 'E'))
                     ? club.name
                     : null
                 )}
               </td>
-              <td className="py-1 pl-2 w-24">
+              <td className="pl-2 w-24">
                 {format(new Date(timestamp.datetime), 'hh:mm a')}
               </td>
-              <td className="py-1 pl-2 w-32 flex">
+              <td className="pl-2 w-32 flex">
                 <button
-                  className="bg-grey-light hover:bg-grey p-1 mr-1 rounded"
+                  className="border hover:bg-red hover:text-white p-1 mr-1 rounded"
                   onClick={() => removeTimestamp(timestamp._id)}
                 >
                   Remove
                 </button>
                 <p className="mx-1 p-1">{timestamp.fobStatus}</p>
               </td>
-              {<td className="py-1 pl-2 w-32">{timestamp.student.pin}</td>}
+              {<td className="pl-2 w-32">{timestamp.student.pin}</td>}
             </tr>
           ))}
         </tbody>

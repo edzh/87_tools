@@ -125,8 +125,8 @@ function Timeclock(props) {
   }
 
   return (
-    <div className="flex p-2">
-      <div className="w-1/3">
+    <div className="lg:flex p-2">
+      <div className="lg:w-1/3">
         <PinInput
           pin={pin}
           setPin={setPin}
@@ -142,7 +142,7 @@ function Timeclock(props) {
           setError={setError}
         />
       </div>
-      <div className="w-2/3">
+      <div className="lg:pl-4 lg:w-2/3">
         <TimestampList
           refresh={refresh}
           setRefresh={setRefresh}

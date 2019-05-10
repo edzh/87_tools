@@ -15,14 +15,14 @@ export default function PinInput(props) {
       <h2 className="mb-4">Timeclock</h2>
       <form onSubmit={handleSubmit}>
         <input
-          className="bg-grey-lighter p-4 rounded-l"
+          className="border p-4 rounded-l"
           placeholder="PIN"
           type="number"
           autoFocus={true}
           value={pin}
           onChange={handleChange}
         />
-        <button className="bg-grey-light p-4 rounded-r" type="submit">
+        <button className="bg-grey-lighter border p-4 rounded-r" type="submit">
           Submit
         </button>
       </form>

@@ -32,7 +32,7 @@ export default function ManualEntry(props) {
 
   return (
     <div className="border rounded pt-4 mt-4">
-      <div className="border-b">
+      <div className="border-b shadow">
         <h2 className="py-1 pl-2">Manual Entry</h2>
         <NameFilter
           filterName={filterName}
@@ -65,17 +65,17 @@ export default function ManualEntry(props) {
               return 0;
             })
             .map((student, index) => (
-              <tr key={student._id} className="border-b">
-                <td className="pl-2 py-1">{student.name}</td>
-                <td>
+              <tr key={student._id} className="border-b block w-full flex">
+                <td className="pl-2 py-1 w-3/4">{student.name}</td>
+                <td className="flex">
                   <button
-                    className="bg-grey-light hover:bg-grey p-1 mr-1 rounded"
+                    className="border hover:text-white hover:bg-blue text-xs p-1 mr-1 rounded"
                     onClick={() => handleInput(student, 'Lost')}
                   >
                     Lost
                   </button>
                   <button
-                    className="bg-grey-light hover:bg-grey p-1 mr-1 rounded"
+                    className="border hover:text-white hover:bg-blue text-xs p-1 mr-1 rounded"
                     onClick={() => handleInput(student, 'Damaged')}
                   >
                     Damaged

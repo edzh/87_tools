@@ -4,7 +4,7 @@ import styles from './css/NameFilter.module.css';
 
 export default function NameFilter(props) {
   return (
-    <form className="py-1 pl-2">
+    <form className="py-2 pl-2">
       <input
         className="p-2 border rounded-l"
         placeholder="search..."
