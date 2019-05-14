@@ -17,7 +17,11 @@ export default props => {
   }, []);
 
   return (
-    <select value={props.family.value} onChange={props.family.onChange}>
+    <select
+      className="p-2 m-2 border rounded"
+      value={props.family.value}
+      onChange={props.family.onChange}
+    >
       {fetchedFamilies
         .sort((a, b) => {
           const nameA = a.name.toUpperCase();

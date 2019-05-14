@@ -121,8 +121,8 @@ export default function EditStudent(props) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="text" {...name} />
-        <select {...grade}>
+        <input className="p-2 m-2 border rounded" type="text" {...name} />
+        <select className="p-2 m-2 border rounded" {...grade}>
           <option value="0">K</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -130,7 +130,8 @@ export default function EditStudent(props) {
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-        <input type="number" {...pin} />
+        <input className="p-2 m-2 border rounded" type="number" {...pin} />
+        <p className="font-bold m-2 ">Clubs</p>
         {clubs.map((club, index) => {
           const day = index + 1;
           const clubsByDay = fetchedClubs.filter(
@@ -147,8 +148,11 @@ export default function EditStudent(props) {
             />
           );
         })}
+        <p className="font-bold m-2 ">Family</p>
         <EditStudentFamily family={family} />
-        <button type="submit">Save</button>
+        <button className="p-2 m-2 border rounded" type="submit">
+          Save
+        </button>
       </form>
     </div>
   );

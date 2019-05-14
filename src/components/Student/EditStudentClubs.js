@@ -6,7 +6,11 @@ export default function EditStudentClubs(props) {
   }
 
   return (
-    <select value={props.club} onChange={handleChange}>
+    <select
+      className="p-2 m-2 border rounded block"
+      value={props.club}
+      onChange={handleChange}
+    >
       <option value="">---</option>
       {props.clubsByDay
         .filter(club => club.day === props.day)
