@@ -47,17 +47,17 @@ export const updateOne = async (req, res) => {
   try {
     const updatedFamily = await Family.findOneAndUpdate(
       { _id: req.params.id },
-      // req.body,
-      { $push: { students: [req.body.student] } },
-      // {
-      //   // $set: {
-      //   //   name: req.body.name,
-      //   //   grade: req.body.grade,
-      //   //   pin: req.body.pin,
-      //   //   clubs: []
-      //   // }
-      //   $push: { clubs: [req.body.clubs] }
-      // },
+      req.body,
+      // { $push: { students: [req.body.student] } },
+      // // {
+      // //   // $set: {
+      // //   //   name: req.body.name,
+      // //   //   grade: req.body.grade,
+      // //   //   pin: req.body.pin,
+      // //   //   clubs: []
+      // //   // }
+      // //   $push: { clubs: [req.body.clubs] }
+      // // },
       { new: true }
     )
       .lean()

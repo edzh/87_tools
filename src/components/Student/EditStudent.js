@@ -3,6 +3,7 @@ import { useFormInput } from './AddStudent';
 import { apiUrl } from 'config';
 
 import SelectClub from './EditStudentClubs';
+import EditStudentFamily from './EditStudentFamily';
 
 export default function EditStudent(props) {
   const { student } = props;
@@ -41,16 +42,11 @@ export default function EditStudent(props) {
     fetchClubs();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(clubs.filter(club => club !== ''));
-  // }, [clubs]);
-
   function handleSubmit(e) {
     e.preventDefault();
 
     const removeClubs = initialClubs.filter(club => !clubs.includes(club));
     const addClubs = clubs.filter(club => !initialClubs.includes(club));
-    // .concat(clubs.filter(club => !initialClubs.includes(club)))
     console.log(removeClubs, addClubs);
     swapStudentFromClubs(student._id, removeClubs, addClubs);
 
@@ -63,7 +59,8 @@ export default function EditStudent(props) {
         name: name.value,
         grade: grade.value,
         pin: pin.value,
-        clubs: clubs.filter(club => club !== '')
+        clubs: clubs.filter(club => club !== ''),
+        family: family.value
       })
     }).then(setInitialClubs(clubs));
   }
@@ -150,6 +147,7 @@ export default function EditStudent(props) {
             />
           );
         })}
+        <EditStudentFamily family={family} />
         <button type="submit">Save</button>
       </form>
     </div>

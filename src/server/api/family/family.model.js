@@ -8,7 +8,8 @@ const familySchema = new mongoose.Schema({
   students: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'student'
+      ref: 'student',
+      unique: true
     }
   ],
   pickups: [

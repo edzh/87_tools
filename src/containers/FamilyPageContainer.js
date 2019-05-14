@@ -3,8 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { apiUrl } from 'config';
 import { setFamily } from '../actions/familyActions';
 
+import FamilyDetails from '../components/Family/FamilyDetails';
+import EditFamily from '../components/Family/EditFamily';
+
 function FamilyPage(props) {
   const [fetchedFamily, setFetchedFamily] = useState('');
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     props.setFamily(props.family);
@@ -22,31 +26,14 @@ function FamilyPage(props) {
   }, []);
 
   return (
-    <ul>
-      <li>{fetchedFamily.name}</li>
-      {fetchedFamily.students &&
-        fetchedFamily.students.map(student =>
-          student ? (
-            <ul>
-              <li>{student.name}</li>
-              <li>{student.grade}</li>
-            </ul>
-          ) : (
-            <p>No student assigned!</p>
-          )
-        )}
-      {fetchedFamily.pickups &&
-        fetchedFamily.pickups.map(pickup =>
-          pickup ? (
-            <ul>
-              <li>{pickup.name}</li>
-              <li>{pickup.pin}</li>
-            </ul>
-          ) : (
-            <p>No pickups assigned!</p>
-          )
-        )}
-    </ul>
+    <div>
+      <button onClick={() => setEdit(!edit)}>Edit</button>
+      {edit ? (
+        <EditFamily family={fetchedFamily} setEdit={setEdit} />
+      ) : (
+        <FamilyDetails family={fetchedFamily} />
+      )}
+    </div>
   );
 }
 
