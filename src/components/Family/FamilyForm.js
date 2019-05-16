@@ -19,7 +19,7 @@ export default function FamilyForm(props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" {...name} />
+      <input className="p-2 border rounded" type="text" {...name} />
       <button type="submit">Create new family</button>
     </form>
   );

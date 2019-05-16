@@ -37,7 +37,6 @@ export default function TimestampList(props) {
             <th className="py-1 pl-2 w-64">Club</th>
             <th className="py-1 pl-2 w-24">Time</th>
             <th className="py-1 pl-2 w-32">Option</th>
-            {<th className="py-1 pl-2 w-32">PIN</th>}
           </tr>
         </thead>
         <tbody className="block" style={{ height: '520px' }}>
@@ -73,7 +72,6 @@ export default function TimestampList(props) {
                 </button>
                 <p className="mx-1 p-1">{timestamp.fobStatus}</p>
               </td>
-              {<td className="pl-2 w-32">{timestamp.student.pin}</td>}
             </tr>
           ))}
         </tbody>

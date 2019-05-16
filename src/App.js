@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import styles from './App.module.css';
-
 import Navbar from './components/Navbar/Navbar';
 import PinLookup from './containers/PinLookup';
 import AddStudent from './components/Student/AddStudent';
@@ -19,12 +17,9 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div
-          className={styles.container}
-          style={{ fontFamily: ['Roboto', 'sans-serif'] }}
-        >
+        <div style={{ fontFamily: ['Roboto', 'sans-serif'] }}>
           <Navbar className="nav" />
-          <div className={styles.content}>
+          <div className="ml-64 p-4">
             <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
             <Route exact path={'/addstudent'} render={() => <AddStudent />} />
             <Route exact path={'/timesheet/'} render={() => <Timesheet />} />

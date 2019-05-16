@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { daysOfWeek } from '../Student/Clubs';
 
 export default function ClubList(props) {
+  console.log(props.clubs);
+
   return (
     <ul>
       {props.clubs.map(club => (

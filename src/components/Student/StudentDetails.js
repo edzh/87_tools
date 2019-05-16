@@ -1,6 +1,13 @@
 import React from 'react';
-
-const intToGrade = ['K', '1st', '2nd', '3rd', '4th', '5th'];
+import { Link } from 'react-router-dom';
+const intToGrade = [
+  'Kindergarten',
+  '1st Grade',
+  '2nd Grade',
+  '3rd Grade',
+  '4th Grade',
+  '5th Grade'
+];
 const intToDay = [
   'Sunday',
   'Monday',
@@ -11,28 +18,43 @@ const intToDay = [
   'Saturday'
 ];
 
-export default function StudentDetails(props) {
-  const { student } = props;
-
+export default function StudentDetails({ student }) {
   return (
-    <ul className="list-reset">
-      <li>{student.name}</li>
-      <li>{intToGrade[student.grade]}</li>
-      <li>{student.pin}</li>
-      {student.family && (
-        <div>
-          <li>{student.family.name}</li>
-          <li>
-            Pickups
-            {student.family.pickups.map((pickup, index) => (
-              <ul className="list-reset" key={index}>
-                <li>{pickup.name}</li>
-                <li>{pickup.pin}</li>
-              </ul>
-            ))}
-          </li>
+    <div className="">
+      <div className="border rounded p-2">
+        <h2>{student.name}</h2>
+        <div className="my-2 flex">
+          <h3 className="w-16">Grade</h3>
+          <p className="text-xl">{intToGrade[student.grade]}</p>
         </div>
-      )}
+        <div className="mt-2 flex">
+          <p className="font-bold w-16">PIN</p>
+          <p>{student.pin}</p>
+        </div>
+      </div>
+
+      <div className="border rounded p-2 my-2">
+        {student.family && (
+          <div className="mb-2">
+            <div className="flex">
+              <h3 className="w-16">Family</h3>
+              <Link
+                to={`/family/${student.family._id}`}
+                className="text-xl no-underline"
+              >
+                {student.family.name}
+              </Link>
+            </div>
+            <h3 className="my-2">Pickups</h3>
+            {student.family.pickups.map((pickup, index) => (
+              <div className="flex" key={index}>
+                <p className="w-64 text-bold">{pickup.name}</p>
+                <p>{pickup.pin}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
       <li>
         Clubs
         {student.clubs
@@ -44,6 +66,6 @@ export default function StudentDetails(props) {
             </ul>
           ))}
       </li>
-    </ul>
+    </div>
   );
 }
