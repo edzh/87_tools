@@ -11,21 +11,21 @@ export default ({ timesheetsDate }) => {
   );
 
   return (
-    <tr className="group bg-transparent border-b border-grey-light flex block">
-      <td className="pl-2 py-2 w-1/4 block">
+    <tr className="py-2 px-4 group bg-transparent border-b border-grey-light flex block">
+      <td className="my-auto w-1/4 block">
         {format(timesheetsDate.date, 'MMMM DD')}
       </td>
-      <td className="pl-2 py-2 w-1/4 block">
+      <td className="my-auto w-1/4 block">
         {timesheetsDate.timesheets.map(timesheet => (
           <TimesheetButton key={timesheet._id} timesheet={timesheet} />
         ))}
       </td>
-      <td className="pl-2 py-2 w-1/4 block text-left">
+      <td className="my-auto w-1/4 block text-left">
         {inExists &&
           timesheetsDate.timesheets.find(timesheet => timesheet.io === 'in')
             .amount}
       </td>
-      <td className="pl-2 py-2 w-1/4 block text-left">
+      <td className="my-auto w-1/4 block text-left">
         {outExists &&
           timesheetsDate.timesheets.find(timesheet => timesheet.io === 'out')
             .amount}

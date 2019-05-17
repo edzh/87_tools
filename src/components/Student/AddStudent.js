@@ -26,41 +26,53 @@ export default function AddStudent() {
   }
 
   return (
-    <form className="w-1/3 border rounded m-2 p-2" onSubmit={handleSubmit}>
+    <form
+      className="w-1/3 shadow-md border rounded p-4"
+      onSubmit={handleSubmit}
+    >
       <h2 className="mb-4">New Student</h2>
-      <div className="flex mb-2">
-        <div className="w-1/4">
-          <label className="block pr-4 text-right">Name:</label>
+      <div className="mb-2">
+        <div className="">
+          <label className="font-bold text-sm">Name</label>
         </div>
-        <div className="w-3/4">
-          <input className="border rounded p-1" type="text" {...name} />
+        <div className="">
+          <input
+            className="border rounded p-1 w-full shadow"
+            type="text"
+            {...name}
+          />
         </div>
       </div>
-      <div className="flex mb-2">
-        <div className="w-1/4">
-          <label className="block pr-4 text-right">Grade:</label>
+      <div className="mb-2">
+        <div className="">
+          <label className="font-bold text-sm">Grade</label>
         </div>
-        <div className="w-3/4">
-          <select className="border rounded p-1" {...grade}>
-            <option value="0">K</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+        <div className="">
+          <select className="border rounded p-1 w-full shadow" {...grade}>
+            <option value="">---</option>
+            <option value="0">Kindergarten</option>
+            <option value="1">1st</option>
+            <option value="2">2nd</option>
+            <option value="3">3rd</option>
+            <option value="4">4th</option>
+            <option value="5">5th</option>
           </select>
         </div>
       </div>
-      <div className="flex mb-2">
-        <div className="w-1/4">
-          <label className="block pr-4 text-right">PIN:</label>
+      <div className="mb-2">
+        <div className="">
+          <label className="font-bold text-sm">PIN</label>
         </div>
-        <div className="w-3/4">
-          <input className="border rounded p-1" type="number" {...pin} />
+        <div className="">
+          <input
+            className="border rounded p-1 w-full shadow"
+            type="number"
+            {...pin}
+          />
         </div>
       </div>
       <button
-        className="border rounded p-1 hover:bg-grey-lighter mx-auto w-3/4"
+        className="border shadow rounded p-1 bg-blue text-white font-bold text-lg hover:bg-grey-lighter hover:text-blue w-full"
         type="submit"
       >
         Submit

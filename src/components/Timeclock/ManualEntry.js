@@ -26,12 +26,12 @@ export default function ManualEntry(props) {
   const handleInput = (student, fobStatus) => {
     props
       .postTimestamp(student, fobStatus)
-      .then(() => props.setError(''))
-      .catch(err => props.setError(err.message));
+      .then(() => props.setMessage(''))
+      .catch(err => props.setMessage(err.message));
   };
 
   return (
-    <div className="border rounded pt-4 mt-4">
+    <div className="border rounded shadow-md pt-4 mt-4">
       <div className="border-b shadow">
         <h2 className="py-1 pl-2">Manual Entry</h2>
         <NameFilter

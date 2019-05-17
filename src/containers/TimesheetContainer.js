@@ -17,7 +17,11 @@ function Timesheet(props) {
         timesheets={props.timesheets}
         isFetching={props.isFetching}
       />
-      <Link to="/timesheet/new">Create Timesheet</Link>
+      <Link to="/timesheet/new">
+        <button className="p-2 my-2 w-full text-xl shadow bg-blue text-white hover:bg-grey-lightest hover:text-blue text-center no-underline border rounded">
+          Create Timesheet
+        </button>
+      </Link>
     </div>
   );
 }

@@ -14,7 +14,7 @@ import MakePdf from 'data/MakePdf';
 
 function Timeclock(props) {
   const [pin, setPin] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [refresh, setRefresh] = useState(false);
   const [family, setFamily] = useState([]);
   const [fetchedTimesheet, setFetchedTimesheet] = useState([]);
@@ -52,14 +52,14 @@ function Timeclock(props) {
 
     getStudentWithPin(pin)
       .then(response => postTimestamp(response))
-      .then(() => setError(''))
-      .catch(err => setError(err.message))
+      .then(() => setMessage(''))
+      .catch(err => setMessage(err.message))
       .finally(() => setPin(''));
   }
 
   function handleFamily(students) {
     students.forEach(student => {
-      postTimestamp(student).catch(err => setError(err.message));
+      postTimestamp(student).catch(err => setMessage(err.message));
     });
 
     setFamily([]);
@@ -125,13 +125,13 @@ function Timeclock(props) {
   }
 
   return (
-    <div className="lg:flex p-2">
+    <div className="lg:flex">
       <div className="lg:w-1/3">
         <PinInput
           pin={pin}
           setPin={setPin}
           handleSubmit={handleSubmit}
-          error={error}
+          message={message}
           family={family}
           handleFamily={handleFamily}
         />
@@ -139,7 +139,7 @@ function Timeclock(props) {
           students={props.students}
           fetchStudents={props.fetchStudents}
           postTimestamp={postTimestamp}
-          setError={setError}
+          setMessage={setMessage}
         />
       </div>
       <div className="lg:pl-4 lg:w-2/3">

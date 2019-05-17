@@ -25,7 +25,7 @@ export default function TimestampList(props) {
   }
 
   return (
-    <div className="mb-3 border rounded pt-4 mt-4 lg:mt-0">
+    <div className="mb-3 border shadow-md rounded pt-4 mt-4 lg:mt-0">
       <h2 className="px-2 pb-4 border-b">
         {timesheet.io === 'in' ? 'Sign In' : 'Sign Out'} -{' '}
         {format(timesheet.date, 'dddd, MMMM D')}

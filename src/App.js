@@ -19,7 +19,7 @@ class App extends Component {
       <Router>
         <div style={{ fontFamily: ['Roboto', 'sans-serif'] }}>
           <Navbar className="nav" />
-          <div className="ml-64 p-4">
+          <div className="lg:ml-64 ml-16 p-4">
             <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
             <Route exact path={'/addstudent'} render={() => <AddStudent />} />
             <Route exact path={'/timesheet/'} render={() => <Timesheet />} />

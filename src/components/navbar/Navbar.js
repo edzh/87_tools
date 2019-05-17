@@ -5,7 +5,7 @@ import styles from './Navbar.module.css';
 
 export default function Navbar(props) {
   return (
-    <nav className="border fixed border-r shadow-inner bg-grey-lighter w-64">
+    <nav className="border fixed border-r shadow-inner bg-grey-lighter lg:w-64 w-16">
       <h1 className="p-2 text-red text-5xl text-center font-bold">87</h1>
       <NavLink
         activeClassName="border-r-4 border-blue"

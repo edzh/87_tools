@@ -35,19 +35,17 @@ export default function TimesheetList(props) {
     });
 
   return (
-    <div className="">
-      <h2 className="m-2">Timesheets</h2>
-      <table className="m-2 border rounded overflow-auto block">
+    <div className="border rounded shadow-md">
+      <h2 className="p-4 border-b font-normal bg-grey-darkest text-white shadow">
+        Timesheets
+      </h2>
+      <table className="overflow-auto block">
         <thead className="w-full block">
-          <tr className="border-b w-full block border-grey-light flex">
-            <th className="py-1 pl-2 text-left block w-1/4">Date</th>
-            <th className="py-1 pl-2 text-left block w-1/4">Type</th>
-            <th className="py-1 pl-2 text-left block w-1/4">
-              # of Students In
-            </th>
-            <th className="py-1 pl-2 text-left block w-1/4">
-              # of Students Out
-            </th>
+          <tr className="px-4 py-2 border-b w-full block border-grey-light flex">
+            <th className="text-left block w-1/4">Date</th>
+            <th className="text-left block w-1/4">Type</th>
+            <th className="text-left block w-1/4"># of Students In</th>
+            <th className="text-left block w-1/4"># of Students Out</th>
           </tr>
         </thead>
         <tbody className="block" style={{ height: '480px' }}>
