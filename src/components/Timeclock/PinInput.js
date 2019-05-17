@@ -23,7 +23,7 @@ export default function PinInput(props) {
           onChange={handleChange}
         />
         <button
-          className="p-2 bg-blue text-white hover:text-blue hover:bg-grey-lightest border text-xl rounded-b w-full"
+          className="p-2 border border-blue bg-blue text-white shadow hover:text-blue hover:bg-grey-lightest hover:border-grey-light text-xl rounded-b w-full"
           type="submit"
         >
           Submit

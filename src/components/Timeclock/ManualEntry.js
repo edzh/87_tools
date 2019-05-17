@@ -24,10 +24,7 @@ export default function ManualEntry(props) {
   }
 
   const handleInput = (student, fobStatus) => {
-    props
-      .postTimestamp(student, fobStatus)
-      .then(() => props.setMessage(''))
-      .catch(err => props.setMessage(err.message));
+    props.postTimestamp(student, fobStatus).catch(err => props.setMessage(err));
   };
 
   return (

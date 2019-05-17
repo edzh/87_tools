@@ -20,6 +20,8 @@ function Timeclock(props) {
   const [fetchedTimesheet, setFetchedTimesheet] = useState([]);
   const [toTimesheets, setToTimesheets] = useState(false);
 
+  console.log(message);
+
   const deleteTimesheet = async timesheetId => {
     try {
       const timesheet = await fetch(`${apiUrl}/api/timesheet/${timesheetId}`, {
@@ -52,73 +54,100 @@ function Timeclock(props) {
 
     getStudentWithPin(pin)
       .then(response => postTimestamp(response))
-      .then(() => setMessage(''))
-      .catch(err => setMessage(err.message))
+      .catch(err => console.error(err))
       .finally(() => setPin(''));
   }
 
   function handleFamily(students) {
     students.forEach(student => {
-      postTimestamp(student).catch(err => setMessage(err.message));
+      postTimestamp(student).catch(err => setMessage(err));
     });
 
     setFamily([]);
   }
 
   const postTimestamp = async (student, fobStatus) => {
-    try {
-      const timestamp = await fetch(`${apiUrl}/api/timestamp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          student: student._id,
-          timesheet: props.timesheet,
-          fobStatus
-        })
+    const timestamp = await fetch(`${apiUrl}/api/timestamp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        student: student._id,
+        timesheet: props.timesheet,
+        fobStatus
       })
-        .then(response => response.json())
-        .then(json => json.data)
-        .then(() => {
-          setRefresh(true);
-        });
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw Error(`${student.name} is already signed in!`);
+        }
 
-      return timestamp;
-    } catch (e) {
-      return Promise.reject(new Error(`${student.name} already signed in!`));
-    }
+        return response.json();
+      })
+      .then(json => json.data)
+      .then(() =>
+        setMessage({
+          status: 'Success',
+          message: `${student.name} has been signed in!`
+        })
+      )
+      .catch(err => setMessage({ status: 'Error', message: err.message }));
+
+    setRefresh(true);
   };
 
   // Will attempt to match pin with student. If student not found, fallback
   // to searching family pins
   const getStudentWithPin = async pin => {
-    try {
-      const student = await fetch(`${apiUrl}/api/student?pin=${pin}`)
-        .then(response => response.json())
-        .then(json => json.data[0]);
+    let student;
 
-      if (!student) {
-        const familyPins = await fetch(`${apiUrl}/api/pin/${pin}`)
-          .then(response => response.json())
-          .then(json => json.data)
-          .catch(err => console.error(err));
-
-        if (!familyPins) {
-          return Promise.reject(new Error('Student not found!'));
+    student = await fetch(`${apiUrl}/api/student?pin=${pin}`)
+      .then(response => {
+        if (!response.ok) {
+          throw Error('Student pin not found');
         }
 
-        if (familyPins.students.length === 1) {
-          return familyPins.students[0];
-        }
-        setFamily(familyPins.students);
-        return Promise.reject(new Error(`${pin} is a family pin!`));
+        return response.json();
+      })
+      .then(json => json.data[0])
+      .catch(() => fetchStudentsByFamily(pin));
+
+    if (!student) {
+      if (fetchStudentsByFamily(pin)) {
+        student = fetchStudentsByFamily(pin);
       }
-      return student;
-    } catch (e) {
-      console.error(e);
+
+      setMessage({ status: 'Warning', message: `${pin} is a family pin!` });
     }
+
+    return student;
   };
+
+  const fetchStudentsByFamily = async pin => {
+    const family = await fetch(`${apiUrl}/api/pin/${pin}`)
+      .then(response => {
+        if (!response.ok) {
+          throw Error('Student not found!');
+        }
+
+        return response.json();
+      })
+      .then(json => json.data)
+      .catch(err => setMessage({ status: 'Error', message: err.message }));
+    console.log(family);
+
+    if (family.students.length === 1) {
+      return family.students[0];
+    }
+    setFamily(family.students);
+  };
+  // const getStudentWithPin2 = async pin => {
+  //   const student = await fetch(`${apiUrl}/api/student?pin=${pin}`)
+  //     .then(response => response.json())
+  //     .then(json => json.data[0]);
+
+  // }
 
   if (toTimesheets === true) {
     return <Redirect to="/timesheet" />;

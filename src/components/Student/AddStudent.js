@@ -5,6 +5,7 @@ export default function AddStudent() {
   const name = useFormInput('');
   const grade = useFormInput('');
   const pin = useFormInput('');
+  const [alert, setAlert] = useState(null);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -20,9 +21,20 @@ export default function AddStudent() {
         pin: pin.value
       })
     })
-      .then(response => response.json())
-      .then(json => console.log(json.data))
-      .catch(err => console.error(err));
+      .then(response => {
+        if (!response.ok) {
+          throw Error('Unable to create student!');
+        }
+
+        return response.json();
+      })
+      .then(() =>
+        setAlert({
+          status: 'Success',
+          message: `${name.value} has been created!`
+        })
+      )
+      .catch(err => setAlert({ status: 'Error', message: err.message }));
   }
 
   return (
@@ -77,6 +89,17 @@ export default function AddStudent() {
       >
         Submit
       </button>
+      {alert && (
+        <p
+          className={`${
+            alert.status === 'Error'
+              ? 'border-red-light bg-red-lighter text-red-darker'
+              : 'border-green-light bg-green-lighter text-green-darker'
+          } p-2 mt-2 border-l-4 rounded`}
+        >
+          {alert.message}
+        </p>
+      )}
     </form>
   );
 }
