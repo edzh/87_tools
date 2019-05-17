@@ -32,8 +32,8 @@ export default function StudentSelector(props) {
     <div>
       {selectedStudents.map((student, index) => (
         <button
-          className={`p-2 m-2 border rounded ${
-            student.selected ? 'bg-grey-lighter' : 'bg-transparent'
+          className={`p-2 my-2 w-full shadow block border rounded hover:border-blue ${
+            student.selected ? 'bg-blue text-white' : 'bg-transparent'
           }`}
           key={student._id}
           onClick={() => handleStudentChange(index)}
@@ -42,7 +42,7 @@ export default function StudentSelector(props) {
         </button>
       ))}
       <button
-        className="p-2 m-2 border rounded hover:bg-grey-lighter"
+        className="p-2 my-2 w-full shadow block border rounded bg-grey-lightest hover:bg-blue hover:text-white"
         onClick={() =>
           props.handleFamily(
             selectedStudents.filter(student => student.selected === true)

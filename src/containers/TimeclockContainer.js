@@ -20,8 +20,6 @@ function Timeclock(props) {
   const [fetchedTimesheet, setFetchedTimesheet] = useState([]);
   const [toTimesheets, setToTimesheets] = useState(false);
 
-  console.log(message);
-
   const deleteTimesheet = async timesheetId => {
     try {
       const timesheet = await fetch(`${apiUrl}/api/timesheet/${timesheetId}`, {
@@ -142,12 +140,6 @@ function Timeclock(props) {
     }
     setFamily(family.students);
   };
-  // const getStudentWithPin2 = async pin => {
-  //   const student = await fetch(`${apiUrl}/api/student?pin=${pin}`)
-  //     .then(response => response.json())
-  //     .then(json => json.data[0]);
-
-  // }
 
   if (toTimesheets === true) {
     return <Redirect to="/timesheet" />;
