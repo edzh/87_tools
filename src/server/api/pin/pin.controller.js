@@ -1,18 +1,30 @@
 import { Family } from '../family/family.model';
+import { Student } from '../student/student.model';
 
-export const getOne = async (req, res) => {
+export const getOne = async (req, res, next) => {
   try {
-    const pin = await Family.findOne({ 'pickups.pin': { $eq: req.params.pin } })
+    const studentPin = await Student.findOne({ pin: req.params.pin })
+      .populate()
+      .lean()
+      .exec();
+
+    if (studentPin) {
+      return res.status(200).json({ data: studentPin });
+    }
+
+    const familyPin = await Family.findOne({
+      'pickups.pin': { $eq: req.params.pin }
+    })
       .populate('students')
       .lean()
       .exec();
 
-    if (!pin) {
-      console.log(req.params.pin, 'pin not found');
+    if (!familyPin) {
+      console.log(req.params.pin, 'does not exist!');
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: pin });
+    res.status(200).json({ data: familyPin });
   } catch (e) {
     console.error(e);
     res.status(400).end();

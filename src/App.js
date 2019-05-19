@@ -13,6 +13,8 @@ import StudentPage from './containers/StudentPageContainer';
 import Club from './containers/ClubContainer';
 import ClubPage from './containers/ClubPageContainer';
 
+import DbMigrate from './data/db.migrate.js';
+
 class App extends Component {
   render() {
     return (
@@ -50,6 +52,7 @@ class App extends Component {
               path={'/club/:id'}
               render={({ match }) => <ClubPage club={match.params.id} />}
             />
+            <Route exact path={'/dbmigrate'} render={() => <DbMigrate />} />
           </div>
         </div>
       </Router>

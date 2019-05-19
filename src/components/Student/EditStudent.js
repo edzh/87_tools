@@ -44,10 +44,13 @@ export default function EditStudent(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    editStudent();
+  }
 
+  function editStudent() {
     const removeClubs = initialClubs.filter(club => !clubs.includes(club));
     const addClubs = clubs.filter(club => !initialClubs.includes(club));
-    console.log(removeClubs, addClubs);
+
     swapStudentFromClubs(student._id, removeClubs, addClubs);
 
     fetch(`${apiUrl}/api/student/${student._id}`, {
@@ -71,12 +74,6 @@ export default function EditStudent(props) {
         .then(response => response.json())
         .then(json => json.data.students);
 
-      console.log(
-        `${student}`,
-        clubStudents
-          .map(clubStudent => clubStudent._id)
-          .filter(clubStudent => clubStudent !== student)
-      );
       fetch(`${apiUrl}/api/club/${club}`, {
         method: 'PUT',
         headers: {
@@ -95,9 +92,6 @@ export default function EditStudent(props) {
         .then(response => response.json())
         .then(json => json.data.students);
 
-      console.log(
-        clubStudents.map(clubStudent => clubStudent._id).concat(student)
-      );
       fetch(`${apiUrl}/api/club/${club}`, {
         method: 'PUT',
         headers: {

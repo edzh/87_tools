@@ -4,7 +4,6 @@ import { apiUrl } from 'config';
 import { setFamily } from '../actions/familyActions';
 
 import FamilyDetails from '../components/Family/FamilyDetails';
-import EditFamily from '../components/Family/EditFamily';
 
 function FamilyPage(props) {
   const [fetchedFamily, setFetchedFamily] = useState('');
@@ -19,20 +18,14 @@ function FamilyPage(props) {
         .then(json => json.data);
 
       setFetchedFamily(result);
-      console.log(result);
     };
 
     fetchFamily();
-  }, []);
+  }, [edit]);
 
   return (
     <div>
-      <button onClick={() => setEdit(!edit)}>Edit</button>
-      {edit ? (
-        <EditFamily family={fetchedFamily} setEdit={setEdit} />
-      ) : (
-        <FamilyDetails family={fetchedFamily} />
-      )}
+      <FamilyDetails family={fetchedFamily} edit={edit} setEdit={setEdit} />
     </div>
   );
 }

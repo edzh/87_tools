@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import TimeclockMessage from './TimeclockMessage';
+import Alert from '../Alert';
 import StudentSelector from './StudentSelector';
 
 export default function PinInput(props) {
@@ -29,7 +29,7 @@ export default function PinInput(props) {
           Submit
         </button>
       </form>
-      <TimeclockMessage message={message} />
+      <Alert message={message} />
       <StudentSelector family={family} handleFamily={handleFamily} />
     </div>
   );

@@ -55,16 +55,6 @@ export const updateOne = async (req, res) => {
 
     const updatedStudent = await Student.findOneAndUpdate(
       { _id: req.params.id },
-      // {
-      // $set: {
-      //   name: req.body.name,
-      //   grade: req.body.grade,
-      //   pin: req.body.pin,
-      //   clubs: []
-      // }
-      // $push: { clubs: [req.body.clubs] }
-      // $set: { family: req.body.family }
-      // },
       req.body,
       { new: true }
     )
@@ -76,8 +66,6 @@ export const updateOne = async (req, res) => {
       { $addToSet: { students: [req.params.id] } },
       { new: true }
     );
-
-    console.log(newFamily);
 
     if (!updatedStudent) {
       return res.status(400).end();
