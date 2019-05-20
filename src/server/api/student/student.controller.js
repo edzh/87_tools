@@ -5,7 +5,13 @@ export const getOne = async (req, res) => {
   try {
     const student = await Student.findOne({ _id: req.params.id })
       .lean()
-      .populate('clubs', '-__v')
+      .populate({
+        path: 'clubs',
+        select: '-__v',
+        options: {
+          sort: { day: 1 }
+        }
+      })
       .populate('family', '-students -__v')
       .exec();
 

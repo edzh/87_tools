@@ -5,13 +5,7 @@ import { apiUrl } from 'config';
 import SelectClub from './EditStudentClubs';
 import EditStudentFamily from './EditStudentFamily';
 
-export default function EditStudent(props) {
-  const { student } = props;
-
-  const name = useFormInput(student.name);
-  const grade = useFormInput(student.grade);
-  const pin = useFormInput(student.pin);
-  const family = useFormInput(student.family ? student.family._id : '');
+export default function EditStudent({ student }) {
   const [fetchedClubs, setFetchedClubs] = useState([]);
 
   const [initialClubs, setInitialClubs] = useState([]);
@@ -59,13 +53,9 @@ export default function EditStudent(props) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: name.value,
-        grade: grade.value,
-        pin: pin.value,
-        clubs: clubs.filter(club => club !== ''),
-        family: family.value
+        clubs: clubs.filter(club => club !== '')
       })
-    }).then(setInitialClubs(clubs));
+    });
   }
 
   function swapStudentFromClubs(student, oldClubs, newClubs) {

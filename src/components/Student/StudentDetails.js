@@ -10,15 +10,6 @@ const intToGrade = [
   '4th Grade',
   '5th Grade'
 ];
-const intToDay = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
 
 export default function StudentDetails({
   editDetails,
@@ -58,18 +49,6 @@ export default function StudentDetails({
           </div>
         )}
       </div>
-
-      <li>
-        Clubs
-        {student.clubs
-          .sort((a, b) => a.day - b.day)
-          .map((club, index) => (
-            <ul className="ml-2 list-reset flex" key={index}>
-              <li className="w-32">{intToDay[club.day]}</li>
-              <li>{club.name}</li>
-            </ul>
-          ))}
-      </li>
     </div>
   );
 }

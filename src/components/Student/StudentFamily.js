@@ -24,20 +24,22 @@ export default ({ student, family, editFamily, setEditFamily }) => {
           setEditFamily={setEditFamily}
         />
       ) : (
-        <div className="m-4">
-          <Link to={`/family/${family._id}`} className="no-underline">
-            <p className="text-xl text-blue-dark hover:text-blue">
-              {family.name}
-            </p>
-          </Link>
-          <h3 className="my-2">Pickups</h3>
-          {family.pickups.map((pickup, index) => (
-            <div className="flex" key={index}>
-              <p className="w-64 text-bold">{pickup.name}</p>
-              <p>{pickup.pin}</p>
-            </div>
-          ))}
-        </div>
+        family && (
+          <div className="m-4">
+            <Link to={`/family/${family._id}`} className="no-underline">
+              <p className="text-xl text-blue-dark hover:text-blue">
+                {family.name}
+              </p>
+            </Link>
+            <h3 className="my-2">Pickups</h3>
+            {family.pickups.map((pickup, index) => (
+              <div className="flex" key={index}>
+                <p className="w-64 text-bold">{pickup.name}</p>
+                <p>{pickup.pin}</p>
+              </div>
+            ))}
+          </div>
+        )
       )}
     </div>
   );
