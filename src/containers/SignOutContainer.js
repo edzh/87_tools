@@ -8,7 +8,14 @@ function SignOut(props) {
     props.signOut();
   }
 
-  return <button onClick={handleSubmit}>Sign Out</button>;
+  return (
+    <button
+      className="py-2 no-underline text-blue hover:text-blue-lighter text-sm"
+      onClick={handleSubmit}
+    >
+      Sign Out
+    </button>
+  );
 }
 
 const mapStateToProps = state => {
