@@ -62,7 +62,7 @@ export default ({ family, edit, setEdit }) => {
       <FamilyPins family={family} />
 
       <button
-        className="p-2 bg-red text-white border rounded"
+        className="p-1 bg-red text-white border rounded"
         onClick={() => setShowModal(!showModal)}
       >
         Delete
@@ -73,14 +73,14 @@ export default ({ family, edit, setEdit }) => {
             <h3>
               Are you sure?{' '}
               <button
-                className="p-2 text-xl bold"
+                className="p-1 text-xl bold"
                 onClick={() => setShowModal(!showModal)}
               >
                 x
               </button>
             </h3>
             <button
-              className="p-2 bg-red text-white border rounded"
+              className="p-1 bg-red text-white border rounded"
               onClick={() => removeFamily(family._id)}
             >
               Delete

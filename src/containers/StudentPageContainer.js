@@ -4,33 +4,39 @@ import { setStudent } from '../actions/studentActions';
 
 import StudentDetails from '../components/Student/StudentDetails';
 import EditStudent from '../components/Student/EditStudent';
+
+import StudentFamily from '../components/Student/StudentFamily';
 import { apiUrl } from 'config';
 
 function StudentPage(props) {
   const [student, setStudent] = useState(null);
-  const [edit, setEdit] = useState(false);
+  const [editDetails, setEditDetails] = useState(false);
+  const [editFamily, setEditFamily] = useState(false);
   useEffect(() => {
     props.setStudent(props.student);
 
     fetch(`${apiUrl}/api/student/${props.student}`)
       .then(response => response.json())
       .then(json => setStudent(json.data));
-  }, [edit]);
+  }, [editDetails, editFamily]);
 
   if (!student) {
     return null;
   }
 
-  console.log(student);
-
   return (
     <div>
-      <button onClick={() => setEdit(!edit)}>Edit</button>
-      {edit ? (
-        <EditStudent student={student} />
-      ) : (
-        <StudentDetails student={student} />
-      )}
+      <StudentDetails
+        student={student}
+        editDetails={editDetails}
+        setEditDetails={setEditDetails}
+      />
+      <StudentFamily
+        student={student}
+        family={student.family}
+        editFamily={editFamily}
+        setEditFamily={setEditFamily}
+      />
     </div>
   );
 }

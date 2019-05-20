@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useFormInput } from 'hooks';
 
 import { apiUrl } from 'config';
 
 export default props => {
   const [fetchedFamilies, setFetchedFamilies] = useState([]);
+  const family = useFormInput(props.family ? props.family._id : '');
 
   useEffect(() => {
     const fetchFamilies = async () => {
@@ -13,30 +15,51 @@ export default props => {
 
       setFetchedFamilies(result);
     };
+
     fetchFamilies();
   }, []);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    editStudent();
+  }
+
+  function editStudent() {
+    fetch(`${apiUrl}/api/student/${props.student._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        family: family.value
+      })
+    }).then(() => {
+      props.setEditFamily(!props.editFamily);
+    });
+  }
+
   return (
-    <select
-      className="p-2 m-2 border rounded"
-      value={props.family.value}
-      onChange={props.family.onChange}
-    >
-      {fetchedFamilies
-        .sort((a, b) => {
-          const nameA = a.name.toUpperCase();
-          const nameB = b.name.toUpperCase();
+    <form onSubmit={handleSubmit}>
+      <select className="p-2 mt-4 ml-4 text-sm border rounded" {...family}>
+        {fetchedFamilies
+          .sort((a, b) => {
+            const nameA = a.name.toUpperCase();
+            const nameB = b.name.toUpperCase();
 
-          if (nameA < nameB) return -1;
-          if (nameA > nameB) return 1;
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
 
-          return 0;
-        })
-        .map(family => (
-          <option key={family._id} value={family._id}>
-            {family.name}
-          </option>
-        ))}
-    </select>
+            return 0;
+          })
+          .map(family => (
+            <option key={family._id} value={family._id}>
+              {family.name}
+            </option>
+          ))}
+      </select>
+      <button className="p-2 m-4 block border rounded" type="submit">
+        Save
+      </button>
+    </form>
   );
 };

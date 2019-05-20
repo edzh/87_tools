@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import EditStudentDetails from './EditStudentDetails';
+
 const intToGrade = [
   'Kindergarten',
   '1st Grade',
@@ -18,43 +20,45 @@ const intToDay = [
   'Saturday'
 ];
 
-export default function StudentDetails({ student }) {
+export default function StudentDetails({
+  editDetails,
+  setEditDetails,
+  student
+}) {
   return (
     <div className="">
-      <div className="border rounded p-2">
-        <h2>{student.name}</h2>
-        <div className="my-2 flex">
-          <h3 className="w-16">Grade</h3>
-          <p className="text-xl">{intToGrade[student.grade]}</p>
+      <div className="border rounded shadow-md">
+        <div className="flex border-b bg-grey-darkest w-full">
+          <h2 className="m-4 font-normal text-white">{student.name}</h2>
+          <button
+            className={`${
+              editDetails ? 'bg-blue text-white' : 'bg-white'
+            } m-4 ml-auto text-xs border rounded shadow p-1`}
+            onClick={() => setEditDetails(!editDetails)}
+          >
+            Edit
+          </button>
         </div>
-        <div className="mt-2 flex">
-          <p className="font-bold w-16">PIN</p>
-          <p>{student.pin}</p>
-        </div>
-      </div>
-
-      <div className="border rounded p-2 my-2">
-        {student.family && (
-          <div className="mb-2">
-            <div className="flex">
-              <h3 className="w-16">Family</h3>
-              <Link
-                to={`/family/${student.family._id}`}
-                className="text-xl no-underline"
-              >
-                {student.family.name}
-              </Link>
+        {editDetails ? (
+          <EditStudentDetails
+            student={student}
+            editDetails={editDetails}
+            setEditDetails={setEditDetails}
+          />
+        ) : (
+          <div>
+            <div className="m-4 flex">
+              <h3 className="w-32 text-xl">Grade</h3>
+              <p className="text-xl">{intToGrade[student.grade]}</p>
             </div>
-            <h3 className="my-2">Pickups</h3>
-            {student.family.pickups.map((pickup, index) => (
-              <div className="flex" key={index}>
-                <p className="w-64 text-bold">{pickup.name}</p>
-                <p>{pickup.pin}</p>
-              </div>
-            ))}
+            <div className="m-4 flex">
+              <h3 className="w-32 text-xl">PIN</h3>
+              <p className="text-xl">{student.pin}</p>
+            </div>
           </div>
         )}
       </div>
+
       <li>
         Clubs
         {student.clubs
