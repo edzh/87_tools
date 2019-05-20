@@ -43,7 +43,7 @@ export default function AddStudent() {
       onSubmit={handleSubmit}
     >
       <h2 className="mb-4">New Student</h2>
-      <div className="mb-2">
+      <div className="mb-4">
         <label className="font-bold text-sm block">Name</label>
         <input
           className="border rounded p-1 w-full shadow block"
@@ -51,7 +51,7 @@ export default function AddStudent() {
           {...name}
         />
       </div>
-      <div className="mb-2">
+      <div className="mb-4">
         <label className="font-bold text-sm block">Grade</label>
         <select className="border rounded p-1 w-full shadow block" {...grade}>
           <option value="">---</option>
@@ -63,7 +63,7 @@ export default function AddStudent() {
           <option value="5">5th</option>
         </select>
       </div>
-      <div className="mb-2">
+      <div className="mb-4">
         <label className="font-bold text-sm block">PIN</label>
         <input
           className="border rounded p-1 w-full shadow block"
@@ -72,7 +72,7 @@ export default function AddStudent() {
         />
       </div>
       <button
-        className="border shadow rounded p-1 bg-blue text-white font-bold text-lg hover:bg-grey-lighter hover:text-blue w-full"
+        className="border shadow rounded p-1 bg-blue text-white text-lg hover:bg-grey-lighter hover:text-blue w-full"
         type="submit"
       >
         Submit

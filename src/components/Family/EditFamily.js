@@ -4,7 +4,7 @@ import { useFetchPin } from 'hooks';
 
 import { useFormInput } from '../Student/AddStudent';
 
-export default ({ setEdit, family }) => {
+export default ({ setEditDetails, family }) => {
   const name = useFormInput(family.name);
   const pickupName = useFormInput('');
   const pin = useFormInput('');
@@ -19,15 +19,18 @@ export default ({ setEdit, family }) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ name: name.value })
-    }).then(() => setEdit(false));
+    }).then(() => setEditDetails(false));
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <p className="font-bold text-sm">Name</p>
-      <input className="block p-2 border rounded" type="text" {...name} />
-      <button className="block p-2 border " type="submit">
-        Save Family
+    <form className="m-4" onSubmit={handleSubmit}>
+      <p className="font-bold">Family Name</p>
+      <input className="p-2 my-2 border rounded" type="text" {...name} />
+      <button
+        className="p-2 border rounded ml-2 bg-blue text-white hover:bg-white hover:text-black"
+        type="submit"
+      >
+        Save Name
       </button>
     </form>
   );

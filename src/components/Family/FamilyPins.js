@@ -1,26 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { apiUrl } from 'config';
+import Alert from '../Alert';
 
 import EditFamilyPins from './EditFamilyPins';
 
-export default ({ family }) => {
-  const [edit, setEdit] = useState(false);
+export default ({ family, editPickups, setEditPickups }) => {
+  const [message, setMessage] = useState('');
+  const [pickups, setPickups] = useState([]);
+
+  useEffect(() => {
+    setPickups(family.pickups);
+  }, [family]);
+
+  function handleRemove(pinToRemove) {
+    const updatedPins = pickups.filter(pickup => pickup.pin !== pinToRemove);
+
+    fetch(`${apiUrl}/api/family/${family._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ pickups: updatedPins })
+    })
+      .then(() => setPickups(updatedPins))
+      .then(() =>
+        setMessage({
+          status: 'Warning',
+          message: `${pinToRemove} has been removed!`
+        })
+      );
+  }
 
   return (
-    <div className="p-2 border w-1/3">
-      <div className="flex">
-        <h3 className="">Pickups</h3>
+    <div className="border rounded shadow-md my-4">
+      <div className="flex border-b">
+        <h3 className="m-4">Pickups</h3>
         <button
           className={`${
-            edit
-              ? 'bg-blue text-white hover:bg-white hover:text-black'
-              : 'bg-white hover:text-white hover:bg-blue'
-          } p-1 ml-auto text-xs border rounded`}
-          onClick={() => setEdit(!edit)}
+            editPickups ? 'bg-blue text-white' : 'bg-white'
+          } m-4 ml-auto text-xs border rounded shadow p-1`}
+          onClick={() => setEditPickups(!editPickups)}
         >
           Edit
         </button>
       </div>
-      <EditFamilyPins family={family} edit={edit} />
+      <div className="m-4">
+        <div className="flex">
+          <p className="font-bold w-64">Name</p>
+          <p className="font-bold w-32">Pin</p>
+        </div>
+        {pickups &&
+          pickups.map((pickup, index) => (
+            <div className="flex my-4" key={pickup.pin}>
+              <p className="w-64">{pickup.name}</p>
+              <p className="w-16">{pickup.pin}</p>
+              {editPickups ? (
+                <button
+                  className=""
+                  type="button"
+                  onClick={() => handleRemove(pickup.pin)}
+                >
+                  Remove
+                </button>
+              ) : null}
+            </div>
+          ))}
+      </div>
+      {editPickups && (
+        <EditFamilyPins
+          family={family}
+          pickups={pickups}
+          setPickups={setPickups}
+          editPickups={editPickups}
+          setEditPickups={setEditPickups}
+          setMessage={setMessage}
+        />
+      )}
+      <Alert message={message} />
     </div>
   );
 };

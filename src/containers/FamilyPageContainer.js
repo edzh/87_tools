@@ -4,10 +4,12 @@ import { apiUrl } from 'config';
 import { setFamily } from '../actions/familyActions';
 
 import FamilyDetails from '../components/Family/FamilyDetails';
+import FamilyPins from '../components/Family/FamilyPins';
 
 function FamilyPage(props) {
   const [fetchedFamily, setFetchedFamily] = useState('');
-  const [edit, setEdit] = useState(false);
+  const [editDetails, setEditDetails] = useState(false);
+  const [editPickups, setEditPickups] = useState(false);
 
   useEffect(() => {
     props.setFamily(props.family);
@@ -21,11 +23,20 @@ function FamilyPage(props) {
     };
 
     fetchFamily();
-  }, [edit]);
+  }, [editDetails]);
 
   return (
     <div>
-      <FamilyDetails family={fetchedFamily} edit={edit} setEdit={setEdit} />
+      <FamilyDetails
+        family={fetchedFamily}
+        editDetails={editDetails}
+        setEditDetails={setEditDetails}
+      />
+      <FamilyPins
+        family={fetchedFamily}
+        editPickups={editPickups}
+        setEditPickups={setEditPickups}
+      />
     </div>
   );
 }
