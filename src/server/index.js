@@ -13,6 +13,9 @@ import studentRouter from './api/student/student.router';
 import timesheetRouter from './api/timesheet/timesheet.router';
 import timestampRouter from './api/timestamp/timestamp.router';
 
+import userRouter from './api/user/user.router';
+import { signup, signin, protect } from './utils/auth';
+
 export const app = express();
 
 app.use(cors());
@@ -27,6 +30,9 @@ app.use('/api/pin', pinRouter);
 app.use('/api/student', studentRouter);
 app.use('/api/timesheet', timesheetRouter);
 app.use('/api/timestamp', timestampRouter);
+app.use('/api/user', protect, userRouter);
+app.post('/api/signup', signup);
+app.post('/api/signin', signin);
 
 export const start = async () => {
   try {

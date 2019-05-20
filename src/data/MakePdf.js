@@ -55,7 +55,7 @@ function MakePdf(props) {
     }
 
     // doc.save(`${Date.now()}-log.pdf`);
-    doc.output('dataurlnewwindow', { filename: 'log' });
+    doc.output('dataurlnewwindow', 'log.pdf');
 
     function clubNameByDay(clubs, day) {
       return clubs.find(club => club.day === day)

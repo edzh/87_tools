@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './containers/NavbarContainer';
 import PinLookup from './containers/PinLookup';
 import AddStudent from './components/Student/AddStudent';
 import TimesheetForm from './components/Timesheet/TimesheetForm';
@@ -12,6 +12,8 @@ import FamilyPage from './containers/FamilyPageContainer';
 import StudentPage from './containers/StudentPageContainer';
 import Club from './containers/ClubContainer';
 import ClubPage from './containers/ClubPageContainer';
+import SignIn from './containers/SignInContainer';
+import SignUp from './containers/SignUpContainer';
 
 import DbMigrate from './data/db.migrate.js';
 
@@ -20,7 +22,7 @@ class App extends Component {
     return (
       <Router>
         <div style={{ fontFamily: ['Roboto', 'sans-serif'] }}>
-          <Navbar className="nav" />
+          <Navbar />
           <div className="lg:ml-64 ml-16 p-4">
             <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
             <Route exact path={'/addstudent'} render={() => <AddStudent />} />
@@ -52,6 +54,8 @@ class App extends Component {
               path={'/club/:id'}
               render={({ match }) => <ClubPage club={match.params.id} />}
             />
+            <Route exact path={'/signin'} render={() => <SignIn />} />
+            <Route exact path={'/signup'} render={() => <SignUp />} />
             <Route exact path={'/dbmigrate'} render={() => <DbMigrate />} />
           </div>
         </div>
