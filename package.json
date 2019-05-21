@@ -1,6 +1,9 @@
 {
   "name": "87_tools",
   "version": "0.1.0",
+  "engines": {
+    "node": "11.9.0"
+  },
   "private": true,
   "dependencies": {
     "bcrypt": "^3.0.6",
