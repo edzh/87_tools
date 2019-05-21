@@ -151,12 +151,12 @@ function Timeclock(props) {
       })
       .then(json => json.data)
       .catch(err => setMessage({ status: 'Error', message: err.message }));
-    console.log(family);
-
-    if (family.students.length === 1) {
-      return family.students[0];
+    if (family) {
+      if (family.students.length === 1) {
+        return family.students[0];
+      }
+      setFamily(family.students);
     }
-    setFamily(family.students);
   };
 
   if (toTimesheets === true) {
