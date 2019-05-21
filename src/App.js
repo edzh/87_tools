@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import WithAuth from 'containers/WithAuthContainer';
+import WithAuth from './containers/WithAuthContainer';
 
 import Navbar from './containers/NavbarContainer';
 import PinLookup from './containers/PinLookup';
