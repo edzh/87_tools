@@ -25,7 +25,7 @@ export default function(props) {
         <label className="block">Password</label>
         <input
           className="p-2 mb-4 border rounded"
-          type="passsword"
+          type="password"
           {...password}
         />
         <button className="block p-2 border rounded" type="submit">
