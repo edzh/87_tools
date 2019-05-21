@@ -1,5 +1,5 @@
 import React from 'react';
-import { apiUrl } from 'config';
+import config from 'config';
 import { useFormInput } from '../Student/AddStudent';
 
 export default function FamilyForm(props) {
@@ -8,9 +8,10 @@ export default function FamilyForm(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`${apiUrl}/api/family`, {
+    fetch(`${config.apiUrl}/api/family`, {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${config.token}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ name: name.value })

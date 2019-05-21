@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useFormInput } from 'hooks';
 
-import { apiUrl } from 'config';
+import config from 'config';
 
 export default props => {
   const [fetchedFamilies, setFetchedFamilies] = useState([]);
@@ -9,7 +9,11 @@ export default props => {
 
   useEffect(() => {
     const fetchFamilies = async () => {
-      const result = await fetch(`${apiUrl}/api/family`)
+      const result = await fetch(`${config.apiUrl}/api/family`, {
+        headers: {
+          Authorization: `Bearer ${config.token}`
+        }
+      })
         .then(response => response.json())
         .then(json => json.data);
 
@@ -25,10 +29,11 @@ export default props => {
   }
 
   function editStudent() {
-    fetch(`${apiUrl}/api/student/${props.student._id}`, {
+    fetch(`${config.apiUrl}/api/student/${props.student._id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.token}`
       },
       body: JSON.stringify({
         family: family.value

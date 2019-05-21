@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from 'config';
+import config from 'config';
 import { useFetchPin } from 'hooks';
 
 import { useFormInput } from '../Student/AddStudent';
@@ -18,7 +18,11 @@ export default ({
   async function handleAddPin(e) {
     e.preventDefault();
 
-    const pinCheck = await fetch(`${apiUrl}/api/pin/${pin.value}`)
+    const pinCheck = await fetch(`${config.apiUrl}/api/pin/${pin.value}`, {
+      headers: {
+        Authorization: `Bearer ${config.token}`
+      }
+    })
       .then(response => response.json())
       .then(json => json.data)
       .catch(() => setMessage({ status: 'Success', message: 'Pin added.' }));
@@ -26,10 +30,11 @@ export default ({
     if (!pinCheck) {
       const newPins = [...pickups, { name: pickupName.value, pin: pin.value }];
 
-      fetch(`${apiUrl}/api/family/${family._id}`, {
+      fetch(`${config.apiUrl}/api/family/${family._id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${config.token}`
         },
         body: JSON.stringify({ pickups: newPins })
       })

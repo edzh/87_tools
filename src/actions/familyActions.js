@@ -1,7 +1,7 @@
 import 'cross-fetch';
 
 import * as types from './familyTypes';
-import { apiUrl } from 'config';
+import config from 'config';
 
 function fetchFamiliesRequest() {
   return {
@@ -25,7 +25,11 @@ function fetchFamiliesFailure() {
 export function fetchFamilies() {
   return dispatch => {
     dispatch(fetchFamiliesRequest());
-    return fetch(`${apiUrl}/api/family`)
+    return fetch(`${config.apiUrl}/api/family`, {
+      headers: {
+        Authorization: `Bearer ${config.token}`
+      }
+    })
       .then(response => response.json())
       .then(json => {
         dispatch(fetchFamiliesSuccess(json.data));

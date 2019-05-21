@@ -1,5 +1,5 @@
 import 'cross-fetch';
-import { apiUrl } from 'config';
+import config from 'config';
 import * as types from './userTypes';
 
 export function signInRequest() {
@@ -25,10 +25,11 @@ export function signInFailure(error) {
 export function signIn(email, password) {
   return dispatch => {
     dispatch(signInRequest());
-    return fetch(`${apiUrl}/api/signin`, {
+    return fetch(`${config.apiUrl}/api/signin`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.token}`
       },
       body: JSON.stringify({ email, password })
     })
@@ -64,10 +65,11 @@ export function signUpFailure(error) {
 export function signUp(email, password) {
   return dispatch => {
     dispatch(signUpRequest());
-    return fetch(`${apiUrl}/api/signup`, {
+    return fetch(`${config.apiUrl}/api/signup`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.token}`
       },
       body: JSON.stringify({ email, password })
     })
@@ -95,7 +97,7 @@ export function signOutRequest() {
 
 export function fetchUserInfo(success, failure, token) {
   return dispatch => {
-    fetch(`${apiUrl}/api/user`, {
+    fetch(`${config.apiUrl}/api/user`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

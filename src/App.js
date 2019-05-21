@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import WithAuth from 'containers/WithAuthContainer';
 
 import Navbar from './containers/NavbarContainer';
 import PinLookup from './containers/PinLookup';
@@ -25,30 +26,78 @@ class App extends Component {
           <Navbar />
           <div className="lg:ml-64 ml-16 p-4">
             <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
-            <Route exact path={'/addstudent'} render={() => <AddStudent />} />
-            <Route exact path={'/timesheet/'} render={() => <Timesheet />} />
+            <Route
+              exact
+              path={'/addstudent'}
+              render={() => (
+                <WithAuth>
+                  <AddStudent />
+                </WithAuth>
+              )}
+            />
+            <Route
+              exact
+              path={'/timesheet/'}
+              render={() => (
+                <WithAuth>
+                  <Timesheet />
+                </WithAuth>
+              )}
+            />
             <Route
               exact
               path={'/timesheet/new'}
-              render={() => <TimesheetForm />}
+              render={() => (
+                <WithAuth>
+                  <TimesheetForm />
+                </WithAuth>
+              )}
             />
             <Route
               exact
               path={'/timesheet/id/:id'}
-              render={({ match }) => <Timeclock timesheet={match.params.id} />}
+              render={({ match }) => (
+                <WithAuth>
+                  <Timeclock timesheet={match.params.id} />
+                </WithAuth>
+              )}
             />
-            <Route exact path={'/family'} render={() => <Family />} />
+            <Route
+              exact
+              path={'/family'}
+              render={() => (
+                <WithAuth>
+                  <Family />
+                </WithAuth>
+              )}
+            />
             <Route
               exact
               path={'/family/:id'}
-              render={({ match }) => <FamilyPage family={match.params.id} />}
+              render={({ match }) => (
+                <WithAuth>
+                  <FamilyPage family={match.params.id} />
+                </WithAuth>
+              )}
             />
             <Route
               exact
               path={'/student/:id'}
-              render={({ match }) => <StudentPage student={match.params.id} />}
+              render={({ match }) => (
+                <WithAuth>
+                  <StudentPage student={match.params.id} />
+                </WithAuth>
+              )}
             />
-            <Route exact path={'/club'} render={() => <Club />} />
+            <Route
+              exact
+              path={'/club'}
+              render={() => (
+                <WithAuth>
+                  <Club />
+                </WithAuth>
+              )}
+            />
             <Route
               exact
               path={'/club/:id'}

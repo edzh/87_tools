@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { apiUrl } from 'config';
+import config from 'config';
 
 import FamilyDetailsDeleteModal from './FamilyDetailsDeleteModal';
 import FamilyPins from './FamilyPins';
@@ -13,8 +13,11 @@ export default ({ family, editDetails, setEditDetails }) => {
 
   const removeFamily = async familyId => {
     try {
-      const family = await fetch(`${apiUrl}/api/family/${familyId}`, {
-        method: 'DELETE'
+      const family = await fetch(`${config.apiUrl}/api/family/${familyId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${config.token}`
+        }
       }).then(() => {
         return <Redirect to={'/family'} />;
       });

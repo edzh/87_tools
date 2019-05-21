@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { apiUrl } from 'config';
+import config from 'config';
 
 import { setTimesheet } from '../actions/timesheetActions';
 import { fetchStudents } from '../actions/studentActions';
@@ -11,6 +11,8 @@ import PinInput from '../components/Timeclock/PinInput';
 import PinLookup from './PinLookup';
 import TimestampList from '../components/Timeclock/TimestampList';
 import MakePdf from 'data/MakePdf';
+
+import WithAuth from './WithAuthContainer';
 
 function Timeclock(props) {
   const [pin, setPin] = useState('');
@@ -22,9 +24,15 @@ function Timeclock(props) {
 
   const deleteTimesheet = async timesheetId => {
     try {
-      const timesheet = await fetch(`${apiUrl}/api/timesheet/${timesheetId}`, {
-        method: 'DELETE'
-      }).then(() => {
+      const timesheet = await fetch(
+        `${config.apiUrl}/api/timesheet/${timesheetId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${config.token}`
+          }
+        }
+      ).then(() => {
         setToTimesheets(true);
       });
 
@@ -39,7 +47,11 @@ function Timeclock(props) {
   });
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/timesheet/${props.timesheet}`)
+    fetch(`${config.apiUrl}/api/timesheet/${props.timesheet}`, {
+      headers: {
+        Authorization: `Bearer ${config.token}`
+      }
+    })
       .then(response => response.json())
       .then(json => {
         setFetchedTimesheet(json.data);
@@ -65,10 +77,11 @@ function Timeclock(props) {
   }
 
   const postTimestamp = async (student, fobStatus) => {
-    const timestamp = await fetch(`${apiUrl}/api/timestamp`, {
+    const timestamp = await fetch(`${config.apiUrl}/api/timestamp`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.token}`
       },
       body: JSON.stringify({
         student: student._id,
@@ -100,7 +113,11 @@ function Timeclock(props) {
   const getStudentWithPin = async pin => {
     let student;
 
-    student = await fetch(`${apiUrl}/api/student?pin=${pin}`)
+    student = await fetch(`${config.apiUrl}/api/student?pin=${pin}`, {
+      headers: {
+        Authorization: `Bearer ${config.token}`
+      }
+    })
       .then(response => {
         if (!response.ok) {
           throw Error('Student pin not found');
@@ -123,7 +140,11 @@ function Timeclock(props) {
   };
 
   const fetchStudentsByFamily = async pin => {
-    const family = await fetch(`${apiUrl}/api/pin/${pin}`)
+    const family = await fetch(`${config.apiUrl}/api/pin/${pin}`, {
+      headers: {
+        Authorization: `Bearer ${config.token}`
+      }
+    })
       .then(response => {
         if (!response.ok) {
           throw Error('Student not found!');
@@ -147,7 +168,7 @@ function Timeclock(props) {
 
   return (
     <div className="lg:flex">
-      <div className="lg:w-1/3">
+      <div className="lg:w-1/3 lg:1/3">
         <PinInput
           pin={pin}
           setPin={setPin}

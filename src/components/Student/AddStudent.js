@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { apiUrl } from 'config';
+import config from 'config';
 
 export default function AddStudent() {
   const name = useFormInput('');
@@ -10,10 +10,11 @@ export default function AddStudent() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`${apiUrl}/api/student`, {
+    fetch(`${config.apiUrl}/api/student`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.token}`
       },
       body: JSON.stringify({
         name: name.value,

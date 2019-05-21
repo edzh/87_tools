@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
-import { apiUrl } from 'config';
+import config from 'config';
 import { format } from 'date-fns';
 import {
   addTimesheetHeader,
@@ -16,7 +16,14 @@ function MakePdf(props) {
 
   useEffect(() => {
     const fetchTimesheet = async () => {
-      const result = await fetch(`${apiUrl}/api/timesheet/${props.timesheetId}`)
+      const result = await fetch(
+        `${config.apiUrl}/api/timesheet/${props.timesheetId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${config.token}`
+          }
+        }
+      )
         .then(response => response.json())
         .then(json => json.data);
 
@@ -24,7 +31,11 @@ function MakePdf(props) {
     };
 
     const fetchClubs = async () => {
-      const result = await fetch(`${apiUrl}/api/club`)
+      const result = await fetch(`${config.apiUrl}/api/club`, {
+        headers: {
+          Authorization: `Bearer ${config.token}`
+        }
+      })
         .then(response => response.json())
         .then(json => json.data);
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from 'config';
+import config from 'config';
 
 const intToDay = [
   'Sunday',
@@ -31,7 +31,11 @@ export default function EditStudentClubs({ student, editClubs, setEditClubs }) {
 
   useEffect(() => {
     const fetchClubs = async () => {
-      const result = await fetch(`${apiUrl}/api/club`)
+      const result = await fetch(`${config.apiUrl}/api/club`, {
+        headers: {
+          Authorization: `Bearer ${config.token}`
+        }
+      })
         .then(response => response.json())
         .then(json => json.data);
 
@@ -52,10 +56,11 @@ export default function EditStudentClubs({ student, editClubs, setEditClubs }) {
 
     swapStudentFromClubs(student._id, removeClubs, addClubs);
 
-    fetch(`${apiUrl}/api/student/${student._id}`, {
+    fetch(`${config.apiUrl}/api/student/${student._id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.token}`
       },
       body: JSON.stringify({
         clubs: clubs.filter(club => club !== '')
@@ -65,14 +70,19 @@ export default function EditStudentClubs({ student, editClubs, setEditClubs }) {
 
   function swapStudentFromClubs(student, oldClubs, newClubs) {
     oldClubs.forEach(async club => {
-      const clubStudents = await fetch(`${apiUrl}/api/club/${club}`)
+      const clubStudents = await fetch(`${config.apiUrl}/api/club/${club}`, {
+        headers: {
+          Authorization: `Bearer ${config.token}`
+        }
+      })
         .then(response => response.json())
         .then(json => json.data.students);
 
-      fetch(`${apiUrl}/api/club/${club}`, {
+      fetch(`${config.apiUrl}/api/club/${club}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${config.token}`
         },
         body: JSON.stringify({
           students: clubStudents
@@ -83,14 +93,19 @@ export default function EditStudentClubs({ student, editClubs, setEditClubs }) {
     });
 
     newClubs.forEach(async club => {
-      const clubStudents = await fetch(`${apiUrl}/api/club/${club}`)
+      const clubStudents = await fetch(`${config.apiUrl}/api/club/${club}`, {
+        headers: {
+          Authorization: `Bearer ${config.token}`
+        }
+      })
         .then(response => response.json())
         .then(json => json.data.students);
 
-      fetch(`${apiUrl}/api/club/${club}`, {
+      fetch(`${config.apiUrl}/api/club/${club}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${config.token}`
         },
         body: JSON.stringify({
           students: clubStudents

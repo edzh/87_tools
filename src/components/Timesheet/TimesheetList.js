@@ -1,5 +1,5 @@
 import React from 'react';
-import { apiUrl } from 'config';
+import config from 'config';
 import { format } from 'date-fns';
 
 import TimesheetListRow from './TimesheetListRow';

@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
-import { apiUrl } from 'config';
+import config from 'config';
 
 export default function TimestampList(props) {
   const { timesheet } = props;
 
   const removeTimestamp = async timestampId => {
     try {
-      const timestamp = await fetch(`${apiUrl}/api/timestamp/${timestampId}`, {
-        method: 'DELETE'
-      }).then(() => {
+      const timestamp = await fetch(
+        `${config.apiUrl}/api/timestamp/${timestampId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${config.token}`
+          }
+        }
+      ).then(() => {
         props.setRefresh(true);
       });
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from 'config';
+import config from 'config';
 import { useFetchPin } from 'hooks';
 
 import { useFormInput } from '../Student/AddStudent';
@@ -13,10 +13,11 @@ export default ({ setEditDetails, family }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`${apiUrl}/api/family/${family._id}`, {
+    fetch(`${config.apiUrl}/api/family/${family._id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.token}`
       },
       body: JSON.stringify({ name: name.value })
     }).then(() => setEditDetails(false));

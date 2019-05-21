@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from 'config';
+import config from 'config';
 import Alert from '../Alert';
 
 import EditFamilyPins from './EditFamilyPins';
@@ -15,10 +15,11 @@ export default ({ family, editPickups, setEditPickups }) => {
   function handleRemove(pinToRemove) {
     const updatedPins = pickups.filter(pickup => pickup.pin !== pinToRemove);
 
-    fetch(`${apiUrl}/api/family/${family._id}`, {
+    fetch(`${config.apiUrl}/api/family/${family._id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.token}`
       },
       body: JSON.stringify({ pickups: updatedPins })
     })

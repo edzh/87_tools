@@ -1,5 +1,5 @@
 import * as types from './clubTypes';
-import { apiUrl } from 'config';
+import config from 'config';
 
 function fetchClubsRequest() {
   return {
@@ -24,7 +24,11 @@ function fetchClubsFailure(err) {
 export function fetchClubs() {
   return dispatch => {
     dispatch(fetchClubsRequest());
-    return fetch(`${apiUrl}/api/club`)
+    return fetch(`${config.apiUrl}/api/club`, {
+      headers: {
+        Authorization: `Bearer ${config.token}`
+      }
+    })
       .then(response => response.json())
       .then(json => {
         dispatch(fetchClubsSuccess(json.data));
