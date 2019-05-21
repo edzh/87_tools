@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFormInput } from 'hooks';
-import config from 'config';
+import { apiUrl } from 'config';
 
 import SelectClub from './EditStudentClubs';
 import EditStudentFamily from './EditStudentFamily';
@@ -20,11 +20,11 @@ export default function EditStudentDetails({
   }
 
   function editStudent() {
-    fetch(`${config.apiUrl}/api/student/${student._id}`, {
+    fetch(`${apiUrl}/api/student/${student._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${config.token}`
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
       },
       body: JSON.stringify({
         name: name.value,

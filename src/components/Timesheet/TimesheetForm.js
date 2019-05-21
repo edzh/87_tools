@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { format } from 'date-fns';
-import config from 'config';
+import { apiUrl } from 'config';
 
 export default function Timesheet() {
   const io = useFormInput('');
@@ -11,11 +11,11 @@ export default function Timesheet() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`${config.apiUrl}/api/timesheet`, {
+    fetch(`${apiUrl}/api/timesheet`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${config.token}`
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
       },
       body: JSON.stringify({
         io: io.value,

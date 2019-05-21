@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import config from 'config';
+import { apiUrl } from 'config';
 import { setFamily } from '../actions/familyActions';
 
 import FamilyDetails from '../components/Family/FamilyDetails';
@@ -15,14 +15,11 @@ function FamilyPage(props) {
     props.setFamily(props.family);
 
     const fetchFamily = async () => {
-      const result = await fetch(
-        `${config.apiUrl}/api/family/${props.family}`,
-        {
-          headers: {
-            Authorization: `Bearer ${config.token}`
-          }
+      const result = await fetch(`${apiUrl}/api/family/${props.family}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('id_token')}`
         }
-      )
+      })
         .then(response => response.json())
         .then(json => json.data);
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import config from 'config';
+import { apiUrl } from 'config';
 
 export default props => {
   const [fetchedStudents, setFetchedStudents] = useState([]);
   useEffect(() => {
     const fetchStudents = async () => {
-      const students = await fetch(`${config.apiUrl}/api/student`, {
+      const students = await fetch(`${apiUrl}/api/student`, {
         headers: {
-          Authorization: `Bearer ${config.token}`
+          Authorization: `Bearer ${localStorage.getItem('id_token')}`
         }
       })
         .then(response => response.json())
@@ -30,24 +30,21 @@ export default props => {
   function migrateStudentPins() {
     reducePins().forEach(studentPin => {
       const fetchStudent = async () => {
-        const student = await fetch(
-          `${config.apiUrl}/api/student/${studentPin.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${config.token}`
-            }
+        const student = await fetch(`${apiUrl}/api/student/${studentPin.id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
           }
-        )
+        })
           .then(response => response.json())
           .then(json => console.log(json.data));
       };
 
       const postPin = async () => {
-        const pin = await fetch(`${config.apiUrl}/api/pin`, {
+        const pin = await fetch(`${apiUrl}/api/pin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${config.token}`
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
           },
           body: JSON.stringify({
             pin: studentPin.pin,
@@ -59,11 +56,11 @@ export default props => {
           .then(json => updatePin(json.data));
 
         const updatePin = async data => {
-          fetch(`${config.apiUrl}/api/student/${studentPin.id}`, {
+          fetch(`${apiUrl}/api/student/${studentPin.id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${config.token}`
+              Authorization: `Bearer ${localStorage.getItem('id_token')}`
             },
             body: JSON.stringify({ pin: data._id })
           });

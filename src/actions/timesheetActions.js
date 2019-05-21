@@ -1,7 +1,7 @@
 import 'cross-fetch';
 
 import * as types from './timesheetTypes';
-import config from 'config';
+import { apiUrl } from 'config';
 
 function fetchTimesheetsRequest() {
   return {
@@ -25,9 +25,9 @@ function fetchTimesheetsFailure() {
 export function fetchTimesheets() {
   return dispatch => {
     dispatch(fetchTimesheetsRequest());
-    return fetch(`${config.apiUrl}/api/timesheet`, {
+    return fetch(`${apiUrl}/api/timesheet`, {
       headers: {
-        Authorization: `Bearer ${config.token}`
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
     })
       .then(response => response.json())

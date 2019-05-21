@@ -1,7 +1,7 @@
 import 'cross-fetch';
 
 import * as types from './studentTypes';
-import config from 'config';
+import { apiUrl } from 'config';
 
 function fetchStudentsRequest() {
   return {
@@ -25,9 +25,9 @@ function fetchStudentsFailure() {
 export function fetchStudents() {
   return dispatch => {
     dispatch(fetchStudentsRequest());
-    return fetch(`${config.apiUrl}/api/student`, {
+    return fetch(`${apiUrl}/api/student`, {
       headers: {
-        Authorization: `Bearer ${config.token}`
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
     })
       .then(response => response.json())

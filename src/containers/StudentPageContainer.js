@@ -7,7 +7,7 @@ import StudentDetails from '../components/Student/StudentDetails';
 import StudentFamily from '../components/Student/StudentFamily';
 import StudentClubs from '../components/Student/StudentClubs';
 
-import config from 'config';
+import { apiUrl } from 'config';
 
 function StudentPage({ isAuthenticated, ...props }) {
   const [student, setStudent] = useState(null);
@@ -18,9 +18,9 @@ function StudentPage({ isAuthenticated, ...props }) {
   useEffect(() => {
     props.setStudent(props.student);
 
-    fetch(`${config.apiUrl}/api/student/${props.student}`, {
+    fetch(`${apiUrl}/api/student/${props.student}`, {
       headers: {
-        Authorization: `Bearer ${config.token}`
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
     })
       .then(response => response.json())

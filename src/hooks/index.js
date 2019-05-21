@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import config from 'config';
+import { apiUrl } from 'config';
 import { Redirect } from 'react-router-dom';
 
 export const useFetchPin = async pin => {
-  const pinExists = await fetch(`${config.apiUrl}/api/pin/${pin}`, {
+  const pinExists = await fetch(`${apiUrl}/api/pin/${pin}`, {
     headers: {
-      Authorization: `Bearer ${config.token}`
+      Authorization: `Bearer ${localStorage.getItem('id_token')}`
     }
   })
     .then(response => response.json())

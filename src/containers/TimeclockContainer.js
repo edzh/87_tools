@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import config from 'config';
+import { apiUrl } from 'config';
 
 import { setTimesheet } from '../actions/timesheetActions';
 import { fetchStudents } from '../actions/studentActions';
@@ -24,15 +24,12 @@ function Timeclock(props) {
 
   const deleteTimesheet = async timesheetId => {
     try {
-      const timesheet = await fetch(
-        `${config.apiUrl}/api/timesheet/${timesheetId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${config.token}`
-          }
+      const timesheet = await fetch(`${apiUrl}/api/timesheet/${timesheetId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('id_token')}`
         }
-      ).then(() => {
+      }).then(() => {
         setToTimesheets(true);
       });
 
@@ -47,9 +44,9 @@ function Timeclock(props) {
   });
 
   useEffect(() => {
-    fetch(`${config.apiUrl}/api/timesheet/${props.timesheet}`, {
+    fetch(`${apiUrl}/api/timesheet/${props.timesheet}`, {
       headers: {
-        Authorization: `Bearer ${config.token}`
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
     })
       .then(response => response.json())
@@ -77,11 +74,11 @@ function Timeclock(props) {
   }
 
   const postTimestamp = async (student, fobStatus) => {
-    const timestamp = await fetch(`${config.apiUrl}/api/timestamp`, {
+    const timestamp = await fetch(`${apiUrl}/api/timestamp`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${config.token}`
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
       },
       body: JSON.stringify({
         student: student._id,
@@ -113,9 +110,9 @@ function Timeclock(props) {
   const getStudentWithPin = async pin => {
     let student;
 
-    student = await fetch(`${config.apiUrl}/api/student?pin=${pin}`, {
+    student = await fetch(`${apiUrl}/api/student?pin=${pin}`, {
       headers: {
-        Authorization: `Bearer ${config.token}`
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
     })
       .then(response => {
@@ -140,9 +137,9 @@ function Timeclock(props) {
   };
 
   const fetchStudentsByFamily = async pin => {
-    const family = await fetch(`${config.apiUrl}/api/pin/${pin}`, {
+    const family = await fetch(`${apiUrl}/api/pin/${pin}`, {
       headers: {
-        Authorization: `Bearer ${config.token}`
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
     })
       .then(response => {
