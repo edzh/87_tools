@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import StudentsList from '../components/Student/StudentList';
 
-import styles from './css/PinLookup.module.css';
-
 import { fetchStudents } from '../actions/studentActions';
 
 function PinLookup(props) {
@@ -12,7 +10,7 @@ function PinLookup(props) {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div>
       <h2>Pin Lookup</h2>
       <StudentsList students={props.students} isFetching={props.isFetching} />
     </div>

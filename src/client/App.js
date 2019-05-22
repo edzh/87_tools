@@ -16,8 +16,6 @@ import ClubPage from './containers/ClubPageContainer';
 import SignIn from './containers/SignInContainer';
 import SignUp from './containers/SignUpContainer';
 
-import DbMigrate from './data/db.migrate.js';
-
 class App extends Component {
   render() {
     return (
@@ -105,7 +103,6 @@ class App extends Component {
             />
             <Route exact path={'/signin'} render={() => <SignIn />} />
             <Route exact path={'/signup'} render={() => <SignUp />} />
-            <Route exact path={'/dbmigrate'} render={() => <DbMigrate />} />
           </div>
         </div>
       </Router>
