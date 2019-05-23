@@ -12,8 +12,6 @@ import PinLookup from './PinLookup';
 import TimestampList from '../components/Timeclock/TimestampList';
 import MakePdf from 'data/MakePdf';
 
-import WithAuth from './WithAuthContainer';
-
 function Timeclock(props) {
   const [pin, setPin] = useState('');
   const [message, setMessage] = useState('');
@@ -41,7 +39,7 @@ function Timeclock(props) {
 
   useEffect(() => {
     props.setTimesheet(props.timesheet);
-  });
+  }, []);
 
   useEffect(() => {
     fetch(`${apiUrl}/api/timesheet/${props.timesheet}`, {

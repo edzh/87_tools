@@ -31,6 +31,7 @@ export const getMany = async (req, res) => {
     const students = await Student.find(req.query)
       .lean()
       .populate('clubs', '-__v -students')
+      .sort({ name: 1 })
       .exec();
 
     res.status(200).json({ data: students });
