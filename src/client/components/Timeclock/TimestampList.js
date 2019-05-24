@@ -60,7 +60,10 @@ export default function TimestampList({ timesheet, setRefresh }) {
           Search
         </button>
       </div>
-      <div className="overflow-auto w-full block" style={{ height: '530px' }}>
+      <div
+        className="overflow-auto w-full block"
+        style={{ WebkitOverflowScrolling: 'touch', height: '530px' }}
+      >
         {showSearch && (
           <input
             className="p-2 shadow-inner rounded border m-4 mb-2"
