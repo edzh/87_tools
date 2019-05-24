@@ -22,7 +22,7 @@ class App extends Component {
       <Router>
         <div style={{ fontFamily: ['Roboto', 'sans-serif'] }}>
           <Navbar />
-          <div className="lg:ml-64 ml-16 p-4">
+          <div className="lg:ml-64 ml-16 p-4 bg-white relative z-10">
             <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
             <Route
               exact
