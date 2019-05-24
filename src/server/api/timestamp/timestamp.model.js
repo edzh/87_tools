@@ -12,6 +12,10 @@ const timestampSchema = new mongoose.Schema({
     ref: 'student',
     required: true
   },
+  club: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'club'
+  },
   timesheet: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'timesheet',

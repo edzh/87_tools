@@ -12,7 +12,7 @@ export default function PinInput(props) {
 
   return (
     <div className="p-4 border rounded shadow-md">
-      <h2 className="mb-4">Timeclock</h2>
+      <h2 className="mb-4 font-normal">Timeclock</h2>
       <form onSubmit={handleSubmit}>
         <input
           className="border shadow-inner block p-4 text-xl rounded-t w-full"

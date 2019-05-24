@@ -86,7 +86,9 @@ function Timeclock(props) {
     })
       .then(response => {
         if (!response.ok) {
-          throw Error(`${student.name} is already signed in!`);
+          throw Error(
+            `${student.name} is already signed ${fetchedTimesheet.io}!`
+          );
         }
 
         return response.json();
@@ -95,7 +97,7 @@ function Timeclock(props) {
       .then(() =>
         setMessage({
           status: 'Success',
-          message: `${student.name} has been signed in!`
+          message: `${student.name} has been signed ${fetchedTimesheet.io}!`
         })
       )
       .catch(err => setMessage({ status: 'Error', message: err.message }));

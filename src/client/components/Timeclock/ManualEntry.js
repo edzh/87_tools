@@ -34,14 +34,14 @@ export default function ManualEntry(props) {
   return (
     <div className="border rounded shadow-md mt-4">
       <div className="border-b p-4">
-        <h2 className="">Manual Entry</h2>
+        <h2 className="font-normal">Manual Entry</h2>
         <NameFilter query={query} onChange={onChange} />
       </div>
       <div className="overflow-auto w-full shadow-inner block">
         <div className="block h-32">
           {filteredSuggestions.length !== 0 ? (
             filteredSuggestions.map((student, index) => (
-              <div key={student._id} className="border-b block w-full flex">
+              <div key={student._id} className="p-2 border-b block w-full flex">
                 <p className="pl-2 py-1 w-3/4">{student.name}</p>
                 <p className="flex">
                   <button

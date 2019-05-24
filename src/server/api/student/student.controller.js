@@ -30,7 +30,11 @@ export const getMany = async (req, res) => {
   try {
     const students = await Student.find(req.query)
       .lean()
-      .populate('clubs', '-__v -students')
+      .populate({
+        path: 'clubs',
+        select: '-__v -students',
+        options: { sort: { day: 1 } }
+      })
       .sort({ name: 1 })
       .exec();
 

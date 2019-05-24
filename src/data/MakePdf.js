@@ -78,13 +78,13 @@ function MakePdf(props) {
   return (
     <>
       <button
-        className="p-2 mx-2 border rounded hover:bg-grey-lighter"
+        className="p-2 mr-2 shadow border rounded hover:bg-grey-lighter"
         onClick={() => generateAllStudentsPdf('signin')}
       >
         Print Sign In
       </button>
       <button
-        className="p-2 mx-2 border rounded hover:bg-grey-lighter"
+        className="p-2 mx-2 shadow border rounded hover:bg-grey-lighter"
         onClick={() => generateAllStudentsPdf('class')}
       >
         Print Class
