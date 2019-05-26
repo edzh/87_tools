@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
+import path from 'path';
 
 import { connect } from './utils/db';
 import config from './config';
@@ -23,6 +24,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.set('json spaces', 2);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'));
+
+  app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../build/index.html'), function(err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    });
+  });
+}
 
 app.use('/api/club', protect, clubRouter);
 app.use('/api/family', protect, familyRouter);

@@ -52,13 +52,21 @@ export default function TimestampList({ timesheet, setRefresh }) {
           {timesheet.io === 'in' ? 'Sign In' : 'Sign Out'} -{' '}
           {format(timesheet.date, 'dddd, MMMM D')}
         </h2>
-        <button
-          className={`${showSearch &&
-            'bg-blue text-white'} ml-auto bg-white text-xs rounded p-1`}
-          onClick={() => setShowSearch(!showSearch)}
-        >
-          Search
-        </button>
+        <div className="ml-auto">
+          <button
+            className={`bg-white text-xs rounded mr-2 p-1`}
+            onClick={() => setRefresh(true)}
+          >
+            Refresh
+          </button>
+          <button
+            className={`${showSearch &&
+              'bg-blue text-white'} bg-white text-xs rounded p-1`}
+            onClick={() => setShowSearch(!showSearch)}
+          >
+            Search
+          </button>
+        </div>
       </div>
       <div
         className="overflow-auto w-full block"
