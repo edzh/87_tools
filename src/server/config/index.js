@@ -9,7 +9,8 @@ const baseConfig = {
     jwt: 'default'
   },
   // dbUrl: 'mongodb://10.5.7.5:27017/87attendance'
-  dbUrl: 'mongodb://localhost:27017/87attendance'
+  // dbUrl: 'mongodb://localhost:27017/87attendance'
+  dbUrl: 'mongodb://edzh:password1@ds261616.mlab.com:61616/aftercaremanage'
 };
 
 export default baseConfig;
