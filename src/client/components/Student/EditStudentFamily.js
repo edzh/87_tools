@@ -46,6 +46,7 @@ export default props => {
   return (
     <form onSubmit={handleSubmit}>
       <select className="p-2 mt-4 ml-4 text-sm border rounded" {...family}>
+        <option value="">---</option>
         {fetchedFamilies
           .sort((a, b) => {
             const nameA = a.name.toUpperCase();

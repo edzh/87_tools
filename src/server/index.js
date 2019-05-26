@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
+import '@babel/polyfill';
 
 import { connect } from './utils/db';
 import config from './config';
@@ -25,17 +26,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.set('json spaces', 2);
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('build'));
+// if (process.env.NODE_ENV === 'production') {
+app.use(express.static('build'));
 
-  app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, '../../build/index.html'), function(err) {
-      if (err) {
-        res.status(500).send(err);
-      }
-    });
-  });
-}
+// }
 
 app.use('/api/club', protect, clubRouter);
 app.use('/api/family', protect, familyRouter);
@@ -46,6 +40,14 @@ app.use('/api/timestamp', protect, timestampRouter);
 app.use('/api/user', protect, userRouter);
 app.post('/api/signup', signup);
 app.post('/api/signin', signin);
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, './index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
 
 export const start = async () => {
   try {
