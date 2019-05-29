@@ -25,7 +25,7 @@ function fetchTimesheetsFailure() {
 export function fetchTimesheets() {
   return dispatch => {
     dispatch(fetchTimesheetsRequest());
-    return fetch(`${apiUrl}/api/timesheet`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/timesheet`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }

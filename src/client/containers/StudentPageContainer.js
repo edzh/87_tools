@@ -18,7 +18,7 @@ function StudentPage({ isAuthenticated, ...props }) {
   useEffect(() => {
     props.setStudent(props.student);
 
-    fetch(`${apiUrl}/api/student/${props.student}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/student/${props.student}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }

@@ -15,7 +15,7 @@ export default ({ family, editPickups, setEditPickups }) => {
   function handleRemove(pinToRemove) {
     const updatedPins = pickups.filter(pickup => pickup.pin !== pinToRemove);
 
-    fetch(`${apiUrl}/api/family/${family._id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/family/${family._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

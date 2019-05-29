@@ -15,11 +15,14 @@ function FamilyPage(props) {
     props.setFamily(props.family);
 
     const fetchFamily = async () => {
-      const result = await fetch(`${apiUrl}/api/family/${props.family}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      const result = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/family/${props.family}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
         }
-      })
+      )
         .then(response => response.json())
         .then(json => json.data);
 

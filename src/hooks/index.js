@@ -4,11 +4,14 @@ import { apiUrl } from 'config';
 import { Redirect } from 'react-router-dom';
 
 export const useFetchPin = async pin => {
-  const pinExists = await fetch(`${apiUrl}/api/pin/${pin}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('id_token')}`
+  const pinExists = await fetch(
+    `${process.env.REACT_APP_API_URL}/api/pin/${pin}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
     }
-  })
+  )
     .then(response => response.json())
     .then(json => json.data)
     .catch(() => false);

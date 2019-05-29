@@ -9,11 +9,14 @@ export default props => {
 
   useEffect(() => {
     const fetchFamilies = async () => {
-      const result = await fetch(`${apiUrl}/api/family`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      const result = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/family`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
         }
-      })
+      )
         .then(response => response.json())
         .then(json => json.data);
 
@@ -29,7 +32,7 @@ export default props => {
   }
 
   function editStudent() {
-    fetch(`${apiUrl}/api/student/${props.student._id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/student/${props.student._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

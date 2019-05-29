@@ -26,10 +26,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.set('json spaces', 2);
 
-// if (process.env.NODE_ENV === 'production') {
-app.use(express.static('build'));
-
-// }
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'));
+}
 
 app.use('/api/club', protect, clubRouter);
 app.use('/api/family', protect, familyRouter);

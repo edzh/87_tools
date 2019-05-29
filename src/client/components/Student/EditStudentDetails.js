@@ -20,7 +20,7 @@ export default function EditStudentDetails({
   }
 
   function editStudent() {
-    fetch(`${apiUrl}/api/student/${student._id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/student/${student._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

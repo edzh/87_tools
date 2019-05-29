@@ -5,11 +5,14 @@ export default props => {
   const [fetchedStudents, setFetchedStudents] = useState([]);
   useEffect(() => {
     const fetchStudents = async () => {
-      const students = await fetch(`${apiUrl}/api/student`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      const students = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/student`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
         }
-      })
+      )
         .then(response => response.json())
         .then(json => json.data);
 
@@ -30,17 +33,20 @@ export default props => {
   function migrateStudentPins() {
     reducePins().forEach(studentPin => {
       const fetchStudent = async () => {
-        const student = await fetch(`${apiUrl}/api/student/${studentPin.id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+        const student = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/student/${studentPin.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('id_token')}`
+            }
           }
-        })
+        )
           .then(response => response.json())
           .then(json => console.log(json.data));
       };
 
       const postPin = async () => {
-        const pin = await fetch(`${apiUrl}/api/pin`, {
+        const pin = await fetch(`${process.env.REACT_APP_API_URL}/api/pin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -56,14 +62,17 @@ export default props => {
           .then(json => updatePin(json.data));
 
         const updatePin = async data => {
-          fetch(`${apiUrl}/api/student/${studentPin.id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('id_token')}`
-            },
-            body: JSON.stringify({ pin: data._id })
-          });
+          fetch(
+            `${process.env.REACT_APP_API_URL}/api/student/${studentPin.id}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('id_token')}`
+              },
+              body: JSON.stringify({ pin: data._id })
+            }
+          );
         };
       };
 

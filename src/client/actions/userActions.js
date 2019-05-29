@@ -25,7 +25,7 @@ export function signInFailure(error) {
 export function signIn(email, password) {
   return dispatch => {
     dispatch(signInRequest());
-    return fetch(`${apiUrl}/api/signin`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/signin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export function signUpFailure(error) {
 export function signUp(email, password) {
   return dispatch => {
     dispatch(signUpRequest());
-    return fetch(`${apiUrl}/api/signup`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export function signOutRequest() {
 
 export function fetchUserInfo(success, failure, token) {
   return dispatch => {
-    fetch(`${apiUrl}/api/user`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/user`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

@@ -22,12 +22,15 @@ function Timeclock(props) {
 
   const deleteTimesheet = async timesheetId => {
     try {
-      const timesheet = await fetch(`${apiUrl}/api/timesheet/${timesheetId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      const timesheet = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/timesheet/${timesheetId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
         }
-      }).then(() => {
+      ).then(() => {
         setToTimesheets(true);
       });
 
@@ -42,7 +45,7 @@ function Timeclock(props) {
   }, []);
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/timesheet/${props.timesheet}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/timesheet/${props.timesheet}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
@@ -72,18 +75,21 @@ function Timeclock(props) {
   }
 
   const postTimestamp = async (student, fobStatus) => {
-    const timestamp = await fetch(`${apiUrl}/api/timestamp`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify({
-        student: student._id,
-        timesheet: props.timesheet,
-        fobStatus
-      })
-    })
+    const timestamp = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/timestamp`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+        },
+        body: JSON.stringify({
+          student: student._id,
+          timesheet: props.timesheet,
+          fobStatus
+        })
+      }
+    )
       .then(response => {
         if (!response.ok) {
           throw Error(
@@ -110,11 +116,14 @@ function Timeclock(props) {
   const getStudentWithPin = async pin => {
     let student;
 
-    student = await fetch(`${apiUrl}/api/student?pin=${pin}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+    student = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/student?pin=${pin}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+        }
       }
-    })
+    )
       .then(response => {
         if (!response.ok) {
           throw Error('Student pin not found');
@@ -137,11 +146,14 @@ function Timeclock(props) {
   };
 
   const fetchStudentsByFamily = async pin => {
-    const family = await fetch(`${apiUrl}/api/pin/${pin}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+    const family = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/pin/${pin}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+        }
       }
-    })
+    )
       .then(response => {
         if (!response.ok) {
           throw Error('Student not found!');

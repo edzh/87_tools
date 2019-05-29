@@ -25,7 +25,7 @@ function fetchStudentsFailure() {
 export function fetchStudents() {
   return dispatch => {
     dispatch(fetchStudentsRequest());
-    return fetch(`${apiUrl}/api/student`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/student`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }

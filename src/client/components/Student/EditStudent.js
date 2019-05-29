@@ -26,7 +26,7 @@ export default function EditStudent({ student }) {
 
   useEffect(() => {
     const fetchClubs = async () => {
-      const result = await fetch(`${apiUrl}/api/club`, {
+      const result = await fetch(`${process.env.REACT_APP_API_URL}/api/club`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('id_token')}`
         }
@@ -51,7 +51,7 @@ export default function EditStudent({ student }) {
 
     swapStudentFromClubs(student._id, removeClubs, addClubs);
 
-    fetch(`${apiUrl}/api/student/${student._id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/student/${student._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -65,11 +65,13 @@ export default function EditStudent({ student }) {
 
   function swapStudentFromClubs(student, oldClubs, newClubs) {
     oldClubs.forEach(async club => {
-      const clubStudents = await fetch(`${apiUrl}/api/club/${club}`)
+      const clubStudents = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/club/${club}`
+      )
         .then(response => response.json())
         .then(json => json.data.students);
 
-      fetch(`${apiUrl}/api/club/${club}`, {
+      fetch(`${process.env.REACT_APP_API_URL}/api/club/${club}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -84,15 +86,18 @@ export default function EditStudent({ student }) {
     });
 
     newClubs.forEach(async club => {
-      const clubStudents = await fetch(`${apiUrl}/api/club/${club}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      const clubStudents = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/club/${club}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
         }
-      })
+      )
         .then(response => response.json())
         .then(json => json.data.students);
 
-      fetch(`${apiUrl}/api/club/${club}`, {
+      fetch(`${process.env.REACT_APP_API_URL}/api/club/${club}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

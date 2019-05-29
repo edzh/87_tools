@@ -13,12 +13,15 @@ export default ({ family, editDetails, setEditDetails }) => {
 
   const removeFamily = async familyId => {
     try {
-      const family = await fetch(`${apiUrl}/api/family/${familyId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      const family = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/family/${familyId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
         }
-      }).then(() => {
+      ).then(() => {
         return <Redirect to={'/family'} />;
       });
     } catch (e) {

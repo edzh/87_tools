@@ -27,7 +27,7 @@ export function fetchFamilies() {
     console.log(localStorage.getItem('id_token'));
 
     dispatch(fetchFamiliesRequest());
-    return fetch(`${apiUrl}/api/family`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/family`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }

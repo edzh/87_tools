@@ -26,12 +26,15 @@ export default function TimestampList({ timesheet, setRefresh }) {
 
   const removeTimestamp = async timestampId => {
     try {
-      const timestamp = await fetch(`${apiUrl}/api/timestamp/${timestampId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      const timestamp = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/timestamp/${timestampId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
         }
-      }).then(() => {
+      ).then(() => {
         setRefresh(true);
       });
 

@@ -17,7 +17,7 @@ function MakePdf(props) {
   useEffect(() => {
     const fetchTimesheet = async () => {
       const result = await fetch(
-        `${apiUrl}/api/timesheet/${props.timesheetId}`,
+        `${process.env.REACT_APP_API_URL}/api/timesheet/${props.timesheetId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('id_token')}`
@@ -31,7 +31,7 @@ function MakePdf(props) {
     };
 
     const fetchClubs = async () => {
-      const result = await fetch(`${apiUrl}/api/club`, {
+      const result = await fetch(`${process.env.REACT_APP_API_URL}/api/club`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('id_token')}`
         }

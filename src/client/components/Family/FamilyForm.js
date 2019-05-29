@@ -8,7 +8,7 @@ export default function FamilyForm(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`${apiUrl}/api/family`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/family`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`,

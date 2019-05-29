@@ -13,7 +13,7 @@ export default ({ setEditDetails, family }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`${apiUrl}/api/family/${family._id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/family/${family._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

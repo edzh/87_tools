@@ -18,11 +18,14 @@ export default ({
   async function handleAddPin(e) {
     e.preventDefault();
 
-    const pinCheck = await fetch(`${apiUrl}/api/pin/${pin.value}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+    const pinCheck = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/pin/${pin.value}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+        }
       }
-    })
+    )
       .then(response => response.json())
       .then(json => json.data)
       .catch(() => setMessage({ status: 'Success', message: 'Pin added.' }));
@@ -30,7 +33,7 @@ export default ({
     if (!pinCheck) {
       const newPins = [...pickups, { name: pickupName.value, pin: pin.value }];
 
-      fetch(`${apiUrl}/api/family/${family._id}`, {
+      fetch(`${process.env.REACT_APP_API_URL}/api/family/${family._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

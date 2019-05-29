@@ -10,7 +10,7 @@ export default function AddStudent() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`${apiUrl}/api/student`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/student`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

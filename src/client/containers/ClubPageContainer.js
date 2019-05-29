@@ -10,7 +10,7 @@ function ClubPage(props) {
   useEffect(() => {
     props.setClub(props.club);
 
-    fetch(`${apiUrl}/api/club/${props.club}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/club/${props.club}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }

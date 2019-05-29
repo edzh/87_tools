@@ -24,7 +24,7 @@ function fetchClubsFailure(err) {
 export function fetchClubs() {
   return dispatch => {
     dispatch(fetchClubsRequest());
-    return fetch(`${apiUrl}/api/club`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/club`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
