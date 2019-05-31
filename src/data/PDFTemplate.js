@@ -61,11 +61,12 @@ export function studentSignInList(doc, timesheet) {
     .forEach((timestamp, index) => {
       const {
         datetime,
-        student: { clubs, name }
+        club,
+        student: { name }
       } = timestamp;
 
-      const clubByDay = clubs.find(club => club.day === timesheetDay);
-      const clubName = clubByDay ? clubByDay.name : 'Drop In';
+      // const clubByDay = clubs.find(club => club.day === timesheetDay);
+      const clubName = club ? club.name : 'Drop In';
       const line = index % lines;
 
       // Add header if new page.

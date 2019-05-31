@@ -30,7 +30,9 @@ export default ({ timestamp, removeTimestamp, timesheet }) => {
           Remove
         </button>
         <span className="mx-1">{timestamp.fobStatus}</span>
-        <span className="mx-1">{`${timestamp.isFamily}`}</span>
+        <span className="mx-1">{`${
+          timestamp.pickup ? timestamp.pickup.name : ''
+        }`}</span>
       </p>
     </div>
   );

@@ -128,7 +128,7 @@ function Timeclock(props) {
   const postTimestamp = async (student, fobStatus, options) => {
     options = options || {};
     const pickup = options.pickup || {};
-    const family = options.family || {};
+    const family = options.family || undefined;
 
     const timestamp = await fetch(
       `${process.env.REACT_APP_API_URL}/api/timestamp`,
