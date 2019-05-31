@@ -6,10 +6,11 @@ export default function StudentSelector(props) {
 
   useEffect(() => {
     setSelectedStudents(
-      family.reduce((selected, student) => {
+      family.students.reduce((selected, student) => {
         selected.push({
           _id: student._id,
           name: student.name,
+          clubs: student.clubs,
           selected: false
         });
 

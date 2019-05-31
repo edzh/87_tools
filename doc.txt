@@ -1,0 +1,6 @@
+timestamp scan uses student club by default instead of getting clubs from student
+  prevents changes to timestamp club on previous timesheets if student changes clubs
+
+tag timestamps with the family taht they were signed out with if applicable.
+  giving indiecation of IF there was even a family pin used can help with reducing illegitimate signouts
+

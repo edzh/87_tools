@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { format } from 'date-fns';
 import { apiUrl } from 'config';
 import { useDebounce, useFormInput } from 'hooks';
@@ -12,6 +12,7 @@ export default function TimestampList({ timesheet, setRefresh }) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const searchRef = useRef();
 
   useEffect(() => {
     if (debouncedSearchTerm) {
@@ -23,6 +24,12 @@ export default function TimestampList({ timesheet, setRefresh }) {
       setShowSuggestions(false);
     }
   }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    if (showSearch) {
+      searchRef.current.focus();
+    }
+  }, [showSearch]);
 
   const removeTimestamp = async timestampId => {
     try {
@@ -81,6 +88,7 @@ export default function TimestampList({ timesheet, setRefresh }) {
             placeholder="Search Name"
             type="text"
             {...query}
+            ref={searchRef}
           />
         )}
         <TimestampListHeader />

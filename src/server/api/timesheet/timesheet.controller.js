@@ -11,19 +11,35 @@ export const getOne = async (req, res) => {
         options: {
           sort: { datetime: -1 }
         },
-        populate: {
-          path: 'student',
-          select: 'name pin clubs',
-          model: 'student',
-          populate: {
-            path: 'clubs',
-            select: 'name day -_id',
-            model: 'club',
-            options: {
-              sort: { day: 1 }
-            }
+        populate: [
+          {
+            path: 'student',
+            select: 'name pin clubs',
+            model: 'student'
+          },
+          {
+            path: 'club',
+            model: 'club'
+          },
+          {
+            path: 'family',
+            model: 'family'
           }
-        }
+        ]
+        // populate: {
+        //   path: 'clubs',
+        //   select: 'name day -_id',
+        //   model: 'club',
+        //   options: {
+        //     sort: { day: 1 }
+        //   }
+        // }
+        // populate: {
+        //   path: 'club'
+        // },
+        // populate: {
+        //   path: 'family'
+        // }
       })
       .exec();
 

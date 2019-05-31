@@ -31,11 +31,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use('/api/club', protect, clubRouter);
-app.use('/api/family', protect, familyRouter);
-app.use('/api/pin', protect, pinRouter);
+app.use('/api/family', familyRouter);
+app.use('/api/pin', pinRouter);
 app.use('/api/student', studentRouter);
-app.use('/api/timesheet', protect, timesheetRouter);
-app.use('/api/timestamp', protect, timestampRouter);
+app.use('/api/timesheet', timesheetRouter);
+app.use('/api/timestamp', timestampRouter);
 app.use('/api/user', protect, userRouter);
 app.post('/api/signup', signup);
 app.post('/api/signin', signin);

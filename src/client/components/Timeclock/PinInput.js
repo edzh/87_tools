@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import Alert from '../Alert';
 import StudentSelector from './StudentSelector';
 
-export default function PinInput(props) {
-  const { message, family, handleFamily, handleSubmit, pin, setPin } = props;
+export default function PinInput({
+  message,
+  family,
+  handleFamily,
+  handleSubmit,
+  pin,
+  setPin,
+  refresh
+}) {
+  const inputRef = useRef();
 
   function handleChange(e) {
     setPin(e.target.value);
   }
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [refresh]);
 
   return (
     <div className="p-4 border rounded shadow-md">
@@ -21,6 +33,7 @@ export default function PinInput(props) {
           autoFocus={true}
           value={pin}
           onChange={handleChange}
+          ref={inputRef}
         />
         <button
           className="p-2 border hover:border-blue hover:bg-blue hover:text-white shadow text-blue bg-grey-lightest border-grey-light text-xl rounded-b w-full"

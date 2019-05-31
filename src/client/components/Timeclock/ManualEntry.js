@@ -28,7 +28,11 @@ export default function ManualEntry(props) {
   }
 
   const handleInput = (student, fobStatus) => {
-    props.postTimestamp(student, fobStatus).catch(err => props.setMessage(err));
+    const studentClub = props.getStudentClubByTimesheet(student);
+    console.log(student, studentClub);
+    props
+      .postTimestamp(student, fobStatus, { club: studentClub })
+      .catch(err => props.setMessage(err));
   };
 
   return (

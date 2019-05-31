@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { apiUrl } from 'config';
+import { format } from 'date-fns';
 
 import { setTimesheet } from '../actions/timesheetActions';
 import { fetchStudents } from '../actions/studentActions';
@@ -16,7 +17,7 @@ function Timeclock(props) {
   const [pin, setPin] = useState('');
   const [message, setMessage] = useState('');
   const [refresh, setRefresh] = useState(false);
-  const [family, setFamily] = useState([]);
+  const [family, setFamily] = useState({ students: [] });
   const [fetchedTimesheet, setFetchedTimesheet] = useState([]);
   const [toTimesheets, setToTimesheets] = useState(false);
 
@@ -60,21 +61,75 @@ function Timeclock(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    getStudentWithPin(pin)
-      .then(response => postTimestamp(response))
-      .catch(err => console.error(err))
+    handlePin(pin)
+      .then(response => {
+        if (response) {
+          const studentClub = getStudentClubByTimesheet(response.student);
+          postTimestamp(response.student, null, {
+            family: response.family,
+            pickup: response.pickup,
+            club: studentClub
+          });
+        }
+      })
+      .catch(() =>
+        setMessage({ status: 'Error', message: 'Please enter a pin.' })
+      )
       .finally(() => setPin(''));
+  }
+
+  async function handlePin(pin) {
+    const fetchedPin = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/pin/${pin}`
+    )
+      .then(response => response.json())
+      .then(json => json.data);
+    const isStudent =
+      fetchedPin.hasOwnProperty('family') || fetchedPin.hasOwnProperty('grade');
+
+    if (isStudent) {
+      return { student: fetchedPin };
+    }
+
+    const pickup = fetchedPin.pickups.find(
+      pickup => pickup.pin === parseInt(pin)
+    );
+
+    if (fetchedPin.students.length === 1) {
+      return {
+        student: fetchedPin.students[0],
+        pickup: pickup,
+        family: fetchedPin._id
+      };
+    }
+
+    setFamily({
+      students: fetchedPin.students,
+      pickup: pickup,
+      family: fetchedPin._id
+    });
+    setMessage({ status: 'Warning', message: `${pin} is a family pin!` });
   }
 
   function handleFamily(students) {
     students.forEach(student => {
-      postTimestamp(student).catch(err => setMessage(err));
+      console.log(student);
+      const studentClub = getStudentClubByTimesheet(student);
+      postTimestamp(student, null, {
+        family: family.family,
+        pickup: family.pickup,
+        club: studentClub
+      }).catch(err => console.error(err));
     });
 
-    setFamily([]);
+    setFamily({ students: [] });
   }
 
-  const postTimestamp = async (student, fobStatus) => {
+  const postTimestamp = async (student, fobStatus, options) => {
+    options = options || {};
+    const pickup = options.pickup || {};
+    const family = options.family || {};
+
     const timestamp = await fetch(
       `${process.env.REACT_APP_API_URL}/api/timestamp`,
       {
@@ -86,7 +141,9 @@ function Timeclock(props) {
         body: JSON.stringify({
           student: student._id,
           timesheet: props.timesheet,
-          fobStatus
+          fobStatus,
+          pickup: { family: family, name: pickup.name, pin: pickup.pin },
+          club: options.club
         })
       }
     )
@@ -111,64 +168,11 @@ function Timeclock(props) {
     setRefresh(true);
   };
 
-  // Will attempt to match pin with student. If student not found, fallback
-  // to searching family pins
-  const getStudentWithPin = async pin => {
-    let student;
+  const getStudentClubByTimesheet = student => {
+    const day = format(new Date(fetchedTimesheet.date), 'E');
+    const club = student.clubs.find(club => club.day === parseInt(day));
 
-    student = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/student?pin=${pin}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
-        }
-      }
-    )
-      .then(response => {
-        if (!response.ok) {
-          throw Error('Student pin not found');
-        }
-
-        return response.json();
-      })
-      .then(json => json.data[0])
-      .catch(() => fetchStudentsByFamily(pin));
-
-    if (!student) {
-      if (fetchStudentsByFamily(pin)) {
-        student = fetchStudentsByFamily(pin);
-      }
-
-      setMessage({ status: 'Warning', message: `${pin} is a family pin!` });
-    }
-
-    return student;
-  };
-
-  const fetchStudentsByFamily = async pin => {
-    const family = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/pin/${pin}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
-        }
-      }
-    )
-      .then(response => {
-        if (!response.ok) {
-          throw Error('Student not found!');
-        }
-
-        return response.json();
-      })
-      .then(json => json.data)
-      .catch(err => setMessage({ status: 'Error', message: err.message }));
-    if (family) {
-      if (family.students.length === 1) {
-        return family.students[0];
-      }
-      setFamily(family.students);
-    }
+    return club ? club._id : null;
   };
 
   if (toTimesheets === true) {
@@ -185,12 +189,14 @@ function Timeclock(props) {
           message={message}
           family={family}
           handleFamily={handleFamily}
+          refresh={refresh}
         />
         <ManualEntry
           students={props.students}
           fetchStudents={props.fetchStudents}
           postTimestamp={postTimestamp}
           setMessage={setMessage}
+          getStudentClubByTimesheet={getStudentClubByTimesheet}
         />
       </div>
       <div className="lg:pl-4 lg:w-2/3">

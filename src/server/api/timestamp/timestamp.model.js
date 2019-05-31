@@ -23,10 +23,19 @@ const timestampSchema = new mongoose.Schema({
   },
   fobStatus: {
     type: String
+  },
+  pickup: {
+    family: {
+      type: mongoose.Schema.Types.ObjectId
+    },
+    name: {
+      type: String
+    },
+    pin: {
+      type: Number
+    }
   }
 });
-
-timestampSchema.post('save', next => {});
 
 timestampSchema.index({ student: 1, timesheet: 1 }, { unique: true });
 

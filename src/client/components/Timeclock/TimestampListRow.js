@@ -14,11 +14,12 @@ export default ({ timestamp, removeTimestamp, timesheet }) => {
         </Link>
       </p>
       <p className=" w-1/3">
-        {timestamp.student.clubs.map(club =>
+        {/*timestamp.student.clubs.map(club =>
           club.day === parseInt(format(new Date(timesheet.date), 'E'))
             ? club.name
             : null
-        )}
+        )*/
+        timestamp.club ? timestamp.club.name : null}
       </p>
       <p className=" w-24">{format(new Date(timestamp.datetime), 'hh:mm a')}</p>
       <p className=" w-32 flex">
@@ -28,7 +29,8 @@ export default ({ timestamp, removeTimestamp, timesheet }) => {
         >
           Remove
         </button>
-        <p className="mx-1">{timestamp.fobStatus}</p>
+        <span className="mx-1">{timestamp.fobStatus}</span>
+        <span className="mx-1">{`${timestamp.isFamily}`}</span>
       </p>
     </div>
   );

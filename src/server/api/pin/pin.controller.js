@@ -4,7 +4,7 @@ import { Student } from '../student/student.model';
 export const getOne = async (req, res, next) => {
   try {
     const studentPin = await Student.findOne({ pin: req.params.pin })
-      .populate()
+      .populate('clubs', '-__v -students')
       .lean()
       .exec();
 
@@ -15,7 +15,14 @@ export const getOne = async (req, res, next) => {
     const familyPin = await Family.findOne({
       'pickups.pin': { $eq: req.params.pin }
     })
-      .populate('students')
+      .populate({
+        path: 'students',
+        populate: {
+          path: 'clubs',
+          select: '-__v -students',
+          model: 'club'
+        }
+      })
       .lean()
       .exec();
 
