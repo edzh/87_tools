@@ -7,9 +7,9 @@ export default function ClubList(props) {
   console.log(props.clubs);
 
   return (
-    <ul>
+    <div>
       {props.clubs.map(club => (
-        <li key={club._id}>
+        <div key={club._id}>
           <Link to={`/club/${club._id}`}>
             {club.name} {daysOfWeek[club.day]}
           </Link>
@@ -18,8 +18,8 @@ export default function ClubList(props) {
               <li>{student.name}</li>
             ))}
           </ul>*/}
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }

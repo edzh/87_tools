@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router';
 import { apiUrl } from 'config';
 import { useFormInput } from '../Student/AddStudent';
 
 export default function FamilyForm(props) {
   const name = useFormInput('');
+  const [newFamily, setNewFamily] = useState({ redirect: false, id: '' });
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -15,7 +17,15 @@ export default function FamilyForm(props) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ name: name.value })
-    });
+    })
+      .then(response => response.json())
+      .then(json => {
+        setNewFamily({ redirect: true, id: json.data._id });
+      });
+  }
+
+  if (newFamily.redirect === true) {
+    return <Redirect to={`/family/id/${newFamily.id}`} />;
   }
 
   return (

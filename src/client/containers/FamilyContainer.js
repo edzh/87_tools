@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { fetchFamilies } from '../actions/familyActions';
@@ -13,8 +14,12 @@ function Family(props) {
 
   return (
     <div>
-      <FamilyForm />
       <FamilyList isFetching={props.isFetching} families={props.families} />
+      <Link to="/family/new">
+        <button className="p-2 my-2 w-full text-xl shadow bg-blue text-white hover:bg-grey-lightest hover:text-blue text-center no-underline border rounded">
+          Create Family
+        </button>
+      </Link>
     </div>
   );
 }

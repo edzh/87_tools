@@ -1,15 +1,19 @@
-import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
 import { apiUrl } from 'config';
+
 import { setFamily } from '../actions/familyActions';
 
 import FamilyDetails from '../components/Family/FamilyDetails';
 import FamilyPins from '../components/Family/FamilyPins';
+import FamilyDeleteModal from '../components/Family/FamilyDeleteModal';
 
 function FamilyPage(props) {
   const [fetchedFamily, setFetchedFamily] = useState('');
   const [editDetails, setEditDetails] = useState(false);
   const [editPickups, setEditPickups] = useState(false);
+  const [toFamily, setToFamily] = useState(false);
 
   useEffect(() => {
     props.setFamily(props.family);
@@ -32,6 +36,28 @@ function FamilyPage(props) {
     fetchFamily();
   }, [editDetails]);
 
+  const removeFamily = async familyId => {
+    try {
+      const family = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/family/${familyId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
+        }
+      ).then(() => {
+        setToFamily(true);
+      });
+    } catch (e) {
+      return Promise.reject();
+    }
+  };
+
+  if (toFamily === true) {
+    return <Redirect to="/family" />;
+  }
+
   return (
     <div>
       <FamilyDetails
@@ -44,6 +70,7 @@ function FamilyPage(props) {
         editPickups={editPickups}
         setEditPickups={setEditPickups}
       />
+      <FamilyDeleteModal family={fetchedFamily} removeFamily={removeFamily} />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import Timesheet from './containers/TimesheetContainer';
 import Timeclock from './containers/TimeclockContainer';
 import Family from './containers/FamilyContainer';
 import FamilyPage from './containers/FamilyPageContainer';
+import FamilyForm from './components/Family/FamilyForm';
 import StudentPage from './containers/StudentPageContainer';
 import Club from './containers/ClubContainer';
 import ClubPage from './containers/ClubPageContainer';
@@ -71,7 +72,16 @@ class App extends Component {
             />
             <Route
               exact
-              path={'/family/:id'}
+              path={'/family/new'}
+              render={() => (
+                <WithAuth>
+                  <FamilyForm />
+                </WithAuth>
+              )}
+            />
+            <Route
+              exact
+              path={'/family/id/:id'}
               render={({ match }) => (
                 <WithAuth>
                   <FamilyPage family={match.params.id} />

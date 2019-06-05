@@ -26,7 +26,7 @@ export default ({ student, family, editFamily, setEditFamily }) => {
       ) : (
         family && (
           <div className="m-4">
-            <Link to={`/family/${family._id}`} className="no-underline">
+            <Link to={`/family/id/${family._id}`} className="no-underline">
               <p className="text-xl text-blue-dark hover:text-blue">
                 {family.name}
               </p>

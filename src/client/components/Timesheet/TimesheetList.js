@@ -36,7 +36,7 @@ export default function TimesheetList(props) {
 
   return (
     <div className="border rounded shadow-md">
-      <h2 className="p-4 border-b font-normal bg-grey-darkest text-white shadow">
+      <h2 className="p-4 border-b rounded-t font-normal bg-grey-darkest text-white shadow">
         Timesheets
       </h2>
       <table

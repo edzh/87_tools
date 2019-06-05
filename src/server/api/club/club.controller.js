@@ -23,6 +23,7 @@ export const getMany = async (req, res) => {
     const clubs = await Club.find(req.query)
       .lean()
       .populate('students')
+      .sort({ day: 1, name: 1 })
       .exec();
 
     res.status(200).json({ data: clubs });

@@ -24,6 +24,7 @@ export const getMany = async (req, res) => {
     const families = await Family.find(req.query)
       .lean()
       .populate('clubs', '-_id -__v -families')
+      .sort({ name: 1 })
       .exec();
 
     res.status(200).json({ data: families });

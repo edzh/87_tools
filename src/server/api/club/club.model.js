@@ -14,7 +14,9 @@ const clubSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'student'
     }
-  ]
+  ],
+  start: Date,
+  end: Date
 });
 
 export const Club = mongoose.model('club', clubSchema);

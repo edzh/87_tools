@@ -57,7 +57,7 @@ export default function TimestampList({ timesheet, setRefresh }) {
 
   return (
     <div className="mb-3 border shadow-md rounded mt-4 lg:mt-0">
-      <div className="flex p-4 bg-grey-darkest shadow">
+      <div className="flex p-4 bg-grey-darkest shadow rounded-t">
         <h2 className="font-normal text-white">
           {timesheet.io === 'in' ? 'Sign In' : 'Sign Out'} -{' '}
           {format(timesheet.date, 'dddd, MMMM D')}
@@ -91,7 +91,7 @@ export default function TimestampList({ timesheet, setRefresh }) {
             ref={searchRef}
           />
         )}
-        <TimestampListHeader />
+        <TimestampListHeader timesheet={timesheet} />
         {showSuggestions
           ? filteredSuggestions.map(timestamp => (
               <TimestampListRow

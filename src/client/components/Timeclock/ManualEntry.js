@@ -45,7 +45,10 @@ export default function ManualEntry(props) {
         <div className="block h-32">
           {filteredSuggestions.length !== 0 ? (
             filteredSuggestions.map((student, index) => (
-              <div key={student._id} className="p-2 border-b block w-full flex">
+              <div
+                key={student._id}
+                className="p-1 border-b block w-full flex text-xs"
+              >
                 <p className="pl-2 py-1 w-3/4">{student.name}</p>
                 <p className="flex">
                   <button

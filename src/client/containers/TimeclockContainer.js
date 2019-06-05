@@ -73,7 +73,7 @@ function Timeclock(props) {
         }
       })
       .catch(() =>
-        setMessage({ status: 'Error', message: 'Please enter a pin.' })
+        setMessage({ status: 'Error', message: 'Student not found.' })
       )
       .finally(() => setPin(''));
   }
@@ -181,7 +181,7 @@ function Timeclock(props) {
 
   return (
     <div className="lg:flex">
-      <div className="lg:w-1/3 lg:1/3">
+      <div className="lg:w-1/3">
         <PinInput
           pin={pin}
           setPin={setPin}
