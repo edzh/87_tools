@@ -1,14 +1,5 @@
 import React from 'react';
-
-export const daysOfWeek = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
+import { daysOfWeek } from 'utils/constants';
 
 export default function Clubs(props) {
   return (

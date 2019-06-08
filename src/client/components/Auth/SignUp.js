@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 
-import { useFormInput } from 'hooks';
+import { useFormInput } from 'utils/hooks';
 
 export default function(props) {
   const email = useFormInput('');

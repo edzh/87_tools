@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiUrl } from 'config';
-import { useFetchPin } from 'hooks';
+import { useFetchPin } from 'utils/hooks';
 
 import { useFormInput } from '../Student/AddStudent';
 

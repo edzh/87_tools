@@ -14,20 +14,18 @@ export default function FamilyList(props) {
           </tr>
         </thead>
         <tbody className="block" style={{ height: '480px' }}>
-          {props.families
-            // .sort((a, b) => {})
-            .map((family, index) => (
-              <tr key={family._id} className="border-b p-2 block">
-                <td>
-                  <Link
-                    to={`/family/id/${family._id}`}
-                    className="no-underline text-blue hover:text-blue-light"
-                  >
-                    {family.name}
-                  </Link>
-                </td>
-              </tr>
-            ))}
+          {props.families.map((family, index) => (
+            <tr key={family._id} className="border-b p-2 block">
+              <td>
+                <Link
+                  to={`/family/id/${family._id}`}
+                  className="no-underline text-blue hover:text-blue-light"
+                >
+                  {family.name}
+                </Link>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

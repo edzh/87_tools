@@ -1,11 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ClubStudentList(props) {
   return (
-    <ul>
+    <div>
       {props.club.students.map(student => (
-        <li>{student.name}</li>
+        <Link
+          className="block no-underline text-blue hover:text-blue-light"
+          to={`/student/${student._id}`}
+        >
+          {student.name}
+        </Link>
       ))}
-    </ul>
+    </div>
   );
 }

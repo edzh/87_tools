@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useFormInput } from 'hooks';
+import { useFormInput } from 'utils/hooks';
 import { Redirect } from 'react-router';
 
 export default function(props) {

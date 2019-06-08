@@ -14,6 +14,7 @@ import FamilyForm from './components/Family/FamilyForm';
 import StudentPage from './containers/StudentPageContainer';
 import Club from './containers/ClubContainer';
 import ClubPage from './containers/ClubPageContainer';
+import ClubForm from './components/Club/ClubForm';
 import SignIn from './containers/SignInContainer';
 import SignUp from './containers/SignUpContainer';
 
@@ -108,8 +109,17 @@ class App extends Component {
             />
             <Route
               exact
-              path={'/club/:id'}
+              path={'/club/id/:id'}
               render={({ match }) => <ClubPage club={match.params.id} />}
+            />
+            <Route
+              exact
+              path={'/club/new'}
+              render={() => (
+                <WithAuth>
+                  <ClubForm />
+                </WithAuth>
+              )}
             />
             <Route exact path={'/signin'} render={() => <SignIn />} />
             <Route exact path={'/signup'} render={() => <SignUp />} />

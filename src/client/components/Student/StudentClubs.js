@@ -38,7 +38,7 @@ export default ({ student, editClubs, setEditClubs }) => {
           {student.clubs.map((club, index) => (
             <div className="flex m-2" key={index}>
               <p className="w-32">{intToDay[club.day]}</p>
-              <Link className="no-underline" to={`/club/${club._id}`}>
+              <Link className="no-underline" to={`/club/id/${club._id}`}>
                 <p className="text-blue-dark hover:text-blue">{club.name}</p>
               </Link>
             </div>

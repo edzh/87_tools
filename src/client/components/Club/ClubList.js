@@ -1,25 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { daysOfWeek } from '../Student/Clubs';
+import { daysOfWeek } from 'utils/constants';
 
 export default function ClubList(props) {
-  console.log(props.clubs);
+  const [day, setDay] = useState(1);
 
   return (
-    <div>
-      {props.clubs.map(club => (
-        <div key={club._id}>
-          <Link to={`/club/${club._id}`}>
-            {club.name} {daysOfWeek[club.day]}
-          </Link>
-          {/*          <ul>
-            {club.students.map(student => (
-              <li>{student.name}</li>
-            ))}
-          </ul>*/}
-        </div>
-      ))}
+    <div className="border shadow-md">
+      <h2 className="p-4 border-b font-normal rounded-t bg-grey-darkest text-white shadow">
+        Clubs
+      </h2>
+      <div className="flex w-full">
+        {daysOfWeek.map(weekDay => (
+          <div
+            className={`${
+              day === daysOfWeek.indexOf(weekDay)
+                ? 'border-r border-l border-t'
+                : 'bg-grey-lightest border-b'
+            } px-4 py-2 rounded-t w-full cursor-pointer`}
+            onClick={() => setDay(daysOfWeek.indexOf(weekDay))}
+          >
+            {weekDay}
+          </div>
+        ))}
+      </div>
+      {props.clubs
+        .filter(club => club.day === day)
+        .map(club => (
+          <div className="p-2 border-b" key={club._id}>
+            <Link
+              className="text-blue hover:text-blue-light no-underline"
+              to={`/club/id/${club._id}`}
+            >
+              {club.name}
+            </Link>
+          </div>
+        ))}
     </div>
   );
 }

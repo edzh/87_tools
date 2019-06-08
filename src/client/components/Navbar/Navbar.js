@@ -3,12 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import NavbarAuth from './NavbarAuth';
 
-export default function Navbar({
-  fetchUserInfo,
-  isAuthenticated,
-  isFetching,
-  user
-}) {
+function Navbar({ fetchUserInfo, isAuthenticated, isFetching, user }) {
   useEffect(() => {
     fetchUserInfo(localStorage.getItem('id_token'));
   }, []);
@@ -52,3 +47,5 @@ export default function Navbar({
     </nav>
   );
 }
+
+export default Navbar;

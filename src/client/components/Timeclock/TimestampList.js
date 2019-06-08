@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { format } from 'date-fns';
 import { apiUrl } from 'config';
-import { useDebounce, useFormInput } from 'hooks';
+import { useDebounce, useFormInput } from 'utils/hooks';
 
 import TimestampListHeader from './TimestampListHeader';
 import TimestampListRow from './TimestampListRow';

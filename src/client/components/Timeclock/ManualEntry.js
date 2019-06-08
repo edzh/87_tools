@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDebounce } from 'hooks';
+import { useDebounce } from 'utils/hooks';
 import styles from './css/ManualEntry.module.css';
 import NameFilter from '../Student/NameFilter';
 

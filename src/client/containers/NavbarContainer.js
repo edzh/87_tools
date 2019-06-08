@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import {
   fetchUserInfo,
@@ -29,4 +30,4 @@ const NavbarContainer = connect(
   mapDispatchToProps
 )(Navbar);
 
-export default NavbarContainer;
+export default withRouter(NavbarContainer);
