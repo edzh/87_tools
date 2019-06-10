@@ -21,7 +21,7 @@ export default function ClubList(props) {
             } px-4 py-2 rounded-t w-full cursor-pointer`}
             onClick={() => setDay(daysOfWeek.indexOf(weekDay))}
           >
-            {weekDay}
+            <p className="text-center">{weekDay}</p>
           </div>
         ))}
       </div>
