@@ -1,7 +1,5 @@
 import 'cross-fetch';
-
 import * as types from './familyTypes';
-import { apiUrl } from 'config';
 
 function fetchFamiliesRequest() {
   return {

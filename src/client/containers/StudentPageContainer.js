@@ -7,8 +7,6 @@ import StudentDetails from '../components/Student/StudentDetails';
 import StudentFamily from '../components/Student/StudentFamily';
 import StudentClubs from '../components/Student/StudentClubs';
 
-import { apiUrl } from 'config';
-
 function StudentPage({ isAuthenticated, ...props }) {
   const [student, setStudent] = useState(null);
   const [editDetails, setEditDetails] = useState(false);

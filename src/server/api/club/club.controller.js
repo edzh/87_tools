@@ -47,8 +47,8 @@ export const updateOne = async (req, res) => {
   try {
     const updatedClub = await Club.findOneAndUpdate(
       { _id: req.params.id },
-      // req.body,
-      { students: req.body.students },
+      req.body,
+      // { students: req.body.students },
       { new: true, upsert: true, safe: true }
     )
       .lean()

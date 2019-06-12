@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useFormInput } from './AddStudent';
-import { apiUrl } from 'config';
 
 import SelectClub from './EditStudentClubs';
 import EditStudentFamily from './EditStudentFamily';

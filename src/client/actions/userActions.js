@@ -1,5 +1,4 @@
 import 'cross-fetch';
-import { apiUrl } from 'config';
 import * as types from './userTypes';
 
 export function signInRequest() {

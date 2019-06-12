@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { format } from 'date-fns';
-import { apiUrl } from 'config';
 
 export default function Timesheet() {
   const io = useFormInput('');

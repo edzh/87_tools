@@ -1,7 +1,6 @@
 import 'cross-fetch';
 
 import * as types from './studentTypes';
-import { apiUrl } from 'config';
 
 function fetchStudentsRequest() {
   return {

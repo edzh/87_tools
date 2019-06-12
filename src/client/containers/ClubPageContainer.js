@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from 'config';
 import { setClub } from '../actions/clubActions';
+import ClubDetails from '../components/Club/ClubDetails';
 import ClubStudentList from '../components/Club/ClubStudentList';
 
 function ClubPage(props) {
   const [club, setClub] = useState(null);
+  const [editDetails, setEditDetails] = useState(false);
 
   useEffect(() => {
     props.setClub(props.club);
@@ -17,13 +18,17 @@ function ClubPage(props) {
     })
       .then(response => response.json())
       .then(json => setClub(json.data));
-  }, []);
+  }, [editDetails]);
 
   if (!club) return null;
 
   return (
     <div>
-      <h2>{club.name}</h2>
+      <ClubDetails
+        club={club}
+        editDetails={editDetails}
+        setEditDetails={setEditDetails}
+      />
       <ClubStudentList club={club} />
     </div>
   );

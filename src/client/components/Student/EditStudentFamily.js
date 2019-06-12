@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFormInput } from 'utils/hooks';
 
-import { apiUrl } from 'config';
-
 export default props => {
   const [fetchedFamilies, setFetchedFamilies] = useState([]);
   const family = useFormInput(props.family ? props.family._id : '');

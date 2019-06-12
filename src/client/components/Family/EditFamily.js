@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from 'config';
 import { useFetchPin } from 'utils/hooks';
 
-import { useFormInput } from '../Student/AddStudent';
+import { useFormInput } from 'utils/hooks';
 
 export default ({ setEditDetails, family }) => {
   const name = useFormInput(family.name);

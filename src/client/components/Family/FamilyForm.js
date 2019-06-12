@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { apiUrl } from 'config';
-import { useFormInput } from '../Student/AddStudent';
+import { useFormInput } from 'utils/hooks';
 
 export default function FamilyForm(props) {
   const name = useFormInput('');

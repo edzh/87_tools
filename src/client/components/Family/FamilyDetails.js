@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { apiUrl } from 'config';
 
 import FamilyDeleteModal from './FamilyDeleteModal';
 import FamilyPins from './FamilyPins';

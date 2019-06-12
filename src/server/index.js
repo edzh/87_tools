@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'));
 }
 
-app.use('/api/club', protect, clubRouter);
+app.use('/api/club', clubRouter);
 app.use('/api/family', familyRouter);
 app.use('/api/pin', pinRouter);
 app.use('/api/student', studentRouter);

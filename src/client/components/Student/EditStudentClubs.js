@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from 'config';
 
 const intToDay = [
   'Sunday',

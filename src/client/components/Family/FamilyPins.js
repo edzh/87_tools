@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from 'config';
 import Alert from '../Alert';
 
 import EditFamilyPins from './EditFamilyPins';

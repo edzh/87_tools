@@ -1,5 +1,4 @@
 import * as types from './clubTypes';
-import { apiUrl } from 'config';
 
 function fetchClubsRequest() {
   return {

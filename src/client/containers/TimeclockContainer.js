@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { apiUrl } from 'config';
 import { format } from 'date-fns';
 
 import { setTimesheet } from '../actions/timesheetActions';

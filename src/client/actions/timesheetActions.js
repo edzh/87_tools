@@ -1,7 +1,6 @@
 import 'cross-fetch';
 
 import * as types from './timesheetTypes';
-import { apiUrl } from 'config';
 
 function fetchTimesheetsRequest() {
   return {

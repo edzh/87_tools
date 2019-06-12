@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { apiUrl } from 'config';
 import { Redirect } from 'react-router-dom';
 
 export const useFetchPin = async pin => {

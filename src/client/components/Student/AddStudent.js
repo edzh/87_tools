@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { apiUrl } from 'config';
 
 export default function AddStudent() {
   const name = useFormInput('');

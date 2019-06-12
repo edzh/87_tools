@@ -16,7 +16,8 @@ const clubSchema = new mongoose.Schema({
     }
   ],
   start: Date,
-  end: Date
+  end: Date,
+  capacity: Number
 });
 
 export const Club = mongoose.model('club', clubSchema);
