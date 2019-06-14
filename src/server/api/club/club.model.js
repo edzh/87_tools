@@ -17,7 +17,8 @@ const clubSchema = new mongoose.Schema({
   ],
   start: Date,
   end: Date,
-  capacity: Number
+  capacity: Number,
+  session: mongoose.Schema.Types.ObjectId
 });
 
 export const Club = mongoose.model('club', clubSchema);
