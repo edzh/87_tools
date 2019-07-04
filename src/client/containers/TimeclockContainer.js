@@ -112,7 +112,6 @@ function Timeclock(props) {
 
   function handleFamily(students) {
     students.forEach(student => {
-      console.log(student);
       const studentClub = getStudentClubByTimesheet(student);
       postTimestamp(student, null, {
         family: family.family,

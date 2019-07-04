@@ -7,7 +7,6 @@ import club from './clubReducer';
 import user from './userReducer';
 
 export default combineReducers({
-  postcareLocations,
   student,
   timesheets,
   family,
