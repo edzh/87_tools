@@ -1,11 +1,10 @@
 import * as types from '../actions/clubTypes';
+import { Club } from '../types/Club';
+import { ClubActionTypes } from '../types/actions';
 
-const initialState = {
-  clubs: [],
-  isFetching: false
-};
+const initialState: Club[] = [];
 
-export default function club(state = initialState, action) {
+const clubReducer = (state = initialState, action: ClubActionTypes): Club[] => {
   switch (action.type) {
     case types.FETCH_CLUBS_REQUEST:
       return {
@@ -31,4 +30,6 @@ export default function club(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export { clubReducer };
