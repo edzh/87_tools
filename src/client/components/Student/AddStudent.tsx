@@ -46,14 +46,17 @@ export default function AddStudent() {
       <div className="mb-4">
         <label className="font-bold text-sm block">Name</label>
         <input
-          className="border rounded p-1 w-full shadow block"
+          className="border rounded p-1 w-full shadow-inner  block"
           type="text"
           {...name}
         />
       </div>
       <div className="mb-4">
         <label className="font-bold text-sm block">Grade</label>
-        <select className="border rounded p-1 w-full shadow block" {...grade}>
+        <select
+          className="border rounded p-1 w-full shadow-inner  block"
+          {...grade}
+        >
           <option value="">---</option>
           <option value="0">Kindergarten</option>
           <option value="1">1st</option>
@@ -66,13 +69,13 @@ export default function AddStudent() {
       <div className="mb-4">
         <label className="font-bold text-sm block">PIN</label>
         <input
-          className="border rounded p-1 w-full shadow block"
+          className="border rounded p-1 w-full shadow-inner  block"
           type="number"
           {...pin}
         />
       </div>
       <button
-        className="border shadow rounded p-1 bg-blue text-white text-lg hover:bg-grey-lighter hover:text-blue w-full"
+        className="border shadow-inner  rounded p-1 bg-blue text-white text-lg hover:bg-grey-lighter hover:text-blue w-full"
         type="submit"
       >
         Submit

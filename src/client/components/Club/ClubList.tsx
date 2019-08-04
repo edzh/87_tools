@@ -25,18 +25,20 @@ export default function ClubList(props) {
           </div>
         ))}
       </div>
-      {props.clubs
-        .filter(club => club.day === day)
-        .map(club => (
-          <div className="p-2 border-b" key={club._id}>
-            <Link
-              className="text-blue hover:text-blue-light no-underline"
-              to={`/club/id/${club._id}`}
-            >
-              {club.name}
-            </Link>
-          </div>
-        ))}
+      <div className="overflow-auto" style={{ height: '420px' }}>
+        {props.clubs
+          .filter(club => club.day === day)
+          .map(club => (
+            <div className="p-2 border-b" key={club._id}>
+              <Link
+                className="text-blue hover:text-blue-light no-underline"
+                to={`/club/id/${club._id}`}
+              >
+                {club.name}
+              </Link>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
