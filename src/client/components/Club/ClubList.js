@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 import { daysOfWeek } from 'utils/constants';
 
+import MainDetailsHeader from '../Details/MainDetailsHeader';
+
 export default function ClubList(props) {
   const [day, setDay] = useState(1);
 
   return (
     <div className="border shadow-md">
-      <h2 className="p-4 border-b font-normal rounded-t bg-grey-darkest text-white shadow">
-        Clubs
-      </h2>
+      <MainDetailsHeader>Clubs</MainDetailsHeader>
       <div className="flex w-full">
         {daysOfWeek.map(weekDay => (
           <div

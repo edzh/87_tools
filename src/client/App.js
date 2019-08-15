@@ -15,6 +15,7 @@ import StudentPage from './containers/StudentPageContainer';
 import Club from './containers/ClubContainer';
 import ClubPage from './containers/ClubPageContainer';
 import ClubForm from './components/Club/ClubForm';
+import Session from './containers/SessionContainer';
 import SignIn from './containers/SignInContainer';
 import SignUp from './containers/SignUpContainer';
 
@@ -121,6 +122,7 @@ class App extends Component {
                 </WithAuth>
               )}
             />
+            <Route exact path={'/session'} render={() => <Session />} />
             <Route exact path={'/signin'} render={() => <SignIn />} />
             <Route exact path={'/signup'} render={() => <SignUp />} />
           </div>

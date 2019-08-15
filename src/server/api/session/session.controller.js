@@ -34,10 +34,6 @@ export const createOne = async (req, res) => {
   try {
     const session = await Session.create({ ...req.body });
 
-    if (!updatedTimesheet) {
-      return res.status(400).end();
-    }
-
     res.status(201).json({ data: session });
   } catch (e) {
     console.error(e);

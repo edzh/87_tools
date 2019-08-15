@@ -58,11 +58,6 @@ export const createOne = async (req, res) => {
 export const updateOne = async (req, res) => {
   try {
     const student = await Student.findOne({ _id: req.params.id });
-    const oldFamily = await Family.findOneAndUpdate(
-      { _id: student.family },
-      { $pull: { students: req.params.id } },
-      { new: true }
-    );
 
     const updatedStudent = await Student.findOneAndUpdate(
       { _id: req.params.id },
@@ -72,11 +67,19 @@ export const updateOne = async (req, res) => {
       .lean()
       .exec();
 
-    const newFamily = await Family.findOneAndUpdate(
-      { _id: updatedStudent.family },
-      { $addToSet: { students: [req.params.id] } },
-      { new: true }
-    );
+    if (!student.family.equals(updatedStudent.family)) {
+      await Family.findOneAndUpdate(
+        { _id: student.family },
+        { $pull: { students: req.params.id } },
+        { new: true }
+      );
+
+      await Family.findOneAndUpdate(
+        { _id: updatedStudent.family },
+        { $addToSet: { students: [req.params.id] } },
+        { new: true }
+      );
+    }
 
     if (!updatedStudent) {
       return res.status(400).end();

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import MainDetailsHeader from '../Details/MainDetailsHeader';
+
 export default function ClubStudentList(props) {
   return (
-    <div className="border rounded shadow-md my-4">
+    <div className="border shadow-md my-4">
       <div className="flex border-b">
         <h3 className="m-4">Students</h3>
       </div>
