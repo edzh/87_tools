@@ -2,66 +2,71 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { setStudent } from '../actions/studentActions';
-import StudentDetails from '../components/Student/StudentDetails';
+import {
+  setStudent,
+  getCurrentStudent,
+  updateCurrentStudent
+} from '../actions/studentActions';
+import StudentDetails from '../components/Student/StudentDetailsNew';
+import EditStudent from '../components/Student/EditStudentNew';
 import StudentFamily from '../components/Student/StudentFamily';
 import StudentClubs from '../components/Student/StudentClubs';
 
-function StudentPage({ isAuthenticated, ...props }) {
+function StudentPage({ isAuthenticated, currentStudent, ...props }) {
   const [student, setStudent] = useState(null);
   const [editDetails, setEditDetails] = useState(false);
   const [editFamily, setEditFamily] = useState(false);
   const [editClubs, setEditClubs] = useState(false);
 
   useEffect(() => {
-    props.setStudent(props.student);
+    props.getCurrentStudent(props.studentId);
+  }, []);
 
-    fetch(`${process.env.REACT_APP_API_URL}/api/student/${props.student}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => setStudent(json.data));
-  }, [editDetails, editFamily, editClubs]);
-
-  if (!student) {
+  if (!currentStudent) {
     return null;
   }
 
   return (
     <div>
       <StudentDetails
-        student={student}
+        student={currentStudent}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
       />
-      <StudentFamily
-        student={student}
-        family={student.family}
+      <EditStudent
+        student={currentStudent}
+        updateCurrentStudent={props.updateCurrentStudent}
+      />
+      {/*      <StudentFamily
+        student={currentStudent}
+        family={currentStudent.family}
         editFamily={editFamily}
         setEditFamily={setEditFamily}
       />
       <StudentClubs
-        student={student}
+        student={currentStudent}
         editClubs={editClubs}
         setEditClubs={setEditClubs}
-      />
+      />*/}
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    student: ownProps.student,
+    studentId: ownProps.studentId,
+    currentStudent: state.student.currentStudent,
     isAuthenticated: state.user.isAuthenticated
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setStudent: student => {
-      dispatch(setStudent(student));
+    getCurrentStudent: studentId => {
+      dispatch(getCurrentStudent(studentId));
+    },
+    updateCurrentStudent: student => {
+      dispatch(updateCurrentStudent(student));
     }
   };
 };

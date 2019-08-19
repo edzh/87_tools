@@ -86,3 +86,59 @@ export function studentError(error) {
     error
   };
 }
+
+function currentStudentRequest() {
+  return {
+    type: 'CURRENT_STUDENT_REQUEST'
+  };
+}
+
+function currentStudentSuccess(student) {
+  return {
+    type: 'CURRENT_STUDENT_SUCCESS',
+    student
+  };
+}
+
+// function currentStudentFailure() {
+//   return {
+
+//   }
+// }
+
+export function getCurrentStudent(studentId) {
+  return dispatch => {
+    dispatch(currentStudentRequest());
+    return fetch(`${apiUrl}/api/student/${studentId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json.data);
+        dispatch(currentStudentSuccess(json.data));
+      });
+    // .catch(err => dispatch(currentStudentFailure()))
+  };
+}
+
+export function updateCurrentStudent(student) {
+  return dispatch => {
+    dispatch(currentStudentRequest());
+    return fetch(`${apiUrl}/api/student/${student._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(student)
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(currentStudentSuccess(json.data));
+      });
+    // .catch(err => dispatch(currentStudentFailure()))
+  };
+}

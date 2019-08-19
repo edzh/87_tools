@@ -6,13 +6,7 @@ const sessionSchema = new mongoose.Schema({
     required: true
   },
   start: Date,
-  end: Date,
-  clubs: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'club'
-    }
-  ]
+  end: Date
 });
 
 export const Session = mongoose.model('session', sessionSchema);

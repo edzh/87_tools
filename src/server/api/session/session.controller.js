@@ -1,4 +1,5 @@
 import { Session } from './session.model';
+import { Club } from '../club/club.model';
 
 export const getOne = async (req, res) => {
   try {
@@ -77,12 +78,25 @@ export const removeOne = async (req, res) => {
   }
 };
 
+export const getClubs = async (req, res) => {
+  try {
+    const session = await Session.findOne({ _id: req.params.id });
+    const clubs = await Club.find({ session: session.id });
+
+    return res.status(200).json({ data: clubs });
+  } catch (e) {
+    console.error(e);
+    res.status(400).end();
+  }
+};
+
 const controller = {
   getOne,
   getMany,
   createOne,
   updateOne,
-  removeOne
+  removeOne,
+  getClubs
 };
 
 export default controller;

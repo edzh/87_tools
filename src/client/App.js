@@ -97,7 +97,7 @@ class App extends Component {
               path={'/student/:id'}
               render={({ match }) => (
                 <WithAuth>
-                  <StudentPage student={match.params.id} />
+                  <StudentPage studentId={match.params.id} />
                 </WithAuth>
               )}
             />

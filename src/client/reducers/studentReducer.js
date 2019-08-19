@@ -2,7 +2,10 @@ import * as types from '../actions/studentTypes';
 
 const initialState = {
   isFetching: false,
-  students: []
+  students: [],
+  currentStudent: {
+    isFetching: false
+  }
 };
 
 export default function student(state = initialState, action) {
@@ -39,6 +42,26 @@ export default function student(state = initialState, action) {
         ...state,
         isFetching: false,
         error: action.error
+      };
+    case 'CURRENT_STUDENT_REQUEST':
+    case 'CURRENT_STUDENT_SUCCESS':
+      return {
+        ...state,
+        currentStudent: currentStudent(state.currentStudent, action)
+      };
+    default:
+      return state;
+  }
+}
+
+function currentStudent(state = initialState, action) {
+  switch (action.type) {
+    case 'CURRENT_STUDENT_REQUEST':
+      return { isFetching: true };
+    case 'CURRENT_STUDENT_SUCCESS':
+      return {
+        isFetching: false,
+        ...action.student
       };
     default:
       return state;
