@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useFormInput } from 'utils/hooks';
 
 export default function AddStudent() {
   const name = useFormInput('');
@@ -90,18 +91,4 @@ export default function AddStudent() {
       )}
     </form>
   );
-}
-
-export function useFormInput(initialValue) {
-  const [value, setValue] = useState(initialValue);
-
-  function handleChange(e) {
-    setValue(e.target.value);
-  }
-
-  return {
-    value,
-    setValue,
-    onChange: handleChange
-  };
 }

@@ -1,5 +1,6 @@
 import { Student } from './student.model';
 import { Family } from '../family/family.model';
+import { Club } from '../club/club.model';
 
 export const getOne = async (req, res) => {
   try {
@@ -57,7 +58,7 @@ export const createOne = async (req, res) => {
 
 export const updateOne = async (req, res) => {
   try {
-    const student = await Student.findOne({ _id: req.params.id });
+    const student = await Student.findOne({ _id: req.params.id }).lean();
 
     const updatedStudent = await Student.findOneAndUpdate(
       { _id: req.params.id },
@@ -66,6 +67,16 @@ export const updateOne = async (req, res) => {
     )
       .lean()
       .exec();
+
+    // if (!student.clubs.equals(updatedStudent.clubs)) {
+    //   console
+    // }
+
+    // console.log(student.clubs, updatedStudent.clubs)
+
+    // console.log(student.clubs.filter(i => updatedStudent.clubs.indexOf(i) < 0))
+
+    console.log(student.clubs.equals(updatedStudent.clubs));
 
     if (!student.family.equals(updatedStudent.family)) {
       await Family.findOneAndUpdate(

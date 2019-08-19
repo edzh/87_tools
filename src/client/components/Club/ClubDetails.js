@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { daysOfWeek } from 'utils/constants';
 import EditClub from './EditClub';
 
-export default ({ club, editDetails, setEditDetails }) => {
+export default ({ club, sessions, editDetails, setEditDetails }) => {
   return (
     <div className="border rounded shadow-md">
       <div className="flex border-b bg-grey-darkest w-full">
@@ -18,16 +18,18 @@ export default ({ club, editDetails, setEditDetails }) => {
       </div>
 
       {editDetails ? (
-        <EditClub club={club} setEditDetails={setEditDetails} />
+        <EditClub
+          club={club}
+          sessions={sessions}
+          setEditDetails={setEditDetails}
+        />
       ) : (
         <div className="m-4">
           <h3>Weekday</h3>
           <p className="my-2">{daysOfWeek[club.day]}</p>
 
-          <h3>Session Dates</h3>
-          <p className="my-2">
-            {club.start} - {club.end}
-          </p>
+          <h3>Session</h3>
+          <p className="my-2">{club.session && club.session.name}</p>
 
           <h3>Capacity</h3>
           <p className="my-2">

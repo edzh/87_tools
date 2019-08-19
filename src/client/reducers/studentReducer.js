@@ -28,6 +28,18 @@ export default function student(state = initialState, action) {
         ...state,
         id: action.student
       };
+    case 'ADD_STUDENT_SUCCESS':
+      return {
+        ...state,
+        students: [...state.students, action.student],
+        isFetching: false
+      };
+    case 'STUDENT_ERROR':
+      return {
+        ...state,
+        isFetching: false,
+        error: action.error
+      };
     default:
       return state;
   }

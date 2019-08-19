@@ -1,4 +1,5 @@
 import 'cross-fetch';
+import { apiUrl } from 'config';
 
 import * as types from './studentTypes';
 
@@ -15,7 +16,7 @@ function fetchStudentsSuccess(students) {
   };
 }
 
-function fetchStudentsFailure() {
+function fetchStudentsFailure(error) {
   return {
     type: types.FETCH_STUDENTS_FAILURE
   };
@@ -43,5 +44,45 @@ export function setStudent(student) {
   return {
     type: types.SET_STUDENT,
     student
+  };
+}
+
+export function addStudent(student) {
+  return dispatch => {
+    return fetch(`${apiUrl}/api/student`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(student)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw Error('Unable to create student!');
+        }
+
+        return response.json();
+      })
+      .then(json => {
+        dispatch(addStudentSuccess(json.data));
+      })
+      .catch(err => {
+        dispatch(studentError(err));
+      });
+  };
+}
+
+function addStudentSuccess(student) {
+  return {
+    type: 'ADD_STUDENT_SUCCESS',
+    student
+  };
+}
+
+export function studentError(error) {
+  return {
+    type: 'STUDENT_ERROR',
+    error
   };
 }

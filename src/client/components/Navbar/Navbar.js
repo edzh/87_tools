@@ -44,6 +44,13 @@ function Navbar({ fetchUserInfo, isAuthenticated, isFetching, user }) {
       >
         Club
       </NavLink>
+      <NavLink
+        activeClassName="border-r-4 border-blue"
+        className="py-2 px-4 no-underline text-black block hover:bg-grey-light"
+        to={'/session'}
+      >
+        Session
+      </NavLink>
     </nav>
   );
 }

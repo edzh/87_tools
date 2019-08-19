@@ -10,8 +10,8 @@ export default function ClubStudentList(props) {
         <h3 className="m-4">Students</h3>
       </div>
       <div className="m-4">
-        {props.club.students &&
-          props.club.students.map(student => (
+        {props.students &&
+          props.students.map(student => (
             <Link
               className="block no-underline text-blue hover:text-blue-light"
               to={`/student/${student._id}`}

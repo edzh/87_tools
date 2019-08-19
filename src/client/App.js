@@ -12,6 +12,7 @@ import Family from './containers/FamilyContainer';
 import FamilyPage from './containers/FamilyPageContainer';
 import FamilyForm from './components/Family/FamilyForm';
 import StudentPage from './containers/StudentPageContainer';
+import Student from './containers/StudentContainer';
 import Club from './containers/ClubContainer';
 import ClubPage from './containers/ClubPageContainer';
 import ClubForm from './components/Club/ClubForm';
@@ -23,7 +24,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div style={{ fontFamily: ['Roboto', 'sans-serif'] }}>
+        <div style={{ fontFamily: 'sans-serif' }}>
           <Navbar />
           <div className="lg:ml-64 ml-16 p-4 bg-white relative z-10">
             <Route exact path={'/pinlookup'} render={() => <PinLookup />} />
@@ -36,6 +37,7 @@ class App extends Component {
                 </WithAuth>
               )}
             />
+            <Route exact path={'/students'} render={() => <Student />} />
             <Route
               exact
               path={'/timesheet/'}

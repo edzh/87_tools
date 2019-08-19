@@ -7,10 +7,26 @@ import MainDetailsHeader from '../Details/MainDetailsHeader';
 
 export default function ClubList(props) {
   const [day, setDay] = useState(1);
+  const [session, setSession] = useState('');
+  console.log(session);
 
   return (
     <div className="border shadow-md">
       <MainDetailsHeader>Clubs</MainDetailsHeader>
+      <div className="flex p-2">
+        <h4>Session: </h4>
+        <select
+          value={session}
+          onChange={e => setSession(e.target.value)}
+          name=""
+          id=""
+        >
+          <option value="">No session assigned</option>
+          {props.sessions.map(session => (
+            <option value={session._id}>{session.name}</option>
+          ))}
+        </select>
+      </div>
       <div className="flex w-full">
         {daysOfWeek.map(weekDay => (
           <div
@@ -27,6 +43,13 @@ export default function ClubList(props) {
       </div>
       {props.clubs
         .filter(club => club.day === day)
+        .filter(club => {
+          if (session === '') {
+            return true;
+          }
+
+          return club.session === session;
+        })
         .map(club => (
           <div className="p-2 border-b" key={club._id}>
             <Link

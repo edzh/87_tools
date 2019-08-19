@@ -9,16 +9,11 @@ const clubSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  students: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'student'
-    }
-  ],
-  start: Date,
-  end: Date,
   capacity: Number,
-  session: mongoose.Schema.Types.ObjectId
+  session: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'session'
+  }
 });
 
 export const Club = mongoose.model('club', clubSchema);

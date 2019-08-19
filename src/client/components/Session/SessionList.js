@@ -6,7 +6,11 @@ export default props => {
   return (
     <div>
       <MainDetailsHeader>Sessions</MainDetailsHeader>
-      {props.sessions.map(session => session.name)}
+      <ul className="list-reset">
+        {props.sessions.map(session => (
+          <li>{session.name}</li>
+        ))}
+      </ul>
       <SessionForm />
     </div>
   );
