@@ -52,20 +52,25 @@ export default function StudentDetails({
           <p className="text-xl">{student.pin}</p>
         </div>
       </div>
-      <div className="m-4">
-        <Link to={`/family/id/${student.family._id}`} className="no-underline">
-          <p className="text-xl text-blue-dark hover:text-blue">
-            {student.family.name}
-          </p>
-        </Link>
-        <h3 className="my-2">Pickups</h3>
-        {student.family.pickups.map((pickup, index) => (
-          <div className="flex" key={index}>
-            <p className="w-64 text-bold">{pickup.name}</p>
-            <p>{pickup.pin}</p>
-          </div>
-        ))}
-      </div>
+      {student.family && (
+        <div className="m-4">
+          <Link
+            to={`/family/id/${student.family._id}`}
+            className="no-underline"
+          >
+            <p className="text-xl text-blue-dark hover:text-blue">
+              {student.family.name}
+            </p>
+          </Link>
+          <h3 className="my-2">Pickups</h3>
+          {student.family.pickups.map((pickup, index) => (
+            <div className="flex" key={index}>
+              <p className="w-64 text-bold">{pickup.name}</p>
+              <p>{pickup.pin}</p>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="p-4">
         {student.clubs &&
           student.clubs.map((club, index) => (

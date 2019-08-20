@@ -57,7 +57,10 @@ export default function student(state = initialState, action) {
 function currentStudent(state = initialState, action) {
   switch (action.type) {
     case 'CURRENT_STUDENT_REQUEST':
-      return { isFetching: true };
+      return {
+        ...state,
+        isFetching: true
+      };
     case 'CURRENT_STUDENT_SUCCESS':
       return {
         isFetching: false,

@@ -8,7 +8,7 @@ export const getOne = async (req, res) => {
       .lean()
       .populate({
         path: 'clubs',
-        select: '-__v',
+        select: '-__v -students',
         options: {
           sort: { day: 1 }
         }
@@ -58,7 +58,7 @@ export const createOne = async (req, res) => {
 
 export const updateOne = async (req, res) => {
   try {
-    const student = await Student.findOne({ _id: req.params.id }).lean();
+    // const student = await Student.findOne({ _id: req.params.id }).lean();
 
     const updatedStudent = await Student.findOneAndUpdate(
       { _id: req.params.id },
@@ -66,6 +66,14 @@ export const updateOne = async (req, res) => {
       { new: true }
     )
       .lean()
+      .populate({
+        path: 'clubs',
+        select: '-__v -students',
+        options: {
+          sort: { day: 1 }
+        }
+      })
+      .populate('family', '-students -__v')
       .exec();
 
     // if (!student.clubs.equals(updatedStudent.clubs)) {
@@ -95,8 +103,6 @@ export const updateOne = async (req, res) => {
     if (!updatedStudent) {
       return res.status(400).end();
     }
-
-    console.log(updatedStudent);
 
     res.status(200).json({ data: updatedStudent });
   } catch (e) {
