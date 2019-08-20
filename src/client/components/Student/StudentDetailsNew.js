@@ -72,8 +72,8 @@ export default function StudentDetails({
         </div>
       )}
       <div className="p-4">
-        {student.clubs &&
-          student.clubs.map((club, index) => (
+        {student.currentClubs &&
+          student.currentClubs.map((club, index) => (
             <div className="flex m-2" key={index}>
               <p className="w-32">{intToDay[club.day]}</p>
               <Link className="no-underline" to={`/club/id/${club._id}`}>

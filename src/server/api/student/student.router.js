@@ -16,4 +16,6 @@ router
   .put(controller.updateOne)
   .delete(controller.removeOne);
 
+router.route('/:id/clubs').get(controller.getStudentClubs);
+
 export default router;

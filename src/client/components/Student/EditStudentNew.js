@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Field, Form, FieldArray } from 'formik';
 
 const intToDay = [
@@ -11,7 +11,23 @@ const intToDay = [
   'Saturday'
 ];
 
-export default ({ student, updateCurrentStudent, currentSessionClubs }) => {
+export default ({ student, updateCurrentStudent, currentSession }) => {
+  // useEffect(() => {
+  //   const fetchClubs = async () => {
+  //     const result = await fetch(`${process.env.REACT_APP_API_URL}/api/club`, {
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem('id_token')}`
+  //       }
+  //     })
+  //       .then(response => response.json())
+  //       .then(json => json.data);
+
+  //     setFetchedClubs(result);
+  //   };
+
+  //   fetchClubs();
+  // }, []);
+
   if (!student._id) {
     return null;
   }
@@ -23,23 +39,33 @@ export default ({ student, updateCurrentStudent, currentSessionClubs }) => {
         grade: student.grade,
         pin: student.pin,
         family: student.family && student.family._id,
-        clubs: student.clubs.reduce(
-          (clubs, club) => {
-            clubs[club.day] = club._id;
-            return clubs;
-          },
-          ['', '', '', '', '']
-        )
+        currentClubs: student.currentClubs
+          ? student.currentClubs.reduce(
+              (clubs, club) => {
+                clubs[club.day] = club._id;
+                return clubs;
+              },
+              ['', '', '', '', '', '', '']
+            )
+          : ['', '', '', '', '', '', ''],
+        clubs: student.clubs
       }}
       onSubmit={(values, action) => {
-        console.log(values);
+        console.log([
+          ...student.clubs,
+          ...values.currentClubs.filter(club => club !== '')
+        ]);
         updateCurrentStudent({
           ...student,
           name: values.studentName,
           grade: values.grade,
           pin: values.pin,
           family: values.family,
-          clubs: values.clubs.filter(club => club !== '')
+          currentClubs: values.currentClubs.filter(club => club !== ''),
+          clubs: [
+            ...student.clubs,
+            ...values.currentClubs.filter(club => club !== '')
+          ].filter((value, index, self) => self.indexOf(value) === index)
         });
       }}
     >
@@ -57,23 +83,28 @@ export default ({ student, updateCurrentStudent, currentSessionClubs }) => {
           <Field name="pin" />
           <Field name="family" component="select"></Field>
           <FieldArray
-            name="clubs"
-            render={arrayHelpers => (
+            name="currentClubs"
+            render={() => (
               <div>
-                {values.clubs.map((clubId, index) => {
+                {values.currentClubs.map((clubId, index) => {
                   const club = student.clubs.find(
                     studentClub => studentClub._id === clubId
                   );
 
+                  if (index === 6 || index === 0) {
+                    return null;
+                  }
+
                   return (
                     <Field
                       key={index}
-                      name={`clubs.${index}`}
+                      name={`currentClubs.${index}`}
                       component="select"
+                      className="rounded border block p-1 m-2"
                     >
-                      <option value={index}>{club && club.name}</option>
-                      {currentSessionClubs &&
-                        currentSessionClubs
+                      <option value="">--</option>
+                      {currentSession.clubs &&
+                        currentSession.clubs
                           .filter(sessionClub => sessionClub.day === index)
                           .map(sessionClub => (
                             <option value={sessionClub._id}>

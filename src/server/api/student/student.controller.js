@@ -7,7 +7,7 @@ export const getOne = async (req, res) => {
     const student = await Student.findOne({ _id: req.params.id })
       .lean()
       .populate({
-        path: 'clubs',
+        path: 'currentClubs',
         select: '-__v -students',
         options: {
           sort: { day: 1 }
@@ -32,7 +32,7 @@ export const getMany = async (req, res) => {
     const students = await Student.find(req.query)
       .lean()
       .populate({
-        path: 'clubs',
+        path: 'currentClubs',
         select: '-__v -students',
         options: { sort: { day: 1 } }
       })
@@ -67,7 +67,7 @@ export const updateOne = async (req, res) => {
     )
       .lean()
       .populate({
-        path: 'clubs',
+        path: 'currentClubs',
         select: '-__v -students',
         options: {
           sort: { day: 1 }
@@ -126,12 +126,26 @@ export const removeOne = async (req, res) => {
   }
 };
 
+export const getStudentClubs = async (req, res) => {
+  try {
+    const student = await Student.findOne({ _id: req.params.id });
+    console.log(student);
+    const clubs = await Club.find({ _id: { $in: student.clubs } });
+    console.log(clubs);
+    res.status(200).json({ data: clubs });
+  } catch (e) {
+    console.log(e);
+    res.status(400).end();
+  }
+};
+
 const controller = {
   getOne,
   getMany,
   createOne,
   updateOne,
-  removeOne
+  removeOne,
+  getStudentClubs
 };
 
 export default controller;

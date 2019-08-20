@@ -99,29 +99,29 @@ export default ({ sessions }) => {
         )}
       </Formik>
 
-      <form onSubmit={handleSubmit}>
-        <h2>New Club</h2>
-        <div className="mb-4">
-          <label>Name</label>
-          <input
-            className="border rounded p-1 shadow block"
-            type="text"
-            {...name}
-          />
-        </div>
-        <div className="mb-4">
-          <label>Day</label>
-          <select className="border rounded p-1 shadow block" {...day}>
-            <option value="">---</option>
-            <option value="1">Monday</option>
-            <option value="2">Tuesday</option>
-            <option value="3">Wednesday</option>
-            <option value="4">Thursday</option>
-            <option value="5">Friday</option>
-          </select>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+      {/*<form onSubmit={handleSubmit}>
+              <h2>New Club</h2>
+              <div className="mb-4">
+                <label>Name</label>
+                <input
+                  className="border rounded p-1 shadow block"
+                  type="text"
+                  {...name}
+                />
+              </div>
+              <div className="mb-4">
+                <label>Day</label>
+                <select className="border rounded p-1 shadow block" {...day}>
+                  <option value="">---</option>
+                  <option value="1">Monday</option>
+                  <option value="2">Tuesday</option>
+                  <option value="3">Wednesday</option>
+                  <option value="4">Thursday</option>
+                  <option value="5">Friday</option>
+                </select>
+              </div>
+              <button type="submit">Submit</button>
+            </form>*/}
     </div>
   );
 };

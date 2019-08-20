@@ -7,7 +7,10 @@ import {
   getCurrentStudent,
   updateCurrentStudent
 } from '../actions/studentActions';
-import { getCurrentSessionClubs } from '../actions/sessionActions';
+import {
+  getCurrentSessionClubs,
+  getCurrentSession
+} from '../actions/sessionActions';
 
 import StudentDetails from '../components/Student/StudentDetailsNew';
 import EditStudent from '../components/Student/EditStudentNew';
@@ -17,7 +20,7 @@ import StudentClubs from '../components/Student/StudentClubs';
 function StudentPage({
   isAuthenticated,
   currentStudent,
-  currentSessionClubs,
+  currentSession,
   ...props
 }) {
   const [student, setStudent] = useState(null);
@@ -27,7 +30,8 @@ function StudentPage({
 
   useEffect(() => {
     props.getCurrentStudent(props.studentId);
-    props.getCurrentSessionClubs('5d56ec4f828f6526182bdcfa');
+    props.getCurrentSession('5d4c7d76fd00b31fb47d7626');
+    props.getCurrentSessionClubs('5d4c7d76fd00b31fb47d7626');
   }, []);
 
   if (!currentStudent) {
@@ -44,7 +48,7 @@ function StudentPage({
       <EditStudent
         student={currentStudent}
         updateCurrentStudent={props.updateCurrentStudent}
-        currentSessionClubs={currentSessionClubs}
+        currentSession={currentSession}
       />
       {/*      <StudentFamily
         student={currentStudent}
@@ -66,7 +70,7 @@ const mapStateToProps = (state, ownProps) => {
     studentId: ownProps.studentId,
     currentStudent: state.student.currentStudent,
     isAuthenticated: state.user.isAuthenticated,
-    currentSessionClubs: state.session.currentSession.clubs
+    currentSession: state.session.currentSession
   };
 };
 
@@ -80,6 +84,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCurrentSessionClubs: sessionId => {
       dispatch(getCurrentSessionClubs(sessionId));
+    },
+    getCurrentSession: sessionId => {
+      dispatch(getCurrentSession(sessionId));
     }
   };
 };
