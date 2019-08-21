@@ -90,6 +90,7 @@ export default ({ sessions }) => {
               component="select"
               className="border rounded p-1 shadow block"
             >
+              <option value="">--</option>
               {sessions.map(session => (
                 <option value={session._id}>{session.name}</option>
               ))}

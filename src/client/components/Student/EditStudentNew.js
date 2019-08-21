@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Field, Form, FieldArray } from 'formik';
 
 const intToDay = [
@@ -12,21 +12,25 @@ const intToDay = [
 ];
 
 export default ({ student, updateCurrentStudent, currentSession }) => {
-  // useEffect(() => {
-  //   const fetchClubs = async () => {
-  //     const result = await fetch(`${process.env.REACT_APP_API_URL}/api/club`, {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem('id_token')}`
-  //       }
-  //     })
-  //       .then(response => response.json())
-  //       .then(json => json.data);
+  const [fetchedFamilies, setFetchedFamilies] = useState([]);
+  useEffect(() => {
+    const fetchFamilies = async () => {
+      const result = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/family`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
+        }
+      )
+        .then(response => response.json())
+        .then(json => json.data);
 
-  //     setFetchedClubs(result);
-  //   };
+      setFetchedFamilies(result);
+    };
 
-  //   fetchClubs();
-  // }, []);
+    fetchFamilies();
+  }, []);
 
   if (!student._id) {
     return null;
@@ -71,8 +75,12 @@ export default ({ student, updateCurrentStudent, currentSession }) => {
     >
       {({ values }) => (
         <Form>
-          <Field name="studentName" />
-          <Field name="grade" component="select">
+          <Field name="studentName" className="rounded border block p-1 m-2" />
+          <Field
+            name="grade"
+            component="select"
+            className="rounded border block p-1 m-2"
+          >
             <option value="0">K</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -80,8 +88,17 @@ export default ({ student, updateCurrentStudent, currentSession }) => {
             <option value="4">4</option>
             <option value="5">5</option>
           </Field>
-          <Field name="pin" />
-          <Field name="family" component="select"></Field>
+          <Field name="pin" className="rounded border block p-1 m-2" />
+          <Field
+            name="family"
+            component="select"
+            className="rounded border block p-1 m-2"
+          >
+            <option value="">--</option>
+            {fetchedFamilies.map(family => (
+              <option value={family._id}>{family.name}</option>
+            ))}
+          </Field>
           <FieldArray
             name="currentClubs"
             render={() => (
@@ -107,7 +124,10 @@ export default ({ student, updateCurrentStudent, currentSession }) => {
                         currentSession.clubs
                           .filter(sessionClub => sessionClub.day === index)
                           .map(sessionClub => (
-                            <option value={sessionClub._id}>
+                            <option
+                              key={sessionClub._id}
+                              value={sessionClub._id}
+                            >
                               {sessionClub.name}
                             </option>
                           ))}
@@ -117,7 +137,9 @@ export default ({ student, updateCurrentStudent, currentSession }) => {
               </div>
             )}
           ></FieldArray>
-          <button type="submit">Submit</button>
+          <button type="submit" className="rounded border block p-1 m-2">
+            Submit
+          </button>
         </Form>
       )}
     </Formik>

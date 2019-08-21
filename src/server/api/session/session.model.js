@@ -6,7 +6,12 @@ const sessionSchema = new mongoose.Schema({
     required: true
   },
   start: Date,
-  end: Date
+  end: Date,
+  program: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'program',
+    required: true
+  }
 });
 
 export const Session = mongoose.model('session', sessionSchema);

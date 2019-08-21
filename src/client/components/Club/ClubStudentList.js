@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
 
 export default function ClubStudentList(props) {
+  console.log(props.student);
   return (
     <div className="border shadow-md my-4">
       <div className="flex border-b">
@@ -11,14 +12,17 @@ export default function ClubStudentList(props) {
       </div>
       <div className="m-4">
         {props.students &&
-          props.students.map(student => (
-            <Link
-              className="block no-underline text-blue hover:text-blue-light"
-              to={`/student/${student._id}`}
-            >
-              {student.name}
-            </Link>
-          ))}
+          props.students.map(
+            student =>
+              student && (
+                <Link
+                  className="block no-underline text-blue hover:text-blue-light"
+                  to={`/student/${student._id}`}
+                >
+                  {student.name}
+                </Link>
+              )
+          )}
       </div>
     </div>
   );

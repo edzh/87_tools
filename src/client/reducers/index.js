@@ -1,17 +1,19 @@
 import { combineReducers } from 'redux';
 import postcareLocations from './postcareLocationsReducer';
+import club from './clubReducer';
+import family from './familyReducer';
+import program from './programReducer';
+import session from './sessionReducer';
 import student from './studentReducer';
 import timesheets from './timesheetReducer';
-import family from './familyReducer';
-import club from './clubReducer';
 import user from './userReducer';
-import session from './sessionReducer';
 
 export default combineReducers({
+  club,
+  family,
+  program,
+  session,
   student,
   timesheets,
-  family,
-  club,
-  user,
-  session
+  user
 });
