@@ -21,7 +21,7 @@ export default ({ isAuthenticated, isFetching, user }) => {
     </div>
   ) : (
     <div className="bg-grey-light mb-4 px-4 py-2">
-      <p className="py-2 text-sm">Hi {!isFetching && user.email}</p>
+      <p className="py-2 text-sm">Hi {!isFetching && user && user.email}</p>
       <SignOut key="1" />
     </div>
   );

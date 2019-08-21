@@ -30,8 +30,8 @@ function StudentPage({
 
   useEffect(() => {
     props.getCurrentStudent(props.studentId);
-    props.getCurrentSession('5d56ec4f828f6526182bdcfa');
-    props.getCurrentSessionClubs('5d56ec4f828f6526182bdcfa');
+    props.getCurrentSession('5d4c7d76fd00b31fb47d7626');
+    props.getCurrentSessionClubs('5d4c7d76fd00b31fb47d7626');
   }, []);
 
   if (!currentStudent) {

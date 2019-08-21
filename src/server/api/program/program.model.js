@@ -8,6 +8,11 @@ const programSchema = new mongoose.Schema({
   currentSession: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'session'
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
   }
 });
 

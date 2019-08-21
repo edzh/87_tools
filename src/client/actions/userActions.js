@@ -1,5 +1,6 @@
 import 'cross-fetch';
 import * as types from './userTypes';
+import { apiUrl } from 'config';
 
 export function signInRequest() {
   return {
@@ -96,13 +97,46 @@ export function signOutRequest() {
 
 export function fetchUserInfo(success, failure, token) {
   return dispatch => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/user`, {
+    return fetch(`${apiUrl}/api/user`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then(response => response.json())
-      .then(response => dispatch(success(response.data)))
+      .then(json => {
+        dispatch(success(json.data));
+      })
       .catch(error => dispatch(failure(error)));
+  };
+}
+
+function updateUserRequest() {
+  return {
+    type: 'UPDATE_USER_REQUEST'
+  };
+}
+
+function updateUserSuccess(user) {
+  return {
+    type: 'UPDATE_USER_SUCCESS',
+    user
+  };
+}
+
+function updateUser(user) {
+  return dispatch => {
+    dispatch(updateUserRequest());
+    return fetch(`${apiUrl}/api/user`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(user)
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(updateUserSuccess(json.data));
+      });
   };
 }

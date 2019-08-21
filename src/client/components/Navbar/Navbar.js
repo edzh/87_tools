@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom';
 import NavbarAuth from './NavbarAuth';
 
 function Navbar({ fetchUserInfo, isAuthenticated, isFetching, user }) {
-  useEffect(() => {
-    fetchUserInfo(localStorage.getItem('id_token'));
-  }, []);
+  // useEffect(() => {
+  //   fetchUserInfo(localStorage.getItem('id_token'));
+  // }, []);
 
   return (
     <nav className="border fixed border-r shadow-inner bg-grey-lighter h-full lg:w-64 w-16">

@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true
+    },
+    currentProgram: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'program'
     }
   },
   { timestamps: true }
