@@ -123,7 +123,7 @@ function updateUserSuccess(user) {
   };
 }
 
-function updateUser(user) {
+export function updateUser(user) {
   return dispatch => {
     dispatch(updateUserRequest());
     return fetch(`${apiUrl}/api/user`, {

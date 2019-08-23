@@ -18,7 +18,7 @@ export default function FamilyList(props) {
             <tr key={family._id} className="border-b p-2 block">
               <td>
                 <Link
-                  to={`/family/id/${family._id}`}
+                  to={`/family/${family._id}`}
                   className="no-underline text-blue hover:text-blue-light"
                 >
                   {family.name}

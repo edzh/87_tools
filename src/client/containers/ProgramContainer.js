@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { fetchPrograms } from '../actions/programActions';
+import { getCurrentSession } from '../actions/sessionActions';
+import { updateUser } from '../actions/userActions';
 
 import ProgramList from '../components/Program/ProgramList';
 
@@ -13,12 +15,11 @@ function Program(props) {
 
   return (
     <div>
-      <ProgramList programs={props.programs} user={props.user} />
-      <Link to="/program/new">
-        <button className="p-2 my-2 w-full text-xl shadow bg-blue text-white hover:bg-grey-lightest hover:text-blue text-center no-underline border rounded">
-          Create Program
-        </button>
-      </Link>
+      <ProgramList
+        programs={props.programs}
+        user={props.user}
+        updateUser={props.updateUser}
+      />
     </div>
   );
 }
@@ -26,7 +27,8 @@ function Program(props) {
 const mapStateToProps = state => {
   return {
     programs: state.program.programs,
-    user: state.user.data
+    user: state.user.data,
+    currentProgram: state.session.currentSession
   };
 };
 
@@ -34,6 +36,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchPrograms: () => {
       dispatch(fetchPrograms());
+    },
+    updateUser: user => {
+      dispatch(updateUser(user));
     }
   };
 };

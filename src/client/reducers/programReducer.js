@@ -7,6 +7,7 @@ const initialProgramsState = {
 
 const initialCurrentProgramState = {
   item: {},
+  sessions: [],
   isFetching: false
 };
 
@@ -40,6 +41,12 @@ function currentProgram(state = initialCurrentProgramState, action) {
         ...state,
         isFetching: false,
         item: action.program
+      };
+    case 'GET_PROGRAM_SESSIONS_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        sessions: action.sessions
       };
     default:
       return state;

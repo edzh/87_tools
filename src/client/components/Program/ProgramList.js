@@ -1,17 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ProgramForm from './ProgramForm';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
 
-export default props => {
+export default function ProgramList(props) {
   return (
     <div>
       <MainDetailsHeader>Programs</MainDetailsHeader>
       <ul className="list-reset">
         {props.programs.items.map(program => (
-          <li>{program.name}</li>
+          <li>
+            <Link to={`/program/id/${program._id}`}>{program.name}</Link>
+          </li>
         ))}
       </ul>
       <ProgramForm user={props.user} />
     </div>
   );
-};
+}
+// onClick={() => props.updateUser({...props.user, currentProgram: program._id})}

@@ -15,4 +15,6 @@ router
   .put(controller.updateOne)
   .delete(controller.removeOne);
 
+router.route('/:id/sessions').get(controller.getSessions);
+
 export default router;

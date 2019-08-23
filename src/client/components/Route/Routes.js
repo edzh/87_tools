@@ -1,64 +1,16 @@
-// import AddStudent from './components/Student/AddStudent';
+import React from 'react';
+import { Switch } from 'react-router-dom';
+import RouteWithSubroutes from './RouteWithSubroutes';
+import routes from './routeConfig';
 
-// export default routes = [
-//   {
-//     path: '/addStudent',
-//     auth: true,
-//     component: AddStudent
-//   },
-//   {
-//     path: '/timesheet',
-//     auth: true,
-//     component:,
-//   },
-//   {
-//     path: '/timesheet/new',
-//     auth: true,
-//     component:,
-//   },
-//   {
-//     path: '/timesheet/id/:id',
-//     auth: true,
-//     component:,
-//   },
-//   {
-//     path: '/family',
-//     auth: true,
-//     component:,
-//   },
-//   {
-//     path: '/family/new',
-//     auth: true,
-//     component:,
-//   },
-//   {
-//     path: '/student/:id',
-//     auth: true,
-//     component:,
-//   },
-//   {
-//     path: '/club',
-//     auth: true,
-//     component:,
-//   },
-//   {
-//     path: '/club/:id',
-//     auth: false,
-//     component:,
-//   },
-//   {
-//     path: '/club/new',
-//     auth: true,
-//     component:,
-//   },
-//   {
-//     path: '/signin',
-//     auth: false,
-//     component:,
-//   },
-//   {
-//     path: '/signout',
-//     auth: false,
-//     component:,
-//   }
-// ]
+export default props => {
+  return (
+    <div className="lg:ml-64 ml-16 p-4 bg-white relative z-10">
+      <Switch>
+        {routes.map((route, index) => (
+          <RouteWithSubroutes key={route.path} {...route} />
+        ))}
+      </Switch>
+    </div>
+  );
+};

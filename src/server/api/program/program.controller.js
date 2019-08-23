@@ -1,4 +1,5 @@
 import { Program } from './program.model';
+import { Session } from '../session/session.model';
 
 export const getOne = async (req, res) => {
   try {
@@ -77,12 +78,25 @@ export const removeOne = async (req, res) => {
   }
 };
 
+export const getSessions = async (req, res) => {
+  try {
+    const program = await Program.findOne({ _id: req.params.id });
+    const sessions = await Session.find({ program: program._id });
+
+    res.status(200).json({ data: sessions });
+  } catch (e) {
+    console.log(e);
+    res.status(400).end();
+  }
+};
+
 const controller = {
   getOne,
   getMany,
   createOne,
   updateOne,
-  removeOne
+  removeOne,
+  getSessions
 };
 
 export default controller;
