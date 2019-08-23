@@ -8,10 +8,17 @@ import {
   signInFailure
 } from '../actions/userActions';
 
+import { getCurrentProgram } from '../actions/programActions';
+
 function UserContainer(props) {
   useEffect(() => {
     props.fetchUserInfo(localStorage.getItem('id_token'));
+    props.user && props.getCurrentProgram(props.user.currentProgram);
   }, []);
+
+  useEffect(() => {
+    props.user && props.getCurrentProgram(props.user.currentProgram);
+  }, [props.user]);
 
   return <div>{props.children}</div>;
 }
@@ -27,6 +34,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchUserInfo: token => {
       dispatch(fetchUserInfo(signInSuccess, signInFailure, token));
+    },
+    getCurrentProgram: programId => {
+      dispatch(getCurrentProgram(programId));
     }
   };
 };

@@ -91,7 +91,7 @@ export default ({ sessions }) => {
               className="border rounded p-1 shadow block"
             >
               <option value="">--</option>
-              {sessions.map(session => (
+              {sessions.items.map(session => (
                 <option value={session._id}>{session.name}</option>
               ))}
             </Field>

@@ -20,6 +20,7 @@ import ClubForm from './components/Club/ClubForm';
 import Program from './containers/ProgramContainer';
 import ProgramPage from './containers/ProgramPageContainer';
 import Session from './containers/SessionContainer';
+import SessionPage from './containers/SessionPageContainer';
 import SignIn from './containers/SignInContainer';
 import SignUp from './containers/SignUpContainer';
 import UserContainer from './containers/UserContainer';
@@ -138,6 +139,11 @@ class App extends Component {
                   render={props => <ProgramPage {...props} />}
                 />
                 <Route exact path={'/session'} render={() => <Session />} />
+                <Route
+                  exact
+                  path={'/session/:id'}
+                  render={props => <SessionPage {...props} />}
+                />
                 <Route exact path={'/signin'} render={() => <SignIn />} />
                 <Route exact path={'/signup'} render={() => <SignUp />} />
               </Switch>

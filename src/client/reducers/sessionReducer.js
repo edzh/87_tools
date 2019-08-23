@@ -1,14 +1,18 @@
+import { combineReducers } from 'redux';
 import * as types from '../actions/sessionTypes';
 
-const initialState = {
-  sessions: [],
-  currentSession: {
-    isFetching: false
-  },
+const initialSessionState = {
+  items: [],
   isFetching: false
 };
 
-export default function session(state = initialState, action) {
+const initialCurrentSessionState = {
+  item: [],
+  clubs: [],
+  isFetching: false
+};
+
+function sessions(state = initialSessionState, action) {
   switch (action.type) {
     case types.FETCH_SESSIONS_REQUEST:
       return {
@@ -18,7 +22,7 @@ export default function session(state = initialState, action) {
     case types.FETCH_SESSIONS_SUCCESS:
       return {
         ...state,
-        sessions: action.sessions,
+        items: action.sessions,
         isFetching: false
       };
     case types.FETCH_SESSIONS_FAILURE:
@@ -31,19 +35,12 @@ export default function session(state = initialState, action) {
         ...state,
         id: action.session
       };
-    case 'CURRENT_SESSION_REQUEST':
-    case 'CURRENT_SESSION_SUCCESS':
-    case 'CURRENT_SESSION_CLUBS_SUCCESS':
-      return {
-        ...state,
-        currentSession: currentSession(state.currentSession, action)
-      };
     default:
       return state;
   }
 }
 
-function currentSession(state = initialState, action) {
+function currentSession(state = initialCurrentSessionState, action) {
   switch (action.type) {
     case 'CURRENT_SESSION_REQUEST':
       return {
@@ -54,7 +51,7 @@ function currentSession(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        ...action.session
+        item: action.session
       };
     case 'CURRENT_SESSION_CLUBS_SUCCESS':
       return {
@@ -66,3 +63,8 @@ function currentSession(state = initialState, action) {
       return state;
   }
 }
+
+export default combineReducers({
+  sessions,
+  currentSession
+});

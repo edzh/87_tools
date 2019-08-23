@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
 
 export default function ProgramDetails({ program }) {
@@ -7,7 +8,9 @@ export default function ProgramDetails({ program }) {
       <MainDetailsHeader>{program.item.name}</MainDetailsHeader>
       <ul>
         {program.sessions.map(session => (
-          <li>{session.name}</li>
+          <li>
+            <Link to={`/session/${session._id}`}>{session.name}</Link>
+          </li>
         ))}
       </ul>
     </div>

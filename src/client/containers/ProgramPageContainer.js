@@ -14,18 +14,6 @@ function ProgramPage(props) {
     props.getProgramSessions(props.programId);
   }, []);
 
-  // useEffect(() => {
-  //   props.setProgram(props.program);
-
-  //   fetch(`${process.env.REACT_APP_API_URL}/api/program/${props.program}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem('id_token')}`
-  //     }
-  //   })
-  //     .then(response => response.json())
-  //     .then(json => setProgram(json.data));
-  // }, [editDetails]);
-
   if (!props.program) return null;
 
   return (

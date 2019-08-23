@@ -26,8 +26,8 @@ function Session(props) {
 
 const mapStateToProps = state => {
   return {
-    isFetching: state.session.isFetching,
-    sessions: state.session.sessions
+    isFetching: state.session.sessions.isFetching,
+    sessions: state.session.sessions.items
   };
 };
 
