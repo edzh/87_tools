@@ -6,7 +6,10 @@ import {
   getProgramSessions
 } from '../actions/programActions';
 
+import { addSession } from '../actions/sessionActions';
+
 import ProgramDetails from '../components/Program/ProgramDetails';
+import SessionForm from '../components/Session/SessionForm';
 
 function ProgramPage(props) {
   useEffect(() => {
@@ -18,7 +21,8 @@ function ProgramPage(props) {
 
   return (
     <div>
-      <ProgramDetails program={props.program} />
+      <ProgramDetails program={props.program} sessions={props.sessions} />
+      <SessionForm addSession={props.addSession} program={props.program} />
     </div>
   );
 }
@@ -26,7 +30,8 @@ function ProgramPage(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
-    program: state.program.currentProgram
+    program: state.program.currentProgram,
+    sessions: state.session.sessions
   };
 };
 
@@ -37,6 +42,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     getProgramSessions: programId => {
       dispatch(getProgramSessions(programId));
+    },
+    addSession: session => {
+      dispatch(addSession(session));
     }
   };
 };

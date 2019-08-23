@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchPrograms } from '../actions/programActions';
+import { fetchPrograms, addProgram } from '../actions/programActions';
 import { getCurrentSession } from '../actions/sessionActions';
 import { updateUser } from '../actions/userActions';
 
 import ProgramList from '../components/Program/ProgramList';
+import ProgramForm from '../components/Program/ProgramForm';
 
 function Program(props) {
   useEffect(() => {
@@ -15,11 +16,8 @@ function Program(props) {
 
   return (
     <div>
-      <ProgramList
-        programs={props.programs}
-        user={props.user}
-        updateUser={props.updateUser}
-      />
+      <ProgramList programs={props.programs} updateUser={props.updateUser} />
+      <ProgramForm user={props.user} addProgram={props.addProgram} />
     </div>
   );
 }
@@ -39,6 +37,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateUser: user => {
       dispatch(updateUser(user));
+    },
+    addProgram: program => {
+      dispatch(addProgram(program));
     }
   };
 };

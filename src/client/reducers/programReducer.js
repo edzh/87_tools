@@ -24,6 +24,12 @@ function programs(state = initialProgramsState, action) {
         isFetching: false,
         items: action.programs
       };
+    case 'ADD_PROGRAM_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        items: [...state.items, action.program]
+      };
     default:
       return state;
   }

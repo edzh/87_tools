@@ -104,3 +104,34 @@ export function getProgramSessions(programId) {
       });
   };
 }
+
+function addProgramSuccess(program) {
+  return {
+    type: 'ADD_PROGRAM_SUCCESS',
+    program
+  };
+}
+
+export function addProgram(program) {
+  return dispatch => {
+    dispatch(fetchProgramsRequest());
+    return fetch(`${apiUrl}/api/program/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(program)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw Error('Unable to create program!');
+        }
+
+        return response.json();
+      })
+      .then(json => {
+        dispatch(addProgramSuccess(json.data));
+      });
+  };
+}

@@ -30,8 +30,6 @@ function StudentPage({
 
   useEffect(() => {
     props.getCurrentStudent(props.studentId);
-    props.getCurrentSession('5d56ec4f828f6526182bdcfa');
-    props.getCurrentSessionClubs('5d56ec4f828f6526182bdcfa');
   }, []);
 
   if (!currentStudent) {
@@ -45,11 +43,11 @@ function StudentPage({
         editDetails={editDetails}
         setEditDetails={setEditDetails}
       />
-      <EditStudent
-        student={currentStudent}
-        updateCurrentStudent={props.updateCurrentStudent}
-        currentSession={currentSession}
-      />
+      {/*<EditStudent
+              student={currentStudent}
+              updateCurrentStudent={props.updateCurrentStudent}
+              currentSession={currentSession}
+            />*/}
       {/*      <StudentFamily
         student={currentStudent}
         family={currentStudent.family}

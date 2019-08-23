@@ -13,20 +13,20 @@ import { getCurrentProgram } from '../actions/programActions';
 function UserContainer(props) {
   useEffect(() => {
     props.fetchUserInfo(localStorage.getItem('id_token'));
-    props.user && props.getCurrentProgram(props.user.currentProgram);
   }, []);
 
-  useEffect(() => {
-    props.user && props.getCurrentProgram(props.user.currentProgram);
-  }, [props.user]);
+  // useEffect(() => {
+  //   props.user.data &&
+  //   props.user.data.currentProgram &&
+  //   props.getCurrentProgram(props.user.data.currentProgram);
+  // }, [props.user]);
 
   return <div>{props.children}</div>;
 }
 
 const mapStateToProps = state => {
   return {
-    isFetching: state.user.isFetching,
-    user: state.user.data
+    user: state.user
   };
 };
 

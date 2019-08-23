@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ProgramForm from './ProgramForm';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
 
 export default function ProgramList(props) {
@@ -14,7 +13,6 @@ export default function ProgramList(props) {
           </li>
         ))}
       </ul>
-      <ProgramForm user={props.user} />
     </div>
   );
 }

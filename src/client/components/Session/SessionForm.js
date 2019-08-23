@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 
 import { apiUrl } from 'config';
 
-export default () => {
+export default function SessionForm(props) {
   return (
     <div>
       <Formik
@@ -13,16 +13,12 @@ export default () => {
           end: ''
         }}
         onSubmit={(values, action) => {
-          fetch(`${apiUrl}/api/session/`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              name: values.sessionName,
-              start: values.start,
-              end: values.end
-            })
+          console.log({ values });
+          props.addSession({
+            name: values.sessionName,
+            start: values.start,
+            end: values.end,
+            program: props.program.item._id
           });
         }}
       >
@@ -37,4 +33,4 @@ export default () => {
       </Formik>
     </div>
   );
-};
+}

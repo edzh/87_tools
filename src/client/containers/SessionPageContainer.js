@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import {
   setSession,
   getCurrentSession,
-  getCurrentSessionClubs
+  getCurrentSessionClubs,
+  addCurrentSessionClub
 } from '../actions/sessionActions';
 
 import SessionDetails from '../components/Session/SessionDetails';
@@ -18,7 +19,7 @@ function SessionPage(props) {
 
   return (
     <div>
-      <SessionDetails session={props.session} />
+      <SessionDetails {...props} session={props.session} />
     </div>
   );
 }
@@ -37,6 +38,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCurrentSessionClubs: sessionId => {
       dispatch(getCurrentSessionClubs(sessionId));
+    },
+    addCurrentSessionClub: (sessionId, club) => {
+      dispatch(addCurrentSessionClub(sessionId, club));
     }
   };
 };

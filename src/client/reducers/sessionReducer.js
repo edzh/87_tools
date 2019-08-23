@@ -20,6 +20,7 @@ function sessions(state = initialSessionState, action) {
         isFetching: true
       };
     case types.FETCH_SESSIONS_SUCCESS:
+    case 'GET_PROGRAM_SESSIONS_SUCCESS':
       return {
         ...state,
         items: action.sessions,
@@ -29,6 +30,12 @@ function sessions(state = initialSessionState, action) {
       return {
         ...state,
         isFetching: false
+      };
+    case 'ADD_SESSION_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        items: [...state.items, action.session]
       };
     case types.SET_SESSION:
       return {
@@ -58,6 +65,12 @@ function currentSession(state = initialCurrentSessionState, action) {
         ...state,
         isFetching: false,
         clubs: action.clubs
+      };
+    case 'ADD_CURRENT_SESSION_CLUBS_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        clubs: [...state.clubs, action.clubs]
       };
     default:
       return state;

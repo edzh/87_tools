@@ -4,7 +4,6 @@ import { Session } from '../session/session.model';
 export const getOne = async (req, res) => {
   try {
     const program = await Program.findOne({ _id: req.params.id })
-      .populate('currentSession')
       .lean()
       .exec();
 

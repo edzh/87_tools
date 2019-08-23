@@ -129,9 +129,8 @@ export const removeOne = async (req, res) => {
 export const getStudentClubs = async (req, res) => {
   try {
     const student = await Student.findOne({ _id: req.params.id });
-    console.log(student);
     const clubs = await Club.find({ _id: { $in: student.clubs } });
-    console.log(clubs);
+
     res.status(200).json({ data: clubs });
   } catch (e) {
     console.log(e);

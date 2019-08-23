@@ -15,7 +15,7 @@ function ClubPage(props) {
 
   useEffect(() => {
     props.getCurrentClub(props.clubId);
-    props.getClubStudents(props.clubId);
+    props.fetchSessions();
   }, []);
 
   // useEffect(() => {
@@ -31,8 +31,8 @@ function ClubPage(props) {
   // }, [editDetails]);
 
   useEffect(() => {
-    props.fetchSessions();
-  }, []);
+    props.getClubStudents(props.clubId);
+  }, [props.club.isFetching]);
 
   if (!props.club) return null;
 

@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 
 import { apiUrl } from 'config';
 
-export default props => {
+export default function ProgramForm(props) {
   return (
     <div>
       <Formik
@@ -11,15 +11,9 @@ export default props => {
           programName: ''
         }}
         onSubmit={(values, action) => {
-          fetch(`${apiUrl}/api/program/`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              name: values.programName,
-              owner: props.user._id
-            })
+          props.addProgram({
+            name: values.programName,
+            owner: props.user._id
           });
         }}
       >
@@ -32,4 +26,4 @@ export default props => {
       </Formik>
     </div>
   );
-};
+}

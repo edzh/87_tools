@@ -49,6 +49,7 @@ export function setStudent(student) {
 
 export function addStudent(student) {
   return dispatch => {
+    dispatch(fetchStudentsRequest());
     return fetch(`${apiUrl}/api/student`, {
       method: 'POST',
       headers: {
@@ -99,12 +100,6 @@ function currentStudentSuccess(student) {
     student
   };
 }
-
-// function currentStudentFailure() {
-//   return {
-
-//   }
-// }
 
 export function getCurrentStudent(studentId) {
   return dispatch => {

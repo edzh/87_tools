@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 import { useFormInput } from 'utils/hooks';
 import { apiUrl } from 'config';
 
-export default ({ sessions }) => {
+export default ({ addCurrentSessionClub, session }) => {
   const name = useFormInput('');
   const day = useFormInput('');
   const [newClub, setNewClub] = useState({ redirect: false, id: '' });
@@ -44,20 +44,13 @@ export default ({ sessions }) => {
       <Formik
         initialValues={{
           clubName: '',
-          day: '',
-          session: ''
+          day: ''
         }}
         onSubmit={(values, action) => {
-          fetch(`${apiUrl}/api/club/`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              name: values.clubName,
-              day: values.day,
-              session: values.session
-            })
+          addCurrentSessionClub({
+            name: values.clubName,
+            day: values.day,
+            session: session._id
           });
         }}
       >
@@ -84,17 +77,6 @@ export default ({ sessions }) => {
               <option value="5">Friday</option>
             </Field>
             <label htmlFor="session"></label>
-            <Field
-              id="session"
-              name="session"
-              component="select"
-              className="border rounded p-1 shadow block"
-            >
-              <option value="">--</option>
-              {sessions.items.map(session => (
-                <option value={session._id}>{session.name}</option>
-              ))}
-            </Field>
             <button type="submit">Submit</button>
           </Form>
         )}
