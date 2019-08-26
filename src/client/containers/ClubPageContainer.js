@@ -11,24 +11,11 @@ import ClubStudentList from '../components/Club/ClubStudentList';
 
 function ClubPage(props) {
   const [editDetails, setEditDetails] = useState(false);
-  console.log(props.clubId);
 
   useEffect(() => {
     props.getCurrentClub(props.clubId);
     props.fetchSessions();
   }, []);
-
-  // useEffect(() => {
-  //   props.setClub(props.club);
-
-  //   fetch(`${process.env.REACT_APP_API_URL}/api/club/${props.club}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem('id_token')}`
-  //     }
-  //   })
-  //     .then(response => response.json())
-  //     .then(json => setClub(json.data));
-  // }, [editDetails]);
 
   useEffect(() => {
     props.getClubStudents(props.clubId);

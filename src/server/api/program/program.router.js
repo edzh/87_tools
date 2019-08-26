@@ -17,4 +17,6 @@ router
 
 router.route('/:id/sessions').get(controller.getSessions);
 
+router.route('/:id/students').get(controller.getStudents);
+
 export default router;

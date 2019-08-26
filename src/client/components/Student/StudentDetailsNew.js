@@ -54,10 +54,7 @@ export default function StudentDetails({
       </div>
       {student.family && (
         <div className="m-4">
-          <Link
-            to={`/family/id/${student.family._id}`}
-            className="no-underline"
-          >
+          <Link to={`/family/${student.family._id}`} className="no-underline">
             <p className="text-xl text-blue-dark hover:text-blue">
               {student.family.name}
             </p>

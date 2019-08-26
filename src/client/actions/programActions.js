@@ -105,6 +105,29 @@ export function getProgramSessions(programId) {
   };
 }
 
+function getProgramStudentsSuccess(students) {
+  return {
+    type: 'GET_PROGRAM_STUDENTS_SUCCESS',
+    students
+  };
+}
+
+export function getProgramStudents(programId) {
+  return dispatch => {
+    dispatch(currentProgramRequest());
+    return fetch(`${apiUrl}/api/program/${programId}/students`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(getProgramStudentsSuccess(json.data));
+      });
+  };
+}
+
 function addProgramSuccess(program) {
   return {
     type: 'ADD_PROGRAM_SUCCESS',
