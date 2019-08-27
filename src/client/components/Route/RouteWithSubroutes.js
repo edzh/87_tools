@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom';
 const RouteWithSubroutes = route => {
   return (
     <Route
-      exact
       path={route.path}
       render={props =>
         route.auth ? (

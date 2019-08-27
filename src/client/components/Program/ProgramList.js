@@ -8,8 +8,8 @@ export default function ProgramList(props) {
       <MainDetailsHeader>Programs</MainDetailsHeader>
       <ul className="list-reset">
         {props.programs.items.map(program => (
-          <li>
-            <Link to={`/program/id/${program._id}`}>{program.name}</Link>
+          <li key={program._id}>
+            <Link to={`/program/${program._id}`}>{program.name}</Link>
           </li>
         ))}
       </ul>

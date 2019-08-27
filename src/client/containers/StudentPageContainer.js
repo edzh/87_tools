@@ -65,7 +65,7 @@ function StudentPage({
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    studentId: ownProps.studentId,
+    studentId: ownProps.match.params.id,
     currentStudent: state.student.currentStudent,
     isAuthenticated: state.user.isAuthenticated,
     currentSession: state.session.currentSession

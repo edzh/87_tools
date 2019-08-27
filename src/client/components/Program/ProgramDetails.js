@@ -9,7 +9,7 @@ export default function ProgramDetails({ program, sessions, students }) {
       <h2>Sessions</h2>
       <ul>
         {sessions.items.map(session => (
-          <li>
+          <li key={session._id}>
             <Link to={`/session/${session._id}`}>{session.name}</Link>
           </li>
         ))}
@@ -17,7 +17,7 @@ export default function ProgramDetails({ program, sessions, students }) {
       <h2>Students</h2>
       <ul>
         {students.map(student => (
-          <li>
+          <li key={student._id}>
             <Link to={`/student/${student._id}`}>{student.name}</Link>
           </li>
         ))}

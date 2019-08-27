@@ -12,7 +12,9 @@ import Club from '../../containers/ClubContainer';
 import ClubPage from '../../containers/ClubPageContainer';
 import ClubForm from '../Club/ClubForm';
 import Program from '../../containers/ProgramContainer';
+import ProgramPage from '../../containers/ProgramPageContainer';
 import Session from '../../containers/SessionContainer';
+import SessionPage from '../../containers/SessionPageContainer';
 import SignIn from '../../containers/SignInContainer';
 import SignUp from '../../containers/SignUpContainer';
 import UserContainer from '../../containers/UserContainer';
@@ -26,6 +28,7 @@ const routes = [
   {
     path: '/timesheet',
     auth: true,
+    exact: true,
     component: Timesheet
   },
   {
@@ -41,19 +44,19 @@ const routes = [
   {
     path: '/family',
     auth: true,
+    exact: true,
     component: Family,
-    routes: [
-      {
-        path: '/family/new',
-        auth: true,
-        component: FamilyForm
-      },
-      {
-        path: '/family/id/:id',
-        auth: true,
-        component: FamilyPage
-      }
-    ]
+    routes: []
+  },
+  {
+    path: '/family/new',
+    auth: true,
+    component: FamilyForm
+  },
+  {
+    path: '/family/:id',
+    auth: true,
+    component: FamilyPage
   },
   {
     path: '/student/:id',
@@ -63,19 +66,51 @@ const routes = [
   {
     path: '/club',
     auth: true,
+    exact: true,
     component: Club,
+    routes: []
+  },
+  {
+    path: '/club/:id',
+    auth: false,
+    component: ClubPage
+  },
+  {
+    path: '/club/new',
+    auth: true,
+    component: ClubForm
+  },
+  {
+    path: '/program',
+    auth: false,
+    exact: true,
+    component: Program
+  },
+  {
+    path: '/program/:id',
+    auth: false,
+    component: ProgramPage,
     routes: [
       {
-        path: '/club/:id',
-        auth: false,
-        component: ClubPage
+        path: '/program/:id/students',
+        exact: true,
+        component: Student
       },
       {
-        path: '/club/new',
-        auth: true,
-        component: ClubForm
+        path: '/program/:id/sessions'
       }
     ]
+  },
+  {
+    path: '/session',
+    auth: false,
+    exact: true,
+    component: Session
+  },
+  {
+    path: '/session/:id',
+    auth: false,
+    component: SessionPage
   },
   {
     path: '/signin',

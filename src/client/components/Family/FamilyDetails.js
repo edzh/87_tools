@@ -37,7 +37,7 @@ export default ({ family, editDetails, setEditDetails }) => {
           {family.students &&
             family.students.map(student =>
               student ? (
-                <div className="flex my-4">
+                <div key={student._id} className="flex my-4">
                   <Link
                     className="no-underline w-64"
                     to={`/student/${student._id}`}

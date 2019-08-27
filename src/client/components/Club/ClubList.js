@@ -13,23 +13,10 @@ export default function ClubList(props) {
   return (
     <div className="border shadow-md">
       <MainDetailsHeader>Clubs</MainDetailsHeader>
-      <div className="flex p-2">
-        <h4>Session: </h4>
-        {/*        <select
-          value={session}
-          onChange={e => setSession(e.target.value)}
-          name=""
-          id=""
-        >
-          <option value="">No session assigned</option>
-          {props.sessions.items.map(session => (
-            <option value={session._id}>{session.name}</option>
-          ))}
-        </select>*/}
-      </div>
       <div className="flex w-full">
         {daysOfWeek.map(weekDay => (
           <div
+            key={weekDay}
             className={`${
               day === daysOfWeek.indexOf(weekDay)
                 ? 'border-r border-l border-t'

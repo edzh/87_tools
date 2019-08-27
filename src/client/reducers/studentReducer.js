@@ -15,7 +15,8 @@ export default function student(state = initialState, action) {
         ...state,
         isFetching: true
       };
-    case types.FETCH_STUDENTS_SUCCESS:
+    // case types.FETCH_STUDENTS_SUCCESS:
+    case 'GET_PROGRAM_STUDENTS_SUCCESS':
       return {
         ...state,
         students: action.students,

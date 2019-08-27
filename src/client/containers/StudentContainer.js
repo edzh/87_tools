@@ -22,7 +22,8 @@ function Student(props) {
           props.addStudent({
             name: values.studentName,
             grade: values.grade,
-            pin: values.pin
+            pin: values.pin,
+            program: props.programId
           });
         }}
       >
@@ -48,7 +49,8 @@ function Student(props) {
 
 const mapStateToProps = state => {
   return {
-    students: state.student.students
+    students: state.student.students,
+    programId: state.program.currentProgram.item._id
   };
 };
 
@@ -57,7 +59,7 @@ const mapDispatchToProps = dispatch => {
     fetchStudents: () => {
       dispatch(fetchStudents());
     },
-    startAddStudent: student => {
+    addStudent: student => {
       dispatch(addStudent(student));
     }
   };

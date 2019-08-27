@@ -28,6 +28,10 @@ const studentSchema = new mongoose.Schema({
   family: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'family'
+  },
+  program: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'program'
   }
 });
 

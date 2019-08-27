@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import RouteWithSubroutes from '../components/Route/RouteWithSubroutes';
+
 import {
   setProgram,
   getCurrentProgram,
@@ -21,6 +24,8 @@ function ProgramPage(props) {
 
   if (!props.program) return null;
 
+  console.log(props.routes);
+
   return (
     <div>
       <ProgramDetails
@@ -28,6 +33,10 @@ function ProgramPage(props) {
         sessions={props.sessions}
         students={props.students}
       />
+      <Link to={`/program/${props.programId}/students`}>Students</Link>
+      {props.routes.map(route => (
+        <RouteWithSubroutes key={route.path} {...route} />
+      ))}
       <SessionForm addSession={props.addSession} program={props.program} />
     </div>
   );
