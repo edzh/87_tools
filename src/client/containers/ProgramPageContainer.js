@@ -13,6 +13,7 @@ import {
 import { addSession } from '../actions/sessionActions';
 
 import ProgramDetails from '../components/Program/ProgramDetails';
+import ProgramHeader from '../components/Program/ProgramHeader';
 import SessionForm from '../components/Session/SessionForm';
 
 function ProgramPage(props) {
@@ -28,12 +29,12 @@ function ProgramPage(props) {
 
   return (
     <div>
+      <ProgramHeader programId={props.programId} />
       <ProgramDetails
         program={props.program}
         sessions={props.sessions}
         students={props.students}
       />
-      <Link to={`/program/${props.programId}/students`}>Students</Link>
       {props.routes.map(route => (
         <RouteWithSubroutes key={route.path} {...route} />
       ))}

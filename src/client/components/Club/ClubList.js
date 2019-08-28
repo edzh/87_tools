@@ -41,7 +41,7 @@ export default function ClubList(props) {
           <div className="p-2 border-b" key={club._id}>
             <Link
               className="text-blue hover:text-blue-light no-underline"
-              to={`/club/id/${club._id}`}
+              to={`/club/${club._id}`}
             >
               {club.name}
             </Link>

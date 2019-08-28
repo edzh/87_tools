@@ -97,7 +97,9 @@ const routes = [
         component: Student
       },
       {
-        path: '/program/:id/sessions'
+        path: '/program/:id/sessions',
+        exact: true,
+        component: Session
       }
     ]
   },
