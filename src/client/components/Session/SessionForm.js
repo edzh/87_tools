@@ -18,7 +18,7 @@ export default function SessionForm(props) {
             name: values.sessionName,
             start: values.start,
             end: values.end,
-            program: props.program.item._id
+            program: props.programId
           });
         }}
       >

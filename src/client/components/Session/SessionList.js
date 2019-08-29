@@ -1,17 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SessionForm from './SessionForm';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
 
 export default props => {
   return (
     <div>
-      <MainDetailsHeader>Sessions</MainDetailsHeader>
       <ul className="list-reset">
-        {props.sessions.map(session => (
-          <li>{session.name}</li>
+        {props.sessions.items.map(session => (
+          <li key={session._id}>
+            <Link to={`/session/${session._id}`}>{session.name}</Link>
+          </li>
         ))}
       </ul>
-      <SessionForm />
     </div>
   );
 };

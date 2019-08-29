@@ -6,6 +6,8 @@ import {
   getClubStudents
 } from '../actions/clubActions';
 import { fetchSessions } from '../actions/sessionActions';
+
+import MainDetailsHeader from '../components/Details/MainDetailsHeader';
 import ClubDetails from '../components/Club/ClubDetails';
 import ClubStudentList from '../components/Club/ClubStudentList';
 
@@ -17,21 +19,23 @@ function ClubPage(props) {
     props.fetchSessions();
   }, []);
 
-  useEffect(() => {
-    props.getClubStudents(props.clubId);
-  }, [props.club.isFetching]);
+  // useEffect(() => {
+  //   props.getClubStudents(props.clubId);
+  // }, []);
 
-  if (!props.club) return null;
+  if (!props.currentClub.item) return null;
 
   return (
     <div>
-      <ClubDetails
-        club={props.club.currentClub}
+      <MainDetailsHeader>{props.currentClub.item.name}</MainDetailsHeader>
+
+      {/*      <ClubDetails
+        club={props.currentClub}
         sessions={props.sessions}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
-      />
-      <ClubStudentList students={props.club.currentClub.students} />
+      />*/}
+      {/*<ClubStudentList students={props.currentClub.item} />*/}
     </div>
   );
 }
@@ -39,7 +43,7 @@ function ClubPage(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     clubId: ownProps.match.params.id,
-    club: state.club,
+    currentClub: state.club.currentClub,
     sessions: state.session.sessions
   };
 };

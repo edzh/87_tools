@@ -2,39 +2,41 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchSessions } from '../actions/sessionActions';
+import { getProgramSessions } from '../actions/programActions';
+import { addSession } from '../actions/sessionActions';
 
+import MainDetailsHeader from '../components/Details/MainDetailsHeader';
 import SessionList from '../components/Session/SessionList';
 import SessionForm from '../components/Session/SessionForm';
 
 function Session(props) {
   useEffect(() => {
-    props.fetchSessions();
+    props.getProgramSessions(props.programId);
   }, []);
 
   return (
     <div>
-      <SessionList isFetching={props.isFetching} sessions={props.sessions} />
-      <Link to="/session/new">
-        <button className="p-2 my-2 w-full text-xl shadow bg-blue text-white hover:bg-grey-lightest hover:text-blue text-center no-underline border rounded">
-          Create Session
-        </button>
-      </Link>
+      <MainDetailsHeader>Sessions</MainDetailsHeader>
+      <SessionList sessions={props.sessions} />
+      <SessionForm programId={props.programId} addSession={props.addSession} />
     </div>
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    isFetching: state.session.sessions.isFetching,
-    sessions: state.session.sessions.items
+    programId: ownProps.match.params.id,
+    sessions: state.session.sessions
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSessions: () => {
-      dispatch(fetchSessions());
+    getProgramSessions: programId => {
+      dispatch(getProgramSessions(programId));
+    },
+    addSession: session => {
+      dispatch(addSession(session));
     }
   };
 };

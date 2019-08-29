@@ -2,62 +2,36 @@ import React, { useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { connect } from 'react-redux';
 
-import { fetchStudents, addStudent } from '../actions/studentActions';
+import { addStudent } from '../actions/studentActions';
+import { getProgramStudents } from '../actions/programActions';
+
+import StudentForm from '../components/Student/StudentForm';
+import StudentList from '../components/Student/StudentList';
+
 function Student(props) {
   useEffect(() => {
-    props.fetchStudents();
+    props.getProgramStudents(props.programId);
   }, []);
 
   return (
     <div>
-      {props.students.map(student => student.name)}
-
-      <Formik
-        initialValues={{
-          studentName: '',
-          grade: '',
-          pin: ''
-        }}
-        onSubmit={(values, action) => {
-          props.addStudent({
-            name: values.studentName,
-            grade: values.grade,
-            pin: values.pin,
-            program: props.programId
-          });
-        }}
-      >
-        {() => (
-          <Form>
-            <Field name="studentName" className="border" />
-            <Field name="grade" component="select" className="border">
-              <option value="0">K</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </Field>
-            <Field name="pin" className="border" />
-            <button type="submit">Submit</button>
-          </Form>
-        )}
-      </Formik>
+      <StudentList students={props.students} />
+      <StudentForm programId={props.programId} addStudent={props.addStudent} />
     </div>
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     students: state.student.students,
-    programId: state.program.currentProgram.item._id
+    programId: ownProps.match.params.id
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchStudents: () => {
-      dispatch(fetchStudents());
+    getProgramStudents: programId => {
+      dispatch(getProgramStudents(programId));
     },
     addStudent: student => {
       dispatch(addStudent(student));

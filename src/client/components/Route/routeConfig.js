@@ -112,7 +112,14 @@ const routes = [
   {
     path: '/session/:id',
     auth: false,
-    component: SessionPage
+    component: SessionPage,
+    routes: [
+      {
+        path: '/session/:id/clubs',
+        exact: true,
+        component: Club
+      }
+    ]
   },
   {
     path: '/signin',

@@ -97,3 +97,34 @@ export function getClubStudents(clubId) {
       });
   };
 }
+
+function addClubSuccess(club) {
+  return {
+    type: 'ADD_CLUB_SUCCESS',
+    club
+  };
+}
+
+export function addClub(club) {
+  return dispatch => {
+    dispatch(fetchClubsRequest());
+    return fetch(`${apiUrl}/api/club/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(club)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw Error('Unable to create club!');
+        }
+
+        return response.json();
+      })
+      .then(json => {
+        dispatch(addClubSuccess(json.data));
+      });
+  };
+}

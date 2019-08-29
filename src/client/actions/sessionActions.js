@@ -59,14 +59,14 @@ function currentSessionSuccess(session) {
   };
 }
 
-function currentSessionClubsSuccess(clubs) {
+function getSessionClubsSuccess(clubs) {
   return {
-    type: 'CURRENT_SESSION_CLUBS_SUCCESS',
+    type: 'GET_SESSION_CLUBS_SUCCESS',
     clubs
   };
 }
 
-function addCurrentSessionClubsSuccess(clubs) {
+function addSessionClubsSuccess(clubs) {
   return {
     type: 'ADD_CURRENT_SESSION_CLUBS_SUCCESS',
     clubs
@@ -89,7 +89,7 @@ export function getCurrentSession(sessionId) {
   };
 }
 
-export function getCurrentSessionClubs(sessionId) {
+export function getSessionClubs(sessionId) {
   return dispatch => {
     dispatch(currentSessionRequest());
     return fetch(`${apiUrl}/api/session/${sessionId}/clubs`, {
@@ -100,7 +100,7 @@ export function getCurrentSessionClubs(sessionId) {
     })
       .then(response => response.json())
       .then(json => {
-        dispatch(currentSessionClubsSuccess(json.data));
+        dispatch(getSessionClubsSuccess(json.data));
       });
   };
 }
@@ -155,7 +155,7 @@ export function addCurrentSessionClub(club) {
         return response.json();
       })
       .then(json => {
-        dispatch(addCurrentSessionClubsSuccess(json.data));
+        dispatch(addSessionClubsSuccess(json.data));
       });
   };
 }

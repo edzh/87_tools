@@ -7,8 +7,6 @@ import MainDetailsHeader from '../Details/MainDetailsHeader';
 
 export default function ClubList(props) {
   const [day, setDay] = useState(1);
-  const [session, setSession] = useState('');
-  console.log(session);
 
   return (
     <div className="border shadow-md">
@@ -28,15 +26,8 @@ export default function ClubList(props) {
           </div>
         ))}
       </div>
-      {props.clubs
+      {props.clubs.items
         .filter(club => club.day === day)
-        .filter(club => {
-          if (session === '') {
-            return true;
-          }
-
-          return club.session === session;
-        })
         .map(club => (
           <div className="p-2 border-b" key={club._id}>
             <Link

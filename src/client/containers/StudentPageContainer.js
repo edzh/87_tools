@@ -7,10 +7,7 @@ import {
   getCurrentStudent,
   updateCurrentStudent
 } from '../actions/studentActions';
-import {
-  getCurrentSessionClubs,
-  getCurrentSession
-} from '../actions/sessionActions';
+import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
 
 import StudentDetails from '../components/Student/StudentDetailsNew';
 import EditStudent from '../components/Student/EditStudentNew';
@@ -39,26 +36,10 @@ function StudentPage({
   return (
     <div>
       <StudentDetails
-        student={currentStudent}
+        student={currentStudent.item}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
       />
-      {/*<EditStudent
-              student={currentStudent}
-              updateCurrentStudent={props.updateCurrentStudent}
-              currentSession={currentSession}
-            />*/}
-      {/*      <StudentFamily
-        student={currentStudent}
-        family={currentStudent.family}
-        editFamily={editFamily}
-        setEditFamily={setEditFamily}
-      />
-      <StudentClubs
-        student={currentStudent}
-        editClubs={editClubs}
-        setEditClubs={setEditClubs}
-      />*/}
     </div>
   );
 }
@@ -80,8 +61,8 @@ const mapDispatchToProps = dispatch => {
     updateCurrentStudent: student => {
       dispatch(updateCurrentStudent(student));
     },
-    getCurrentSessionClubs: sessionId => {
-      dispatch(getCurrentSessionClubs(sessionId));
+    getSessionClubs: sessionId => {
+      dispatch(getSessionClubs(sessionId));
     },
     getCurrentSession: sessionId => {
       dispatch(getCurrentSession(sessionId));

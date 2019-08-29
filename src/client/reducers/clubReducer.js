@@ -1,15 +1,18 @@
+import { combineReducers } from 'redux';
+
 import * as types from '../actions/clubTypes';
 
-const initialState = {
-  clubs: [],
-  currentClub: {
-    isFetching: false,
-    students: []
-  },
+const initialClubsState = {
+  items: [],
   isFetching: false
 };
 
-export default function club(state = initialState, action) {
+const initialCurrentClubState = {
+  item: {},
+  isFetching: false
+};
+
+function clubs(state = initialClubsState, action) {
   switch (action.type) {
     case types.FETCH_CLUBS_REQUEST:
       return {
@@ -17,9 +20,10 @@ export default function club(state = initialState, action) {
         isFetching: true
       };
     case types.FETCH_CLUBS_SUCCESS:
+    case 'GET_SESSION_CLUBS_SUCCESS':
       return {
         ...state,
-        clubs: action.clubs,
+        items: action.clubs,
         isFetching: false
       };
     case types.FETCH_CLUBS_FAILURE:
@@ -32,10 +36,6 @@ export default function club(state = initialState, action) {
         ...state,
         id: action.club
       };
-    case 'CURRENT_CLUB_REQUEST':
-    case 'GET_CURRENT_CLUB_SUCCESS':
-    case 'GET_CLUB_STUDENTS_SUCCESS':
-      return { ...state, currentClub: currentClub(state.currentClub, action) };
     default:
       return state;
   }
@@ -44,11 +44,14 @@ export default function club(state = initialState, action) {
 function currentClub(state = { isFetching: false }, action) {
   switch (action.type) {
     case 'CURRENT_CLUB_REQUEST':
-      return { isFetching: true };
+      return {
+        ...state,
+        isFetching: true
+      };
     case 'GET_CURRENT_CLUB_SUCCESS':
       return {
         isFetching: false,
-        ...action.club
+        item: action.club
       };
     case 'GET_CLUB_STUDENTS_SUCCESS':
       return {
@@ -60,3 +63,8 @@ function currentClub(state = { isFetching: false }, action) {
       return state;
   }
 }
+
+export default combineReducers({
+  clubs,
+  currentClub
+});

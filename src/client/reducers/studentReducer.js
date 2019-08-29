@@ -1,14 +1,18 @@
+import { combineReducers } from 'redux';
+
 import * as types from '../actions/studentTypes';
 
-const initialState = {
-  isFetching: false,
-  students: [],
-  currentStudent: {
-    isFetching: false
-  }
+const initialStudentsState = {
+  items: [],
+  isFetching: false
 };
 
-export default function student(state = initialState, action) {
+const initialCurrentStudentState = {
+  item: {},
+  isFetching: false
+};
+
+function students(state = initialStudentsState, action) {
   switch (action.type) {
     case types.FETCH_STUDENTS_REQUEST:
       return {
@@ -19,7 +23,7 @@ export default function student(state = initialState, action) {
     case 'GET_PROGRAM_STUDENTS_SUCCESS':
       return {
         ...state,
-        students: action.students,
+        items: action.students,
         isFetching: false
       };
     case types.FETCH_STUDENTS_FAILURE:
@@ -35,7 +39,7 @@ export default function student(state = initialState, action) {
     case 'ADD_STUDENT_SUCCESS':
       return {
         ...state,
-        students: [...state.students, action.student],
+        items: [...state.items, action.student],
         isFetching: false
       };
     case 'STUDENT_ERROR':
@@ -44,18 +48,12 @@ export default function student(state = initialState, action) {
         isFetching: false,
         error: action.error
       };
-    case 'CURRENT_STUDENT_REQUEST':
-    case 'CURRENT_STUDENT_SUCCESS':
-      return {
-        ...state,
-        currentStudent: currentStudent(state.currentStudent, action)
-      };
     default:
       return state;
   }
 }
 
-function currentStudent(state = initialState, action) {
+function currentStudent(state = initialCurrentStudentState, action) {
   switch (action.type) {
     case 'CURRENT_STUDENT_REQUEST':
       return {
@@ -65,9 +63,14 @@ function currentStudent(state = initialState, action) {
     case 'CURRENT_STUDENT_SUCCESS':
       return {
         isFetching: false,
-        ...action.student
+        item: action.student
       };
     default:
       return state;
   }
 }
+
+export default combineReducers({
+  students,
+  currentStudent
+});
