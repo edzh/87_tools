@@ -7,11 +7,12 @@ export default props => {
   return (
     <div>
       <ul className="list-reset">
-        {props.sessions.items.map(session => (
-          <li key={session._id}>
-            <Link to={`/session/${session._id}`}>{session.name}</Link>
-          </li>
-        ))}
+        {props.sessions.items &&
+          props.sessions.items.map(session => (
+            <li key={session._id}>
+              <Link to={`/session/${session._id}`}>{session.name}</Link>
+            </li>
+          ))}
       </ul>
     </div>
   );

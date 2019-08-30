@@ -7,24 +7,28 @@ import { getProgramSessions } from '../actions/programActions';
 
 import EditStudentClubs from '../components/Student/EditStudentClubsNew';
 
-function StudentClubs(props) {
+function StudentClubs({
+  currentStudent,
+  currentSession,
+  sessions,
+  getProgramSessions,
+  getSessionClubs,
+  getCurrentSession
+}) {
   useEffect(() => {
-    props.currentStudent.item &&
-      props.getProgramSessions(props.currentStudent.item.program);
-  }, [props.currentStudent.isFetching]);
+    currentStudent.item && getProgramSessions(currentStudent.item.program);
+  }, [currentStudent.isFetching]);
 
   useEffect(() => {
-    props.currentSession.item &&
-      props.getSessionClubs(props.currentSession.item._id);
-  }, [props.currentSession.isFetching]);
+    currentSession.item && getSessionClubs(currentSession.item._id);
+  }, [currentSession.isFetching]);
 
-  if (!props.currentStudent.item) return null;
+  if (!currentStudent.item) return null;
 
   return (
     <div>
-      {props.sessions.items &&
-        props.sessions.items.map(session => session.name)}
-      {props.currentStudent.item.currentClubs.map(club => club.name)}
+      {sessions.items && sessions.items.map(session => session.name)}
+      {currentStudent.item.currentClubs.map(club => club.name)}
       <EditStudentClubs />
     </div>
   );
