@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import {
   setStudent,
@@ -8,6 +8,8 @@ import {
   updateCurrentStudent
 } from '../actions/studentActions';
 import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
+
+import RouteWithSubroutes from '../components/Route/RouteWithSubroutes';
 
 import StudentDetails from '../components/Student/StudentDetailsNew';
 import EditStudent from '../components/Student/EditStudentNew';
@@ -35,11 +37,15 @@ function StudentPage({
 
   return (
     <div>
+      <Link to={`/student/${props.studentId}/clubs`}>Clubs</Link>
       <StudentDetails
         student={currentStudent.item}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
       />
+      {props.routes.map(route => (
+        <RouteWithSubroutes key={route.path} {...route} />
+      ))}
     </div>
   );
 }

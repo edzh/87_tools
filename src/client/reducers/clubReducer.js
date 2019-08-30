@@ -3,12 +3,10 @@ import { combineReducers } from 'redux';
 import * as types from '../actions/clubTypes';
 
 const initialClubsState = {
-  items: [],
   isFetching: false
 };
 
 const initialCurrentClubState = {
-  item: {},
   isFetching: false
 };
 
@@ -36,6 +34,12 @@ function clubs(state = initialClubsState, action) {
         ...state,
         id: action.club
       };
+    case 'ADD_CLUB_SUCCESS':
+      return {
+        ...state,
+        items: [...state.items, action.club]
+      };
+
     default:
       return state;
   }

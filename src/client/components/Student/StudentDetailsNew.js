@@ -25,7 +25,7 @@ export default function StudentDetails({
   setEditDetails,
   student
 }) {
-  if (!student._id) {
+  if (!student) {
     return null;
   }
 

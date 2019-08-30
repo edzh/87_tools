@@ -2,13 +2,10 @@ import { combineReducers } from 'redux';
 import * as types from '../actions/sessionTypes';
 
 const initialSessionState = {
-  items: [],
   isFetching: false
 };
 
 const initialCurrentSessionState = {
-  item: [],
-  clubs: [],
   isFetching: false
 };
 

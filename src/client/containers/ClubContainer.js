@@ -20,12 +20,7 @@ function Club(props) {
   return (
     <div>
       <ClubList clubs={props.clubs} sessions={props.sessions} />
-      <ClubForm sessionId={props.sessionId} />
-      {/*      <Link to="/club/new">
-        <button className="p-2 my-2 w-full text-xl shadow bg-blue text-white hover:bg-grey-lightest hover:text-blue text-center no-underline border rounded">
-          Create Club
-        </button>
-      </Link>*/}
+      <ClubForm addClub={props.addClub} sessionId={props.sessionId} />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import Family from '../../containers/FamilyContainer';
 import FamilyPage from '../../containers/FamilyPageContainer';
 import FamilyForm from '../Family/FamilyForm';
 import StudentPage from '../../containers/StudentPageContainer';
+import StudentClubs from '../../containers/StudentClubsContainer';
 import Student from '../../containers/StudentContainer';
 import Club from '../../containers/ClubContainer';
 import ClubPage from '../../containers/ClubPageContainer';
@@ -61,7 +62,14 @@ const routes = [
   {
     path: '/student/:id',
     auth: true,
-    component: StudentPage
+    component: StudentPage,
+    routes: [
+      {
+        path: '/student/:id/clubs',
+        exact: true,
+        component: StudentClubs
+      }
+    ]
   },
   {
     path: '/club',
