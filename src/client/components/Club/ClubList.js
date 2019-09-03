@@ -26,18 +26,19 @@ export default function ClubList(props) {
           </div>
         ))}
       </div>
-      {props.clubs.items
-        .filter(club => club.day === day)
-        .map(club => (
-          <div className="p-2 border-b" key={club._id}>
-            <Link
-              className="text-blue hover:text-blue-light no-underline"
-              to={`/club/${club._id}`}
-            >
-              {club.name}
-            </Link>
-          </div>
-        ))}
+      {props.clubs.items &&
+        props.clubs.items
+          .filter(club => club.day === day)
+          .map(club => (
+            <div className="p-2 border-b" key={club._id}>
+              <Link
+                className="text-blue hover:text-blue-light no-underline"
+                to={`/club/${club._id}`}
+              >
+                {club.name}
+              </Link>
+            </div>
+          ))}
     </div>
   );
 }
