@@ -63,6 +63,9 @@ const mapDispatchToProps = dispatch => {
     },
     getProgramSessions: programId => {
       dispatch(getProgramSessions(programId));
+    },
+    updateCurrentStudent: student => {
+      dispatch(updateCurrentStudent(student));
     }
   };
 };

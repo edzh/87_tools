@@ -5,42 +5,6 @@ export const getOne = async (req, res) => {
   try {
     const timesheet = await Timesheet.findOne({ _id: req.params.id })
       .lean()
-      .populate({
-        path: 'timestamp',
-        select: '-__v -timesheet',
-        options: {
-          sort: { datetime: -1 }
-        },
-        populate: [
-          {
-            path: 'student',
-            select: 'name pin clubs',
-            model: 'student'
-          },
-          {
-            path: 'club',
-            model: 'club'
-          },
-          {
-            path: 'family',
-            model: 'family'
-          }
-        ]
-        // populate: {
-        //   path: 'clubs',
-        //   select: 'name day -_id',
-        //   model: 'club',
-        //   options: {
-        //     sort: { day: 1 }
-        //   }
-        // }
-        // populate: {
-        //   path: 'club'
-        // },
-        // populate: {
-        //   path: 'family'
-        // }
-      })
       .exec();
 
     if (!timesheet) {
@@ -116,12 +80,25 @@ export const removeOne = async (req, res) => {
   }
 };
 
+export const getTimestamps = async (req, res) => {
+  try {
+    const timesheet = await Timesheet.findOne({ _id: req.params.id });
+    const timestamps = await Timestamp.find({ timesheet: timesheet.id });
+
+    return res.status(200).json({ data: timestamps });
+  } catch (e) {
+    console.error(e);
+    res.status(400).end();
+  }
+};
+
 const controller = {
   getOne,
   getMany,
   createOne,
   updateOne,
-  removeOne
+  removeOne,
+  getTimestamps
 };
 
 export default controller;

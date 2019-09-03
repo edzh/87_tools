@@ -16,4 +16,6 @@ router
   .put(controller.updateOne)
   .delete(controller.removeOne);
 
+router.route('/:id/timestamps').get(controller.getTimestamps);
+
 export default router;

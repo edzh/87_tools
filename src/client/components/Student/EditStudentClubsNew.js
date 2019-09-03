@@ -7,10 +7,9 @@ export default function EditStudentClubs({
   sessions,
   currentStudent,
   getCurrentSession,
-  getSessionClubs
+  getSessionClubs,
+  updateCurrentStudent
 }) {
-  console.log(currentStudent.item);
-
   return (
     <div>
       {sessions.items &&
@@ -22,16 +21,46 @@ export default function EditStudentClubs({
 
       <Formik
         initialValues={{
-          monday: currentStudent.item.currentClubs[0],
-          tuesday: currentStudent.item.currentClubs[0],
-          wednesday: currentStudent.item.currentClubs[0],
-          thursday: currentStudent.item.currentClubs[0],
-          friday: currentStudent.item.currentClubs[0]
+          monday: currentStudent.item.currentClubs[0]
+            ? currentStudent.item.currentClubs[0]._id
+            : '',
+          tuesday: currentStudent.item.currentClubs[1]
+            ? currentStudent.item.currentClubs[1]._id
+            : '',
+          wednesday: currentStudent.item.currentClubs[2]
+            ? currentStudent.item.currentClubs[2]._id
+            : '',
+          thursday: currentStudent.item.currentClubs[3]
+            ? currentStudent.item.currentClubs[3]._id
+            : '',
+          friday: currentStudent.item.currentClubs[4]
+            ? currentStudent.item.currentClubs[4]._id
+            : ''
+        }}
+        onSubmit={(values, actions) => {
+          const currentClubs = [
+            values.monday,
+            values.tuesday,
+            values.wednesday,
+            values.thursday,
+            values.friday
+          ].filter(club => club !== '');
+
+          const clubs = Array.from(
+            new Set([...currentStudent.item.clubs, ...currentClubs])
+          ).filter(club => club !== '');
+
+          updateCurrentStudent({
+            ...currentStudent.item,
+            currentClubs,
+            clubs
+          });
         }}
       >
         {() => (
           <Form>
             <Field name="monday" component="select">
+              <option value="">---</option>
               {clubs.items &&
                 clubs.items
                   .filter(club => club.day === 1)
@@ -42,6 +71,7 @@ export default function EditStudentClubs({
                   ))}
             </Field>
             <Field name="tuesday" component="select">
+              <option value="">---</option>
               {clubs.items &&
                 clubs.items
                   .filter(club => club.day === 2)
@@ -52,6 +82,7 @@ export default function EditStudentClubs({
                   ))}
             </Field>
             <Field name="wednesday" component="select">
+              <option value="">---</option>
               {clubs.items &&
                 clubs.items
                   .filter(club => club.day === 3)
@@ -62,6 +93,7 @@ export default function EditStudentClubs({
                   ))}
             </Field>
             <Field name="thursday" component="select">
+              <option value="">---</option>
               {clubs.items &&
                 clubs.items
                   .filter(club => club.day === 4)
@@ -72,6 +104,7 @@ export default function EditStudentClubs({
                   ))}
             </Field>
             <Field name="friday" component="select">
+              <option value="">---</option>
               {clubs.items &&
                 clubs.items
                   .filter(club => club.day === 5)

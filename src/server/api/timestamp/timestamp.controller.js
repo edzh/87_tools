@@ -35,15 +35,15 @@ export const createOne = async (req, res) => {
   try {
     const timestamp = await Timestamp.create({ ...req.body });
 
-    const updatedTimesheet = await Timesheet.findOneAndUpdate(
-      { _id: req.body.timesheet },
-      { $push: { timestamp: [timestamp._id] } },
-      { new: true, upsert: true, safe: true }
-    );
+    // const updatedTimesheet = await Timesheet.findOneAndUpdate(
+    //   { _id: req.body.timesheet },
+    //   { $push: { timestamp: [timestamp._id] } },
+    //   { new: true, upsert: true, safe: true }
+    // );
 
-    if (!updatedTimesheet) {
-      return res.status(400).end();
-    }
+    // if (!updatedTimesheet) {
+    //   return res.status(400).end();
+    // }
 
     res.status(201).json({ data: timestamp });
   } catch (e) {

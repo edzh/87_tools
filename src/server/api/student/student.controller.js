@@ -76,30 +76,6 @@ export const updateOne = async (req, res) => {
       .populate('family', '-students -__v')
       .exec();
 
-    // if (!student.clubs.equals(updatedStudent.clubs)) {
-    //   console
-    // }
-
-    // console.log(student.clubs, updatedStudent.clubs)
-
-    // console.log(student.clubs.filter(i => updatedStudent.clubs.indexOf(i) < 0))
-
-    // console.log(student.clubs.equals(updatedStudent.clubs));
-
-    // if (!student.family.equals(updatedStudent.family)) {
-    //   await Family.findOneAndUpdate(
-    //     { _id: student.family },
-    //     { $pull: { students: req.params.id } },
-    //     { new: true }
-    //   );
-
-    //   await Family.findOneAndUpdate(
-    //     { _id: updatedStudent.family },
-    //     { $addToSet: { students: [req.params.id] } },
-    //     { new: true }
-    //   );
-    // }
-
     if (!updatedStudent) {
       return res.status(400).end();
     }

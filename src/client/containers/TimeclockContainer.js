@@ -219,7 +219,7 @@ function Timeclock(props) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    timesheet: ownProps.timesheet,
+    timesheet: ownProps.match.params.id,
     students: state.student.students
   };
 };
