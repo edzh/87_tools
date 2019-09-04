@@ -22,6 +22,6 @@ const timesheetSchema = new mongoose.Schema({
   }
 });
 
-timesheetSchema.index({ date: 1, io: 1 }, { unique: true });
+timesheetSchema.index({ date: 1, io: 1, session: 1 }, { unique: true });
 
 export const Timesheet = mongoose.model('timesheet', timesheetSchema);

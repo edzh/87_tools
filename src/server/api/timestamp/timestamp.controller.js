@@ -35,6 +35,17 @@ export const createOne = async (req, res) => {
   try {
     const timestamp = await Timestamp.create({ ...req.body });
 
+    const populatedTimestamp = await timestamp
+      .populate({
+        path: 'student',
+        select: 'name'
+      })
+      .populate({
+        path: 'club',
+        select: 'name day'
+      })
+      .execPopulate();
+
     // const updatedTimesheet = await Timesheet.findOneAndUpdate(
     //   { _id: req.body.timesheet },
     //   { $push: { timestamp: [timestamp._id] } },
@@ -45,7 +56,7 @@ export const createOne = async (req, res) => {
     //   return res.status(400).end();
     // }
 
-    res.status(201).json({ data: timestamp });
+    res.status(201).json({ data: populatedTimestamp });
   } catch (e) {
     console.error(e);
     res.status(400).end();

@@ -8,6 +8,9 @@ export default function ProgramHeader(props) {
       <li>
         <Link to={`/session/${props.sessionId}/clubs`}>Clubs</Link>
       </li>
+      <li>
+        <Link to={`/session/${props.sessionId}/timesheets`}>Timesheets</Link>
+      </li>
     </ul>
   );
 }

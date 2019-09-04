@@ -63,6 +63,11 @@ function currentSession(state = initialCurrentSessionState, action) {
         isFetching: false,
         clubs: action.clubs
       };
+    case 'GET_SESSION_CLUBS_SUCCESS':
+      return {
+        ...state,
+        isFetching: false
+      };
     case 'ADD_CURRENT_SESSION_CLUBS_SUCCESS':
       return {
         ...state,

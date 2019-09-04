@@ -2,41 +2,45 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchTimesheets, setTimesheet } from '../actions/timesheetActions';
+import { addTimesheet, setTimesheet } from '../actions/timesheetActions';
+import { getSessionTimesheets } from '../actions/sessionActions';
 
 import TimesheetList from '../components/Timesheet/TimesheetList';
+import TimesheetForm from '../components/Timesheet/TimesheetForm';
 
-function Timesheet(props) {
+function Timesheet({
+  sessionId,
+  timesheets,
+  addTimesheet,
+  getSessionTimesheets
+}) {
+  console.log(sessionId);
   useEffect(() => {
-    props.fetchTimesheets();
+    getSessionTimesheets(sessionId);
   }, []);
 
   return (
     <div>
-      <TimesheetList
-        timesheets={props.timesheets}
-        isFetching={props.isFetching}
-      />
-      <Link to="/timesheet/new">
-        <button className="p-2 my-2 w-full text-xl shadow bg-blue text-white hover:bg-grey-lightest hover:text-blue text-center no-underline border rounded">
-          Create Timesheet
-        </button>
-      </Link>
+      <TimesheetList timesheets={timesheets} />
+      <TimesheetForm sessionId={sessionId} addTimesheet={addTimesheet} />
     </div>
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    isFetching: state.timesheets.isFetching,
-    timesheets: state.timesheets.fetchedTimesheets
+    timesheets: state.timesheet.timesheets,
+    sessionId: ownProps.match.params.id
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchTimesheets: () => {
-      dispatch(fetchTimesheets());
+    getSessionTimesheets: sessionId => {
+      dispatch(getSessionTimesheets(sessionId));
+    },
+    addTimesheet: timesheet => {
+      dispatch(addTimesheet(timesheet));
     }
   };
 };

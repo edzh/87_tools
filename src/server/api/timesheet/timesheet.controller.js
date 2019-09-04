@@ -83,7 +83,17 @@ export const removeOne = async (req, res) => {
 export const getTimestamps = async (req, res) => {
   try {
     const timesheet = await Timesheet.findOne({ _id: req.params.id });
-    const timestamps = await Timestamp.find({ timesheet: timesheet.id });
+    const timestamps = await Timestamp.find({ timesheet: timesheet.id })
+      .lean()
+      .populate({
+        path: 'student',
+        select: 'name'
+      })
+      .populate({
+        path: 'club',
+        select: 'name day'
+      })
+      .exec();
 
     return res.status(200).json({ data: timestamps });
   } catch (e) {

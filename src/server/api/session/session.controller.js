@@ -1,5 +1,6 @@
 import { Session } from './session.model';
 import { Club } from '../club/club.model';
+import { Timesheet } from '../timesheet/timesheet.model';
 
 export const getOne = async (req, res) => {
   try {
@@ -90,13 +91,26 @@ export const getClubs = async (req, res) => {
   }
 };
 
+export const getTimesheets = async (req, res) => {
+  try {
+    const session = await Session.findOne({ _id: req.params.id });
+    const timesheets = await Timesheet.find({ session: session.id });
+
+    return res.status(200).json({ data: timesheets });
+  } catch (e) {
+    console.error(e);
+    res.status(400).end();
+  }
+};
+
 const controller = {
   getOne,
   getMany,
   createOne,
   updateOne,
   removeOne,
-  getClubs
+  getClubs,
+  getTimesheets
 };
 
 export default controller;

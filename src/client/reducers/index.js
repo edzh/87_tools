@@ -5,7 +5,8 @@ import family from './familyReducer';
 import program from './programReducer';
 import session from './sessionReducer';
 import student from './studentReducer';
-import timesheets from './timesheetReducer';
+import timesheet from './timesheetReducer';
+import timestamp from './timestampReducer';
 import user from './userReducer';
 
 export default combineReducers({
@@ -14,6 +15,7 @@ export default combineReducers({
   program,
   session,
   student,
-  timesheets,
+  timesheet,
+  timestamp,
   user
 });

@@ -5,7 +5,11 @@ import { useDebounce, useFormInput } from 'utils/hooks';
 import TimestampListHeader from './TimestampListHeader';
 import TimestampListRow from './TimestampListRow';
 
-export default function TimestampList({ timesheet, setRefresh }) {
+export default function TimestampList({
+  currentTimesheet,
+  timestamps,
+  setRefresh
+}) {
   const query = useFormInput('');
   const debouncedSearchTerm = useDebounce(query.value, 250);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -15,7 +19,7 @@ export default function TimestampList({ timesheet, setRefresh }) {
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      const filtered = search(debouncedSearchTerm, timesheet.timestamp);
+      const filtered = search(debouncedSearchTerm, timestamps.items);
       setFilteredSuggestions(filtered);
       setShowSuggestions(true);
     } else {
@@ -50,65 +54,69 @@ export default function TimestampList({ timesheet, setRefresh }) {
     }
   };
 
-  if (!timesheet.timestamp) {
+  if (!timestamps.items && !currentTimesheet.item) {
     return <p>loading...</p>;
   }
 
   return (
     <div className="mb-3 border shadow-md rounded mt-4 lg:mt-0">
-      <div className="flex p-4 bg-grey-darkest shadow rounded-t">
-        <h2 className="font-normal text-white">
-          {timesheet.io === 'in' ? 'Sign In' : 'Sign Out'} -{' '}
-          {format(timesheet.date, 'dddd, MMMM D')}
-        </h2>
-        <div className="ml-auto">
-          <button
-            className={`bg-white text-xs rounded mr-2 p-1`}
-            onClick={() => setRefresh(true)}
+      {currentTimesheet.item && (
+        <>
+          <div className="flex p-4 bg-grey-darkest shadow rounded-t">
+            <h2 className="font-normal text-white">
+              {currentTimesheet.item.io === 'in' ? 'Sign In' : 'Sign Out'} -{' '}
+              {format(currentTimesheet.item.date, 'dddd, MMMM D')}
+            </h2>
+            <div className="ml-auto">
+              <button
+                className={`bg-white text-xs rounded mr-2 p-1`}
+                onClick={() => setRefresh(true)}
+              >
+                Refresh
+              </button>
+              <button
+                className={`${showSearch &&
+                  'bg-blue text-white'} bg-white text-xs rounded p-1`}
+                onClick={() => setShowSearch(!showSearch)}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          <div
+            className="overflow-auto w-full block"
+            style={{ WebkitOverflowScrolling: 'touch', height: '530px' }}
           >
-            Refresh
-          </button>
-          <button
-            className={`${showSearch &&
-              'bg-blue text-white'} bg-white text-xs rounded p-1`}
-            onClick={() => setShowSearch(!showSearch)}
-          >
-            Search
-          </button>
-        </div>
-      </div>
-      <div
-        className="overflow-auto w-full block"
-        style={{ WebkitOverflowScrolling: 'touch', height: '530px' }}
-      >
-        {showSearch && (
-          <input
-            className="p-2 shadow-inner rounded border m-4 mb-2"
-            placeholder="Search Name"
-            type="text"
-            {...query}
-            ref={searchRef}
-          />
-        )}
-        <TimestampListHeader timesheet={timesheet} />
-        {showSuggestions
-          ? filteredSuggestions.map(timestamp => (
-              <TimestampListRow
-                removeTimestamp={removeTimestamp}
-                timesheet={timesheet}
-                key={timestamp._id}
-                timestamp={timestamp}
+            {showSearch && (
+              <input
+                className="p-2 shadow-inner rounded border m-4 mb-2"
+                placeholder="Search Name"
+                type="text"
+                {...query}
+                ref={searchRef}
               />
-            ))
-          : timesheet.timestamp.map(timestamp => (
-              <TimestampListRow
-                removeTimestamp={removeTimestamp}
-                timesheet={timesheet}
-                key={timestamp._id}
-                timestamp={timestamp}
-              />
-            ))}
-      </div>
+            )}
+            <TimestampListHeader currentTimesheet={currentTimesheet} />
+            {showSuggestions
+              ? filteredSuggestions.map(timestamp => (
+                  <TimestampListRow
+                    removeTimestamp={removeTimestamp}
+                    currentTimesheet={currentTimesheet}
+                    key={timestamp._id}
+                    timestamp={timestamp}
+                  />
+                ))
+              : timestamps.items.map(timestamp => (
+                  <TimestampListRow
+                    removeTimestamp={removeTimestamp}
+                    currentTimesheet={currentTimesheet}
+                    key={timestamp._id}
+                    timestamp={timestamp}
+                  />
+                ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

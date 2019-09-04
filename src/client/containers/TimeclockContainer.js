@@ -3,16 +3,52 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
 
-import { setTimesheet } from '../actions/timesheetActions';
-import { fetchStudents } from '../actions/studentActions';
+import {
+  getTimesheetTimestamps,
+  addTimestamp,
+  getCurrentTimesheet
+} from '../actions/timesheetActions';
+import { getProgramStudents } from '../actions/programActions';
+import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
 
 import ManualEntry from '../components/Timeclock/ManualEntry';
 import PinInput from '../components/Timeclock/PinInput';
 import PinLookup from './PinLookup';
-import TimestampList from '../components/Timeclock/TimestampList';
+import TimestampList from '../components/Timeclock/NewTimestampList';
 import MakePdf from 'data/MakePdf';
 
-function Timeclock(props) {
+function Timeclock({
+  getTimesheetTimestamps,
+  getCurrentTimesheet,
+  getCurrentSession,
+  getSessionClubs,
+  getProgramStudents,
+  clubs,
+  students,
+  timesheetId,
+  timestamps,
+  currentTimesheet,
+  currentSession,
+  ...props
+}) {
+  useEffect(() => {
+    getCurrentTimesheet(timesheetId);
+    getTimesheetTimestamps(timesheetId);
+  }, []);
+
+  useEffect(() => {
+    if (currentTimesheet.item) {
+      getCurrentSession(currentTimesheet.item.session);
+      getSessionClubs(currentTimesheet.item.session);
+    }
+  }, [currentTimesheet.isFetching]);
+
+  useEffect(() => {
+    if (currentSession.item) {
+      getProgramStudents(currentSession.item.program);
+    }
+  }, [currentSession.isFetching]);
+
   const [pin, setPin] = useState('');
   const [message, setMessage] = useState('');
   const [refresh, setRefresh] = useState(false);
@@ -41,11 +77,7 @@ function Timeclock(props) {
   };
 
   useEffect(() => {
-    props.setTimesheet(props.timesheet);
-  }, []);
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/timesheet/${props.timesheet}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/timesheet/${timesheetId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
@@ -138,7 +170,7 @@ function Timeclock(props) {
         },
         body: JSON.stringify({
           student: student._id,
-          timesheet: props.timesheet,
+          timesheet: timesheetId,
           fobStatus,
           pickup: { family: family, name: pickup.name, pin: pickup.pin },
           club: options.club
@@ -189,28 +221,27 @@ function Timeclock(props) {
           handleFamily={handleFamily}
           refresh={refresh}
         />
-        <ManualEntry
-          students={props.students}
-          fetchStudents={props.fetchStudents}
-          postTimestamp={postTimestamp}
-          setMessage={setMessage}
-          getStudentClubByTimesheet={getStudentClubByTimesheet}
-        />
+        {/*<ManualEntry
+                  students={props.students}
+                  postTimestamp={postTimestamp}
+                  setMessage={setMessage}
+                  getStudentClubByTimesheet={getStudentClubByTimesheet}
+                />*/}
       </div>
       <div className="lg:pl-4 lg:w-2/3">
         <TimestampList
-          refresh={refresh}
-          setRefresh={setRefresh}
-          timesheet={fetchedTimesheet}
+          timestamps={timestamps}
+          clubs={clubs}
+          students={students}
         />
         <div className="flex">
           <button
             className="p-2 ml-4 border rounded hover:bg-red hover:text-white hidden"
-            onClick={() => deleteTimesheet(props.timesheet)}
+            onClick={() => deleteTimesheet(timesheetId)}
           >
             Delete
           </button>
-          {<MakePdf timesheetId={props.timesheet} />}
+          {/*<MakePdf timesheetId={timesheetId} />*/}
         </div>
       </div>
     </div>
@@ -219,18 +250,31 @@ function Timeclock(props) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    timesheet: ownProps.match.params.id,
-    students: state.student.students
+    clubs: state.club.clubs,
+    currentSession: state.session.currentSession,
+    currentTimesheet: state.timesheet.currentTimesheet,
+    students: state.student.students,
+    timesheetId: ownProps.match.params.id,
+    timestamps: state.timestamp
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setTimesheet: timesheet => {
-      dispatch(setTimesheet(timesheet));
+    getTimesheetTimestamps: timesheetId => {
+      dispatch(getTimesheetTimestamps(timesheetId));
     },
-    fetchStudents: () => {
-      dispatch(fetchStudents());
+    getProgramStudents: programId => {
+      dispatch(getProgramStudents(programId));
+    },
+    getSessionClubs: sessionId => {
+      dispatch(getSessionClubs(sessionId));
+    },
+    getCurrentTimesheet: timesheetId => {
+      dispatch(getCurrentTimesheet(timesheetId));
+    },
+    getCurrentSession: sessionId => {
+      dispatch(getCurrentSession(sessionId));
     }
   };
 };

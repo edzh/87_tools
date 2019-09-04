@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default ({ timesheet }) => {
-  if (timesheet.io === 'in') {
+export default ({ currentTimesheet }) => {
+  if (currentTimesheet.item.io === 'in') {
     return (
       <div className="text-sm border-b flex border-grey-light px-4">
         <p className="py-1 font-bold w-24">Time</p>
@@ -12,7 +12,7 @@ export default ({ timesheet }) => {
     );
   }
 
-  if (timesheet.io === 'out') {
+  if (currentTimesheet.item.io === 'out') {
     return (
       <div className="text-sm border-b flex border-grey-light px-4">
         <p className="py-1 font-bold w-24">Time</p>

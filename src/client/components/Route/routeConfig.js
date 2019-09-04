@@ -126,6 +126,11 @@ const routes = [
         path: '/session/:id/clubs',
         exact: true,
         component: Club
+      },
+      {
+        path: '/session/:id/timesheets',
+        exact: true,
+        component: Timesheet
       }
     ]
   },

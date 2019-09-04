@@ -21,14 +21,14 @@ export default ({ timesheetsDate }) => {
         ))}
       </td>
       <td className="my-auto w-1/4 block text-left">
-        {inExists &&
+        {/*inExists &&
           timesheetsDate.timesheets.find(timesheet => timesheet.io === 'in')
-            .amount}
+            .amount*/}
       </td>
       <td className="my-auto w-1/4 block text-left">
-        {outExists &&
+        {/*outExists &&
           timesheetsDate.timesheets.find(timesheet => timesheet.io === 'out')
-            .amount}
+            .amount*/}
       </td>
     </tr>
   );

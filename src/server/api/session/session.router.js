@@ -16,5 +16,6 @@ router
   .delete(controller.removeOne);
 
 router.route('/:id/clubs').get(controller.getClubs);
+router.route('/:id/timesheets').get(controller.getTimesheets);
 
 export default router;

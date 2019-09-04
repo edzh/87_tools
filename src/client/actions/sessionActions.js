@@ -159,3 +159,26 @@ export function addCurrentSessionClub(club) {
       });
   };
 }
+
+function getSessionTimesheetsSuccess(timesheets) {
+  return {
+    type: 'GET_SESSION_TIMESHEETS_SUCCESS',
+    timesheets
+  };
+}
+
+export function getSessionTimesheets(sessionId) {
+  return dispatch => {
+    dispatch(currentSessionRequest());
+    return fetch(`${apiUrl}/api/session/${sessionId}/timesheets`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(getSessionTimesheetsSuccess(json.data));
+      });
+  };
+}
