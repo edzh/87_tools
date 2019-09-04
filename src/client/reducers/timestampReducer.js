@@ -6,6 +6,7 @@ export default function timestamps(state = initialState, action) {
   switch (action.type) {
     case 'GET_TIMESHEET_TIMESTAMPS_REQUEST':
       return {
+        ...state,
         isFetching: true
       };
     case 'GET_TIMESHEET_TIMESTAMPS_SUCCESS':

@@ -5,8 +5,8 @@ import { format } from 'date-fns';
 
 import {
   getTimesheetTimestamps,
-  addTimestamp,
-  getCurrentTimesheet
+  getCurrentTimesheet,
+  addTimestamp
 } from '../actions/timesheetActions';
 import { getProgramStudents } from '../actions/programActions';
 import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
@@ -23,6 +23,7 @@ function Timeclock({
   getCurrentSession,
   getSessionClubs,
   getProgramStudents,
+  addTimestamp,
   clubs,
   students,
   timesheetId,
@@ -76,18 +77,18 @@ function Timeclock({
     }
   };
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/timesheet/${timesheetId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        setFetchedTimesheet(json.data);
-      })
-      .then(() => setRefresh(false));
-  }, [refresh]);
+  // useEffect(() => {
+  //   fetch(`${process.env.REACT_APP_API_URL}/api/timesheet/${timesheetId}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem('id_token')}`
+  //     }
+  //   })
+  //     .then(response => response.json())
+  //     .then(json => {
+  //       setFetchedTimesheet(json.data);
+  //     })
+  //     .then(() => setRefresh(false));
+  // }, [refresh]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -160,46 +161,54 @@ function Timeclock({
     const pickup = options.pickup || {};
     const family = options.family || undefined;
 
-    const timestamp = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/timestamp`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
-        },
-        body: JSON.stringify({
-          student: student._id,
-          timesheet: timesheetId,
-          fobStatus,
-          pickup: { family: family, name: pickup.name, pin: pickup.pin },
-          club: options.club
-        })
-      }
-    )
-      .then(response => {
-        if (!response.ok) {
-          throw Error(
-            `${student.name} is already signed ${fetchedTimesheet.io}!`
-          );
-        }
+    // const timestamp = await fetch(
+    //   `${process.env.REACT_APP_API_URL}/api/timestamp`,
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       Authorization: `Bearer ${localStorage.getItem('id_token')}`
+    //     },
+    //     body: JSON.stringify({
+    //       student: student._id,
+    //       timesheet: timesheetId,
+    //       fobStatus,
+    //       pickup: { family: family, name: pickup.name, pin: pickup.pin },
+    //       club: options.club
+    //     })
+    //   }
+    // )
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw Error(
+    //         `${student.name} is already signed ${fetchedTimesheet.io}!`
+    //       );
+    //     }
 
-        return response.json();
-      })
-      .then(json => json.data)
-      .then(() =>
-        setMessage({
-          status: 'Success',
-          message: `${student.name} has been signed ${fetchedTimesheet.io}!`
-        })
-      )
-      .catch(err => setMessage({ status: 'Error', message: err.message }));
+    //     return response.json();
+    //   })
+    //   .then(json => json.data)
+    //   .then(() =>
+    //     setMessage({
+    //       status: 'Success',
+    //       message: `${student.name} has been signed ${fetchedTimesheet.io}!`
+    //     })
+    //   )
+    //   .catch(err => setMessage({ status: 'Error', message: err.message }));
+
+    addTimestamp({
+      student: student._id,
+      timesheet: timesheetId,
+      fobStatus,
+      pickup: { family: family, name: pickup.name, pin: pickup.pin },
+      club: options.club
+    });
 
     setRefresh(true);
   };
 
   const getStudentClubByTimesheet = student => {
-    const day = format(new Date(fetchedTimesheet.date), 'E');
+    const day = format(new Date(currentTimesheet.item.date), 'E');
     const club = student.clubs.find(club => club.day === parseInt(day));
 
     return club ? club._id : null;
@@ -275,6 +284,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCurrentSession: sessionId => {
       dispatch(getCurrentSession(sessionId));
+    },
+    addTimestamp: timestamp => {
+      dispatch(addTimestamp(timestamp));
     }
   };
 };

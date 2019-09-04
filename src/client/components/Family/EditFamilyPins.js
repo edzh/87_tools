@@ -41,10 +41,7 @@ export default ({
         body: JSON.stringify({ pickups: newPins })
       })
         .then(() => setPickups(newPins))
-        .then(() => {
-          pin.setValue('');
-          pickupName.setValue('');
-        });
+        .then(() => {});
     } else {
       setMessage({
         status: 'Error',

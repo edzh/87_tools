@@ -1,8 +1,6 @@
 import React from 'react';
 
 export default function TimestampList({ timestamps, clubs, students }) {
-  console.log(timestamps.items);
-
   return (
     <ul>
       {timestamps.items &&

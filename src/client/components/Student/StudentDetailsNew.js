@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import EditStudentDetails from './EditStudentDetails';
+import EditStudentFamily from './EditStudentFamily';
 
 const intToGrade = [
   'Kindergarten',
@@ -52,6 +53,7 @@ export default function StudentDetails({
           <p className="text-xl">{student.pin}</p>
         </div>
       </div>
+      <EditStudentFamily student={student} />
       {student.family && (
         <div className="m-4">
           <Link to={`/family/${student.family._id}`} className="no-underline">

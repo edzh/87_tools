@@ -29,7 +29,7 @@ function StudentClubs({
 
   return (
     <div>
-      {currentStudent.item.currentClubs.map(club => club.name)}
+      {/*currentStudent.item.currentClubs.map(club => club.name)*/}
       <EditStudentClubs
         clubs={clubs}
         sessions={sessions}

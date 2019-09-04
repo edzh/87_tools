@@ -94,7 +94,9 @@ export const getSessions = async (req, res) => {
 export const getStudents = async (req, res) => {
   try {
     const program = await Program.findOne({ _id: req.params.id });
-    const students = await Student.find({ program: program._id });
+    const students = await Student.find({ program: program._id }).sort({
+      name: 1
+    });
 
     res.status(200).json({ data: students });
   } catch (e) {

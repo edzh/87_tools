@@ -148,9 +148,12 @@ export function addTimestamp(timestamp) {
       })
       .then(json => {
         dispatch(addTimestampSuccess(json.data));
-      });
+      })
+      .catch(err => console.log(err));
   };
 }
+
+function addTimestampFailure(error) {}
 
 export function getTimesheetTimestamps(timesheetId) {
   return dispatch => {

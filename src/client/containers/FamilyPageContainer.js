@@ -76,7 +76,7 @@ function FamilyPage(props) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    family: ownProps.family
+    family: ownProps.match.params.id
   };
 };
 

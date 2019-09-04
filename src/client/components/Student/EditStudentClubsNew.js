@@ -21,20 +21,30 @@ export default function EditStudentClubs({
 
       <Formik
         initialValues={{
-          monday: currentStudent.item.currentClubs[0]
-            ? currentStudent.item.currentClubs[0]._id
+          monday: currentStudent.item.currentClub
+            ? currentStudent.item.currentClubs[0]
+              ? currentStudent.item.currentClubs[0]._id
+              : ''
             : '',
-          tuesday: currentStudent.item.currentClubs[1]
-            ? currentStudent.item.currentClubs[1]._id
+          tuesday: currentStudent.item.currentClub
+            ? currentStudent.item.currentClubs[1]
+              ? currentStudent.item.currentClubs[1]._id
+              : ''
             : '',
-          wednesday: currentStudent.item.currentClubs[2]
-            ? currentStudent.item.currentClubs[2]._id
+          wednesday: currentStudent.item.currentClub
+            ? currentStudent.item.currentClubs[2]
+              ? currentStudent.item.currentClubs[2]._id
+              : ''
             : '',
-          thursday: currentStudent.item.currentClubs[3]
-            ? currentStudent.item.currentClubs[3]._id
+          thursday: currentStudent.item.currentClub
+            ? currentStudent.item.currentClubs[3]
+              ? currentStudent.item.currentClubs[3]._id
+              : ''
             : '',
-          friday: currentStudent.item.currentClubs[4]
-            ? currentStudent.item.currentClubs[4]._id
+          friday: currentStudent.item.currentClub
+            ? currentStudent.item.currentClubs[4]
+              ? currentStudent.item.currentClubs[4]._id
+              : ''
             : ''
         }}
         onSubmit={(values, actions) => {

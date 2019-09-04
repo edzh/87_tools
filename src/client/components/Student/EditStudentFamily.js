@@ -40,7 +40,7 @@ export default props => {
         family: family.value
       })
     }).then(() => {
-      props.setEditFamily(!props.editFamily);
+      // props.setEditFamily(!props.editFamily);
     });
   }
 

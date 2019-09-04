@@ -24,7 +24,7 @@ export default function FamilyForm(props) {
   }
 
   if (newFamily.redirect === true) {
-    return <Redirect to={`/family/id/${newFamily.id}`} />;
+    return <Redirect to={`/family/${newFamily.id}`} />;
   }
 
   return (
