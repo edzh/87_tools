@@ -35,9 +35,19 @@ function students(state = initialStudentsState, action) {
         id: action.student
       };
     case 'ADD_STUDENT_SUCCESS':
+      function compare(a, b) {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      }
+
       return {
         ...state,
-        items: [...state.items, action.student],
+        items: [action.student, ...state.items].sort(compare),
         isFetching: false
       };
     case 'STUDENT_ERROR':

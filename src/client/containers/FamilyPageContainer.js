@@ -61,6 +61,7 @@ function FamilyPage(props) {
     <div>
       <FamilyDetails
         family={fetchedFamily}
+        familyId={props.family}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
       />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -6,7 +6,28 @@ import FamilyDeleteModal from './FamilyDeleteModal';
 import FamilyPins from './FamilyPins';
 import EditFamily from './EditFamily';
 
-export default ({ family, editDetails, setEditDetails }) => {
+export default ({ family, editDetails, setEditDetails, familyId }) => {
+  const [fetchedFamily, setFetchedFamily] = useState('');
+
+  useEffect(() => {
+    const fetchFamily = async () => {
+      const result = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/family/${familyId}/students`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('id_token')}`
+          }
+        }
+      )
+        .then(response => response.json())
+        .then(json => json.data);
+
+      setFetchedFamily(result);
+    };
+
+    fetchFamily();
+  }, []);
+
   return (
     <div className="border rounded shadow-md">
       <div className="flex border-b bg-grey-darkest w-full">
@@ -34,8 +55,8 @@ export default ({ family, editDetails, setEditDetails }) => {
             <p className="text-left w-64">Name</p>
             <p className="text-left">Grade</p>
           </div>
-          {family.students &&
-            family.students.map(student =>
+          {fetchedFamily &&
+            fetchedFamily.map(student =>
               student ? (
                 <div key={student._id} className="flex my-4">
                   <Link

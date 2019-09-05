@@ -81,9 +81,16 @@ export const removeOne = async (req, res) => {
   }
 };
 
-export const getFamilyStudents = async (req, res) => {
+export const getStudents = async (req, res) => {
   try {
-  } catch (e) {}
+    const family = await Family.findOne({ _id: req.params.id });
+    const students = await Student.find({ family: family._id });
+
+    res.status(200).json({ data: students });
+  } catch (e) {
+    console.log(e);
+    res.status(400).end();
+  }
 };
 
 const controller = {
@@ -92,7 +99,7 @@ const controller = {
   createOne,
   updateOne,
   removeOne,
-  getFamilyStudents
+  getStudents
 };
 
 export default controller;
