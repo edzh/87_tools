@@ -42,7 +42,7 @@ function Timeclock({
   useEffect(() => {
     if (currentTimesheet.item) {
       getCurrentSession(currentTimesheet.item.session);
-      getSessionClubs(currentTimesheet.item.session);
+      // getSessionClubs(currentTimesheet.item.session);
     }
   }, [currentTimesheet.isFetching]);
 
@@ -134,7 +134,6 @@ function Timeclock({
     )
       .then(response => response.json())
       .then(json => json.data);
-    console.log(pickup);
 
     if (familyStudents.length === 1) {
       return {
@@ -153,7 +152,6 @@ function Timeclock({
   }
 
   function handleFamily(students) {
-    console.log(students);
     students.forEach(student => {
       const studentClub = getStudentClubByTimesheet(student);
       postTimestamp(student, null, {
@@ -228,8 +226,6 @@ function Timeclock({
   const getStudentClubByTimesheet = student => {
     const day = format(new Date(currentTimesheet.item.date), 'E');
     const club = student.currentClubs.find(club => club.day === parseInt(day));
-    console.log(club);
-    console.log(student);
 
     return club ? club._id : null;
   };
