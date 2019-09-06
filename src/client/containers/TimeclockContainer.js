@@ -205,7 +205,7 @@ function Timeclock({
     //   )
     //   .catch(err => setMessage({ status: 'Error', message: err.message }));
 
-    addTimestamp({
+    await addTimestamp({
       student: student._id,
       timesheet: timesheetId,
       fobStatus,
@@ -216,9 +216,18 @@ function Timeclock({
     setRefresh(true);
   };
 
+  useEffect(() => {
+    timestamps.recentTimestamp &&
+      setMessage({
+        status: 'Success',
+        message: `${timestamps.recentTimestamp.student.name} has been recorded!`
+      });
+  }, [timestamps.recentTimestamp]);
+
   const getStudentClubByTimesheet = student => {
     const day = format(new Date(currentTimesheet.item.date), 'E');
     const club = student.currentClubs.find(club => club.day === parseInt(day));
+    console.log(club);
 
     return club ? club._id : null;
   };

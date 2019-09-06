@@ -19,6 +19,7 @@ export default function timestamps(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
+        recentTimestamp: action.timestamp,
         items: [action.timestamp, ...state.items]
       };
     default:

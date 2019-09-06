@@ -4,7 +4,7 @@ import { Student } from '../student/student.model';
 export const getOne = async (req, res, next) => {
   try {
     const studentPin = await Student.findOne({ pin: req.params.pin })
-      .populate('clubs', '-__v -students')
+      .populate('currentClubs', '-__v -students')
       .lean()
       .exec();
 
@@ -18,7 +18,7 @@ export const getOne = async (req, res, next) => {
       .populate({
         path: 'students',
         populate: {
-          path: 'clubs',
+          path: 'currentClubs',
           select: '-__v -students',
           model: 'club'
         }
