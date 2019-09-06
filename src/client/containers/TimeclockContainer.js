@@ -228,6 +228,7 @@ function Timeclock({
     const day = format(new Date(currentTimesheet.item.date), 'E');
     const club = student.currentClubs.find(club => club.day === parseInt(day));
     console.log(club);
+    console.log(student);
 
     return club ? club._id : null;
   };
@@ -260,6 +261,7 @@ function Timeclock({
           timestamps={timestamps}
           clubs={clubs}
           students={students}
+          currentTimesheet={currentTimesheet}
         />
         <div className="flex">
           <button

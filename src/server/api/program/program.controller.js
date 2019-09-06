@@ -94,9 +94,17 @@ export const getSessions = async (req, res) => {
 export const getStudents = async (req, res) => {
   try {
     const program = await Program.findOne({ _id: req.params.id });
-    const students = await Student.find({ program: program._id }).sort({
-      name: 1
-    });
+    const students = await Student.find({ program: program._id })
+      .sort({
+        name: 1
+      })
+      .populate({
+        path: 'currentClubs',
+        select: '-__v -students',
+        options: {
+          sort: { day: 1 }
+        }
+      });
 
     res.status(200).json({ data: students });
   } catch (e) {

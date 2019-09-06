@@ -85,6 +85,7 @@ export const getTimestamps = async (req, res) => {
     const timesheet = await Timesheet.findOne({ _id: req.params.id });
     const timestamps = await Timestamp.find({ timesheet: timesheet.id })
       .lean()
+      .sort({ datetime: -1 })
       .populate({
         path: 'student',
         select: 'name'
