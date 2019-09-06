@@ -5,9 +5,9 @@ import StudentsList from '../components/Student/StudentList';
 import { fetchStudents } from '../actions/studentActions';
 
 function PinLookup(props) {
-  useEffect(() => {
-    props.fetchStudents();
-  }, []);
+  // useEffect(() => {
+  //   props.fetchStudents();
+  // }, []);
 
   return (
     <div>

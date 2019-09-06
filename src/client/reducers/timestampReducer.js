@@ -19,7 +19,7 @@ export default function timestamps(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        items: [...state.items, action.timestamp]
+        items: [action.timestamp, ...state.items]
       };
     default:
       return state;

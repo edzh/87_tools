@@ -11,7 +11,7 @@ export default function ManualEntry(props) {
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      const filtered = search(debouncedSearchTerm, props.students);
+      const filtered = search(debouncedSearchTerm, props.students.items);
       setFilteredSuggestions(filtered);
       setShowSuggestions(true);
     } else {
@@ -19,9 +19,9 @@ export default function ManualEntry(props) {
     }
   }, [debouncedSearchTerm]);
 
-  useEffect(() => {
-    props.fetchStudents();
-  }, []);
+  // useEffect(() => {
+  //   props.fetchStudents();
+  // }, []);
 
   function onChange(e) {
     setQuery(e.target.value);

@@ -3,6 +3,8 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
 
+import { apiUrl } from 'config';
+
 import {
   getTimesheetTimestamps,
   getCurrentTimesheet,
@@ -127,16 +129,23 @@ function Timeclock({
       pickup => pickup.pin === parseInt(pin)
     );
 
-    if (fetchedPin.students.length === 1) {
+    const familyStudents = await fetch(
+      `${apiUrl}/api/family/${fetchedPin._id}/students`
+    )
+      .then(response => response.json())
+      .then(json => json.data);
+    console.log(pickup);
+
+    if (familyStudents.length === 1) {
       return {
-        student: fetchedPin.students[0],
+        student: familyStudents[0],
         pickup: pickup,
         family: fetchedPin._id
       };
     }
 
     setFamily({
-      students: fetchedPin.students,
+      students: familyStudents,
       pickup: pickup,
       family: fetchedPin._id
     });
@@ -209,7 +218,7 @@ function Timeclock({
 
   const getStudentClubByTimesheet = student => {
     const day = format(new Date(currentTimesheet.item.date), 'E');
-    const club = student.clubs.find(club => club.day === parseInt(day));
+    const club = student.currentClubs.find(club => club.day === parseInt(day));
 
     return club ? club._id : null;
   };
@@ -230,12 +239,12 @@ function Timeclock({
           handleFamily={handleFamily}
           refresh={refresh}
         />
-        {/*<ManualEntry
-                  students={props.students}
-                  postTimestamp={postTimestamp}
-                  setMessage={setMessage}
-                  getStudentClubByTimesheet={getStudentClubByTimesheet}
-                />*/}
+        <ManualEntry
+          students={students}
+          postTimestamp={postTimestamp}
+          setMessage={setMessage}
+          getStudentClubByTimesheet={getStudentClubByTimesheet}
+        />
       </div>
       <div className="lg:pl-4 lg:w-2/3">
         <TimestampList
