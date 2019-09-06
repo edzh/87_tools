@@ -10,7 +10,7 @@ export default function StudentSelector(props) {
         selected.push({
           _id: student._id,
           name: student.name,
-          clubs: student.clubs,
+          currentClubs: student.currentClubs,
           selected: false
         });
 

@@ -153,6 +153,7 @@ function Timeclock({
   }
 
   function handleFamily(students) {
+    console.log(students);
     students.forEach(student => {
       const studentClub = getStudentClubByTimesheet(student);
       postTimestamp(student, null, {
