@@ -22,6 +22,12 @@ export default function timestamps(state = initialState, action) {
         recentTimestamp: action.timestamp,
         items: [action.timestamp, ...state.items]
       };
+    case 'DELETE_TIMESTAMP_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        items: state.items.filter(item => item._id !== action.timestampId)
+      };
     default:
       return state;
   }

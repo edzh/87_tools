@@ -6,6 +6,7 @@ export default function TimestampList({
   currentTimesheet,
   timestamps,
   clubs,
+  deleteTimestamp,
   students
 }) {
   return (
@@ -31,7 +32,13 @@ export default function TimestampList({
                   {timestamp.club && timestamp.club.name}
                 </Link>
               </p>
-              <p>{timestamp.fobStatus}</p>
+              <p className="w-8">{timestamp.fobStatus}</p>
+              <p
+                className={`cursor-pointer text-lg text-red-lighter font-bold -my-1 ml-auto hover:text-red rounded`}
+                onClick={() => deleteTimestamp(timestamp._id)}
+              >
+                ×
+              </p>
             </li>
           ))}
       </ul>

@@ -1,4 +1,5 @@
 import * as types from './timeclockTypes';
+import { apiUrl } from 'config';
 
 function setSelectorStudents(students) {
   return {
@@ -72,5 +73,92 @@ function fetchOutTimesheetSuccess(outTimesheet) {
 function fetchOutTimesheetFailure() {
   return {
     type: types.FETCH_OUT_TIMESHEET_FAILURE
+  };
+}
+
+function addTimestampSuccess(timestamp) {
+  return {
+    type: 'ADD_TIMESTAMP_SUCCESS',
+    timestamp
+  };
+}
+
+export function addTimestamp(timestamp) {
+  return dispatch => {
+    dispatch(getTimesheetTimestampsRequest());
+    return fetch(`${apiUrl}/api/timestamp/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(timestamp)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw Error('Unable to create timestamp!');
+        }
+
+        return response.json();
+      })
+      .then(json => {
+        dispatch(addTimestampSuccess(json.data));
+      })
+      .catch(err => console.log(err));
+  };
+}
+
+function addTimestampFailure(error) {}
+
+function deleteTimestampSuccess(timestampId) {
+  return {
+    type: 'DELETE_TIMESTAMP_SUCCESS',
+    timestampId
+  };
+}
+
+function getTimesheetTimestampsRequest() {
+  return {
+    type: 'GET_TIMESHEET_TIMESTAMPS_REQUEST'
+  };
+}
+
+function getTimesheetTimestampsSuccess(timestamps) {
+  return {
+    type: 'GET_TIMESHEET_TIMESTAMPS_SUCCESS',
+    timestamps
+  };
+}
+
+export function getTimesheetTimestamps(timesheetId) {
+  return dispatch => {
+    dispatch(getTimesheetTimestampsRequest());
+    return fetch(`${apiUrl}/api/timesheet/${timesheetId}/timestamps`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(getTimesheetTimestampsSuccess(json.data));
+      });
+  };
+}
+
+export function deleteTimestamp(timestampId) {
+  return dispatch => {
+    dispatch(getTimesheetTimestampsRequest());
+    return fetch(`${apiUrl}/api/timestamp/${timestampId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
+    })
+      .then(json => {
+        dispatch(deleteTimestampSuccess(timestampId));
+      })
+      .catch(err => console.log(err));
   };
 }

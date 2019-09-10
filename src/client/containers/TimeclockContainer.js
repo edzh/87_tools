@@ -5,11 +5,13 @@ import { format } from 'date-fns';
 
 import { apiUrl } from 'config';
 
+import { getCurrentTimesheet } from '../actions/timesheetActions';
 import {
   getTimesheetTimestamps,
-  getCurrentTimesheet,
-  addTimestamp
-} from '../actions/timesheetActions';
+  addTimestamp,
+  deleteTimestamp
+} from '../actions/timeclockActions';
+
 import { getProgramStudents } from '../actions/programActions';
 import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
 
@@ -32,6 +34,7 @@ function Timeclock({
   timestamps,
   currentTimesheet,
   currentSession,
+  deleteTimestamp,
   ...props
 }) {
   useEffect(() => {
@@ -259,6 +262,7 @@ function Timeclock({
           clubs={clubs}
           students={students}
           currentTimesheet={currentTimesheet}
+          deleteTimestamp={deleteTimestamp}
         />
         <div className="flex">
           <button
@@ -304,6 +308,9 @@ const mapDispatchToProps = dispatch => {
     },
     addTimestamp: timestamp => {
       dispatch(addTimestamp(timestamp));
+    },
+    deleteTimestamp: timestampId => {
+      dispatch(deleteTimestamp(timestampId));
     }
   };
 };
