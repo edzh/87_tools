@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import * as types from '../actions/studentTypes';
 
 const initialStudentsState = {
+  items: [],
   isFetching: false
 };
 

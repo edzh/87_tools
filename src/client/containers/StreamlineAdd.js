@@ -1,49 +1,40 @@
 import React, { useState } from 'react';
-import { connect } from 'redux';
+import { connect } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 
 import { addStudent } from '../actions/studentActions';
+import { addFamily } from '../actions/familyActions';
 
-export default function StreamlineAdd({ addStudent, programId }) {
+import StreamlineStudentForm from '../components/Streamline/StreamlineStudentForm';
+import StreamlineFamilyForm from '../components/Streamline/StreamlineFamilyForm';
+
+function StreamlineAdd({
+  addFamily,
+  addStudent,
+  programId,
+  recentFamily,
+  recentStudent
+}) {
   const [alert, setAlert] = useState(null);
 
   return (
-    <Formik
-      initialValues={{
-        studentName: '',
-        grade: ''
-      }}
-      onSubmit={values => {
-        addStudent({
-          name: values.studentName,
-          grade: values.grade,
-          program: programId
-        });
-      }}
-    >
-      {() => (
-        <Form>
-          <Field name="studentName" className="border rounded" />
-          <Field name="grade" component="select" className="border rounded">
-            <option value="">---</option>
-            <option value="0">K</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </Field>
-          <button type="submit">Create Student</button>
-        </Form>
-      )}
-    </Formik>
+    <div>
+      <StreamlineFamilyForm addFamily={addFamily} programId={programId} />
+      <StreamlineStudentForm
+        addStudent={addStudent}
+        programId={programId}
+        recentFamily={recentFamily}
+        recentStudent={recentStudent}
+      />
+    </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
-    recentStudent: state.student.recentStudent
+    recentStudent: state.student.students.recentStudent,
+    recentFamily: state.family.families.recentFamily
   };
 };
 
@@ -51,6 +42,14 @@ const mapDispatchToProps = dispatch => {
   return {
     addStudent: student => {
       dispatch(addStudent(student));
+    },
+    addFamily: family => {
+      dispatch(addFamily(family));
     }
   };
 };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StreamlineAdd);

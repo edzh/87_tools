@@ -26,8 +26,8 @@ function Family(props) {
 
 const mapStateToProps = state => {
   return {
-    isFetching: state.family.isFetching,
-    families: state.family.families
+    isFetching: state.family.family.isFetching,
+    families: state.family.family.families
   };
 };
 

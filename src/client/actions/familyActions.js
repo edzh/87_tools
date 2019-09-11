@@ -1,5 +1,6 @@
 import 'cross-fetch';
 import * as types from './familyTypes';
+import { apiUrl } from 'config';
 
 function fetchFamiliesRequest() {
   return {
@@ -22,8 +23,6 @@ function fetchFamiliesFailure() {
 
 export function fetchFamilies() {
   return dispatch => {
-    console.log(localStorage.getItem('id_token'));
-
     dispatch(fetchFamiliesRequest());
     return fetch(`${process.env.REACT_APP_API_URL}/api/family`, {
       headers: {
@@ -44,5 +43,30 @@ export function setFamily(family) {
   return {
     type: types.SET_FAMILY,
     family
+  };
+}
+
+function addFamilySuccess(family) {
+  return {
+    type: 'ADD_FAMILY_SUCCESS',
+    family
+  };
+}
+
+export function addFamily(family) {
+  return dispatch => {
+    dispatch(fetchFamiliesRequest());
+    return fetch(`${apiUrl}/api/family`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(family)
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(addFamilySuccess(json.data));
+      });
   };
 }

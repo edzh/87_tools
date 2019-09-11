@@ -23,7 +23,8 @@ const studentSchema = new mongoose.Schema({
   ],
   pin: {
     type: Number,
-    unique: true
+    unique: true,
+    sparse: true
   },
   family: {
     type: mongoose.Schema.Types.ObjectId,
