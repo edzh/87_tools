@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
 import EditStudentDetails from './EditStudentDetails';
 import EditStudentFamily from './EditStudentFamily';
@@ -21,11 +22,9 @@ const intToDay = [
   'Saturday'
 ];
 
-export default function StudentDetails({
-  editDetails,
-  setEditDetails,
-  student
-}) {
+export default function StudentDetails({ updateCurrentStudent, student }) {
+  const [editPin, setEditPin] = useState(false);
+
   if (!student) {
     return null;
   }
@@ -36,9 +35,9 @@ export default function StudentDetails({
         <h2 className="m-4 font-normal text-white">{student.name}</h2>
         <button
           className={`${
-            editDetails ? 'bg-blue text-white' : 'bg-white'
+            editPin ? 'bg-blue text-white' : 'bg-white'
           } m-4 ml-auto text-xs border rounded shadow p-1`}
-          onClick={() => setEditDetails(!editDetails)}
+          onClick={() => setEditPin(!editPin)}
         >
           Edit
         </button>
@@ -50,7 +49,29 @@ export default function StudentDetails({
         </div>
         <div className="m-4 flex">
           <h3 className="w-32 text-xl">PIN</h3>
-          <p className="text-xl">{student.pin}</p>
+
+          {editPin ? (
+            <Formik
+              initialValues={{
+                pin: student.pin
+              }}
+              onSubmit={values => {
+                updateCurrentStudent({
+                  ...student,
+                  pin: values.pin
+                });
+              }}
+            >
+              {() => (
+                <Form>
+                  <Field name="pin" className="border rounded" />
+                  <button type="submit">Submit</button>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <p className="text-xl">{student.pin}</p>
+          )}
         </div>
       </div>
       <EditStudentFamily student={student} />

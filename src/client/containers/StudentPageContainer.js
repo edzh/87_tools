@@ -20,6 +20,7 @@ function StudentPage({
   isAuthenticated,
   currentStudent,
   currentSession,
+  updateCurrentStudent,
   ...props
 }) {
   const [student, setStudent] = useState(null);
@@ -42,6 +43,7 @@ function StudentPage({
         student={currentStudent.item}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
+        updateCurrentStudent={updateCurrentStudent}
       />
       {props.routes.map(route => (
         <RouteWithSubroutes key={route.path} {...route} />
