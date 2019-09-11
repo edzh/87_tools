@@ -11,6 +11,9 @@ export default function ProgramHeader(props) {
       <li>
         <Link to={`/program/${props.programId}/sessions`}>Sessions</Link>
       </li>
+      <li>
+        <Link to={`/program/${props.programId}/streamline`}>Streamline</Link>
+      </li>
     </ul>
   );
 }

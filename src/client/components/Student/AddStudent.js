@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+
 import { useFormInput } from 'utils/hooks';
 
 export default function AddStudent() {
@@ -39,56 +41,26 @@ export default function AddStudent() {
   }
 
   return (
-    <form
-      className="w-1/3 shadow-md border rounded p-4"
-      onSubmit={handleSubmit}
+    <Formik
+      initialValues={{
+        studentName: '',
+        grade: ''
+      }}
     >
-      <h2 className="mb-4">New Student</h2>
-      <div className="mb-4">
-        <label className="font-bold text-sm block">Name</label>
-        <input
-          className="border rounded p-1 w-full shadow block"
-          type="text"
-          {...name}
-        />
-      </div>
-      <div className="mb-4">
-        <label className="font-bold text-sm block">Grade</label>
-        <select className="border rounded p-1 w-full shadow block" {...grade}>
-          <option value="">---</option>
-          <option value="0">Kindergarten</option>
-          <option value="1">1st</option>
-          <option value="2">2nd</option>
-          <option value="3">3rd</option>
-          <option value="4">4th</option>
-          <option value="5">5th</option>
-        </select>
-      </div>
-      <div className="mb-4">
-        <label className="font-bold text-sm block">PIN</label>
-        <input
-          className="border rounded p-1 w-full shadow block"
-          type="number"
-          {...pin}
-        />
-      </div>
-      <button
-        className="border shadow rounded p-1 bg-blue text-white text-lg hover:bg-grey-lighter hover:text-blue w-full"
-        type="submit"
-      >
-        Submit
-      </button>
-      {alert && (
-        <p
-          className={`${
-            alert.status === 'Error'
-              ? 'border-red-light bg-red-lighter text-red-darker'
-              : 'border-green-light bg-green-lighter text-green-darker'
-          } p-2 mt-2 border-l-4 rounded`}
-        >
-          {alert.message}
-        </p>
+      {() => (
+        <Form>
+          <Field name="studentName" className="border rounded" />
+          <Field name="grade" component="select" className="border rounded">
+            <option value="">---</option>
+            <option value="0">K</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </Field>
+        </Form>
       )}
-    </form>
+    </Formik>
   );
 }

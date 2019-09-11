@@ -115,7 +115,6 @@ export function getCurrentStudent(studentId) {
         console.log(json.data);
         dispatch(currentStudentSuccess(json.data));
       });
-    // .catch(err => dispatch(currentStudentFailure()))
   };
 }
 
@@ -134,6 +133,5 @@ export function updateCurrentStudent(student) {
       .then(json => {
         dispatch(currentStudentSuccess(json.data));
       });
-    // .catch(err => dispatch(currentStudentFailure()))
   };
 }

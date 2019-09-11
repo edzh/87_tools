@@ -48,6 +48,7 @@ function students(state = initialStudentsState, action) {
       return {
         ...state,
         items: [action.student, ...state.items].sort(compare),
+        recentStudent: action.student,
         isFetching: false
       };
     case 'STUDENT_ERROR':

@@ -18,6 +18,7 @@ import Session from '../../containers/SessionContainer';
 import SessionPage from '../../containers/SessionPageContainer';
 import SignIn from '../../containers/SignInContainer';
 import SignUp from '../../containers/SignUpContainer';
+import StreamlineAdd from '../../containers/StreamlineAdd';
 import UserContainer from '../../containers/UserContainer';
 
 const routes = [
@@ -108,6 +109,11 @@ const routes = [
         path: '/program/:id/sessions',
         exact: true,
         component: Session
+      },
+      {
+        path: '/program/:id/streamline',
+        exact: true,
+        component: StreamlineAdd
       }
     ]
   },
