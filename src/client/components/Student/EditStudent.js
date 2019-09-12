@@ -36,7 +36,7 @@ export default function EditStudent({ student }) {
       setFetchedClubs(result);
     };
 
-    fetchClubs();
+    getClubs();
   }, []);
 
   function handleSubmit(e) {

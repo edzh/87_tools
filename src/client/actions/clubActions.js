@@ -1,27 +1,19 @@
-import * as types from './clubTypes';
 import { apiUrl } from 'config';
 
 function fetchClubsRequest() {
   return {
-    type: types.FETCH_CLUBS_REQUEST
+    type: 'FETCH_CLUBS_REQUEST'
   };
 }
 
-function fetchClubsSuccess(clubs) {
+export function fetchCurrentClubRequest() {
   return {
-    type: types.FETCH_CLUBS_SUCCESS,
-    clubs
+    type: 'FETCH_CURRENT_CLUB_REQUEST'
   };
 }
 
-function fetchClubsFailure(err) {
-  return {
-    type: types.FETCH_CLUBS_FAILURE,
-    err
-  };
-}
-
-export function fetchClubs() {
+// get many
+export function getClubs() {
   return dispatch => {
     dispatch(fetchClubsRequest());
     return fetch(`${process.env.REACT_APP_API_URL}/api/club`, {
@@ -31,44 +23,32 @@ export function fetchClubs() {
     })
       .then(response => response.json())
       .then(json => {
-        dispatch(fetchClubsSuccess(json.data));
+        dispatch(getClubsSuccess(json.data));
       })
       .catch(err => {
-        dispatch(fetchClubsFailure(err));
+        dispatch(getClubsFailure(err));
       });
   };
 }
 
-export function setClub(club) {
+function getClubsSuccess(clubs) {
   return {
-    type: types.SET_CLUB,
-    club
+    type: 'GET_CLUBS_SUCCESS',
+    clubs
   };
 }
 
-export function currentClubRequest() {
+function getClubsFailure(err) {
   return {
-    type: 'CURRENT_CLUB_REQUEST'
+    type: 'GET_CLUBS_FAILURE',
+    err
   };
 }
 
-function getCurrentClubSuccess(club) {
-  return {
-    type: 'GET_CURRENT_CLUB_SUCCESS',
-    club
-  };
-}
-
-function getClubStudentsSuccess(students) {
-  return {
-    type: 'GET_CLUB_STUDENTS_SUCCESS',
-    students
-  };
-}
-
+// get one
 export function getCurrentClub(clubId) {
   return dispatch => {
-    dispatch(currentClubRequest());
+    dispatch(fetchCurrentClubRequest());
     return fetch(`${apiUrl}/api/club/${clubId}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -82,29 +62,14 @@ export function getCurrentClub(clubId) {
   };
 }
 
-export function getClubStudents(clubId) {
-  return dispatch => {
-    dispatch(currentClubRequest());
-    return fetch(`${apiUrl}/api/club/${clubId}/students`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getClubStudentsSuccess(json.data));
-      });
-  };
-}
-
-function addClubSuccess(club) {
+function getCurrentClubSuccess(club) {
   return {
-    type: 'ADD_CLUB_SUCCESS',
+    type: 'GET_CURRENT_CLUB_SUCCESS',
     club
   };
 }
 
+// create one
 export function addClub(club) {
   return dispatch => {
     dispatch(fetchClubsRequest());
@@ -125,6 +90,87 @@ export function addClub(club) {
       })
       .then(json => {
         dispatch(addClubSuccess(json.data));
+      });
+  };
+}
+
+function addClubSuccess(club) {
+  return {
+    type: 'ADD_CLUB_SUCCESS',
+    club
+  };
+}
+
+// update one
+export function updateClub(club) {
+  return dispatch => {
+    dispatch(fetchCurrentClubRequest());
+    return fetch(`${apiUrl}/api/club/${club._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(club)
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(updateClubSuccess(club));
+      });
+  };
+}
+
+function updateClubSuccess(club) {
+  return {
+    type: 'UPDATE_CLUB_SUCCESS',
+    club
+  };
+}
+
+// delete one
+export function deleteClub(clubId) {
+  return dispatch => {
+    dispatch(fetchClubsRequest());
+    return fetch(`${apiUrl}/api/club/${clubId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(deleteClubSuccess(clubId));
+      });
+  };
+}
+
+function deleteClubSuccess(clubId) {
+  return {
+    type: 'DELETE_CLUB_SUCCESS',
+    clubId
+  };
+}
+
+function getClubStudentsSuccess(students) {
+  return {
+    type: 'GET_CLUB_STUDENTS_SUCCESS',
+    students
+  };
+}
+
+export function getClubStudents(clubId) {
+  return dispatch => {
+    dispatch(fetchCurrentClubRequest());
+    return fetch(`${apiUrl}/api/club/${clubId}/students`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(getClubStudentsSuccess(json.data));
       });
   };
 }

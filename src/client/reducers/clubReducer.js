@@ -1,7 +1,5 @@
 import { combineReducers } from 'redux';
 
-import * as types from '../actions/clubTypes';
-
 const initialClubsState = {
   isFetching: false
 };
@@ -12,34 +10,35 @@ const initialCurrentClubState = {
 
 function clubs(state = initialClubsState, action) {
   switch (action.type) {
-    case types.FETCH_CLUBS_REQUEST:
+    case 'FETCH_CLUBS_REQUEST':
       return {
         ...state,
         isFetching: true
       };
-    case types.FETCH_CLUBS_SUCCESS:
+    case 'GET_CLUBS_SUCCESS':
     case 'GET_SESSION_CLUBS_SUCCESS':
       return {
         ...state,
         items: action.clubs,
         isFetching: false
       };
-    case types.FETCH_CLUBS_FAILURE:
+    case 'GET_CLUBS_FAILURE':
       return {
         ...state,
         isFetching: false
       };
-    case types.SET_CLUB:
-      return {
-        ...state,
-        id: action.club
-      };
     case 'ADD_CLUB_SUCCESS':
       return {
         ...state,
+        isFetching: false,
         items: [...state.items, action.club]
       };
-
+    case 'DELETE_CLUB_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        items: state.items.filter(club => club._id !== action.clubId)
+      };
     default:
       return state;
   }
@@ -47,7 +46,7 @@ function clubs(state = initialClubsState, action) {
 
 function currentClub(state = { isFetching: false }, action) {
   switch (action.type) {
-    case 'CURRENT_CLUB_REQUEST':
+    case 'FETCH_CURRENT_CLUB_REQUEST':
       return {
         ...state,
         isFetching: true
@@ -62,6 +61,12 @@ function currentClub(state = { isFetching: false }, action) {
         ...state,
         isFetching: false,
         students: action.students
+      };
+    case 'UPDATE_CLUB_SUCCESs':
+      return {
+        ...state,
+        isFetching: false,
+        item: action.club
       };
     default:
       return state;

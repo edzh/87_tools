@@ -61,6 +61,12 @@ export default function ManualEntry(props) {
                     className="border hover:text-white hover:bg-blue text-xs p-1 mr-1 rounded"
                     onClick={() => handleInput(student, 'Damaged')}
                   >
+                    Home
+                  </button>
+                  <button
+                    className="border hover:text-white hover:bg-blue text-xs p-1 mr-1 rounded"
+                    onClick={() => handleInput(student, 'Damaged')}
+                  >
                     Damaged
                   </button>
                 </p>
