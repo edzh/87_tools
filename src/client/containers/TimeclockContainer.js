@@ -82,18 +82,9 @@ function Timeclock({
     }
   };
 
-  // useEffect(() => {
-  //   fetch(`${process.env.REACT_APP_API_URL}/api/timesheet/${timesheetId}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem('id_token')}`
-  //     }
-  //   })
-  //     .then(response => response.json())
-  //     .then(json => {
-  //       setFetchedTimesheet(json.data);
-  //     })
-  //     .then(() => setRefresh(false));
-  // }, [refresh]);
+  useEffect(() => {
+    setRefresh(false);
+  }, [refresh]);
 
   function handleSubmit(e) {
     e.preventDefault();
