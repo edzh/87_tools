@@ -6,7 +6,7 @@ import MainDetailsHeader from '../Details/MainDetailsHeader';
 export default props => {
   return (
     <div>
-      <ul className="list-reset">
+      <ul className="">
         {props.sessions.items &&
           props.sessions.items.map(session => (
             <li key={session._id}>

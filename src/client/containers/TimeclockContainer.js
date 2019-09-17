@@ -18,7 +18,7 @@ import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
 import ManualEntry from '../components/Timeclock/ManualEntry';
 import PinInput from '../components/Timeclock/PinInput';
 import PinLookup from './PinLookup';
-import TimestampList from '../components/Timeclock/NewTimestampList';
+import TimestampList from './Timeclock/TimestampList';
 import MakePdf from 'data/MakePdf';
 
 function Timeclock({
@@ -248,13 +248,7 @@ function Timeclock({
         />
       </div>
       <div className="lg:pl-4 lg:w-2/3">
-        <TimestampList
-          timestamps={timestamps}
-          clubs={clubs}
-          students={students}
-          currentTimesheet={currentTimesheet}
-          deleteTimestamp={deleteTimestamp}
-        />
+        <TimestampList />
         <div className="flex">
           <button
             className="p-2 ml-4 border rounded hover:bg-red hover:text-white hidden"

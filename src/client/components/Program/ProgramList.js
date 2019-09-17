@@ -6,7 +6,7 @@ export default function ProgramList(props) {
   return (
     <div>
       <MainDetailsHeader>Programs</MainDetailsHeader>
-      <ul className="list-reset">
+      <ul className="">
         {props.programs.items.map(program => (
           <li key={program._id}>
             <Link to={`/program/${program._id}`}>{program.name}</Link>

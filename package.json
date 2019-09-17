@@ -76,6 +76,6 @@
     "@testing-library/react": "^8.0.4",
     "autoprefixer": "^9.5.1",
     "postcss-cli": "^6.1.2",
-    "tailwindcss": "^0.7.4"
+    "tailwindcss": "^1.1.2"
   }
 }

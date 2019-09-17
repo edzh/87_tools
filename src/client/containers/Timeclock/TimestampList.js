@@ -1,24 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
-export default function TimestampList({
+import { deleteTimestamp } from '../../actions/timeclockActions';
+
+function TimestampList({
   currentTimesheet,
   timestamps,
   clubs,
-  deleteTimestamp,
-  students
+  deleteTimestamp
 }) {
+  if (!currentTimesheet.item || currentTimesheet.isFetching) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div>
       <h2>
-        Timestamps{' '}
-        {currentTimesheet.item &&
-          format(currentTimesheet.item.date, 'dddd, MMMM D')}
+        {format(currentTimesheet.item.date, 'dddd, MMMM D')} Sign{' '}
+        {currentTimesheet.item.io} Timesheet
       </h2>
-      <ul className="list-reset">
+      <ul className="">
         {timestamps.items &&
-          students.items &&
           timestamps.items.map(timestamp => (
             <li className="border-b flex text-sm" key={timestamp._id}>
               <p className="w-24">{format(timestamp.datetime, 'hh:mm a')}</p>
@@ -45,3 +49,24 @@ export default function TimestampList({
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    clubs: state.club.clubs,
+    timestamps: state.timestamp,
+    currentTimesheet: state.timesheet.currentTimesheet
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteTimestamp: timestampId => {
+      dispatch(deleteTimestamp(timestampId));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TimestampList);
