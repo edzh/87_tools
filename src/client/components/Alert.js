@@ -4,22 +4,22 @@ const errorStyle = 'border-red-light bg-red-lighter text-red-darker';
 const successStyle = 'border-green-light bg-green-lighter text-green-darker';
 const warningStyle = 'border-yellow-light bg-yellow-lighter text-yellow-darker';
 
-export default function Alert({ message }) {
-  if (!message) {
+export default function Alert({ alert }) {
+  if (!alert) {
     return null;
   }
 
   return (
     <p
       className={`p-2 mt-2 border-l-4 ${
-        message.status === 'Error'
+        alert.type === 'error'
           ? errorStyle
-          : message.status === 'Success'
+          : alert.type === 'success'
           ? successStyle
-          : message.status === 'Warning' && warningStyle
+          : alert.type === 'warning' && warningStyle
       } rounded`}
     >
-      {message.message}
+      {alert.message}
     </p>
   );
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
 import { Formik, Field, Form } from 'formik';
-import * as Yup from 'yup';
 import { apiUrl } from 'config';
 
 import { getCurrentTimesheet } from '../../actions/timesheetActions';
@@ -12,11 +11,9 @@ import {
 } from '../../actions/timeclockActions';
 
 import TimestampList from './TimestampList';
+import Alert from '../../components/Alert';
+import PinInput from '../../components/Timeclock/PinInput';
 import MultiStudent from '../../components/Timeclock/MultiStudent';
-
-const PinSchema = Yup.object().shape({
-  pin: Yup.string().required('Please enter a pin!')
-});
 
 function Timeclock({
   getCurrentTimesheet,
@@ -35,15 +32,17 @@ function Timeclock({
   async function submitPinTimestamp(pin) {
     const fetchedPin = await fetch(`${apiUrl}/api/pin/${pin}`)
       .then(response => {
-        if (!response.ok) throw Error('Invalid pin!');
+        if (!response.ok) throw Error('Pin does not exist!');
         return response.json();
       })
       .then(json => json.data);
 
+    // Refuse student fob for sign out
     if (currentTimesheet.item.io === 'out' && fetchedPin.type === 'student') {
       throw Error('You cannot use a student to pin to sign out!');
     }
 
+    // Sign student in
     if (fetchedPin.type === 'student') {
       const studentClub = fetchedPin.currentClubs.find(
         club =>
@@ -58,6 +57,7 @@ function Timeclock({
       });
     }
 
+    // Sign family out
     if (fetchedPin.type === 'family') {
       const familyStudents = await fetch(
         `${apiUrl}/api/family/${fetchedPin._id}/students`
@@ -97,32 +97,16 @@ function Timeclock({
 
   return (
     <div>
-      <Formik
-        initialValues={{
-          pin: ''
-        }}
-        // validationSchema={PinSchema}
-        onSubmit={values => {
-          submitPinTimestamp(values.pin).catch(err => addTimestampFailure(err));
-        }}
-      >
-        {({ errors }) => (
-          <Form>
-            <Field name="pin" className="border rounded" />
-            <button type="submit">Submit</button>
-          </Form>
-        )}
-      </Formik>
-      {alert ? (
-        <div className={alert.type === 'error' ? `bg-red` : `bg-green`}>
-          {alert.type} {alert.message}
-        </div>
-      ) : null}
+      <PinInput
+        submitPinTimestamp={submitPinTimestamp}
+        addTimestampFailure={addTimestampFailure}
+      />
+      <Alert alert={alert} />
       <MultiStudent
         multiStudent={multiStudent}
+        setMultiStudent={setMultiStudent}
         addTimestamp={addTimestamp}
         currentTimesheet={currentTimesheet}
-        setMultiStudent={setMultiStudent}
       />
       <TimestampList />
     </div>
