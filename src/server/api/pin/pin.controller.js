@@ -9,20 +9,12 @@ export const getOne = async (req, res, next) => {
       .exec();
 
     if (studentPin) {
-      return res.status(200).json({ data: studentPin });
+      return res.status(200).json({ data: { ...studentPin, type: 'student' } });
     }
 
     const familyPin = await Family.findOne({
       'pickups.pin': { $eq: req.params.pin }
     })
-      .populate({
-        path: 'students',
-        populate: {
-          path: 'currentClubs',
-          select: '-__v -students',
-          model: 'club'
-        }
-      })
       .lean()
       .exec();
 
@@ -31,7 +23,7 @@ export const getOne = async (req, res, next) => {
       return res.status(400).end();
     }
 
-    res.status(200).json({ data: familyPin });
+    res.status(200).json({ data: { ...familyPin, type: 'family' } });
   } catch (e) {
     console.error(e);
     res.status(400).end();

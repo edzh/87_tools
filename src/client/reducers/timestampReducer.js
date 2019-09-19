@@ -20,7 +20,20 @@ export default function timestamps(state = initialState, action) {
         ...state,
         isFetching: false,
         recentTimestamp: action.timestamp,
-        items: [action.timestamp, ...state.items]
+        items: [action.timestamp, ...state.items],
+        alert: {
+          type: 'success',
+          message: `${action.timestamp.student.name} has been signed in!`
+        }
+      };
+    case 'ADD_TIMESTAMP_FAILURE':
+      return {
+        ...state,
+        isFetching: false,
+        alert: {
+          type: 'error',
+          message: action.error.message
+        }
       };
     case 'DELETE_TIMESTAMP_SUCCESS':
       return {

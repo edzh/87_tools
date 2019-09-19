@@ -84,7 +84,13 @@ export const removeOne = async (req, res) => {
 export const getStudents = async (req, res) => {
   try {
     const family = await Family.findOne({ _id: req.params.id });
-    const students = await Student.find({ family: family._id });
+    const students = await Student.find({ family: family._id }).populate({
+      path: 'currentClubs',
+      select: '-__v -students',
+      options: {
+        sort: { day: 1 }
+      }
+    });
 
     res.status(200).json({ data: students });
   } catch (e) {

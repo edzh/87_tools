@@ -95,20 +95,22 @@ export function addTimestamp(timestamp) {
       body: JSON.stringify(timestamp)
     })
       .then(response => {
-        if (!response.ok) {
-          throw Error('Unable to create timestamp!');
-        }
-
+        if (!response.ok) throw Error(`Student already signed in!`);
         return response.json();
       })
       .then(json => {
         dispatch(addTimestampSuccess(json.data));
       })
-      .catch(err => console.log(err));
+      .catch(err => dispatch(addTimestampFailure(err)));
   };
 }
 
-function addTimestampFailure(error) {}
+export function addTimestampFailure(error) {
+  return {
+    type: 'ADD_TIMESTAMP_FAILURE',
+    error
+  };
+}
 
 function deleteTimestampSuccess(timestampId) {
   return {

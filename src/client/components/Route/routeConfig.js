@@ -3,6 +3,7 @@ import PinLookup from '../../containers/PinLookup';
 import TimesheetForm from '../Timesheet/TimesheetForm';
 import Timesheet from '../../containers/TimesheetContainer';
 import Timeclock from '../../containers/TimeclockContainer';
+import NewTimeclock from '../../containers/Timeclock/Timeclock';
 import Family from '../../containers/FamilyContainer';
 import FamilyPage from '../../containers/FamilyPageContainer';
 import FamilyForm from '../Family/FamilyForm';
@@ -41,7 +42,7 @@ const routes = [
   {
     path: '/timesheet/:id',
     auth: true,
-    component: Timeclock
+    component: NewTimeclock
   },
   {
     path: '/family',

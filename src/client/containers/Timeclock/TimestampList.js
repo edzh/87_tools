@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
-import { deleteTimestamp } from '../../actions/timeclockActions';
+import {
+  deleteTimestamp,
+  getTimesheetTimestamps
+} from '../../actions/timeclockActions';
 
 function TimestampList({
   currentTimesheet,
+  getTimesheetTimestamps,
   timestamps,
   clubs,
   deleteTimestamp
@@ -14,6 +18,10 @@ function TimestampList({
   if (!currentTimesheet.item || currentTimesheet.isFetching) {
     return <p>Loading...</p>;
   }
+
+  useEffect(() => {
+    getTimesheetTimestamps(currentTimesheet.item._id);
+  }, []);
 
   return (
     <div>
@@ -62,6 +70,9 @@ const mapDispatchToProps = dispatch => {
   return {
     deleteTimestamp: timestampId => {
       dispatch(deleteTimestamp(timestampId));
+    },
+    getTimesheetTimestamps: timesheetId => {
+      dispatch(getTimesheetTimestamps(timesheetId));
     }
   };
 };

@@ -84,6 +84,13 @@ function addTimesheetSuccess(timesheet) {
   };
 }
 
+function addTimesheetFailure(err) {
+  return {
+    type: 'ADD_TIMESHEET_FAILURE',
+    err
+  };
+}
+
 export function addTimesheet(timesheet) {
   return dispatch => {
     dispatch(fetchTimesheetsRequest());
@@ -104,6 +111,9 @@ export function addTimesheet(timesheet) {
       })
       .then(json => {
         dispatch(addTimesheetSuccess(json.data));
+      })
+      .catch(err => {
+        dispatch(addTimesheetFailure(err));
       });
   };
 }

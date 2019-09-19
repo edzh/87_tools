@@ -10,6 +10,8 @@ export default function EditStudentClubs({
   getSessionClubs,
   updateCurrentStudent
 }) {
+  console.log(currentStudent.item.currentClubs);
+
   return (
     <div>
       {sessions.items &&
@@ -21,27 +23,27 @@ export default function EditStudentClubs({
 
       <Formik
         initialValues={{
-          monday: currentStudent.item.currentClub
+          monday: currentStudent.item.currentClubs
             ? currentStudent.item.currentClubs[0]
               ? currentStudent.item.currentClubs[0]._id
               : ''
             : '',
-          tuesday: currentStudent.item.currentClub
+          tuesday: currentStudent.item.currentClubs
             ? currentStudent.item.currentClubs[1]
               ? currentStudent.item.currentClubs[1]._id
               : ''
             : '',
-          wednesday: currentStudent.item.currentClub
+          wednesday: currentStudent.item.currentClubs
             ? currentStudent.item.currentClubs[2]
               ? currentStudent.item.currentClubs[2]._id
               : ''
             : '',
-          thursday: currentStudent.item.currentClub
+          thursday: currentStudent.item.currentClubs
             ? currentStudent.item.currentClubs[3]
               ? currentStudent.item.currentClubs[3]._id
               : ''
             : '',
-          friday: currentStudent.item.currentClub
+          friday: currentStudent.item.currentClubs
             ? currentStudent.item.currentClubs[4]
               ? currentStudent.item.currentClubs[4]._id
               : ''
