@@ -15,12 +15,6 @@ function UserContainer(props) {
     props.fetchUserInfo(localStorage.getItem('id_token'));
   }, []);
 
-  // useEffect(() => {
-  //   props.user.data &&
-  //   props.user.data.currentProgram &&
-  //   props.getCurrentProgram(props.user.data.currentProgram);
-  // }, [props.user]);
-
   return <div>{props.children}</div>;
 }
 

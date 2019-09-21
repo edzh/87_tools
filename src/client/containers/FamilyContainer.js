@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { fetchFamilies } from '../actions/familyActions';
 
 import FamilyList from '../components/Family/FamilyList';
-import FamilyForm from '../components/Family/FamilyForm';
 
 function Family(props) {
   useEffect(() => {

@@ -9,15 +9,15 @@ import { updateUser } from '../actions/userActions';
 import ProgramList from '../components/Program/ProgramList';
 import ProgramForm from '../components/Program/ProgramForm';
 
-function Program(props) {
+function Program({ fetchPrograms, programs, user, updateUser, addProgram }) {
   useEffect(() => {
-    props.fetchPrograms();
+    fetchPrograms();
   }, []);
 
   return (
     <div>
-      <ProgramList programs={props.programs} updateUser={props.updateUser} />
-      <ProgramForm user={props.user} addProgram={props.addProgram} />
+      <ProgramList programs={programs} updateUser={updateUser} user={user} />
+      <ProgramForm user={user} addProgram={addProgram} />
     </div>
   );
 }

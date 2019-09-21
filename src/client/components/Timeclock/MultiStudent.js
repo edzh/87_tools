@@ -5,7 +5,8 @@ export default function MultiStudent({
   multiStudent,
   addTimestamp,
   currentTimesheet,
-  setMultiStudent
+  setMultiStudent,
+  pinInputRef
 }) {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
@@ -46,6 +47,7 @@ export default function MultiStudent({
       });
 
     setMultiStudent({ students: [] });
+    pinInputRef.current.focus();
   }
 
   function handleStudentChange(index) {

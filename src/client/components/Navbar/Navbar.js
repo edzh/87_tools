@@ -19,27 +19,6 @@ function Navbar({ fetchUserInfo, isAuthenticated, isFetching, user }) {
       <NavLink
         activeClassName="border-r-4 border-blue"
         className="py-2 px-4 no-underline text-black block hover:bg-grey-light"
-        to={'/addstudent'}
-      >
-        Add Student
-      </NavLink>
-      <NavLink
-        activeClassName="border-r-4 border-blue"
-        className="py-2 px-4 no-underline text-black block hover:bg-grey-light"
-        to={'/timesheet'}
-      >
-        Timesheets
-      </NavLink>
-      <NavLink
-        activeClassName="border-r-4 border-blue"
-        className="py-2 px-4 no-underline text-black block hover:bg-grey-light"
-        to={'/family'}
-      >
-        Family
-      </NavLink>
-      <NavLink
-        activeClassName="border-r-4 border-blue"
-        className="py-2 px-4 no-underline text-black block hover:bg-grey-light"
         to={'/program'}
       >
         Program

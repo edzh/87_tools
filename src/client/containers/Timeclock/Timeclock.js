@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
 import { Formik, Field, Form } from 'formik';
@@ -14,6 +14,7 @@ import TimestampList from './TimestampList';
 import Alert from '../../components/Alert';
 import PinInput from '../../components/Timeclock/PinInput';
 import MultiStudent from '../../components/Timeclock/MultiStudent';
+import ManualEntry from './ManualEntry';
 
 function Timeclock({
   getCurrentTimesheet,
@@ -24,12 +25,13 @@ function Timeclock({
   alert
 }) {
   const [multiStudent, setMultiStudent] = useState({ students: [] });
-
+  const pinInputRef = useRef();
   useEffect(() => {
     getCurrentTimesheet(timesheetId);
+    pinInputRef.current.focus();
   }, []);
 
-  async function submitPinTimestamp(pin) {
+  async function submitPinTimestamp(pin, fobStatus) {
     const fetchedPin = await fetch(`${apiUrl}/api/pin/${pin}`)
       .then(response => {
         if (!response.ok) throw Error('Pin does not exist!');
@@ -53,6 +55,7 @@ function Timeclock({
       addTimestamp({
         student: fetchedPin._id,
         club: studentClub ? studentClub._id : null,
+        fobStatus,
         timesheet: timesheetId
       });
     }
@@ -93,6 +96,8 @@ function Timeclock({
         });
       }
     }
+
+    pinInputRef.current.focus();
   }
 
   return (
@@ -100,6 +105,7 @@ function Timeclock({
       <PinInput
         submitPinTimestamp={submitPinTimestamp}
         addTimestampFailure={addTimestampFailure}
+        pinInputRef={pinInputRef}
       />
       <Alert alert={alert} />
       <MultiStudent
@@ -107,7 +113,9 @@ function Timeclock({
         setMultiStudent={setMultiStudent}
         addTimestamp={addTimestamp}
         currentTimesheet={currentTimesheet}
+        pinInputRef={pinInputRef}
       />
+      <ManualEntry submitPinTimestamp={submitPinTimestamp} />
       <TimestampList />
     </div>
   );

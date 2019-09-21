@@ -2,8 +2,7 @@ import AddStudent from '../Student/AddStudent';
 import PinLookup from '../../containers/PinLookup';
 import TimesheetForm from '../Timesheet/TimesheetForm';
 import Timesheet from '../../containers/TimesheetContainer';
-import Timeclock from '../../containers/TimeclockContainer';
-import NewTimeclock from '../../containers/Timeclock/Timeclock';
+import Timeclock from '../../containers/Timeclock/Timeclock';
 import Family from '../../containers/FamilyContainer';
 import FamilyPage from '../../containers/FamilyPageContainer';
 import FamilyForm from '../Family/FamilyForm';
@@ -42,20 +41,20 @@ const routes = [
   {
     path: '/timesheet/:id',
     auth: true,
-    component: NewTimeclock
+    component: Timeclock
   },
-  {
-    path: '/family',
-    auth: true,
-    exact: true,
-    component: Family,
-    routes: []
-  },
-  {
-    path: '/family/new',
-    auth: true,
-    component: FamilyForm
-  },
+  // {
+  //   path: '/family',
+  //   auth: true,
+  //   exact: true,
+  //   component: Family,
+  //   routes: []
+  // },
+  // {
+  //   path: '/family/new',
+  //   auth: true,
+  //   component: FamilyForm
+  // },
   {
     path: '/family/:id',
     auth: true,
@@ -115,6 +114,11 @@ const routes = [
         path: '/program/:id/streamline',
         exact: true,
         component: StreamlineAdd
+      },
+      {
+        path: '/program/:id/families',
+        exact: true,
+        component: Family
       }
     ]
   },
