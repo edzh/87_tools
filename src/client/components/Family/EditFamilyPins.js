@@ -66,7 +66,7 @@ export default ({
           {...pin}
         />
         <button
-          className="p-1 my-2 -ml-1 border rounded block bg-blue text-white hover:bg-white hover:text-black"
+          className="p-1 my-2 -ml-1 border rounded block bg-blue-500 text-white hover:bg-white hover:text-black"
           type="submit"
         >
           Add Pin

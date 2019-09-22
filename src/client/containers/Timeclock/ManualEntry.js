@@ -50,7 +50,7 @@ function ManualEntry({
               <p className="pl-2 py-1 w-3/4">{student.name}</p>
               <p className="flex">
                 <button
-                  className="border hover:text-white hover:bg-blue text-xs p-1 mr-1 rounded"
+                  className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
                     console.log(student.pin);
                     submitPinTimestamp(student.pin, 'Lost');
@@ -59,7 +59,7 @@ function ManualEntry({
                   Lost
                 </button>
                 <button
-                  className="border hover:text-white hover:bg-blue text-xs p-1 mr-1 rounded"
+                  className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
                     submitPinTimestamp(student.pin, 'Home');
                   }}
@@ -67,7 +67,7 @@ function ManualEntry({
                   Home
                 </button>
                 <button
-                  className="border hover:text-white hover:bg-blue text-xs p-1 mr-1 rounded"
+                  className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
                     submitPinTimestamp(student.pin, 'Damaged');
                   }}
@@ -78,8 +78,8 @@ function ManualEntry({
             </div>
           ))
         ) : (
-          <div className="bg-grey-lightest h-full">
-            <p className="text-center text-grey pt-8">Type to search</p>
+          <div className="bg-gray-100 h-full">
+            <p className="text-center text-gray-500 pt-8">Type to search</p>
           </div>
         )}
       </div>

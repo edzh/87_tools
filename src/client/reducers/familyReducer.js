@@ -51,6 +51,7 @@ function families(state = initialFamiliesState, action) {
         isFetching: true
       };
     case 'FETCH_FAMILIES_SUCCESS':
+    case 'GET_PROGRAM_FAMILIES_SUCCESS':
       return {
         ...state,
         items: action.families,

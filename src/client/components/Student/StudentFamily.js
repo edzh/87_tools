@@ -9,7 +9,7 @@ export default ({ student, family, editFamily, setEditFamily }) => {
         <h3 className="text-xl m-4">Family</h3>
         <button
           className={`${
-            editFamily ? 'bg-blue text-white' : 'bg-white'
+            editFamily ? 'bg-blue-500 text-white' : 'bg-white'
           } m-4 ml-auto text-xs border rounded shadow p-1`}
           onClick={() => setEditFamily(!editFamily)}
         >
@@ -27,7 +27,7 @@ export default ({ student, family, editFamily, setEditFamily }) => {
         family && (
           <div className="m-4">
             <Link to={`/family/id/${family._id}`} className="no-underline">
-              <p className="text-xl text-blue-dark hover:text-blue">
+              <p className="text-xl text-blue-600  hover:text-blue">
                 {family.name}
               </p>
             </Link>

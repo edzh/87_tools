@@ -16,7 +16,7 @@ router
   .delete(controller.removeOne);
 
 router.route('/:id/sessions').get(controller.getSessions);
-
 router.route('/:id/students').get(controller.getStudents);
+router.route('/:id/families').get(controller.getFamilies);
 
 export default router;

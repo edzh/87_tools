@@ -1,5 +1,7 @@
 const initialState = {
-  isFetching: false
+  isFetching: false,
+  filter: 'SHOW_ALL',
+  items: []
 };
 
 export default function timestamps(state = initialState, action) {
@@ -14,6 +16,12 @@ export default function timestamps(state = initialState, action) {
         ...state,
         isFetching: false,
         items: action.timestamps
+      };
+    case 'GET_SIGNIN_TIMESHEET_TIMESTAMPS_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        signin: action.timestamps
       };
     case 'ADD_TIMESTAMP_SUCCESS':
       return {
@@ -40,6 +48,11 @@ export default function timestamps(state = initialState, action) {
         ...state,
         isFetching: false,
         items: state.items.filter(item => item._id !== action.timestampId)
+      };
+    case 'SET_TIMESTAMP_FILTER':
+      return {
+        ...state,
+        filter: action.filter
       };
     default:
       return state;

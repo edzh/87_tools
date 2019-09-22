@@ -51,7 +51,7 @@ export default ({ setEditDetails, club, sessions }) => {
           className="p-2 my-2 border rounded"
         />
         <button
-          className="p-2 border rounded ml-2 bg-blue text-white hover:bg-white hover:text-black"
+          className="p-2 border rounded ml-2 bg-blue-500 text-white hover:bg-white hover:text-black"
           type="submit"
         >
           Save Club Details

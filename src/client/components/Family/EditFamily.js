@@ -27,7 +27,7 @@ export default ({ setEditDetails, family }) => {
       <p className="font-bold">Family Name</p>
       <input className="p-2 my-2 border rounded" type="text" {...name} />
       <button
-        className="p-2 border rounded ml-2 bg-blue text-white hover:bg-white hover:text-black"
+        className="p-2 border rounded ml-2 bg-blue-500 text-white hover:bg-white hover:text-black"
         type="submit"
       >
         Save Name

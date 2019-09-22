@@ -31,11 +31,11 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
 
   return (
     <div className="border rounded shadow">
-      <div className="flex border-b bg-grey-darkest w-full rounded-t">
+      <div className="flex border-b bg-gray-800 w-full rounded-t">
         <h2 className="m-4 font-normal text-white">{student.name}</h2>
         <button
           className={`${
-            editPin ? 'bg-blue text-white' : 'bg-white'
+            editPin ? 'bg-blue-500 text-white' : 'bg-white'
           } m-4 ml-auto text-xs border rounded shadow p-1`}
           onClick={() => setEditPin(!editPin)}
         >
@@ -78,7 +78,7 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
       {student.family && (
         <div className="m-4">
           <Link to={`/family/${student.family._id}`} className="no-underline">
-            <p className="text-xl text-blue-dark hover:text-blue">
+            <p className="text-xl text-blue-600  hover:text-blue">
               {student.family.name}
             </p>
           </Link>
@@ -97,7 +97,7 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
             <div className="flex m-2" key={index}>
               <p className="w-32">{intToDay[club.day]}</p>
               <Link className="no-underline" to={`/club/${club._id}`}>
-                <p className="text-blue-dark hover:text-blue">{club.name}</p>
+                <p className="text-blue-600  hover:text-blue">{club.name}</p>
               </Link>
             </div>
           ))}

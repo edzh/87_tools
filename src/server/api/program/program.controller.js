@@ -1,6 +1,7 @@
 import { Program } from './program.model';
 import { Session } from '../session/session.model';
 import { Student } from '../student/student.model';
+import { Family } from '../family/family.model';
 
 export const getOne = async (req, res) => {
   try {
@@ -113,6 +114,20 @@ export const getStudents = async (req, res) => {
   }
 };
 
+export const getFamilies = async (req, res) => {
+  try {
+    const program = await Program.findOne({ _id: req.params.id });
+    const families = await Family.find({ program: program._id }).sort({
+      name: 1
+    });
+
+    res.status(200).json({ data: families });
+  } catch (e) {
+    console.log(e);
+    res.status(400).end();
+  }
+};
+
 const controller = {
   getOne,
   getMany,
@@ -120,7 +135,8 @@ const controller = {
   updateOne,
   removeOne,
   getSessions,
-  getStudents
+  getStudents,
+  getFamilies
 };
 
 export default controller;

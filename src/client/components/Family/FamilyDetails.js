@@ -30,11 +30,11 @@ export default ({ family, editDetails, setEditDetails, familyId }) => {
 
   return (
     <div className="border rounded shadow-md">
-      <div className="flex border-b bg-grey-darkest w-full">
+      <div className="flex border-b bg-gray-800 w-full">
         <h2 className="m-4 font-normal text-white">{family.name}</h2>
         <button
           className={`${
-            editDetails ? 'bg-blue text-white' : 'bg-white'
+            editDetails ? 'bg-blue-500 text-white' : 'bg-white'
           } m-4 ml-auto text-xs border rounded shadow p-1`}
           onClick={() => setEditDetails(!editDetails)}
         >
@@ -63,7 +63,7 @@ export default ({ family, editDetails, setEditDetails, familyId }) => {
                     className="no-underline w-64"
                     to={`/student/${student._id}`}
                   >
-                    <p className="text-blue hover:text-blue-light">
+                    <p className="text-blue-500 hover:text-blue-400">
                       {student.name}
                     </p>
                   </Link>

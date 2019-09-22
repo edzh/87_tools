@@ -112,6 +112,13 @@ function getProgramStudentsSuccess(students) {
   };
 }
 
+function getProgramFamiliesSuccess(families) {
+  return {
+    type: 'GET_PROGRAM_FAMILIES_SUCCESS',
+    families
+  };
+}
+
 export function getProgramStudents(programId) {
   return dispatch => {
     dispatch(currentProgramRequest());
@@ -155,6 +162,22 @@ export function addProgram(program) {
       })
       .then(json => {
         dispatch(addProgramSuccess(json.data));
+      });
+  };
+}
+
+export function getProgramFamilies(programId) {
+  return dispatch => {
+    dispatch(currentProgramRequest());
+    return fetch(`${apiUrl}/api/program/${programId}/families`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(getProgramFamiliesSuccess(json.data));
       });
   };
 }

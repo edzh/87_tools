@@ -18,7 +18,7 @@ export default function ClubList(props) {
             className={`${
               day === daysOfWeek.indexOf(weekDay)
                 ? 'border-r border-l border-t'
-                : 'bg-grey-lightest border-b'
+                : 'bg-gray-100 border-b'
             } px-4 py-2 rounded-t w-full cursor-pointer`}
             onClick={() => setDay(daysOfWeek.indexOf(weekDay))}
           >
@@ -32,7 +32,7 @@ export default function ClubList(props) {
           .map(club => (
             <div className="p-2 border-b" key={club._id}>
               <Link
-                className="text-blue hover:text-blue-light no-underline"
+                className="text-blue-500 hover:text-blue-400 no-underline"
                 to={`/club/${club._id}`}
               >
                 {club.name}

@@ -7,7 +7,8 @@ import { apiUrl } from 'config';
 import { getCurrentTimesheet } from '../../actions/timesheetActions';
 import {
   addTimestamp,
-  addTimestampFailure
+  addTimestampFailure,
+  getSigninTimesheetTimestamps
 } from '../../actions/timeclockActions';
 
 import TimestampList from './TimestampList';
@@ -18,11 +19,13 @@ import ManualEntry from './ManualEntry';
 
 function Timeclock({
   getCurrentTimesheet,
+  getSigninTimesheetTimestamps,
   currentTimesheet,
   addTimestamp,
   addTimestampFailure,
   timesheetId,
-  alert
+  alert,
+  signInTimestamps
 }) {
   const [multiStudent, setMultiStudent] = useState({ students: [] });
   const pinInputRef = useRef();
@@ -30,6 +33,11 @@ function Timeclock({
     getCurrentTimesheet(timesheetId);
     pinInputRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    if (currentTimesheet.item && currentTimesheet.item.io === 'out')
+      getSigninTimesheetTimestamps(currentTimesheet.item.date);
+  }, [currentTimesheet.isFetching]);
 
   async function submitPinTimestamp(pin, fobStatus) {
     const fetchedPin = await fetch(`${apiUrl}/api/pin/${pin}`)
@@ -42,6 +50,10 @@ function Timeclock({
     // Refuse student fob for sign out
     if (currentTimesheet.item.io === 'out' && fetchedPin.type === 'student') {
       throw Error('You cannot use a student to pin to sign out!');
+    }
+
+    if (currentTimesheet.item.io === 'in' && fetchedPin.type === 'family') {
+      throw Error('You cannot use a family to pin to sign in!');
     }
 
     // Sign student in
@@ -114,6 +126,7 @@ function Timeclock({
         addTimestamp={addTimestamp}
         currentTimesheet={currentTimesheet}
         pinInputRef={pinInputRef}
+        signInTimestamps={signInTimestamps}
       />
       <ManualEntry submitPinTimestamp={submitPinTimestamp} />
       <TimestampList />
@@ -125,7 +138,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     timesheetId: ownProps.match.params.id,
     currentTimesheet: state.timesheet.currentTimesheet,
-    alert: state.timestamp.alert
+    alert: state.timestamp.alert,
+    signInTimestamps: state.timestamp.signin
   };
 };
 
@@ -139,6 +153,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCurrentTimesheet: timesheetId => {
       dispatch(getCurrentTimesheet(timesheetId));
+    },
+    getSigninTimesheetTimestamps: date => {
+      dispatch(getSigninTimesheetTimestamps(date));
     }
   };
 };

@@ -12,9 +12,9 @@ function Timesheet({
   sessionId,
   timesheets,
   addTimesheet,
-  getSessionTimesheets
+  getSessionTimesheets,
+  currentSession
 }) {
-  console.log(sessionId);
   useEffect(() => {
     getSessionTimesheets(sessionId);
   }, []);
@@ -22,7 +22,10 @@ function Timesheet({
   return (
     <div>
       <TimesheetList timesheets={timesheets} />
-      <TimesheetForm sessionId={sessionId} addTimesheet={addTimesheet} />
+      <TimesheetForm
+        addTimesheet={addTimesheet}
+        currentSession={currentSession}
+      />
     </div>
   );
 }
@@ -30,7 +33,8 @@ function Timesheet({
 const mapStateToProps = (state, ownProps) => {
   return {
     timesheets: state.timesheet.timesheets,
-    sessionId: ownProps.match.params.id
+    sessionId: ownProps.match.params.id,
+    currentSession: state.session.currentSession
   };
 };
 

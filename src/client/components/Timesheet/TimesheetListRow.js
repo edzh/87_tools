@@ -11,7 +11,7 @@ export default ({ timesheetsDate }) => {
   );
 
   return (
-    <tr className="py-2 px-4 group bg-transparent border-b border-grey-light flex block">
+    <tr className="py-2 px-4 group bg-transparent border-b border-gray-400 flex block">
       <td className="my-auto w-1/4 block">
         {format(timesheetsDate.date, 'MMMM DD')}
       </td>

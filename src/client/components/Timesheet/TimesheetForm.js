@@ -3,7 +3,9 @@ import { Redirect } from 'react-router';
 import { format } from 'date-fns';
 import { Formik, Form, Field } from 'formik';
 
-export default function Timesheet({ sessionId, addTimesheet }) {
+export default function Timesheet({ currentSession, addTimesheet }) {
+  console.log(currentSession);
+
   return (
     <Formik
       initialValues={{
@@ -14,7 +16,8 @@ export default function Timesheet({ sessionId, addTimesheet }) {
         addTimesheet({
           date: values.date,
           io: values.io,
-          session: sessionId
+          session: currentSession.item._id,
+          program: currentSession.item.program
         });
       }}
     >

@@ -10,7 +10,7 @@ function SignOut(props) {
 
   return (
     <button
-      className="py-2 no-underline text-blue hover:text-blue-lighter text-sm"
+      className="py-2 no-underline text-blue-500 hover:text-blue-200 text-sm"
       onClick={handleSubmit}
     >
       Sign Out

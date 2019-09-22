@@ -19,11 +19,11 @@ export default function StudentDetails({
   console.log(student);
   return (
     <div className="border rounded shadow-md">
-      <div className="flex border-b bg-grey-darkest w-full">
+      <div className="flex border-b bg-gray-800 w-full">
         <h2 className="m-4 font-normal text-white">{student.name}</h2>
         <button
           className={`${
-            editDetails ? 'bg-blue text-white' : 'bg-white'
+            editDetails ? 'bg-blue-500 text-white' : 'bg-white'
           } m-4 ml-auto text-xs border rounded shadow p-1`}
           onClick={() => setEditDetails(!editDetails)}
         >

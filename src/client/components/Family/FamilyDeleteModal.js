@@ -6,7 +6,7 @@ export default ({ family, removeFamily }) => {
   return (
     <div>
       <button
-        className="p-1 bg-red text-white border rounded"
+        className="p-1 bg-red-500 text-white border rounded"
         onClick={() => setShowModal(!showModal)}
       >
         Delete
@@ -26,7 +26,7 @@ export default ({ family, removeFamily }) => {
                 </button>
               </h3>
               <button
-                className="p-1 bg-red text-white border rounded"
+                className="p-1 bg-red-500 text-white border rounded"
                 onClick={() => removeFamily(family._id)}
               >
                 Delete

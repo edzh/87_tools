@@ -37,7 +37,7 @@ export default function TimesheetList({ timesheets }) {
 
   return (
     <div className="border rounded shadow-md">
-      <h2 className="p-4 border-b rounded-t font-normal bg-grey-darkest text-white shadow">
+      <h2 className="p-4 border-b rounded-t font-normal bg-gray-800 text-white shadow">
         Timesheets
       </h2>
       <table
@@ -45,7 +45,7 @@ export default function TimesheetList({ timesheets }) {
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         <thead className="w-full block">
-          <tr className="px-4 py-2 border-b w-full block border-grey-light flex">
+          <tr className="px-4 py-2 border-b w-full block border-gray-400 flex">
             <th className="text-left block w-1/4">Date</th>
             <th className="text-left block w-1/4">Type</th>
             <th className="text-left block w-1/4"># of Students In</th>

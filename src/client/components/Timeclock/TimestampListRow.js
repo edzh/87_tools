@@ -17,7 +17,7 @@ export default ({ timestamp, removeTimestamp, timesheet }) => {
         </p>
         <p className="w-64">
           <Link
-            className="no-underline text-blue hover:text-blue-light"
+            className="no-underline text-blue-500 hover:text-blue-400"
             to={`/student/${timestamp.student._id}`}
           >
             {timestamp.student.name}
@@ -30,7 +30,7 @@ export default ({ timestamp, removeTimestamp, timesheet }) => {
         <button
           className={`${
             hover ? 'opacity-100' : 'opacity-0'
-          } text-lg text-red-lighter font-bold -my-1 ml-auto hover:text-red rounded`}
+          } text-lg text-red-200 font-bold -my-1 ml-auto hover:text-red-500 rounded`}
           onClick={() => removeTimestamp(timestamp._id)}
         >
           ×
@@ -51,7 +51,7 @@ export default ({ timestamp, removeTimestamp, timesheet }) => {
         </p>
         <p className="w-64">
           <Link
-            className="no-underline text-blue hover:text-blue-light"
+            className="no-underline text-blue-500 hover:text-blue-400"
             to={`/student/${timestamp.student._id}`}
           >
             {timestamp.student.name}
@@ -63,7 +63,7 @@ export default ({ timestamp, removeTimestamp, timesheet }) => {
         <button
           className={`${
             hover ? 'opacity-100' : 'opacity-0'
-          } text-lg text-red-lighter font-bold -my-1 ml-auto hover:text-red rounded`}
+          } text-lg text-red-200 font-bold -my-1 ml-auto hover:text-red-500 rounded`}
           onClick={() => removeTimestamp(timestamp._id)}
         >
           ×

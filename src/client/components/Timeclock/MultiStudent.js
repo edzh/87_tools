@@ -6,19 +6,35 @@ export default function MultiStudent({
   addTimestamp,
   currentTimesheet,
   setMultiStudent,
-  pinInputRef
+  pinInputRef,
+  signInTimestamps
 }) {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   useEffect(() => {
     setSelectedStudents(
       multiStudent.students.reduce((selected, student) => {
-        selected.push({
-          _id: student._id,
-          name: student.name,
-          currentClubs: student.currentClubs,
-          selected: false
-        });
+        const signedIn = signInTimestamps.find(
+          timestamp => timestamp.student._id === student._id
+        );
+
+        console.log(signedIn);
+
+        if (signedIn) {
+          selected.push({
+            _id: student._id,
+            name: student.name,
+            currentClubs: student.currentClubs,
+            selected: true
+          });
+        } else {
+          selected.push({
+            _id: student._id,
+            name: student.name,
+            currentClubs: student.currentClubs,
+            selected: false
+          });
+        }
 
         return selected;
       }, [])
@@ -64,8 +80,8 @@ export default function MultiStudent({
     <div>
       {selectedStudents.map((student, index) => (
         <button
-          className={`p-2 my-2 w-full shadow block border rounded hover:border-blue ${
-            student.selected ? 'bg-blue text-white' : 'bg-transparent'
+          className={`p-2 my-2 w-full shadow block border rounded hover:border-blue-500 ${
+            student.selected ? 'bg-blue-500 text-white' : 'bg-transparent'
           }`}
           key={student._id}
           onClick={() => handleStudentChange(index)}
@@ -74,7 +90,7 @@ export default function MultiStudent({
         </button>
       ))}
       <button
-        className="p-2 my-2 w-full shadow block border rounded bg-grey-lightest hover:bg-blue hover:text-white"
+        className="p-2 my-2 w-full shadow block border rounded bg-gray-100 hover:bg-blue-500 hover:text-white"
         onClick={() => addMultiStudentTimestamp()}
       >
         Select

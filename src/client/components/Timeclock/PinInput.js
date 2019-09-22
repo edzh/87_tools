@@ -31,7 +31,7 @@ export default function PinInput({
               innerRef={pinInputRef}
             />
             <button
-              className="p-2 border hover:border-blue hover:bg-blue hover:text-white shadow text-blue bg-grey-lightest border-grey-light text-xl rounded-b w-full"
+              className="p-2 border hover:border-blue-500 hover:bg-blue-500 hover:text-white shadow text-blue-500 bg-gray-100 border-gray-400 text-xl rounded-b w-full"
               type="submit"
             >
               Submit

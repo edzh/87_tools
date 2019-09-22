@@ -117,3 +117,10 @@ export function addTimesheet(timesheet) {
       });
   };
 }
+
+export function setTimestampFilters(filter) {
+  return {
+    type: 'SET_TIMESTAMP_FILTER',
+    filter
+  };
+}

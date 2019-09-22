@@ -20,7 +20,7 @@ export default ({ student, editClubs, setEditClubs }) => {
         <h3 className="m-4">Clubs</h3>
         <button
           className={`${
-            editClubs ? 'bg-blue text-white' : 'bg-white'
+            editClubs ? 'bg-blue-500 text-white' : 'bg-white'
           } m-4 ml-auto text-xs border rounded shadow p-1`}
           onClick={() => setEditClubs(!editClubs)}
         >
@@ -40,7 +40,7 @@ export default ({ student, editClubs, setEditClubs }) => {
               <div className="flex m-2" key={index}>
                 <p className="w-32">{intToDay[club.day]}</p>
                 <Link className="no-underline" to={`/club/id/${club._id}`}>
-                  <p className="text-blue-dark hover:text-blue">{club.name}</p>
+                  <p className="text-blue-600  hover:text-blue">{club.name}</p>
                 </Link>
               </div>
             ))}

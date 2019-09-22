@@ -37,7 +37,7 @@ export default ({ family, editPickups, setEditPickups }) => {
         <h3 className="m-4">Pickups</h3>
         <button
           className={`${
-            editPickups ? 'bg-blue text-white' : 'bg-white'
+            editPickups ? 'bg-blue-500 text-white' : 'bg-white'
           } m-4 ml-auto text-xs border rounded shadow p-1`}
           onClick={() => setEditPickups(!editPickups)}
         >
