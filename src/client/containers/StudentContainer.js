@@ -15,12 +15,7 @@ function Student(props) {
 
   return (
     <div>
-      <div className="fixed -mt-6">
-        <StudentForm
-          programId={props.programId}
-          addStudent={props.addStudent}
-        />
-      </div>
+      <StudentForm programId={props.programId} addStudent={props.addStudent} />
       <StudentList students={props.students} />
     </div>
   );

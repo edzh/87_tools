@@ -1,22 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
+import Navbar from './Navbar';
 
-export default function ProgramHeader(props) {
+export default function ProgramHeader({ currentProgram }) {
   return (
-    <ul>
-      <li>
-        <Link to={`/program/${props.programId}/students`}>Students</Link>
-      </li>
-      <li>
-        <Link to={`/program/${props.programId}/sessions`}>Sessions</Link>
-      </li>
-      <li>
-        <Link to={`/program/${props.programId}/families`}>Families</Link>
-      </li>
-      <li>
-        <Link to={`/program/${props.programId}/streamline`}>Streamline</Link>
-      </li>
-    </ul>
+    <div>
+      <h2 className="text-lg">
+        <NavLink to={`/program/${currentProgram.item._id}`}>
+          {currentProgram.item.name}
+        </NavLink>
+      </h2>
+      <Navbar currentProgram={currentProgram} />
+    </div>
   );
 }

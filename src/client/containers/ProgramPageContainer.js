@@ -13,11 +13,11 @@ function ProgramPage(props) {
     props.getCurrentProgram(props.programId);
   }, []);
 
-  if (!props.program) return null;
+  if (!props.currentProgram) return null;
 
   return (
     <div>
-      <ProgramHeader programId={props.programId} />
+      <ProgramHeader currentProgram={props.currentProgram} />
       {props.routes.map(route => (
         <RouteWithSubroutes key={route.path} {...route} />
       ))}
@@ -28,7 +28,7 @@ function ProgramPage(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
-    program: state.program.currentProgram
+    currentProgram: state.program.currentProgram
   };
 };
 

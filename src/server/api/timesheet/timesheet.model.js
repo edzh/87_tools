@@ -19,6 +19,11 @@ const timesheetSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'session',
     required: true
+  },
+  program: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'program',
+    required: true
   }
 });
 
