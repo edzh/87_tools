@@ -6,7 +6,8 @@ export default function Navbar({ currentProgram }) {
     <ul className="flex">
       <li>
         <NavLink
-          activeClassName="bg-blue-500"
+          className="m-2 p-1 rounded"
+          activeClassName="bg-blue-500 text-blue-100"
           to={`/program/${currentProgram.item._id}/students`}
         >
           Students
@@ -14,7 +15,8 @@ export default function Navbar({ currentProgram }) {
       </li>
       <li>
         <NavLink
-          activeClassName="bg-blue-500"
+          className="m-2 p-1 rounded"
+          activeClassName="bg-blue-500 text-blue-100"
           to={`/program/${currentProgram.item._id}/sessions`}
         >
           Sessions
@@ -22,7 +24,8 @@ export default function Navbar({ currentProgram }) {
       </li>
       <li>
         <NavLink
-          activeClassName="bg-blue-500"
+          className="m-2 p-1 rounded"
+          activeClassName="bg-blue-500 text-blue-100"
           to={`/program/${currentProgram.item._id}/families`}
         >
           Families
@@ -30,7 +33,8 @@ export default function Navbar({ currentProgram }) {
       </li>
       <li>
         <NavLink
-          activeClassName="bg-blue-500"
+          className="m-2 p-1 rounded"
+          activeClassName="bg-blue-500 text-blue-100"
           to={`/program/${currentProgram.item._id}/streamline`}
         >
           Streamline
