@@ -4,6 +4,8 @@ import { format } from 'date-fns';
 import { Formik, Form, Field } from 'formik';
 
 export default function Timesheet({ currentSession, addTimesheet }) {
+  console.log('hi');
+
   return (
     <Formik
       initialValues={{
