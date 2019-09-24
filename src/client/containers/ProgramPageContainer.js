@@ -7,6 +7,7 @@ import { getCurrentProgram } from '../actions/programActions';
 
 import ProgramDetails from '../components/Program/ProgramDetails';
 import ProgramHeader from '../components/Program/ProgramHeader';
+import Dashboard from './Program/Dashboard';
 
 function ProgramPage(props) {
   useEffect(() => {
@@ -18,6 +19,7 @@ function ProgramPage(props) {
   return (
     <div>
       <ProgramHeader currentProgram={props.currentProgram} />
+      <Dashboard programId={props.programId} />
       {props.routes.map(route => (
         <RouteWithSubroutes key={route.path} {...route} />
       ))}

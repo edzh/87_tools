@@ -28,12 +28,7 @@ function TimestampList({
 
   return (
     <div>
-      <h2>
-        {format(currentTimesheet.item.date, 'dddd, MMMM D')} Sign{' '}
-        {currentTimesheet.item.io} Timesheet
-      </h2>
-      <Filters />
-      <ul className="">
+      <ul>
         {timestamps &&
           timestamps.map(timestamp => (
             <li className="border-b flex text-sm" key={timestamp._id}>

@@ -16,6 +16,8 @@ import Alert from '../../components/Alert';
 import PinInput from '../../components/Timeclock/PinInput';
 import MultiStudent from '../../components/Timeclock/MultiStudent';
 import ManualEntry from './ManualEntry';
+import Filters from '../../components/Timeclock/Filters';
+import TimesheetHeader from '../../components/Timeclock/TimesheetHeader';
 
 function Timeclock({
   getCurrentTimesheet,
@@ -113,23 +115,31 @@ function Timeclock({
   }
 
   return (
-    <div>
-      <PinInput
-        submitPinTimestamp={submitPinTimestamp}
-        addTimestampFailure={addTimestampFailure}
-        pinInputRef={pinInputRef}
-      />
-      <Alert alert={alert} />
-      <MultiStudent
-        multiStudent={multiStudent}
-        setMultiStudent={setMultiStudent}
-        addTimestamp={addTimestamp}
-        currentTimesheet={currentTimesheet}
-        pinInputRef={pinInputRef}
-        signInTimestamps={signInTimestamps}
-      />
-      <ManualEntry submitPinTimestamp={submitPinTimestamp} />
-      <TimestampList />
+    <div className="flex">
+      <div className="w-1/3">
+        <PinInput
+          submitPinTimestamp={submitPinTimestamp}
+          addTimestampFailure={addTimestampFailure}
+          pinInputRef={pinInputRef}
+        />
+        <Alert alert={alert} />
+        <MultiStudent
+          multiStudent={multiStudent}
+          setMultiStudent={setMultiStudent}
+          addTimestamp={addTimestamp}
+          currentTimesheet={currentTimesheet}
+          pinInputRef={pinInputRef}
+          signInTimestamps={signInTimestamps}
+        />
+        <ManualEntry submitPinTimestamp={submitPinTimestamp} />
+      </div>
+      <div className="w-2/3 border rounded p-2">
+        <TimesheetHeader currentTimesheet={currentTimesheet} />
+        <Filters />
+        <div style={{ height: '540px' }} className="overflow-auto">
+          <TimestampList />
+        </div>
+      </div>
     </div>
   );
 }

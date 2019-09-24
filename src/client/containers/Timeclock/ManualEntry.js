@@ -35,12 +35,13 @@ function ManualEntry({
   return (
     <div>
       <input
-        className="border"
+        className="border w-full rounded p-1"
+        placeholder="search here..."
         type="text"
         onChange={e => setQuery(e.target.value)}
         value={query}
       />
-      <div className="overflow-auto h-32">
+      <div className="overflow-auto h-64">
         {filteredSuggestions.length !== 0 ? (
           filteredSuggestions.map((student, index) => (
             <div
@@ -52,7 +53,6 @@ function ManualEntry({
                 <button
                   className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
-                    console.log(student.pin);
                     submitPinTimestamp(student.pin, 'Lost');
                   }}
                 >

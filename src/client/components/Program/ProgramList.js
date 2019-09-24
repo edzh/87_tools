@@ -5,7 +5,7 @@ import MainDetailsHeader from '../Details/MainDetailsHeader';
 export default function ProgramList({ programs, updateUser, user }) {
   return (
     <div>
-      <MainDetailsHeader>Programs</MainDetailsHeader>
+      <h2 className=""></h2>
       <ul className="">
         {programs.items.map(program => (
           <li key={program._id}>
