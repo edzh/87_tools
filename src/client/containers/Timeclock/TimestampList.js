@@ -18,13 +18,13 @@ function TimestampList({
   deleteTimestamp,
   isFetching
 }) {
+  useEffect(() => {
+    currentTimesheet.item && getTimesheetTimestamps(currentTimesheet.item._id);
+  }, [currentTimesheet.item]);
+
   if (!currentTimesheet.item || currentTimesheet.isFetching) {
     return <p data-testid="load">Loading...</p>;
   }
-
-  useEffect(() => {
-    getTimesheetTimestamps(currentTimesheet.item._id);
-  }, []);
 
   return (
     <div>

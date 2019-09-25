@@ -28,12 +28,6 @@ const routes = [
     component: AddStudent
   },
   {
-    path: '/timesheet',
-    auth: true,
-    exact: true,
-    component: Timesheet
-  },
-  {
     path: '/timesheet/new',
     auth: true,
     component: TimesheetForm
