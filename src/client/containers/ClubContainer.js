@@ -27,7 +27,7 @@ function Club(props) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    clubs: state.club.clubs,
+    clubs: state.clubs,
     sessionId: ownProps.match.params.id
   };
 };

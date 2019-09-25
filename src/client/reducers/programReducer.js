@@ -12,7 +12,7 @@ const initialCurrentProgramState = {
   isFetching: false
 };
 
-function programs(state = initialProgramsState, action) {
+export function programs(state = initialProgramsState, action) {
   switch (action.type) {
     case 'FETCH_PROGRAMS_REQUEST':
       return {
@@ -36,7 +36,7 @@ function programs(state = initialProgramsState, action) {
   }
 }
 
-function currentProgram(state = initialCurrentProgramState, action) {
+export function currentProgram(state = initialCurrentProgramState, action) {
   switch (action.type) {
     case 'CURRENT_PROGRAM_REQUEST':
       return {
@@ -66,9 +66,9 @@ function currentProgram(state = initialCurrentProgramState, action) {
   }
 }
 
-const programReducer = combineReducers({
-  programs,
-  currentProgram
-});
+// const programReducer = combineReducers({
+//   programs,
+//   currentProgram
+// });
 
-export default programReducer;
+// export default programReducer;

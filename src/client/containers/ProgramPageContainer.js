@@ -30,7 +30,7 @@ function ProgramPage(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
-    currentProgram: state.program.currentProgram
+    currentProgram: state.currentProgram
   };
 };
 

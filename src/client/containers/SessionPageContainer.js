@@ -35,7 +35,7 @@ function SessionPage(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     sessionId: ownProps.match.params.id,
-    session: state.session.currentSession
+    session: state.currentSession
   };
 };
 

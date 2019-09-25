@@ -23,7 +23,7 @@ function Student(props) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    students: state.student.students,
+    students: state.students,
     programId: ownProps.match.params.id
   };
 };

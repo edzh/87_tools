@@ -35,10 +35,10 @@ function Dashboard({
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.programId,
-    currentProgram: state.program.currentProgram,
-    students: state.student.students,
-    families: state.family.families,
-    sessions: state.session.sessions
+    currentProgram: state.currentProgram,
+    students: state.students,
+    families: state.families,
+    sessions: state.sessions
   };
 };
 

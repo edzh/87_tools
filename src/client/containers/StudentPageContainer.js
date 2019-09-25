@@ -55,9 +55,9 @@ function StudentPage({
 const mapStateToProps = (state, ownProps) => {
   return {
     studentId: ownProps.match.params.id,
-    currentStudent: state.student.currentStudent,
+    currentStudent: state.currentStudent,
     isAuthenticated: state.user.isAuthenticated,
-    currentSession: state.session.currentSession
+    currentSession: state.currentSession
   };
 };
 

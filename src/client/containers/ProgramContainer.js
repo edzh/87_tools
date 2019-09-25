@@ -24,9 +24,9 @@ function Program({ fetchPrograms, programs, user, updateUser, addProgram }) {
 
 const mapStateToProps = state => {
   return {
-    programs: state.program.programs,
+    programs: state.programs,
     user: state.user.data,
-    currentProgram: state.session.currentSession
+    currentProgram: state.currentSession
   };
 };
 

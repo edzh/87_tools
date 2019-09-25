@@ -19,7 +19,7 @@ function TimestampList({
   isFetching
 }) {
   if (!currentTimesheet.item || currentTimesheet.isFetching) {
-    return <p>Loading...</p>;
+    return <p data-testid="load">Loading...</p>;
   }
 
   useEffect(() => {
@@ -72,13 +72,13 @@ function getFilteredTimestamps(timestamps, filter) {
 
 const mapStateToProps = state => {
   return {
-    clubs: state.club.clubs,
+    clubs: state.clubs,
     timestamps: getFilteredTimestamps(
       state.timestamp.items,
       state.timestamp.filter
     ),
     isFetching: state.timestamp.isFetching,
-    currentTimesheet: state.timesheet.currentTimesheet
+    currentTimesheet: state.currentTimesheet
   };
 };
 

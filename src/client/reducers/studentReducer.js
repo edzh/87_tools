@@ -11,7 +11,7 @@ const initialCurrentStudentState = {
   isFetching: false
 };
 
-function students(state = initialStudentsState, action) {
+export function students(state = initialStudentsState, action) {
   switch (action.type) {
     case types.FETCH_STUDENTS_REQUEST:
       return {
@@ -63,7 +63,7 @@ function students(state = initialStudentsState, action) {
   }
 }
 
-function currentStudent(state = initialCurrentStudentState, action) {
+export function currentStudent(state = initialCurrentStudentState, action) {
   switch (action.type) {
     case 'CURRENT_STUDENT_REQUEST':
       return {
@@ -79,8 +79,3 @@ function currentStudent(state = initialCurrentStudentState, action) {
       return state;
   }
 }
-
-export default combineReducers({
-  students,
-  currentStudent
-});

@@ -26,7 +26,7 @@ function Session(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
-    sessions: state.session.sessions
+    sessions: state.sessions
   };
 };
 

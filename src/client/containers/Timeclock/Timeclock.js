@@ -147,7 +147,7 @@ function Timeclock({
 const mapStateToProps = (state, ownProps) => {
   return {
     timesheetId: ownProps.match.params.id,
-    currentTimesheet: state.timesheet.currentTimesheet,
+    currentTimesheet: state.currentTimesheet,
     alert: state.timestamp.alert,
     signInTimestamps: state.timestamp.signin
   };

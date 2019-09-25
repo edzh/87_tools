@@ -97,8 +97,8 @@ function search(search, list) {
 
 const mapStateToProps = state => {
   return {
-    students: state.student.students,
-    currentTimesheet: state.timesheet.currentTimesheet
+    students: state.students,
+    currentTimesheet: state.currentTimesheet
   };
 };
 

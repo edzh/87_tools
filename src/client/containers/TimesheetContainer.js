@@ -32,9 +32,9 @@ function Timesheet({
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    timesheets: state.timesheet.timesheets,
+    timesheets: state.timesheets,
     sessionId: ownProps.match.params.id,
-    currentSession: state.session.currentSession
+    currentSession: state.currentSession
   };
 };
 

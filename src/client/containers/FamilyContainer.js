@@ -25,7 +25,7 @@ function Family(props) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    families: state.family.families,
+    families: state.families,
     programId: ownProps.match.params.id
   };
 };
