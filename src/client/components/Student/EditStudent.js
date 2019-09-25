@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFormInput } from './AddStudent';
 
-import SelectClub from './EditStudentClubs';
 import EditStudentFamily from './EditStudentFamily';
 
 export default function EditStudent({ student }) {

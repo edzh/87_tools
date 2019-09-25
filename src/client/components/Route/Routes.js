@@ -5,7 +5,7 @@ import routes from './routeConfig';
 
 export default props => {
   return (
-    <div className="lg:ml-64 ml-16 p-4 bg-white relative z-10">
+    <div className="lg:ml-32 ml-16 p-4 bg-white relative z-10">
       <Switch>
         {routes.map((route, index) => (
           <RouteWithSubroutes key={route.path} {...route} />

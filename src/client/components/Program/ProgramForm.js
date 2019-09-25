@@ -19,7 +19,7 @@ export default function ProgramForm(props) {
       >
         {() => (
           <Form>
-            <Field name="programName" className="p-2 my-2 border rounded" />
+            <Field name="programName" className="p-1 my-2 border rounded" />
             <button type="submit">Submit</button>
           </Form>
         )}

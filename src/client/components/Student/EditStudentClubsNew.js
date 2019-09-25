@@ -10,7 +10,13 @@ export default function EditStudentClubs({
   getSessionClubs,
   updateCurrentStudent
 }) {
-  console.log(currentStudent.item.currentClubs);
+  function findClubWithDay(clubDay) {
+    if (!currentStudent.item.currentClubs) return '';
+    const club = currentStudent.item.currentClubs.find(
+      club => club.day === clubDay
+    );
+    if (club) return club._id;
+  }
 
   return (
     <div>
@@ -23,31 +29,11 @@ export default function EditStudentClubs({
 
       <Formik
         initialValues={{
-          monday: currentStudent.item.currentClubs
-            ? currentStudent.item.currentClubs[0]
-              ? currentStudent.item.currentClubs[0]._id
-              : ''
-            : '',
-          tuesday: currentStudent.item.currentClubs
-            ? currentStudent.item.currentClubs[1]
-              ? currentStudent.item.currentClubs[1]._id
-              : ''
-            : '',
-          wednesday: currentStudent.item.currentClubs
-            ? currentStudent.item.currentClubs[2]
-              ? currentStudent.item.currentClubs[2]._id
-              : ''
-            : '',
-          thursday: currentStudent.item.currentClubs
-            ? currentStudent.item.currentClubs[3]
-              ? currentStudent.item.currentClubs[3]._id
-              : ''
-            : '',
-          friday: currentStudent.item.currentClubs
-            ? currentStudent.item.currentClubs[4]
-              ? currentStudent.item.currentClubs[4]._id
-              : ''
-            : ''
+          monday: findClubWithDay(1),
+          tuesday: findClubWithDay(2),
+          wednesday: findClubWithDay(3),
+          thursday: findClubWithDay(4),
+          friday: findClubWithDay(5)
         }}
         onSubmit={(values, actions) => {
           const currentClubs = [
