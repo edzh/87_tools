@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import RouteWithSubroutes from '../components/Route/RouteWithSubroutes';
+import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 import {
   setSession,
   getCurrentSession,
   getSessionClubs,
   addCurrentSessionClub
-} from '../actions/sessionActions';
+} from '../../actions/sessionActions';
 
-import MainDetailsHeader from '../components/Details/MainDetailsHeader';
-import SessionDetails from '../components/Session/SessionDetails';
-import SessionHeader from '../components/Session/SessionHeader';
+import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
+import SessionDetails from '../../components/Session/SessionDetails';
+import SessionHeader from '../../components/Session/SessionHeader';
 
 function SessionPage(props) {
   useEffect(() => {

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getProgramFamilies } from '../actions/programActions';
+import { getProgramFamilies } from '../../actions/programActions';
 
-import FamilyList from '../components/Family/FamilyList';
+import FamilyList from '../../components/Family/FamilyList';
 
 function Family(props) {
   useEffect(() => {

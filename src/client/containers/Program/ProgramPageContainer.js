@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import RouteWithSubroutes from '../components/Route/RouteWithSubroutes';
+import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
-import { getCurrentProgram } from '../actions/programActions';
+import { getCurrentProgram } from '../../actions/programActions';
 
-import ProgramDetails from '../components/Program/ProgramDetails';
-import ProgramHeader from '../components/Program/ProgramHeader';
-import Dashboard from './Program/Dashboard';
+import ProgramDetails from '../../components/Program/ProgramDetails';
+import ProgramHeader from '../../components/Program/ProgramHeader';
+import Dashboard from '../Program/Dashboard';
 
 function ProgramPage(props) {
   useEffect(() => {

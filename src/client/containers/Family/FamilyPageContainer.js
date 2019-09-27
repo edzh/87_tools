@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
-import { setFamily } from '../actions/familyActions';
+import { setFamily } from '../../actions/familyActions';
 
-import FamilyDetails from '../components/Family/FamilyDetails';
-import FamilyPins from '../components/Family/FamilyPins';
-import FamilyDeleteModal from '../components/Family/FamilyDeleteModal';
+import FamilyDetails from '../../components/Family/FamilyDetails';
+import FamilyPins from '../../components/Family/FamilyPins';
+import FamilyDeleteModal from '../../components/Family/FamilyDeleteModal';
 
 function FamilyPage(props) {
   const [fetchedFamily, setFetchedFamily] = useState('');

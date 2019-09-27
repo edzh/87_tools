@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
-import { updateCurrentStudent } from '../actions/studentActions';
-import { getProgramSessions } from '../actions/programActions';
+import {
+  getSessionClubs,
+  getCurrentSession
+} from '../../actions/sessionActions';
+import { updateCurrentStudent } from '../../actions/studentActions';
+import { getProgramSessions } from '../../actions/programActions';
 
-import EditStudentClubs from '../components/Student/EditStudentClubsNew';
+import EditStudentClubs from '../../components/Student/EditStudentClubsNew';
 
 function StudentClubs({
   currentStudent,

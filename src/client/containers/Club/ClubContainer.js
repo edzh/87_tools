@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
-import { addClub } from '../actions/clubActions';
-import { getSessionClubs } from '../actions/sessionActions';
+import { addClub } from '../../actions/clubActions';
+import { getSessionClubs } from '../../actions/sessionActions';
 
-import ClubList from '../components/Club/ClubList';
-import ClubForm from '../components/Club/ClubForm';
+import ClubList from '../../components/Club/ClubList';
+import ClubForm from '../../components/Club/ClubForm';
 
 function Club(props) {
   useEffect(() => {

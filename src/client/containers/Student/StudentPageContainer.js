@@ -6,15 +6,18 @@ import {
   setStudent,
   getCurrentStudent,
   updateCurrentStudent
-} from '../actions/studentActions';
-import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
+} from '../../actions/studentActions';
+import {
+  getSessionClubs,
+  getCurrentSession
+} from '../../actions/sessionActions';
 
-import RouteWithSubroutes from '../components/Route/RouteWithSubroutes';
+import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
-import StudentDetails from '../components/Student/StudentDetailsNew';
-import EditStudent from '../components/Student/EditStudentNew';
-import StudentFamily from '../components/Student/StudentFamily';
-import StudentClubs from '../components/Student/StudentClubs';
+import StudentDetails from '../../components/Student/StudentDetailsNew';
+import EditStudent from '../../components/Student/EditStudentNew';
+import StudentFamily from '../../components/Student/StudentFamily';
+import StudentClubs from '../../components/Student/StudentClubs';
 
 function StudentPage({
   isAuthenticated,

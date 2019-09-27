@@ -19,6 +19,7 @@ export function students(state = initialStudentsState, action) {
         isFetching: true
       };
     // case types.FETCH_STUDENTS_SUCCESS:
+    case 'GET_CLUB_STUDENTS_SUCCESS':
     case 'GET_PROGRAM_STUDENTS_SUCCESS':
       return {
         ...state,

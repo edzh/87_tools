@@ -4,24 +4,25 @@ import {
   setClub,
   getCurrentClub,
   getClubStudents
-} from '../actions/clubActions';
-import { fetchSessions } from '../actions/sessionActions';
+} from '../../actions/clubActions';
+import { fetchSessions } from '../../actions/sessionActions';
 
-import MainDetailsHeader from '../components/Details/MainDetailsHeader';
-import ClubDetails from '../components/Club/ClubDetails';
-import ClubStudentList from '../components/Club/ClubStudentList';
+import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
+import ClubDetails from '../../components/Club/ClubDetails';
+import ClubStudentList from '../../components/Club/ClubStudentList';
 
 function ClubPage(props) {
   const [editDetails, setEditDetails] = useState(false);
+  console.log(props.students);
 
   useEffect(() => {
     props.getCurrentClub(props.clubId);
     props.fetchSessions();
   }, []);
 
-  // useEffect(() => {
-  //   props.getClubStudents(props.clubId);
-  // }, []);
+  useEffect(() => {
+    props.getClubStudents(props.clubId);
+  }, []);
 
   if (!props.currentClub.item) return null;
 
@@ -35,7 +36,7 @@ function ClubPage(props) {
         editDetails={editDetails}
         setEditDetails={setEditDetails}
       />*/}
-      {/*<ClubStudentList students={props.currentClub.item} />*/}
+      {<ClubStudentList students={props.students.items} />}
     </div>
   );
 }
@@ -44,6 +45,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     clubId: ownProps.match.params.id,
     currentClub: state.currentClub,
+    students: state.students,
     sessions: state.sessions
   };
 };
