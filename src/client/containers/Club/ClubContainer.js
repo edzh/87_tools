@@ -10,7 +10,7 @@ import ClubForm from '../../components/Club/ClubForm';
 
 function Club(props) {
   useEffect(() => {
-    getSessionClubs(props.sessionId);
+    props.getSessionClubs(props.sessionId);
   }, []);
 
   if (!props.clubs) {

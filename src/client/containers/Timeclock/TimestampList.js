@@ -15,8 +15,7 @@ function TimestampList({
   getTimesheetTimestamps,
   timestamps,
   clubs,
-  deleteTimestamp,
-  isFetching
+  deleteTimestamp
 }) {
   useEffect(() => {
     currentTimesheet.item && getTimesheetTimestamps(currentTimesheet.item._id);
@@ -31,25 +30,29 @@ function TimestampList({
       <ul>
         {timestamps &&
           timestamps.map(timestamp => (
-            <li className="border-b flex text-sm" key={timestamp._id}>
-              <p className="w-24">{format(timestamp.datetime, 'hh:mm a')}</p>
-              <p className="w-64">
-                <Link to={`/student/${timestamp.student._id}`}>
-                  {timestamp.student.name}
-                </Link>
-              </p>
-              <p className="w-64">
-                <Link to={`/club/${timestamp.club && timestamp.club._id}`}>
-                  {timestamp.club && timestamp.club.name}
-                </Link>
-              </p>
-              <p className="w-8">{timestamp.fobStatus}</p>
-              <p
-                className={`cursor-pointer text-lg text-red-200 font-bold -my-1 ml-auto hover:text-red-500 rounded`}
-                onClick={() => deleteTimestamp(timestamp._id)}
-              >
-                ×
-              </p>
+            <li className="border-b text-sm" key={timestamp._id}>
+              <ul className="flex">
+                <li className="w-24">
+                  {format(timestamp.datetime, 'hh:mm a')}
+                </li>
+                <li className="w-64">
+                  <Link to={`/student/${timestamp.student._id}`}>
+                    {timestamp.student.name}
+                  </Link>
+                </li>
+                <li className="w-64">
+                  <Link to={`/club/${timestamp.club && timestamp.club._id}`}>
+                    {timestamp.club && timestamp.club.name}
+                  </Link>
+                </li>
+                <li className="w-8">{timestamp.fobStatus}</li>
+                <li
+                  className={`cursor-pointer text-lg text-red-200 font-bold -my-1 ml-auto hover:text-red-500 rounded`}
+                  onClick={() => deleteTimestamp(timestamp._id)}
+                >
+                  ×
+                </li>
+              </ul>
             </li>
           ))}
       </ul>
@@ -77,7 +80,6 @@ const mapStateToProps = state => {
       state.timestamp.items,
       state.timestamp.filter
     ),
-    isFetching: state.timestamp.isFetching,
     currentTimesheet: state.currentTimesheet
   };
 };

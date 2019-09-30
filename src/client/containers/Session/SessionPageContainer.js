@@ -16,7 +16,6 @@ import SessionHeader from '../../components/Session/SessionHeader';
 function SessionPage(props) {
   useEffect(() => {
     props.getCurrentSession(props.sessionId);
-    props.getSessionClubs(props.sessionId);
   }, []);
 
   if (!props.session) return null;
