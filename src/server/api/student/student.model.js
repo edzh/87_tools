@@ -33,7 +33,13 @@ const studentSchema = new mongoose.Schema({
   program: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'program'
-  }
+  },
+  sessions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'session'
+    }
+  ]
 });
 
 export const Student = mongoose.model('student', studentSchema);
