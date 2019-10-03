@@ -49,6 +49,7 @@ const testState = {
           name: 'Test Student 1'
         },
         club: null,
+        fobStatus: 'Damaged',
         timesheet: '5d8e56a84324b83a39602330',
         datetime: '2019-09-27T19:16:05.886Z',
         __v: 0
@@ -89,7 +90,7 @@ const testState = {
   }
 };
 
-test('will render list with data', async () => {
+test('will render list with data', () => {
   const { debug, findByText, getByText } = renderWithRedux(<TimestampList />, {
     initialState: testState
   });
@@ -97,6 +98,65 @@ test('will render list with data', async () => {
   expect(getByText(/Test Student 1/i).textContent).toBeTruthy();
   expect(getByText(/Fencing/i).textContent).toBeTruthy();
   expect(getByText(/03:16 pm/i).textContent).toBeTruthy();
+});
 
+test('will render loading with no data', () => {
+  const { debug, findByText, getByText } = renderWithRedux(<TimestampList />, {
+    initialState: {
+      currentTimesheet: {
+        isFetching: true
+      }
+    }
+  });
+
+  expect(getByText(/loading/i).textContent).toBeTruthy();
+});
+
+test('will render with lost filter', () => {
+  const { debug, getByTestId, getByText } = renderWithRedux(<TimestampList />, {
+    initialState: {
+      ...testState,
+      timestamp: {
+        items: [...testState.timestamp.items],
+        filter: 'SHOW_LOST'
+      }
+    }
+  });
+
+  const timestampList = getByTestId('timestamp-ul');
+
+  expect(timestampList.children.length).toBe(1);
+  expect(getByText(/Lost/i).textContent).toBeTruthy();
+});
+
+test('will render with damaged filter', () => {
+  const { debug, getByTestId, getByText } = renderWithRedux(<TimestampList />, {
+    initialState: {
+      ...testState,
+      timestamp: {
+        items: [...testState.timestamp.items],
+        filter: 'SHOW_DAMAGED'
+      }
+    }
+  });
+
+  const timestampList = getByTestId('timestamp-ul');
+
+  expect(timestampList.children.length).toBe(1);
+  expect(getByText(/Damaged/i).textContent).toBeTruthy();
+  debug();
+});
+
+test('will delete', () => {
+  const { debug, getByTestId, getByText } = renderWithRedux(<TimestampList />, {
+    initialState: testState
+  });
+
+  const timestampList = getByTestId('timestamp-ul');
+
+  fireEvent.click(getByText('×'));
+
+  expect(timestampList.children.length).toBe(1);
+  expect(getByText(/Damaged/i).textContent).toBeTruthy();
   debug();
 });

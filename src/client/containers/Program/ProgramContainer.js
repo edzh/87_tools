@@ -6,21 +6,7 @@ import { fetchPrograms, addProgram } from '../../actions/programActions';
 import { getCurrentSession } from '../../actions/sessionActions';
 import { updateUser } from '../../actions/userActions';
 
-import ProgramList from '../../components/Program/ProgramList';
-import ProgramForm from '../../components/Program/ProgramForm';
-
-function Program({ fetchPrograms, programs, user, updateUser, addProgram }) {
-  useEffect(() => {
-    fetchPrograms();
-  }, []);
-
-  return (
-    <div>
-      <ProgramList programs={programs} updateUser={updateUser} user={user} />
-      <ProgramForm user={user} addProgram={addProgram} />
-    </div>
-  );
-}
+import Program from '../../components/Program/Programs';
 
 const mapStateToProps = state => {
   return {
