@@ -16,7 +16,7 @@ export default function Program({
 
   return (
     <div>
-      <h1 className="text-xl">Programs</h1>
+      <h1 className="pg-header">Programs</h1>
       <ProgramList programs={programs} updateUser={updateUser} user={user} />
       <ProgramForm user={user} addProgram={addProgram} />
     </div>

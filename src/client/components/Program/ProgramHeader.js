@@ -6,7 +6,7 @@ import Navbar from './Navbar';
 export default function ProgramHeader({ currentProgram }) {
   return (
     <div>
-      <h2 className="text-lg">
+      <h2 className="pg-header">
         <NavLink to={`/program/${currentProgram.item._id}`}>
           {currentProgram.item.name}
         </NavLink>

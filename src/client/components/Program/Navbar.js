@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom';
 
 export default function Navbar({ currentProgram }) {
   return (
-    <ul className="flex">
+    <ul className="flex px-2 py-3 bg-gray-200 rounded-lg">
       <li>
         <NavLink
-          className="m-2 p-1 rounded"
+          className="px-2 py-1 mx-1 rounded"
           activeClassName="bg-blue-500 text-blue-100"
           to={`/program/${currentProgram.item._id}/students`}
         >
@@ -15,7 +15,7 @@ export default function Navbar({ currentProgram }) {
       </li>
       <li>
         <NavLink
-          className="m-2 p-1 rounded"
+          className="px-2 py-1 mx-1 rounded"
           activeClassName="bg-blue-500 text-blue-100"
           to={`/program/${currentProgram.item._id}/sessions`}
         >
@@ -24,7 +24,7 @@ export default function Navbar({ currentProgram }) {
       </li>
       <li>
         <NavLink
-          className="m-2 p-1 rounded"
+          className="px-2 py-1 mx-1 rounded"
           activeClassName="bg-blue-500 text-blue-100"
           to={`/program/${currentProgram.item._id}/families`}
         >
@@ -33,7 +33,7 @@ export default function Navbar({ currentProgram }) {
       </li>
       <li>
         <NavLink
-          className="m-2 p-1 rounded"
+          className="px-2 py-1 mx-1 rounded"
           activeClassName="bg-blue-500 text-blue-100"
           to={`/program/${currentProgram.item._id}/streamline`}
         >

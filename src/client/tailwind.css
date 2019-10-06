@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.pg-header {
+  @apply text-2xl font-bold py-4 text-gray-600;
+}
