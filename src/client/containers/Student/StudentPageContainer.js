@@ -14,7 +14,7 @@ import {
 
 import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
-import StudentDetails from '../../components/Student/StudentDetailsNew';
+import StudentDetails from '../../components/Student/StudentDetails';
 import EditStudent from '../../components/Student/EditStudentNew';
 import StudentFamily from '../../components/Student/StudentFamily';
 import StudentClubs from '../../components/Student/StudentClubs';
