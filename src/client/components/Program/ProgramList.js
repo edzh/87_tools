@@ -9,7 +9,7 @@ export default function ProgramList({ programs, updateUser, user }) {
         {programs.items.map(program => (
           <li key={program._id}>
             <Link
-              className="pt-2 pl-4 pb-8 my-2 mr-2 w-64 rounded hover:bg-blue-200 bg-blue-100 block text-blue-800 font-bold"
+              className="pt-2 pl-4 pb-8 my-2 mr-2 w-64 h-24 rounded hover:bg-blue-200 bg-blue-100 block text-blue-800 text-lg font-bold"
               onClick={() =>
                 updateUser({ ...user, currentProgram: program._id })
               }
@@ -20,7 +20,7 @@ export default function ProgramList({ programs, updateUser, user }) {
           </li>
         ))}
         <li>
-          <button className="text-5xl text-blue-800 hover:text-blue-700">
+          <button className="text-5xl h-24 text-blue-800 hover:text-blue-700">
             +
           </button>
         </li>
