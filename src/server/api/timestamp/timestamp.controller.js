@@ -21,6 +21,7 @@ export const getOne = async (req, res) => {
 export const getMany = async (req, res) => {
   try {
     const timestamps = await Timestamp.find(req.query)
+      .sort({ datetime: -1 })
       .lean()
       .exec();
 
