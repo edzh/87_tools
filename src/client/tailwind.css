@@ -5,3 +5,12 @@
 .pg-header {
   @apply text-2xl font-bold py-4 text-gray-600;
 }
+
+.btn {
+  @apply bg-blue-500 text-white font-bold rounded block px-2 py-1;
+}
+
+.form {
+  @apply border border-gray-200 rounded py-1 px-2 mb-2 block;
+}
+@tailwind screens;

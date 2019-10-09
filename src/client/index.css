@@ -7159,6 +7159,30 @@ video {
   color: #718096;
 }
 
+.btn {
+  background-color: #4299e1;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 0.25rem;
+  display: block;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.form {
+  border-width: 1px;
+  border-color: #edf2f7;
+  border-radius: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
 @media (min-width: 576px) {
   .sm\:sr-only {
     position: absolute;

@@ -5,7 +5,7 @@ import { apiUrl } from 'config';
 
 export default function ProgramForm(props) {
   return (
-    <div className="bg-gray-100 w-64 rounded p-4">
+    <div className="bg-gray-100 w-64 shadow rounded p-4">
       <Formik
         initialValues={{
           programName: ''
@@ -23,12 +23,9 @@ export default function ProgramForm(props) {
             <Field
               name="programName"
               placeholder="Program Name"
-              className="p-2 mb-2 rounded w-full"
+              className="form"
             />
-            <button
-              className="bg-blue-200 text-blue-800 p-1 rounded ml-auto block"
-              type="submit"
-            >
+            <button className="btn hover:bg-blue-400" type="submit">
               Submit
             </button>
           </Form>

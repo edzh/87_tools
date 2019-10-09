@@ -30,9 +30,9 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
   }
 
   return (
-    <div className="rounded shadow">
-      <div className="flex border-b bg-gray-800 w-full rounded-t">
-        <h2 className="m-4 font-normal text-white">{student.name}</h2>
+    <div className="">
+      <div className="flex">
+        <h2 className="pg-header">{student.name}</h2>
         <button
           className={`${
             editPin ? 'bg-blue-500 text-white' : 'bg-white'
@@ -42,7 +42,7 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
           Edit
         </button>
       </div>
-      <div>
+      <div className="bg-gray-100">
         <div className="m-4 flex">
           <h3 className="w-32 text-xl">Grade</h3>
           <p className="text-xl">{intToGrade[student.grade]}</p>

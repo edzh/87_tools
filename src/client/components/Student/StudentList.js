@@ -3,15 +3,18 @@ import { Link } from 'react-router-dom';
 
 export default function Student(props) {
   return (
-    <ul className="overflow-auto" style={{ height: '360px' }}>
+    <ul
+      className="overflow-auto pr-4 border-t border-b border-gray-200 rounded"
+      style={{ height: '360px' }}
+    >
       {props.students.items &&
         props.students.items.map((student, index) => (
           <li
-            className="border-b hover:bg-gray-100 p-1 border-gray-600"
+            className="mb-2 rounded border border-gray-200 bg-gray-100 px-2 py-1"
             key={student._id}
           >
             <Link
-              className="text-blue-600 hover:text-blue-400"
+              className="text-blue-600 text-sm hover:text-blue-400"
               to={`/student/${student._id}`}
             >
               {student.name}
