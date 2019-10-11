@@ -8,7 +8,7 @@ export default function Program({
   programs,
   user,
   updateUser,
-  addProgram
+  ...props
 }) {
   useEffect(() => {
     fetchPrograms();
@@ -17,8 +17,12 @@ export default function Program({
   return (
     <div>
       <h1 className="pg-header">Programs</h1>
-      <ProgramList programs={programs} updateUser={updateUser} user={user} />
-      <ProgramForm user={user} addProgram={addProgram} />
+      <ProgramList
+        {...props}
+        programs={programs}
+        updateUser={updateUser}
+        user={user}
+      />
     </div>
   );
 }

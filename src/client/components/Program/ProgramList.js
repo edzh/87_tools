@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
+import ProgramForm from './ProgramForm';
 
-export default function ProgramList({ programs, updateUser, user }) {
+export default function ProgramList({
+  programs,
+  updateUser,
+  user,
+  addProgram
+}) {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <div>
-      <ul className="flex">
+      <ul className="flex flex-wrap">
         {programs.items.map(program => (
           <li key={program._id}>
             <Link
@@ -19,11 +27,25 @@ export default function ProgramList({ programs, updateUser, user }) {
             </Link>
           </li>
         ))}
-        <li>
-          <button className="text-5xl h-24 text-blue-500 hover:text-blue-400">
-            +
-          </button>
-        </li>
+
+        {showForm ? (
+          <li className="h-24">
+            <ProgramForm
+              user={user}
+              addProgram={addProgram}
+              setShowForm={setShowForm}
+            />
+          </li>
+        ) : (
+          <li>
+            <button
+              onClick={() => setShowForm(true)}
+              className="text-5xl h-24 text-blue-500 hover:text-blue-400"
+            >
+              +
+            </button>
+          </li>
+        )}
       </ul>
     </div>
   );

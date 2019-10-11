@@ -20,7 +20,7 @@ function Dashboard({
   }, []);
 
   if (!(students.items && families.items && sessions.items)) {
-    return <div>Loading</div>;
+    return <div className="p-2">Loading...</div>;
   }
 
   return (

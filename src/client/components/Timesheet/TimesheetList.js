@@ -5,7 +5,7 @@ import TimesheetListRow from './TimesheetListRow';
 
 export default function TimesheetList({ timesheets }) {
   if (timesheets.isFetching && !timesheets.items) {
-    return <p>Loading...</p>;
+    return <div>Loading...</div>;
   }
 
   let indexedTimesheets;

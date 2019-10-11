@@ -16,7 +16,6 @@ function Session(props) {
 
   return (
     <div>
-      <MainDetailsHeader>Sessions</MainDetailsHeader>
       <SessionList sessions={props.sessions} />
       <SessionForm programId={props.programId} addSession={props.addSession} />
     </div>

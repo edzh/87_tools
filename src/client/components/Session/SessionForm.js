@@ -5,7 +5,7 @@ import { apiUrl } from 'config';
 
 export default function SessionForm(props) {
   return (
-    <div>
+    <div className="p-8 w-64 mt-2 form">
       <Formik
         initialValues={{
           sessionName: '',
@@ -24,10 +24,27 @@ export default function SessionForm(props) {
       >
         {() => (
           <Form>
-            <Field name="sessionName" className="p-2 my-2 border rounded" />
-            <Field name="start" className="p-2 my-2 border rounded" />
-            <Field name="end" className="p-2 my-2 border rounded" />
-            <button type="submit">Submit</button>
+            <label htmlFor="sessionName"></label>
+            <Field
+              name="sessionName"
+              placeholder="Session Name"
+              className="form-input w-full"
+            />
+            <label htmlFor="start"></label>
+            <Field
+              name="start"
+              placeholder="Start Date"
+              className="form-input w-full"
+            />
+            <label htmlFor="end"></label>
+            <Field
+              name="end"
+              placeholder="End Date"
+              className="form-input w-full"
+            />
+            <button className="btn" type="submit">
+              Submit
+            </button>
           </Form>
         )}
       </Formik>

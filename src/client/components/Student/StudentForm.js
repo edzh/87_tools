@@ -3,7 +3,7 @@ import { Formik, Field, Form } from 'formik';
 
 export default function StudentForm(props) {
   return (
-    <div className="p-8 shadow mt-2 w-64 rounded">
+    <div className="p-8 form mt-2 w-64 rounded">
       <Formik
         initialValues={{
           studentName: '',
@@ -25,13 +25,13 @@ export default function StudentForm(props) {
             <Field
               name="studentName"
               placeholder="Name"
-              className="border border-gray-400 rounded py-1 px-2 my-2 block"
+              className="form-input py-1 px-2 my-2"
             />
             <label htmlFor="grade"></label>
             <Field
               name="grade"
               component="select"
-              className="border text-sm border-gray-400 rounded p-1 my-2 block"
+              className="p-1 my-2 form-input"
             >
               <option value="">---</option>
               <option value="0">K</option>
@@ -45,7 +45,7 @@ export default function StudentForm(props) {
             <Field
               name="pin"
               placeholder="PIN"
-              className="border border-gray-400 rounded py-1 px-2 my-2 block"
+              className="form-input py-1 px-2 my-2"
             />
             <div className="flex"></div>
             <button type="submit" className="btn">

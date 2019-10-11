@@ -22,7 +22,7 @@ function TimestampList({
   }, [currentTimesheet.item]);
 
   if (!currentTimesheet.item || currentTimesheet.isFetching) {
-    return <p data-testid="load">Loading...</p>;
+    return <div data-testid="load">Loading...</div>;
   }
 
   return (

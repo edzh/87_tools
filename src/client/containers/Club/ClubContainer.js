@@ -14,7 +14,7 @@ function Club(props) {
   }, []);
 
   if (!props.clubs) {
-    return <p>Loading</p>;
+    return <div>Loading...</div>;
   }
 
   return (
