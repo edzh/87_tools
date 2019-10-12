@@ -41,7 +41,7 @@ function ManualEntry({
         onChange={e => setQuery(e.target.value)}
         value={query}
       />
-      <div className="overflow-auto h-64">
+      <div className="overflow-auto bg-white h-64">
         {filteredSuggestions.length !== 0 ? (
           filteredSuggestions.map((student, index) => (
             <div
@@ -78,7 +78,7 @@ function ManualEntry({
             </div>
           ))
         ) : (
-          <div className="bg-gray-100 h-full">
+          <div className="bg-gray-200 h-full">
             <p className="text-center text-gray-500 pt-8">Type to search</p>
           </div>
         )}

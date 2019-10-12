@@ -7,6 +7,8 @@ import {
   getProgramSessions
 } from '../../actions/programActions';
 
+import Chart from '../../components/Dashboard/Chart';
+
 function Dashboard({
   programId,
   getAllProgramData,
@@ -37,6 +39,7 @@ function Dashboard({
         <div className="w-32 font-bold text-gray-800 text-lg">Sessions</div>
         <div className="w-10 text-lg">{sessions.items.length}</div>
       </div>
+      {/*<Chart />*/}
     </div>
   );
 }

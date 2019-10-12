@@ -10,7 +10,6 @@ export default function ClubList(props) {
 
   return (
     <div className="border shadow-md">
-      <MainDetailsHeader>Clubs</MainDetailsHeader>
       <div className="flex w-full">
         {daysOfWeek.map(weekDay => (
           <div
