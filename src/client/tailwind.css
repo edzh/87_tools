@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .pg-header {
-  @apply text-2xl font-bold py-4 text-gray-600;
+  @apply text-2xl font-bold py-4 text-gray-700;
 }
 
 .btn {
@@ -15,6 +15,6 @@
 }
 
 .form {
-  @apply bg-gray-200 rounded shadow border border-gray-400;
+  @apply bg-white rounded shadow border border-gray-400;
 }
 @tailwind screens;

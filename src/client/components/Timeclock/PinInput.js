@@ -10,7 +10,7 @@ export default function PinInput({
   pinInputRef
 }) {
   return (
-    <div className="p-4 border rounded shadow-md">
+    <div className="p-4 border rounded bg-white shadow-md">
       <h2 className="mb-4 font-normal">Timeclock</h2>
       <Formik
         initialValues={{

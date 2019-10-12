@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function Navbar({ currentProgram }) {
   return (
-    <ul className="flex px-2 py-2 bg-gray-200 rounded-lg">
+    <ul className="flex px-2 py-2 bg-white border border-gray-400 rounded">
       <li>
         <NavLink
           className="px-2 py-2 mx-1"

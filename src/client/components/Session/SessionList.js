@@ -7,10 +7,13 @@ import { format } from 'date-fns';
 export default props => {
   return (
     <div>
-      <ul className="">
+      <ul className="bg-gray-100 border-t border-b border-gray-400">
         {props.sessions.items &&
           props.sessions.items.map(session => (
-            <li className="flex p-2 hover:bg-gray-100" key={session._id}>
+            <li
+              className="flex border my-2 border-gray-400 rounded p-2 bg-white"
+              key={session._id}
+            >
               <div className="w-64">
                 <Link
                   className="text-blue-500 hover:text-blue-400"

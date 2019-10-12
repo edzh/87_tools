@@ -24,7 +24,7 @@ function Dashboard({
   }
 
   return (
-    <div className="bg-gray-100 w-48 p-2 my-2 rounded border border-gray-200">
+    <div className="bg-white w-48 p-2 my-2 rounded border border-gray-400">
       <div className="flex">
         <div className="w-32 font-bold text-gray-800 text-lg">Students</div>
         <div className="w-10 text-lg">{students.items.length}</div>

@@ -116,7 +116,7 @@ function Timeclock({
 
   return (
     <div className="flex">
-      <div className="w-1/3">
+      <div className="w-1/3 mr-2">
         <PinInput
           submitPinTimestamp={submitPinTimestamp}
           addTimestampFailure={addTimestampFailure}

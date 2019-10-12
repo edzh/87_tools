@@ -22,7 +22,7 @@ function SessionPage(props) {
 
   return (
     <div>
-      <SessionHeader sessionId={props.sessionId} />
+      <SessionHeader sessionId={props.sessionId} session={props.session} />
       {props.routes.map(route => (
         <RouteWithSubroutes key={route.path} {...route} />
       ))}
