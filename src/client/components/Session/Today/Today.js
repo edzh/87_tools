@@ -56,27 +56,31 @@ export default function Today({
         {format(date, 'dddd, MMMM DD, YYYY')}
       </h2>
       <div className="flex">
-        <div className="mr-4 overflow-auto p-2" style={{ height: '360px' }}>
-          <h3 className="font-bold">Absent</h3>
-          {absentStudents.map(student => (
-            <div key={student._id} className="flex">
-              <div className="w-64">{student.name}</div>
-              <div>
-                {student.currentClubs.find(club => club.day === day).name}
+        <div className="mr-4 p-2">
+          <h3 className="font-bold">Absent {absentStudents.length}</h3>
+          <div className="overflow-auto" style={{ height: '360px' }}>
+            {absentStudents.map(student => (
+              <div key={student._id} className="flex">
+                <div className="w-64">{student.name}</div>
+                <div>
+                  {student.currentClubs.find(club => club.day === day).name}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-        <div className="overflow-auto p-2" style={{ height: '360px' }}>
-          <h3 className="font-bold">Present</h3>
-          {signedInStudents.map(student => (
-            <div key={student._id} className="flex">
-              <div className="w-64">{student.name}</div>
-              <div>
-                {student.currentClubs.find(club => club.day === day).name}
+        <div className="p-2">
+          <h3 className="font-bold">Present {signedInStudents.length}</h3>
+          <div className="overflow-auto" style={{ height: '360px' }}>
+            {signedInStudents.map(student => (
+              <div key={student._id} className="flex">
+                <div className="w-64">{student.name}</div>
+                <div>
+                  {student.currentClubs.find(club => club.day === day).name}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
