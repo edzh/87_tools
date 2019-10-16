@@ -9,9 +9,10 @@ export default function Today({
   getDateTimesheetTimestamps
 }) {
   const [day, setDay] = useState(+format(new Date(), 'd'));
-  // const [date, setDate] = useState(format(new Date(), 'YYYY-MM-DDT') + '04:00:00Z')
-  const [date, setDate] = useState('2019-09-24T04:00:00Z');
-  console.log(date);
+  const [date, setDate] = useState(
+    format(new Date(), 'YYYY-MM-DDT') + '04:00:00Z'
+  );
+  // const [date, setDate] = useState('2019-09-24T04:00:00Z');
 
   useEffect(() => {
     programId && getProgramStudents(programId);
@@ -54,7 +55,7 @@ export default function Today({
       <h2 className="p-2 text-xl font-bold">
         {format(date, 'dddd, MMMM DD, YYYY')}
       </h2>
-      <div className="flex p-2">
+      <div className="flex">
         <div className="mr-4 overflow-auto p-2" style={{ height: '360px' }}>
           <h3 className="font-bold">Absent</h3>
           {absentStudents.map(student => (
