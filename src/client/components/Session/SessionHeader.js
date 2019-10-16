@@ -20,6 +20,13 @@ export default function ProgramHeader({ sessionId, session }) {
           <NavLink
             className="px-2 py-2 mx-1"
             activeClassName="border-b-2 border-blue-400"
+            to={`/session/${sessionId}/today`}
+          >
+            Today
+          </NavLink>
+          <NavLink
+            className="px-2 py-2 mx-1"
+            activeClassName="border-b-2 border-blue-400"
             to={`/session/${sessionId}/clubs`}
           >
             Clubs

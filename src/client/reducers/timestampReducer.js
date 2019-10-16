@@ -23,6 +23,12 @@ export default function timestamps(state = initialState, action) {
         isFetching: false,
         signin: action.timestamps
       };
+    case 'GET_SIGNOUT_TIMESHEET_TIMESTAMPS_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        signout: action.timestamps
+      };
     case 'ADD_TIMESTAMP_SUCCESS':
       return {
         ...state,

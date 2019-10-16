@@ -8,7 +8,7 @@ import { getCurrentTimesheet } from '../../actions/timesheetActions';
 import {
   addTimestamp,
   addTimestampFailure,
-  getSigninTimesheetTimestamps
+  getDateTimesheetTimestamps
 } from '../../actions/timeclockActions';
 
 import TimestampList from './TimestampList';
@@ -21,7 +21,7 @@ import TimesheetHeader from '../../components/Timeclock/TimesheetHeader';
 
 function Timeclock({
   getCurrentTimesheet,
-  getSigninTimesheetTimestamps,
+  getDateTimesheetTimestamps,
   currentTimesheet,
   addTimestamp,
   addTimestampFailure,
@@ -38,7 +38,7 @@ function Timeclock({
 
   useEffect(() => {
     if (currentTimesheet.item && currentTimesheet.item.io === 'out')
-      getSigninTimesheetTimestamps(currentTimesheet.item.date);
+      getDateTimesheetTimestamps(currentTimesheet.item.date, 'in');
   }, [currentTimesheet.isFetching]);
 
   async function submitPinTimestamp(pin, fobStatus) {
@@ -164,8 +164,8 @@ const mapDispatchToProps = dispatch => {
     getCurrentTimesheet: timesheetId => {
       dispatch(getCurrentTimesheet(timesheetId));
     },
-    getSigninTimesheetTimestamps: date => {
-      dispatch(getSigninTimesheetTimestamps(date));
+    getDateTimesheetTimestamps: (date, io) => {
+      dispatch(getDateTimesheetTimestamps(date, io));
     }
   };
 };

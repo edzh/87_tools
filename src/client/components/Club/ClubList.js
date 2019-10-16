@@ -9,7 +9,7 @@ export default function ClubList(props) {
   const [day, setDay] = useState(1);
 
   return (
-    <div className="border shadow-md">
+    <div className="border shadow bg-white mt-2">
       <div className="flex w-full">
         {daysOfWeek.map(weekDay => (
           <div

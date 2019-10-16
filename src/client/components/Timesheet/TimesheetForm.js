@@ -5,7 +5,7 @@ import { Formik, Form, Field } from 'formik';
 
 export default function Timesheet({ currentSession, addTimesheet }) {
   return (
-    <div className="p-8 form ml-auto">
+    <div className="p-8 form ml-2">
       <h3 className="mb-2 text-lg font-bold">New Timesheet</h3>
       <Formik
         initialValues={{
@@ -29,7 +29,7 @@ export default function Timesheet({ currentSession, addTimesheet }) {
               <option value="in">Sign in</option>
               <option value="out">Sign out</option>
             </Field>
-            <button className="btn" type="submit">
+            <button className="btn hover:bg-blue-400" type="submit">
               Submit
             </button>
           </Form>

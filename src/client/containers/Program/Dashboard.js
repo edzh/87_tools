@@ -26,18 +26,20 @@ function Dashboard({
   }
 
   return (
-    <div className="bg-white w-48 p-2 my-2 rounded border border-gray-400">
-      <div className="flex">
-        <div className="w-32 font-bold text-gray-800 text-lg">Students</div>
-        <div className="w-10 text-lg">{students.items.length}</div>
-      </div>
-      <div className="flex">
-        <div className="w-32 font-bold text-gray-800 text-lg">Families</div>
-        <div className="w-10 text-lg">{families.items.length}</div>
-      </div>
-      <div className="flex">
-        <div className="w-32 font-bold text-gray-800 text-lg">Sessions</div>
-        <div className="w-10 text-lg">{sessions.items.length}</div>
+    <div>
+      <div className="bg-white w-48 p-2 my-2 rounded border border-gray-400">
+        <div className="flex">
+          <div className="w-32 font-bold text-gray-800 text-lg">Students</div>
+          <div className="w-10 text-lg">{students.items.length}</div>
+        </div>
+        <div className="flex">
+          <div className="w-32 font-bold text-gray-800 text-lg">Families</div>
+          <div className="w-10 text-lg">{families.items.length}</div>
+        </div>
+        <div className="flex">
+          <div className="w-32 font-bold text-gray-800 text-lg">Sessions</div>
+          <div className="w-10 text-lg">{sessions.items.length}</div>
+        </div>
       </div>
       {/*<Chart />*/}
     </div>

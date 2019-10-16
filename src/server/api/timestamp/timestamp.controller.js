@@ -96,12 +96,30 @@ export const removeOne = async (req, res) => {
   }
 };
 
+export const getWeek = async (req, res) => {
+  try {
+    const date = new Date(req.params.date);
+    const weekLater = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+    console.log(date, weekLater);
+
+    const timestamps = await Timestamp.find({
+      datetime: { $gte: date, $lt: weekLater }
+    }).populate('timesheet');
+
+    return res.status(200).json({ data: timestamps });
+  } catch (e) {
+    console.error(e);
+    res.status(400).end();
+  }
+};
+
 const controller = {
   getOne,
   getMany,
   createOne,
   updateOne,
-  removeOne
+  removeOne,
+  getWeek
 };
 
 export default controller;

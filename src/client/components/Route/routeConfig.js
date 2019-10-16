@@ -22,6 +22,7 @@ import ProgramPage from '../../containers/Program/ProgramPageContainer';
 
 import Session from '../../containers/Session/SessionContainer';
 import SessionPage from '../../containers/Session/SessionPageContainer';
+import Today from '../../containers/Session/Today/TodayContainer';
 
 import SignIn from '../../containers/SignInContainer';
 import SignUp from '../../containers/SignUpContainer';
@@ -123,6 +124,11 @@ const routes = [
     auth: false,
     component: SessionPage,
     routes: [
+      {
+        path: '/session/:id/today',
+        exact: true,
+        component: Today
+      },
       {
         path: '/session/:id/clubs',
         exact: true,
