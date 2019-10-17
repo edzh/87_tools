@@ -41,6 +41,13 @@ export default function Today({
     );
   });
 
+  const signedOutStudents = signedInStudents.filter(student => {
+    return (
+      timestamp.signout &&
+      !!timestamp.signout.find(t => t.student._id === student._id)
+    );
+  });
+
   const absentStudents = todayStudents
     .filter(student => {
       return (
@@ -49,6 +56,12 @@ export default function Today({
       );
     })
     .filter(student => student.grade !== 0);
+
+  const dropInStudents = timestamp.signin.filter(t => {
+    return !signedInStudents.find(s => s.student._id === t.student._id);
+  });
+
+  console.log(dropInStudents);
 
   return (
     <div>
