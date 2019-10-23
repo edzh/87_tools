@@ -26,6 +26,8 @@ export default function Today({
     getDateTimesheetTimestamps(date, 'out');
   }, []);
 
+  // const createL
+
   const todayStudents = students.items.filter(student => {
     let exists = false;
     student.currentClubs.forEach(club => {
@@ -34,14 +36,23 @@ export default function Today({
     return exists;
   });
 
-  const signedInStudents = todayStudents.filter(student => {
-    return (
-      timestamp.signin &&
-      !!timestamp.signin.find(t => t.student._id === student._id)
-    );
-  });
+  const presentStudents = todayStudents
+    .filter(student => {
+      return (
+        timestamp.signin &&
+        !!timestamp.signin.find(t => t.student._id === student._id)
+      );
+    })
+    .sort((a, b) => {
+      const clubA = a.currentClubs.find(club => club.day === day).name;
+      const clubB = b.currentClubs.find(club => club.day === day).name;
 
-  const signedOutStudents = signedInStudents.filter(student => {
+      if (clubA < clubB) return -1;
+      if (clubA > clubB) return 1;
+      return 0;
+    });
+
+  const signedOutStudents = presentStudents.filter(student => {
     return (
       timestamp.signout &&
       !!timestamp.signout.find(t => t.student._id === student._id)
@@ -55,13 +66,28 @@ export default function Today({
         !timestamp.signin.find(t => t.student._id === student._id)
       );
     })
-    .filter(student => student.grade !== 0);
+    .filter(student => student.grade !== 0)
+    .sort((a, b) => {
+      const clubA = a.currentClubs.find(club => club.day === day).name;
+      const clubB = b.currentClubs.find(club => club.day === day).name;
 
-  const dropInStudents = timestamp.signin.filter(t => {
-    return !signedInStudents.find(s => s.student._id === t.student._id);
-  });
+      if (clubA < clubB) return -1;
+      if (clubA > clubB) return 1;
+      return 0;
+    });
 
-  console.log(dropInStudents);
+  const dropInStudents =
+    timestamp.signin &&
+    timestamp.signin
+      .filter(t => t.club === null)
+      .sort((a, b) => {
+        const clubA = a.student.name;
+        const clubB = b.student.name;
+
+        if (clubA < clubB) return -1;
+        if (clubA > clubB) return 1;
+        return 0;
+      });
 
   return (
     <div>
@@ -73,9 +99,9 @@ export default function Today({
           <h3 className="font-bold">Absent {absentStudents.length}</h3>
           <div className="overflow-auto" style={{ height: '360px' }}>
             {absentStudents.map(student => (
-              <div key={student._id} className="flex">
+              <div key={student._id} className="flex text-sm">
                 <div className="w-64">{student.name}</div>
-                <div>
+                <div className="w-64">
                   {student.currentClubs.find(club => club.day === day).name}
                 </div>
               </div>
@@ -83,16 +109,27 @@ export default function Today({
           </div>
         </div>
         <div className="p-2">
-          <h3 className="font-bold">Present {signedInStudents.length}</h3>
+          <h3 className="font-bold">Present {presentStudents.length}</h3>
           <div className="overflow-auto" style={{ height: '360px' }}>
-            {signedInStudents.map(student => (
-              <div key={student._id} className="flex">
+            {presentStudents.map(student => (
+              <div key={student._id} className="flex text-sm">
                 <div className="w-64">{student.name}</div>
-                <div>
+                <div className="w-64">
                   {student.currentClubs.find(club => club.day === day).name}
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+        <div className="p-2">
+          <h3 className="font-bold">Drop-In</h3>
+          <div className="overflow-auto" style={{ height: '360px' }}>
+            {dropInStudents &&
+              dropInStudents.map(timestamp => (
+                <div key={timestamp.student._id} className="flex text-sm">
+                  <div className="w-64">{timestamp.student.name}</div>
+                </div>
+              ))}
           </div>
         </div>
       </div>
