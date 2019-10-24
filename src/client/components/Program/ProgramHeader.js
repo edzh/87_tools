@@ -3,15 +3,15 @@ import { NavLink } from 'react-router-dom';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
 import Navbar from './Navbar';
 
-export default function ProgramHeader({ currentProgram }) {
+export default function ProgramHeader({ currentProgram, programId }) {
   return (
     <div>
       <h2 className="pg-header">
-        <NavLink to={`/program/${currentProgram.item._id}`}>
+        <NavLink to={`/program/${programId}`}>
           {currentProgram.item.name}
         </NavLink>
       </h2>
-      <Navbar currentProgram={currentProgram} />
+      <Navbar programId={programId} />
     </div>
   );
 }

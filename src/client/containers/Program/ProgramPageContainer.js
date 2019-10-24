@@ -18,7 +18,10 @@ function ProgramPage(props) {
 
   return (
     <div>
-      <ProgramHeader currentProgram={props.currentProgram} />
+      <ProgramHeader
+        programId={props.programId}
+        currentProgram={props.currentProgram}
+      />
       <Dashboard programId={props.programId} />
       {props.routes.map(route => (
         <RouteWithSubroutes key={route.path} {...route} />

@@ -1,14 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export default function Navbar({ currentProgram }) {
+export default function Navbar({ programId }) {
   return (
     <ul className="flex px-2 py-2 bg-white border border-gray-400 rounded">
       <li>
         <NavLink
           className="px-2 py-2 mx-1"
           activeClassName="border-b-2 border-blue-400"
-          to={`/program/${currentProgram.item._id}/students`}
+          to={`/program/${programId}/students`}
         >
           Students
         </NavLink>
@@ -17,7 +17,7 @@ export default function Navbar({ currentProgram }) {
         <NavLink
           className="px-2 py-2 mx-1"
           activeClassName="border-b-2 border-blue-400"
-          to={`/program/${currentProgram.item._id}/sessions`}
+          to={`/program/${programId}/sessions`}
         >
           Sessions
         </NavLink>
@@ -26,7 +26,7 @@ export default function Navbar({ currentProgram }) {
         <NavLink
           className="px-2 py-2 mx-1"
           activeClassName="border-b-2 border-blue-400"
-          to={`/program/${currentProgram.item._id}/families`}
+          to={`/program/${programId}/families`}
         >
           Families
         </NavLink>
