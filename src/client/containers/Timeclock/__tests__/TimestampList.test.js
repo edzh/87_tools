@@ -32,7 +32,7 @@ const testState = {
   currentTimesheet: {
     isFetching: false,
     item: {
-      date: '2019-09-27T04:00:00.000Z',
+      date: '2019-09-27T05:00:00.000Z',
       io: 'in',
       program: '5d703251a4034f37a4ff3469',
       session: '5d70341fa4034f37a4ff346b',
