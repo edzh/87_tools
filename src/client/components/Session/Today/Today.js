@@ -10,7 +10,7 @@ export default function Today({
 }) {
   const [day, setDay] = useState(+format(new Date(), 'd'));
   const [date, setDate] = useState(
-    format(new Date(), 'YYYY-MM-DDT') + '04:00:00Z'
+    format(new Date(), 'YYYY-MM-DDT') + '05:00:00Z'
   );
   // const [date, setDate] = useState('2019-09-24T04:00:00Z');
 

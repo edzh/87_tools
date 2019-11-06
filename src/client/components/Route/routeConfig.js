@@ -82,13 +82,13 @@ const routes = [
   },
   {
     path: '/program',
-    auth: false,
+    auth: true,
     exact: true,
     component: Program
   },
   {
     path: '/program/:id',
-    auth: false,
+    auth: true,
     component: ProgramPage,
     routes: [
       {
