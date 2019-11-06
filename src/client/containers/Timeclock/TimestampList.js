@@ -68,6 +68,10 @@ function getFilteredTimestamps(timestamps, filter) {
       return timestamps.filter(timestamp => timestamp.fobStatus === 'Lost');
     case 'SHOW_DAMAGED':
       return timestamps.filter(timestamp => timestamp.fobStatus === 'Damaged');
+    case 'SHOW_HOME':
+      return timestamps.filter(timestamp => timestamp.fobStatus === 'Home');
+    case 'SHOW_DNF':
+      return timestamps.filter(timestamp => timestamp.fobStatus === 'DNF');
     default:
       throw new Error('Unknown filter: ' + filter);
   }

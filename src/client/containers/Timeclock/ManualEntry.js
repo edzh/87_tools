@@ -74,6 +74,14 @@ function ManualEntry({
                 >
                   Damaged
                 </button>
+                <button
+                  className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
+                  onClick={() => {
+                    submitPinTimestamp(student.pin, 'DNF');
+                  }}
+                >
+                  DNF
+                </button>
               </p>
             </div>
           ))

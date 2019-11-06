@@ -37,7 +37,9 @@ export default function timestamps(state = initialState, action) {
         items: [action.timestamp, ...state.items],
         alert: {
           type: 'success',
-          message: `${action.timestamp.student.name} has been signed in!`
+          message: `${action.timestamp.student.name} has been signed ${
+            action.timestamp.pickup ? 'out' : 'in'
+          }!`
         }
       };
     case 'ADD_TIMESTAMP_FAILURE':
