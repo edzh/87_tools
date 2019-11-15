@@ -17,7 +17,11 @@ const familySchema = new mongoose.Schema({
       name: String,
       pin: Number
     }
-  ]
+  ],
+  program: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'program'
+  }
 });
 
 familySchema.index({ pickups: 'text' });

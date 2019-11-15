@@ -25,7 +25,7 @@ function StudentClubs({
   }, [currentStudent.isFetching]);
 
   useEffect(() => {
-    currentSession.item && getSessionClubs(currentSession.item._id);
+    currentSession.item._id && getSessionClubs(currentSession.item._id);
   }, [currentSession.isFetching]);
 
   if (!currentStudent.item) return null;
@@ -40,6 +40,7 @@ function StudentClubs({
         getSessionClubs={getSessionClubs}
         currentStudent={currentStudent}
         updateCurrentStudent={updateCurrentStudent}
+        currentSession={currentSession}
       />
     </div>
   );

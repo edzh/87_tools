@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
+
 import SessionForm from './SessionForm';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
-import { format } from 'date-fns';
+import DefaultSessionButton from '../../containers/Session/DefaultSessionButton';
 
 export default props => {
   return (
@@ -26,6 +28,7 @@ export default props => {
                 {format(session.start, 'MMM DD YYYY')} -{' '}
                 {format(session.end, 'MMM DD YYYY')}
               </div>
+              <DefaultSessionButton sessionId={session._id} />
             </li>
           ))}
       </ul>

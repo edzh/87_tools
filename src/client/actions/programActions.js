@@ -185,3 +185,21 @@ export function getProgramFamilies(programId) {
       });
   };
 }
+
+export function updateCurrentProgram(program) {
+  return dispatch => {
+    dispatch(currentProgramRequest());
+    return fetch(`${apiUrl}/api/program/${program._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(program)
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(currentProgramSuccess(json.data));
+      });
+  };
+}

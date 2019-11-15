@@ -23,7 +23,7 @@ const intToDay = [
 ];
 
 export default function StudentDetails({ updateCurrentStudent, student }) {
-  const [editPin, setEditPin] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   if (!student) {
     return null;
@@ -35,9 +35,9 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
         <h2 className="pg-header">{student.name}</h2>
         <button
           className={`${
-            editPin ? 'bg-blue-500 text-white' : 'bg-white'
+            edit ? 'bg-blue-500 text-white' : 'bg-white'
           } m-4 ml-auto text-xs border rounded shadow p-1`}
-          onClick={() => setEditPin(!editPin)}
+          onClick={() => setEdit(!edit)}
         >
           Edit
         </button>
@@ -50,23 +50,38 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
         <div className="m-4 flex">
           <h3 className="w-32 text-xl">PIN</h3>
 
-          {editPin ? (
+          {edit ? (
             <Formik
               initialValues={{
                 studentName: student.name,
+                grade: student.grade,
                 pin: student.pin
               }}
               onSubmit={values => {
                 updateCurrentStudent({
                   ...student,
                   name: values.studentName,
+                  grade: values.grade,
                   pin: values.pin
                 });
+                setEdit(false);
               }}
             >
               {() => (
                 <Form>
                   <Field name="studentName" className="border rounded" />
+                  <Field
+                    component="select"
+                    name="grade"
+                    className="border rounded"
+                  >
+                    <option value="0">Kindergarten</option>
+                    <option value="1">1st Grade</option>
+                    <option value="2">2nd Grade</option>
+                    <option value="3">3rd Grade</option>
+                    <option value="4">4th Grade</option>
+                    <option value="5">5th Grade</option>
+                  </Field>
                   <Field name="pin" className="border rounded" />
                   <button type="submit">Submit</button>
                 </Form>
@@ -77,6 +92,7 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
           )}
         </div>
       </div>
+      <h2 className="font-bold text-xl">Family</h2>
       <EditStudentFamily student={student} />
       {student.family && (
         <div className="m-4">
@@ -94,6 +110,7 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
           ))}
         </div>
       )}
+      <h2 className="text-xl font-bold my-2">Clubs</h2>
       <div className="p-4">
         {student.currentClubs &&
           student.currentClubs.map((club, index) => (

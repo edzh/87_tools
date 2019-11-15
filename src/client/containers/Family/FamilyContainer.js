@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getProgramFamilies } from '../../actions/programActions';
 
 import FamilyList from '../../components/Family/FamilyList';
+import FamilyForm from '../../components/Family/FamilyForm';
 
 function Family(props) {
   useEffect(() => {
@@ -14,11 +15,7 @@ function Family(props) {
   return (
     <div>
       <FamilyList families={props.families} />
-      <Link to="/family/new">
-        <button className="p-2 my-2 w-full text-xl shadow bg-blue-500 text-white hover:bg-gray-100 hover:text-blue-500 text-center no-underline border rounded">
-          Create Family
-        </button>
-      </Link>
+      <FamilyForm programId={props.programId} />
     </div>
   );
 }

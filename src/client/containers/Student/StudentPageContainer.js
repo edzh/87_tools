@@ -47,6 +47,7 @@ function StudentPage({
         editDetails={editDetails}
         setEditDetails={setEditDetails}
         updateCurrentStudent={updateCurrentStudent}
+        currentSession={currentSession}
       />
       {props.routes.map(route => (
         <RouteWithSubroutes key={route.path} {...route} />

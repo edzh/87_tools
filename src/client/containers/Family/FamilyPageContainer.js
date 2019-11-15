@@ -54,7 +54,7 @@ function FamilyPage(props) {
   };
 
   if (toFamily === true) {
-    return <Redirect to="/family" />;
+    return <Redirect to={`/program/${fetchedFamily.program}/families`} />;
   }
 
   return (

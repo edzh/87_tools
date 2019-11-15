@@ -3,7 +3,7 @@ import { useFormInput } from 'utils/hooks';
 
 export default props => {
   const [fetchedFamilies, setFetchedFamilies] = useState([]);
-  const family = useFormInput(props.family ? props.family._id : '');
+  const family = useFormInput(props.student ? props.student.family._id : '');
 
   useEffect(() => {
     const fetchFamilies = async () => {
