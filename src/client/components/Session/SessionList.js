@@ -28,7 +28,11 @@ export default props => {
                 {format(session.start, 'MMM DD YYYY')} -{' '}
                 {format(session.end, 'MMM DD YYYY')}
               </div>
-              <DefaultSessionButton sessionId={session._id} />
+              {props.currentProgramSession === session._id ? (
+                <div className="text-sm mx-6 my-auto">Default Session</div>
+              ) : (
+                <DefaultSessionButton sessionId={session._id} />
+              )}
             </li>
           ))}
       </ul>

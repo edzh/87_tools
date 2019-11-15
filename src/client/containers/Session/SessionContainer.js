@@ -16,7 +16,10 @@ function Session(props) {
 
   return (
     <div>
-      <SessionList sessions={props.sessions} />
+      <SessionList
+        sessions={props.sessions}
+        currentProgramSession={props.currentProgramSession}
+      />
       <SessionForm programId={props.programId} addSession={props.addSession} />
     </div>
   );
@@ -25,7 +28,8 @@ function Session(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
-    sessions: state.sessions
+    sessions: state.sessions,
+    currentProgramSession: state.currentProgram.item.currentSession
   };
 };
 

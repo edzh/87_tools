@@ -8,6 +8,7 @@ function DefaultSessionButton(props) {
   return (
     <div>
       <button
+        className="mx-4 text-sm px-2 bg-gray-200 hover:bg-gray-100 rounded border border-gray-400"
         onClick={() =>
           props.updateCurrentProgram({
             ...props.program,
@@ -15,7 +16,7 @@ function DefaultSessionButton(props) {
           })
         }
       >
-        Set Current Program
+        Set As Default
       </button>
     </div>
   );

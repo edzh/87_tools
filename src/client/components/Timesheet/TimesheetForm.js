@@ -38,16 +38,3 @@ export default function Timesheet({ currentSession, addTimesheet }) {
     </div>
   );
 }
-
-function useFormInput(initialValue) {
-  const [value, setValue] = useState(initialValue);
-
-  function handleChange(e) {
-    setValue(e.target.value);
-  }
-
-  return {
-    value,
-    onChange: handleChange
-  };
-}
