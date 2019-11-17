@@ -22,7 +22,11 @@ const intToDay = [
   'Saturday'
 ];
 
-export default function StudentDetails({ updateCurrentStudent, student }) {
+export default function StudentDetails({
+  updateCurrentStudent,
+  student,
+  ...props
+}) {
   const [edit, setEdit] = useState(false);
 
   if (!student) {
@@ -112,15 +116,17 @@ export default function StudentDetails({ updateCurrentStudent, student }) {
       )}
       <h2 className="text-xl font-bold my-2">Clubs</h2>
       <div className="p-4">
-        {student.currentClubs &&
-          student.currentClubs.map((club, index) => (
-            <div className="flex m-2" key={index}>
-              <p className="w-32">{intToDay[club.day]}</p>
-              <Link className="no-underline" to={`/club/${club._id}`}>
-                <p className="text-blue-600  hover:text-blue">{club.name}</p>
-              </Link>
-            </div>
-          ))}
+        {student.clubs &&
+          student.clubs
+            .filter(club => club.session === props.currentSession.item._id)
+            .map((club, index) => (
+              <div className="flex m-2" key={index}>
+                <p className="w-32">{intToDay[club.day]}</p>
+                <Link className="no-underline" to={`/club/${club._id}`}>
+                  <p className="text-blue-600  hover:text-blue">{club.name}</p>
+                </Link>
+              </div>
+            ))}
       </div>
     </div>
   );

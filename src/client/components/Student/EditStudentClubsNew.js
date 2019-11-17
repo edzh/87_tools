@@ -13,9 +13,11 @@ export default function EditStudentClubs({
 }) {
   function findClubWithDay(clubDay) {
     if (!currentStudent.item.currentClubs) return '';
-    const club = currentStudent.item.currentClubs.find(
-      club => club.day === clubDay
-    );
+    const club = currentStudent.item.clubs
+      .filter(club => club.day === clubDay)
+      .find(club => club.session === currentSession.item._id);
+    console.log(club);
+
     if (club) return club._id;
   }
 
@@ -27,7 +29,10 @@ export default function EditStudentClubs({
             <p
               key={session._id}
               className="p-2 mr-2 btn"
-              onClick={() => getCurrentSession(session._id)}
+              onClick={() => {
+                getCurrentSession(session._id);
+                getSessionClubs(session._id);
+              }}
             >
               {session.name}
             </p>
@@ -36,6 +41,7 @@ export default function EditStudentClubs({
 
       {currentSession.item._id && (
         <Formik
+          enableReinitialize
           initialValues={{
             monday: findClubWithDay(1),
             tuesday: findClubWithDay(2),
@@ -52,8 +58,12 @@ export default function EditStudentClubs({
               values.friday
             ].filter(club => club !== '');
 
+            const sessionClubIds = currentStudent.item.clubs
+              .filter(club => club.session !== currentSession.item._id)
+              .map(club => club._id);
+
             const clubs = Array.from(
-              new Set([...currentStudent.item.clubs, ...currentClubs])
+              new Set([...sessionClubIds, ...currentClubs])
             ).filter(club => club !== '');
 
             updateCurrentStudent({

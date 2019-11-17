@@ -11,6 +11,7 @@ import {
   getSessionClubs,
   getCurrentSession
 } from '../../actions/sessionActions';
+import { getCurrentProgram } from '../../actions/programActions';
 
 import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
@@ -34,6 +35,10 @@ function StudentPage({
   useEffect(() => {
     props.getCurrentStudent(props.studentId);
   }, []);
+
+  useEffect(() => {
+    props.currentProgramId && props.getCurrentProgram(props.currentProgramId);
+  }, [props.currentProgramId]);
 
   if (!currentStudent) {
     return null;
@@ -61,7 +66,8 @@ const mapStateToProps = (state, ownProps) => {
     studentId: ownProps.match.params.id,
     currentStudent: state.currentStudent,
     isAuthenticated: state.user.isAuthenticated,
-    currentSession: state.currentSession
+    currentSession: state.currentSession,
+    currentProgramId: state.user.data.currentProgram
   };
 };
 
@@ -78,6 +84,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCurrentSession: sessionId => {
       dispatch(getCurrentSession(sessionId));
+    },
+    getCurrentProgram: programId => {
+      dispatch(getCurrentProgram(programId));
     }
   };
 };

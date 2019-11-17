@@ -2,7 +2,8 @@ import * as types from '../actions/userTypes';
 
 const initialState = {
   isAuthenticated: localStorage.getItem('id_token') ? true : false,
-  isFetching: localStorage.getItem('id_token') ? true : false
+  isFetching: localStorage.getItem('id_token') ? true : false,
+  data: {}
 };
 
 export default function user(state = initialState, action) {

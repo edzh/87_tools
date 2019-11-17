@@ -26,7 +26,7 @@ function StudentClubs({
 
   useEffect(() => {
     currentSession.item._id && getSessionClubs(currentSession.item._id);
-  }, [currentSession.isFetching]);
+  }, [currentSession.item._id]);
 
   if (!currentStudent.item) return null;
 
