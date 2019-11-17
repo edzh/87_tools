@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
-import { updateCurrentStudent } from '../actions/studentActions';
-import { getProgramSessions } from '../actions/programActions';
+import {
+  getSessionClubs,
+  getCurrentSession
+} from '../../actions/sessionActions';
+import { updateCurrentStudent } from '../../actions/studentActions';
+import { getProgramSessions } from '../../actions/programActions';
 
-import EditStudentClubs from '../components/Student/EditStudentClubsNew';
+import EditStudentClubs from '../../components/Student/EditStudentClubsNew';
 
 function StudentClubs({
   currentStudent,
@@ -22,8 +25,8 @@ function StudentClubs({
   }, [currentStudent.isFetching]);
 
   useEffect(() => {
-    currentSession.item && getSessionClubs(currentSession.item._id);
-  }, [currentSession.isFetching]);
+    currentSession.item._id && getSessionClubs(currentSession.item._id);
+  }, [currentSession.item._id]);
 
   if (!currentStudent.item) return null;
 
@@ -37,6 +40,7 @@ function StudentClubs({
         getSessionClubs={getSessionClubs}
         currentStudent={currentStudent}
         updateCurrentStudent={updateCurrentStudent}
+        currentSession={currentSession}
       />
     </div>
   );
@@ -45,11 +49,11 @@ function StudentClubs({
 const mapStateToProps = (state, ownProps) => {
   return {
     studentId: ownProps.studentId,
-    currentStudent: state.student.currentStudent,
+    currentStudent: state.currentStudent,
     isAuthenticated: state.user.isAuthenticated,
-    currentSession: state.session.currentSession,
-    sessions: state.session.sessions,
-    clubs: state.club.clubs
+    currentSession: state.currentSession,
+    sessions: state.sessions,
+    clubs: state.clubs
   };
 };
 

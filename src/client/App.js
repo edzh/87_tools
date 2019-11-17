@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <UserContainer>
         <Router>
-          <div style={{ fontFamily: 'sans-serif' }}>
+          <div>
             <Navbar />
             <Routes />
           </div>

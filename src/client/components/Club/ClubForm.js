@@ -14,7 +14,7 @@ export default ({ addClub, sessionId }) => {
   }
 
   return (
-    <div className="shadow-md border rounded p-4">
+    <div className="shadow mt-2 border rounded p-4 form">
       <Formik
         initialValues={{
           clubName: '',
@@ -32,17 +32,13 @@ export default ({ addClub, sessionId }) => {
         {() => (
           <Form>
             <label htmlFor="clubName"></label>
-            <Field
-              id="clubName"
-              name="clubName"
-              className="border rounded p-1 shadow block"
-            />
+            <Field id="clubName" name="clubName" className="form-input" />
             <label htmlFor="day"></label>
             <Field
               id="day"
               name="day"
               component="select"
-              className="border rounded p-1 shadow block"
+              className="form-input"
             >
               <option value="">---</option>
               <option value="1">Monday</option>
@@ -52,7 +48,9 @@ export default ({ addClub, sessionId }) => {
               <option value="5">Friday</option>
             </Field>
             <label htmlFor="session"></label>
-            <button type="submit">Submit</button>
+            <button className="btn hover:bg-blue-400" type="submit">
+              Submit
+            </button>
           </Form>
         )}
       </Formik>

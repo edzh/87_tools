@@ -43,7 +43,7 @@ function family(state = initialState, action) {
   }
 }
 
-function families(state = initialFamiliesState, action) {
+export function families(state = initialFamiliesState, action) {
   switch (action.type) {
     case 'FETCH_FAMILIES_REQUEST':
       return {
@@ -78,5 +78,3 @@ function families(state = initialFamiliesState, action) {
       return state;
   }
 }
-
-export default combineReducers({ family, families });

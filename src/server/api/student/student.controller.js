@@ -13,6 +13,13 @@ export const getOne = async (req, res) => {
           sort: { day: 1 }
         }
       })
+      .populate({
+        path: 'clubs',
+        select: '-__v -students',
+        options: {
+          sort: { day: 1 }
+        }
+      })
       .populate('family', '-students -__v')
       .exec();
 
@@ -68,6 +75,13 @@ export const updateOne = async (req, res) => {
       .lean()
       .populate({
         path: 'currentClubs',
+        select: '-__v -students',
+        options: {
+          sort: { day: 1 }
+        }
+      })
+      .populate({
+        path: 'clubs',
         select: '-__v -students',
         options: {
           sort: { day: 1 }

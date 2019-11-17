@@ -8,7 +8,7 @@ import { getCurrentTimesheet } from '../../actions/timesheetActions';
 import {
   addTimestamp,
   addTimestampFailure,
-  getSigninTimesheetTimestamps
+  getDateTimesheetTimestamps
 } from '../../actions/timeclockActions';
 
 import TimestampList from './TimestampList';
@@ -16,10 +16,12 @@ import Alert from '../../components/Alert';
 import PinInput from '../../components/Timeclock/PinInput';
 import MultiStudent from '../../components/Timeclock/MultiStudent';
 import ManualEntry from './ManualEntry';
+import Filters from '../../components/Timeclock/Filters';
+import TimesheetHeader from '../../components/Timeclock/TimesheetHeader';
 
 function Timeclock({
   getCurrentTimesheet,
-  getSigninTimesheetTimestamps,
+  getDateTimesheetTimestamps,
   currentTimesheet,
   addTimestamp,
   addTimestampFailure,
@@ -36,7 +38,7 @@ function Timeclock({
 
   useEffect(() => {
     if (currentTimesheet.item && currentTimesheet.item.io === 'out')
-      getSigninTimesheetTimestamps(currentTimesheet.item.date);
+      getDateTimesheetTimestamps(currentTimesheet.item.date, 'in');
   }, [currentTimesheet.isFetching]);
 
   async function submitPinTimestamp(pin, fobStatus) {
@@ -113,23 +115,31 @@ function Timeclock({
   }
 
   return (
-    <div>
-      <PinInput
-        submitPinTimestamp={submitPinTimestamp}
-        addTimestampFailure={addTimestampFailure}
-        pinInputRef={pinInputRef}
-      />
-      <Alert alert={alert} />
-      <MultiStudent
-        multiStudent={multiStudent}
-        setMultiStudent={setMultiStudent}
-        addTimestamp={addTimestamp}
-        currentTimesheet={currentTimesheet}
-        pinInputRef={pinInputRef}
-        signInTimestamps={signInTimestamps}
-      />
-      <ManualEntry submitPinTimestamp={submitPinTimestamp} />
-      <TimestampList />
+    <div className="flex">
+      <div className="w-1/3 mr-2">
+        <PinInput
+          submitPinTimestamp={submitPinTimestamp}
+          addTimestampFailure={addTimestampFailure}
+          pinInputRef={pinInputRef}
+        />
+        <Alert alert={alert} />
+        <MultiStudent
+          multiStudent={multiStudent}
+          setMultiStudent={setMultiStudent}
+          addTimestamp={addTimestamp}
+          currentTimesheet={currentTimesheet}
+          pinInputRef={pinInputRef}
+          signInTimestamps={signInTimestamps}
+        />
+        <ManualEntry submitPinTimestamp={submitPinTimestamp} />
+      </div>
+      <div className="w-2/3 border rounded p-2">
+        <TimesheetHeader currentTimesheet={currentTimesheet} />
+        <Filters />
+        <div style={{ height: '540px' }} className="overflow-auto">
+          <TimestampList />
+        </div>
+      </div>
     </div>
   );
 }
@@ -137,7 +147,7 @@ function Timeclock({
 const mapStateToProps = (state, ownProps) => {
   return {
     timesheetId: ownProps.match.params.id,
-    currentTimesheet: state.timesheet.currentTimesheet,
+    currentTimesheet: state.currentTimesheet,
     alert: state.timestamp.alert,
     signInTimestamps: state.timestamp.signin
   };
@@ -154,8 +164,8 @@ const mapDispatchToProps = dispatch => {
     getCurrentTimesheet: timesheetId => {
       dispatch(getCurrentTimesheet(timesheetId));
     },
-    getSigninTimesheetTimestamps: date => {
-      dispatch(getSigninTimesheetTimestamps(date));
+    getDateTimesheetTimestamps: (date, io) => {
+      dispatch(getDateTimesheetTimestamps(date, io));
     }
   };
 };

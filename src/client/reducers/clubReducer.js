@@ -8,7 +8,7 @@ const initialCurrentClubState = {
   isFetching: false
 };
 
-function clubs(state = initialClubsState, action) {
+export function clubs(state = initialClubsState, action) {
   switch (action.type) {
     case 'FETCH_CLUBS_REQUEST':
       return {
@@ -44,7 +44,7 @@ function clubs(state = initialClubsState, action) {
   }
 }
 
-function currentClub(state = { isFetching: false }, action) {
+export function currentClub(state = { isFetching: false }, action) {
   switch (action.type) {
     case 'FETCH_CURRENT_CLUB_REQUEST':
       return {
@@ -72,8 +72,3 @@ function currentClub(state = { isFetching: false }, action) {
       return state;
   }
 }
-
-export default combineReducers({
-  clubs,
-  currentClub
-});

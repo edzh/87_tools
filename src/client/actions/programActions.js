@@ -35,11 +35,15 @@ export function fetchPrograms() {
   };
 }
 
+/* Current Program Actions */
+/* REQUEST */
 function currentProgramRequest() {
   return {
     type: 'CURRENT_PROGRAM_REQUEST'
   };
 }
+
+/* SUCCESS */
 
 function currentProgramSuccess(program) {
   return {
@@ -48,10 +52,31 @@ function currentProgramSuccess(program) {
   };
 }
 
+function addProgramSuccess(program) {
+  return {
+    type: 'ADD_PROGRAM_SUCCESS',
+    program
+  };
+}
+
 function getProgramSessionsSuccess(sessions) {
   return {
     type: 'GET_PROGRAM_SESSIONS_SUCCESS',
     sessions
+  };
+}
+
+function getProgramStudentsSuccess(students) {
+  return {
+    type: 'GET_PROGRAM_STUDENTS_SUCCESS',
+    students
+  };
+}
+
+function getProgramFamiliesSuccess(families) {
+  return {
+    type: 'GET_PROGRAM_FAMILIES_SUCCESS',
+    families
   };
 }
 
@@ -105,20 +130,6 @@ export function getProgramSessions(programId) {
   };
 }
 
-function getProgramStudentsSuccess(students) {
-  return {
-    type: 'GET_PROGRAM_STUDENTS_SUCCESS',
-    students
-  };
-}
-
-function getProgramFamiliesSuccess(families) {
-  return {
-    type: 'GET_PROGRAM_FAMILIES_SUCCESS',
-    families
-  };
-}
-
 export function getProgramStudents(programId) {
   return dispatch => {
     dispatch(currentProgramRequest());
@@ -132,13 +143,6 @@ export function getProgramStudents(programId) {
       .then(json => {
         dispatch(getProgramStudentsSuccess(json.data));
       });
-  };
-}
-
-function addProgramSuccess(program) {
-  return {
-    type: 'ADD_PROGRAM_SUCCESS',
-    program
   };
 }
 
@@ -178,6 +182,24 @@ export function getProgramFamilies(programId) {
       .then(response => response.json())
       .then(json => {
         dispatch(getProgramFamiliesSuccess(json.data));
+      });
+  };
+}
+
+export function updateCurrentProgram(program) {
+  return dispatch => {
+    dispatch(currentProgramRequest());
+    return fetch(`${apiUrl}/api/program/${program._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
+      body: JSON.stringify(program)
+    })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(currentProgramSuccess(json.data));
       });
   };
 }

@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { connect } from 'react-redux';
 
-import { addStudent } from '../actions/studentActions';
-import { getProgramStudents } from '../actions/programActions';
+import { addStudent } from '../../actions/studentActions';
+import { getProgramStudents } from '../../actions/programActions';
 
-import StudentForm from '../components/Student/StudentForm';
-import StudentList from '../components/Student/StudentList';
+import StudentForm from '../../components/Student/StudentForm';
+import StudentList from '../../components/Student/StudentList';
 
 function Student(props) {
   useEffect(() => {
@@ -15,15 +15,15 @@ function Student(props) {
 
   return (
     <div>
-      <StudentForm programId={props.programId} addStudent={props.addStudent} />
       <StudentList students={props.students} />
+      <StudentForm programId={props.programId} addStudent={props.addStudent} />
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    students: state.student.students,
+    students: state.students,
     programId: ownProps.match.params.id
   };
 };

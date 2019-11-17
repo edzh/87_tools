@@ -33,8 +33,8 @@ function StreamlineAdd({
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
-    recentStudent: state.student.students.recentStudent,
-    recentFamily: state.family.families.recentFamily
+    recentStudent: state.students.recentStudent,
+    recentFamily: state.families.recentFamily
   };
 };
 

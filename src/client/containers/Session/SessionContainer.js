@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getProgramSessions } from '../actions/programActions';
-import { addSession } from '../actions/sessionActions';
+import { getProgramSessions } from '../../actions/programActions';
+import { addSession } from '../../actions/sessionActions';
 
-import MainDetailsHeader from '../components/Details/MainDetailsHeader';
-import SessionList from '../components/Session/SessionList';
-import SessionForm from '../components/Session/SessionForm';
+import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
+import SessionList from '../../components/Session/SessionList';
+import SessionForm from '../../components/Session/SessionForm';
 
 function Session(props) {
   useEffect(() => {
@@ -16,8 +16,10 @@ function Session(props) {
 
   return (
     <div>
-      <MainDetailsHeader>Sessions</MainDetailsHeader>
-      <SessionList sessions={props.sessions} />
+      <SessionList
+        sessions={props.sessions}
+        currentProgramSession={props.currentProgramSession}
+      />
       <SessionForm programId={props.programId} addSession={props.addSession} />
     </div>
   );
@@ -26,7 +28,8 @@ function Session(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
-    sessions: state.session.sessions
+    sessions: state.sessions,
+    currentProgramSession: state.currentProgram.item.currentSession
   };
 };
 

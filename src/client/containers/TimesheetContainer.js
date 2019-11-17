@@ -1,40 +1,16 @@
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { addTimesheet, setTimesheet } from '../actions/timesheetActions';
 import { getSessionTimesheets } from '../actions/sessionActions';
 
-import TimesheetList from '../components/Timesheet/TimesheetList';
-import TimesheetForm from '../components/Timesheet/TimesheetForm';
-
-function Timesheet({
-  sessionId,
-  timesheets,
-  addTimesheet,
-  getSessionTimesheets,
-  currentSession
-}) {
-  useEffect(() => {
-    getSessionTimesheets(sessionId);
-  }, []);
-
-  return (
-    <div>
-      <TimesheetList timesheets={timesheets} />
-      <TimesheetForm
-        addTimesheet={addTimesheet}
-        currentSession={currentSession}
-      />
-    </div>
-  );
-}
+import Timesheet from '../components/Timesheet/Timesheet';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    timesheets: state.timesheet.timesheets,
+    timesheets: state.timesheets,
     sessionId: ownProps.match.params.id,
-    currentSession: state.session.currentSession
+    currentSession: state.currentSession
   };
 };
 

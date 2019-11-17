@@ -19,8 +19,8 @@ function PinLookup(props) {
 
 const mapStateToProps = state => {
   return {
-    isFetching: state.student.isFetching,
-    students: state.student.students
+    isFetching: state.isFetching,
+    students: state.students
   };
 };
 

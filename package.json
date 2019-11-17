@@ -2,7 +2,7 @@
   "name": "87_tools",
   "version": "0.1.0",
   "engines": {
-    "node": "11.9.0"
+    "node": "12.10.0"
   },
   "private": true,
   "dependencies": {
@@ -11,9 +11,10 @@
     "@types/node": "^12.0.10",
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.4",
-    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "cross-fetch": "^3.0.1",
+    "d3": "^5.12.0",
     "date-fns": "^1.30.1",
     "express": "^4.16.4",
     "formik": "^1.5.8",
@@ -26,12 +27,13 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "prettier": "^1.16.4",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
     "react-redux": "^7.0.3",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.5",
+    "react-router-dom": "^5.1.1",
+    "react-scripts": "^3.1.2",
     "redux": "^4.0.1",
+    "redux-starter-kit": "^0.9.1",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.2",
     "typescript": "^3.5.2",
@@ -73,7 +75,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
     "@testing-library/dom": "^5.4.0",
-    "@testing-library/react": "^8.0.4",
+    "@testing-library/react": "^9.2.0",
     "autoprefixer": "^9.5.1",
     "postcss-cli": "^6.1.2",
     "tailwindcss": "^1.1.2"

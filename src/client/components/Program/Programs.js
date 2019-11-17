@@ -1,0 +1,28 @@
+import React, { useEffect } from 'react';
+import ProgramList from './ProgramList';
+import ProgramForm from './ProgramForm';
+import ProgramHeader from './ProgramHeader';
+
+export default function Program({
+  fetchPrograms,
+  programs,
+  user,
+  updateUser,
+  ...props
+}) {
+  useEffect(() => {
+    fetchPrograms();
+  }, []);
+
+  return (
+    <div>
+      <h1 className="pg-header">Programs</h1>
+      <ProgramList
+        {...props}
+        programs={programs}
+        updateUser={updateUser}
+        user={user}
+      />
+    </div>
+  );
+}

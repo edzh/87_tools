@@ -18,8 +18,6 @@ export default function MultiStudent({
           timestamp => timestamp.student._id === student._id
         );
 
-        console.log(signedIn);
-
         if (signedIn) {
           selected.push({
             _id: student._id,

@@ -14,7 +14,7 @@ export default function(props) {
   }
 
   if (props.isAuthenticated) {
-    return <Redirect to="/timesheet" />;
+    return <Redirect to="/program" />;
   }
 
   return (

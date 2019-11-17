@@ -23,6 +23,12 @@ export default function timestamps(state = initialState, action) {
         isFetching: false,
         signin: action.timestamps
       };
+    case 'GET_SIGNOUT_TIMESHEET_TIMESTAMPS_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        signout: action.timestamps
+      };
     case 'ADD_TIMESTAMP_SUCCESS':
       return {
         ...state,
@@ -31,7 +37,9 @@ export default function timestamps(state = initialState, action) {
         items: [action.timestamp, ...state.items],
         alert: {
           type: 'success',
-          message: `${action.timestamp.student.name} has been signed in!`
+          message: `${action.timestamp.student.name} has been signed ${
+            action.timestamp.pickup ? 'out' : 'in'
+          }!`
         }
       };
     case 'ADD_TIMESTAMP_FAILURE':

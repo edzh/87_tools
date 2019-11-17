@@ -2,14 +2,16 @@ import { combineReducers } from 'redux';
 import * as types from '../actions/sessionTypes';
 
 const initialSessionState = {
+  items: [],
   isFetching: false
 };
 
 const initialCurrentSessionState = {
+  item: {},
   isFetching: false
 };
 
-function sessions(state = initialSessionState, action) {
+export function sessions(state = initialSessionState, action) {
   switch (action.type) {
     case types.FETCH_SESSIONS_REQUEST:
       return {
@@ -44,7 +46,7 @@ function sessions(state = initialSessionState, action) {
   }
 }
 
-function currentSession(state = initialCurrentSessionState, action) {
+export function currentSession(state = initialCurrentSessionState, action) {
   switch (action.type) {
     case 'CURRENT_SESSION_REQUEST':
       return {
@@ -67,14 +69,9 @@ function currentSession(state = initialCurrentSessionState, action) {
       return {
         ...state,
         isFetching: false,
-        clubs: [...state.clubs, action.clubs]
+        clubs: [...state, action.clubs]
       };
     default:
       return state;
   }
 }
-
-export default combineReducers({
-  sessions,
-  currentSession
-});

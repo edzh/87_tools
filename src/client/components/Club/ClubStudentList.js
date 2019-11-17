@@ -16,6 +16,7 @@ export default function ClubStudentList(props) {
             student =>
               student && (
                 <Link
+                  key={student._id}
                   className="block no-underline text-blue-500 hover:text-blue-400"
                   to={`/student/${student._id}`}
                 >

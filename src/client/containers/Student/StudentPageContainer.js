@@ -6,15 +6,19 @@ import {
   setStudent,
   getCurrentStudent,
   updateCurrentStudent
-} from '../actions/studentActions';
-import { getSessionClubs, getCurrentSession } from '../actions/sessionActions';
+} from '../../actions/studentActions';
+import {
+  getSessionClubs,
+  getCurrentSession
+} from '../../actions/sessionActions';
+import { getCurrentProgram } from '../../actions/programActions';
 
-import RouteWithSubroutes from '../components/Route/RouteWithSubroutes';
+import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
-import StudentDetails from '../components/Student/StudentDetailsNew';
-import EditStudent from '../components/Student/EditStudentNew';
-import StudentFamily from '../components/Student/StudentFamily';
-import StudentClubs from '../components/Student/StudentClubs';
+import StudentDetails from '../../components/Student/StudentDetails';
+import EditStudent from '../../components/Student/EditStudentNew';
+import StudentFamily from '../../components/Student/StudentFamily';
+import StudentClubs from '../../components/Student/StudentClubs';
 
 function StudentPage({
   isAuthenticated,
@@ -32,6 +36,10 @@ function StudentPage({
     props.getCurrentStudent(props.studentId);
   }, []);
 
+  useEffect(() => {
+    props.currentProgramId && props.getCurrentProgram(props.currentProgramId);
+  }, [props.currentProgramId]);
+
   if (!currentStudent) {
     return null;
   }
@@ -44,6 +52,7 @@ function StudentPage({
         editDetails={editDetails}
         setEditDetails={setEditDetails}
         updateCurrentStudent={updateCurrentStudent}
+        currentSession={currentSession}
       />
       {props.routes.map(route => (
         <RouteWithSubroutes key={route.path} {...route} />
@@ -55,9 +64,10 @@ function StudentPage({
 const mapStateToProps = (state, ownProps) => {
   return {
     studentId: ownProps.match.params.id,
-    currentStudent: state.student.currentStudent,
+    currentStudent: state.currentStudent,
     isAuthenticated: state.user.isAuthenticated,
-    currentSession: state.session.currentSession
+    currentSession: state.currentSession,
+    currentProgramId: state.user.data.currentProgram
   };
 };
 
@@ -74,6 +84,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCurrentSession: sessionId => {
       dispatch(getCurrentSession(sessionId));
+    },
+    getCurrentProgram: programId => {
+      dispatch(getCurrentProgram(programId));
     }
   };
 };
