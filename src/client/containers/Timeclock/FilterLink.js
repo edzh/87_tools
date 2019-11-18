@@ -7,7 +7,9 @@ function Link({ active, onClick, children }) {
     <button
       onClick={onClick}
       disabled={active}
-      className={`${active ? 'font-bold' : 'font-normal'} px-2`}
+      className={`${
+        active ? 'text-blue-400 border-b-2 border-blue-400' : 'font-normal'
+      } mr-2`}
     >
       {children}
     </button>
@@ -22,7 +24,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: () => dispatch(setTimestampFilters(ownProps.filter))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Link);
+export default connect(mapStateToProps, mapDispatchToProps)(Link);

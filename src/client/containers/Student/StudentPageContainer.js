@@ -17,8 +17,8 @@ import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
 import StudentDetails from '../../components/Student/StudentDetails';
 import EditStudent from '../../components/Student/EditStudentNew';
-import StudentFamily from '../../components/Student/StudentFamily';
 import StudentClubs from '../../components/Student/StudentClubs';
+import StudentHeader from '../../components/Student/StudentHeader';
 
 function StudentPage({
   isAuthenticated,
@@ -46,7 +46,7 @@ function StudentPage({
 
   return (
     <div>
-      <Link to={`/student/${props.studentId}/clubs`}>Clubs</Link>
+      <StudentHeader student={currentStudent} studentId={props.studentId} />
       <StudentDetails
         student={currentStudent.item}
         editDetails={editDetails}
@@ -91,7 +91,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StudentPage);
+export default connect(mapStateToProps, mapDispatchToProps)(StudentPage);

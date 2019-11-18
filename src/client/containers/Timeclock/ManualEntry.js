@@ -33,15 +33,16 @@ function ManualEntry({
   }, [debouncedSearchTerm]);
 
   return (
-    <div>
+    <div className="mt-2 p-2 bg-white border border-gray-200 shadow rounded">
+      <h3 className="text-lg font-gray-800 my-2">Manual Entry</h3>
       <input
-        className="border w-full rounded p-1"
+        className="border w-full rounded-t p-1"
         placeholder="search here..."
         type="text"
         onChange={e => setQuery(e.target.value)}
         value={query}
       />
-      <div className="overflow-auto bg-white h-64">
+      <div className="overflow-auto rounded-b bg-white h-64">
         {filteredSuggestions.length !== 0 ? (
           filteredSuggestions.map((student, index) => (
             <div
@@ -121,7 +122,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ManualEntry);
+export default connect(mapStateToProps, mapDispatchToProps)(ManualEntry);

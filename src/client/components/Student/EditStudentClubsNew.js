@@ -2,6 +2,16 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
 
+const intToDay = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+];
+
 export default function EditStudentClubs({
   clubs,
   sessions,
@@ -16,13 +26,14 @@ export default function EditStudentClubs({
     const club = currentStudent.item.clubs
       .filter(club => club.day === clubDay)
       .find(club => club.session === currentSession.item._id);
-    console.log(club);
 
     if (club) return club._id;
   }
 
   return (
     <div>
+      <h2 className="text-xl font-bold my-2">Clubs</h2>
+
       <div className="flex">
         {sessions.items &&
           sessions.items.map(session => (
@@ -37,6 +48,19 @@ export default function EditStudentClubs({
               {session.name}
             </p>
           ))}
+      </div>
+      <div className="p-4">
+        {currentStudent.item.clubs &&
+          currentStudent.item.clubs
+            .filter(club => club.session === currentSession.item._id)
+            .map((club, index) => (
+              <div className="flex m-2" key={index}>
+                <p className="w-32">{intToDay[club.day]}</p>
+                <Link className="no-underline" to={`/club/${club._id}`}>
+                  <p className="text-blue-600  hover:text-blue">{club.name}</p>
+                </Link>
+              </div>
+            ))}
       </div>
 
       {currentSession.item._id && (
