@@ -8,7 +8,6 @@ const initialProgramsState = {
 const initialCurrentProgramState = {
   item: {},
   sessions: [],
-  students: [],
   isFetching: false
 };
 
@@ -52,14 +51,12 @@ export function currentProgram(state = initialCurrentProgramState, action) {
     case 'GET_PROGRAM_SESSIONS_SUCCESS':
       return {
         ...state,
-        isFetching: false,
-        sessions: action.sessions
+        isFetching: false
       };
     case 'GET_PROGRAM_STUDENTS_SUCCESS':
       return {
         ...state,
-        isFetching: false,
-        students: action.students
+        isFetching: false
       };
     default:
       return state;
