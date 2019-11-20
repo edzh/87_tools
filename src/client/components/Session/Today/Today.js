@@ -13,14 +13,24 @@ export default function Today({
     format(new Date(), 'YYYY-MM-DDT') + '05:00:00Z'
   );
   // const [date, setDate] = useState('2019-09-24T04:00:00Z');
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     programId && getProgramStudents(programId);
   }, [programId]);
 
   useEffect(() => {
+    let timeout = setTimeout(() => {
+      setRefresh(true);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [refresh]);
+
+  useEffect(() => {
     getDateTimesheetTimestamps(date, 'in');
-  }, []);
+    setRefresh(true);
+  }, [refresh]);
 
   useEffect(() => {
     getDateTimesheetTimestamps(date, 'out');

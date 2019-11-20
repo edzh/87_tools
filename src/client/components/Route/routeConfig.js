@@ -11,6 +11,7 @@ import FamilyForm from '../Family/FamilyForm';
 
 import StudentPage from '../../containers/Student/StudentPageContainer';
 import StudentClubs from '../../containers/Student/StudentClubsContainer';
+import StudentFamily from '../../containers/Student/StudentFamilyContainer';
 import Student from '../../containers/Student/StudentContainer';
 
 import Club from '../../containers/Club/ClubContainer';
@@ -60,6 +61,11 @@ const routes = [
         path: '/student/:id/clubs',
         exact: true,
         component: StudentClubs
+      },
+      {
+        path: '/student/:id/family',
+        exact: true,
+        component: StudentFamily
       }
     ]
   },

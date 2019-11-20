@@ -133,7 +133,7 @@ function Timeclock({
         />
         <ManualEntry submitPinTimestamp={submitPinTimestamp} />
       </div>
-      <div className="w-2/3 border rounded p-2">
+      <div className="w-2/3 border rounded p-2 bg-white shadow">
         <TimesheetHeader currentTimesheet={currentTimesheet} />
         <Filters />
         <div style={{ height: '540px' }} className="overflow-auto">
@@ -170,7 +170,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Timeclock);
+export default connect(mapStateToProps, mapDispatchToProps)(Timeclock);

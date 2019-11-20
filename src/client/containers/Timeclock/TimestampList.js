@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
@@ -17,9 +17,20 @@ function TimestampList({
   clubs,
   deleteTimestamp
 }) {
+  const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
     currentTimesheet.item && getTimesheetTimestamps(currentTimesheet.item._id);
-  }, [currentTimesheet.item]);
+    setRefresh(false);
+  }, [refresh, currentTimesheet.item]);
+
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      setRefresh(true);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [refresh]);
 
   if (!currentTimesheet.item || currentTimesheet.isFetching) {
     return <div data-testid="load">Loading...</div>;
@@ -36,12 +47,18 @@ function TimestampList({
                   {format(timestamp.datetime, 'hh:mm a')}
                 </li>
                 <li className="w-64">
-                  <Link to={`/student/${timestamp.student._id}`}>
+                  <Link
+                    className="text-blue-500 hover:text-blue-400"
+                    to={`/student/${timestamp.student._id}`}
+                  >
                     {timestamp.student.name}
                   </Link>
                 </li>
                 <li className="w-64">
-                  <Link to={`/club/${timestamp.club && timestamp.club._id}`}>
+                  <Link
+                    className="text-blue-500 hover:text-blue-400"
+                    to={`/club/${timestamp.club && timestamp.club._id}`}
+                  >
                     {timestamp.club && timestamp.club.name}
                   </Link>
                 </li>
@@ -99,7 +116,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TimestampList);
+export default connect(mapStateToProps, mapDispatchToProps)(TimestampList);
