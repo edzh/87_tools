@@ -1,5 +1,4 @@
 import AddStudent from '../Student/AddStudent';
-import PinLookup from '../../containers/PinLookup';
 
 import TimesheetForm from '../Timesheet/TimesheetForm';
 import Timesheet from '../../containers/TimesheetContainer';

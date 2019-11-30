@@ -27,6 +27,7 @@
     "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
+    "normalizr": "^3.4.1",
     "prettier": "^1.16.4",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",

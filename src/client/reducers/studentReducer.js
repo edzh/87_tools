@@ -74,7 +74,8 @@ export function currentStudent(state = initialCurrentStudentState, action) {
     case 'CURRENT_STUDENT_SUCCESS':
       return {
         isFetching: false,
-        item: action.student
+        item: action.payload.student.entities.students,
+        byId: action.payload.student.result
       };
     default:
       return state;

@@ -76,7 +76,7 @@ export default function Today({
         !timestamp.signin.find(t => t.student._id === student._id)
       );
     })
-    .filter(student => student.grade !== 0)
+    // .filter(student => student.grade !== 0)
     .sort((a, b) => {
       const clubA = a.currentClubs.find(club => club.day === day).name;
       const clubB = b.currentClubs.find(club => club.day === day).name;

@@ -1,6 +1,8 @@
 import 'cross-fetch';
 import { apiUrl } from 'config';
-
+import { fetchStudents } from '../api';
+import * as schema from '../schemas/schema';
+import { normalize } from 'normalizr';
 import * as types from './studentTypes';
 
 function fetchStudentsRequest() {
@@ -22,24 +24,6 @@ function fetchStudentsFailure(error) {
   };
 }
 
-export function fetchStudents() {
-  return dispatch => {
-    dispatch(fetchStudentsRequest());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/student`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(fetchStudentsSuccess(json.data));
-      })
-      .catch(err => {
-        dispatch(fetchStudentsFailure());
-      });
-  };
-}
-
 export function setStudent(student) {
   return {
     type: types.SET_STUDENT,
@@ -50,23 +34,10 @@ export function setStudent(student) {
 export function addStudent(student) {
   return dispatch => {
     dispatch(fetchStudentsRequest());
-    return fetch(`${apiUrl}/api/student`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(student)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error('Unable to create student!');
-        }
-
-        return response.json();
-      })
-      .then(json => {
-        dispatch(addStudentSuccess(json.data));
+    return fetchStudents
+      .add(student)
+      .then(data => {
+        dispatch(addStudentSuccess(data));
       })
       .catch(err => {
         dispatch(studentError(err));
@@ -97,41 +68,24 @@ function currentStudentRequest() {
 function currentStudentSuccess(student) {
   return {
     type: 'CURRENT_STUDENT_SUCCESS',
-    student
+    payload: { student }
   };
 }
 
 export function getCurrentStudent(studentId) {
   return dispatch => {
     dispatch(currentStudentRequest());
-    return fetch(`${apiUrl}/api/student/${studentId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json.data);
-        dispatch(currentStudentSuccess(json.data));
-      });
+    return fetchStudents.get.one(studentId).then(data => {
+      dispatch(currentStudentSuccess(normalize(data, schema.student)));
+    });
   };
 }
 
 export function updateCurrentStudent(student) {
   return dispatch => {
     dispatch(currentStudentRequest());
-    return fetch(`${apiUrl}/api/student/${student._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(student)
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(currentStudentSuccess(json.data));
-      });
+    return fetchStudents.update(student).then(data => {
+      dispatch(currentStudentSuccess(data));
+    });
   };
 }

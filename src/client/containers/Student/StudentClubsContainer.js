@@ -49,7 +49,7 @@ function StudentClubs({
 const mapStateToProps = (state, ownProps) => {
   return {
     studentId: ownProps.studentId,
-    currentStudent: state.currentStudent,
+    currentStudent: state.currentStudent.item,
     isAuthenticated: state.user.isAuthenticated,
     currentSession: state.currentSession,
     sessions: state.sessions,
@@ -74,7 +74,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StudentClubs);
+export default connect(mapStateToProps, mapDispatchToProps)(StudentClubs);

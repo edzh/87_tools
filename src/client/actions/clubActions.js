@@ -1,4 +1,5 @@
 import { apiUrl } from 'config';
+import { fetchStudents } from '../api';
 
 function fetchClubsRequest() {
   return {
@@ -162,15 +163,8 @@ function getClubStudentsSuccess(students) {
 export function getClubStudents(clubId) {
   return dispatch => {
     dispatch(fetchCurrentClubRequest());
-    return fetch(`${apiUrl}/api/club/${clubId}/students`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getClubStudentsSuccess(json.data));
-      });
+    return fetchStudents.get.club(clubId).then(data => {
+      dispatch(getClubStudentsSuccess(data));
+    });
   };
 }

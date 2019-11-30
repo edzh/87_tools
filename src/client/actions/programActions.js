@@ -1,4 +1,7 @@
 import { apiUrl } from 'config';
+import { fetchStudents } from '../api';
+import * as schema from '../schemas/schema';
+import { normalize } from 'normalizr';
 
 function fetchProgramsRequest() {
   return {
@@ -69,7 +72,7 @@ function getProgramSessionsSuccess(sessions) {
 function getProgramStudentsSuccess(students) {
   return {
     type: 'GET_PROGRAM_STUDENTS_SUCCESS',
-    students
+    students: normalize(students, schema.studentList)
   };
 }
 
@@ -133,16 +136,9 @@ export function getProgramSessions(programId) {
 export function getProgramStudents(programId) {
   return dispatch => {
     dispatch(currentProgramRequest());
-    return fetch(`${apiUrl}/api/program/${programId}/students`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getProgramStudentsSuccess(json.data));
-      });
+    return fetchStudents.get
+      .program(programId)
+      .then(data => dispatch(getProgramStudentsSuccess(data)));
   };
 }
 
