@@ -12,9 +12,14 @@ function fetchStudentsRequest() {
 }
 
 function fetchStudentsSuccess(students) {
+  const normalizedStudents = normalize(students, schema.studentList);
+
   return {
     type: types.FETCH_STUDENTS_SUCCESS,
-    students
+    payload: {
+      byId: normalizedStudents.entities.students,
+      allIds: normalizedStudents.result
+    }
   };
 }
 
@@ -66,9 +71,14 @@ function currentStudentRequest() {
 }
 
 function currentStudentSuccess(student) {
+  const normalizedStudent = normalize(student, schema.student);
+
   return {
     type: 'CURRENT_STUDENT_SUCCESS',
-    payload: { student }
+    payload: {
+      byId: normalizedStudent.entities.students,
+      allIds: normalizedStudent.result
+    }
   };
 }
 
@@ -76,7 +86,7 @@ export function getCurrentStudent(studentId) {
   return dispatch => {
     dispatch(currentStudentRequest());
     return fetchStudents.get.one(studentId).then(data => {
-      dispatch(currentStudentSuccess(normalize(data, schema.student)));
+      dispatch(currentStudentSuccess(data));
     });
   };
 }
@@ -85,7 +95,25 @@ export function updateCurrentStudent(student) {
   return dispatch => {
     dispatch(currentStudentRequest());
     return fetchStudents.update(student).then(data => {
-      dispatch(currentStudentSuccess(data));
+      dispatch(currentStudentSuccess(normalize(data, schema.student)));
     });
+  };
+}
+
+export function getStudentsByProgram(programId) {
+  return dispatch => {
+    dispatch(fetchStudentsRequest());
+    return fetchStudents.get
+      .program(programId)
+      .then(data => dispatch(fetchStudentsSuccess(data)));
+  };
+}
+
+export function getStudentsByClub(clubId) {
+  return dispatch => {
+    dispatch(fetchStudentsRequest());
+    return fetchStudents.get
+      .club(clubId)
+      .then(data => dispatch(fetchStudentsSuccess(data)));
   };
 }

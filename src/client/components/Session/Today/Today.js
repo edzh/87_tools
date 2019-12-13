@@ -5,7 +5,7 @@ export default function Today({
   students,
   timestamp,
   programId,
-  getProgramStudents,
+  getStudentsByProgram,
   getDateTimesheetTimestamps
 }) {
   const [day, setDay] = useState(+format(new Date(), 'd'));
@@ -16,7 +16,7 @@ export default function Today({
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    programId && getProgramStudents(programId);
+    programId && getStudentsByProgram(programId);
   }, [programId]);
 
   useEffect(() => {

@@ -3,11 +3,18 @@ import { combineReducers } from 'redux';
 import * as types from '../actions/studentTypes';
 
 const initialStudentsState = {
-  items: [],
+  items: {
+    byId: {},
+    allIds: []
+  },
   isFetching: false
 };
 
 const initialCurrentStudentState = {
+  item: {
+    byId: {},
+    allIds: ''
+  },
   isFetching: false
 };
 
@@ -18,12 +25,13 @@ export function students(state = initialStudentsState, action) {
         ...state,
         isFetching: true
       };
-    // case types.FETCH_STUDENTS_SUCCESS:
-    case 'GET_CLUB_STUDENTS_SUCCESS':
-    case 'GET_PROGRAM_STUDENTS_SUCCESS':
+    case types.FETCH_STUDENTS_SUCCESS:
       return {
         ...state,
-        items: action.students,
+        items: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        },
         isFetching: false
       };
     case types.FETCH_STUDENTS_FAILURE:
@@ -74,8 +82,10 @@ export function currentStudent(state = initialCurrentStudentState, action) {
     case 'CURRENT_STUDENT_SUCCESS':
       return {
         isFetching: false,
-        item: action.payload.student.entities.students,
-        byId: action.payload.student.result
+        item: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        }
       };
     default:
       return state;

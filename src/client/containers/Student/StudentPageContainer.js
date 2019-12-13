@@ -46,9 +46,12 @@ function StudentPage({
 
   return (
     <div>
-      <StudentHeader student={currentStudent} studentId={props.studentId} />
+      <StudentHeader
+        currentStudent={currentStudent.item}
+        studentId={props.studentId}
+      />
       <StudentDetails
-        student={currentStudent.item}
+        currentStudent={currentStudent.item}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
         updateCurrentStudent={updateCurrentStudent}

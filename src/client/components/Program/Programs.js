@@ -4,14 +4,14 @@ import ProgramForm from './ProgramForm';
 import ProgramHeader from './ProgramHeader';
 
 export default function Program({
-  fetchPrograms,
+  fetchUserPrograms,
   programs,
   user,
   updateUser,
   ...props
 }) {
   useEffect(() => {
-    fetchPrograms();
+    fetchUserPrograms();
   }, []);
 
   return (

@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 
 import {
   getProgramFamilies,
-  getProgramStudents,
   getProgramSessions
 } from '../../actions/programActions';
+
+import { getStudentsByProgram } from '../../actions/studentActions';
 
 import Chart from '../../components/Dashboard/Chart';
 
@@ -21,7 +22,7 @@ function Dashboard({
     getAllProgramData(programId);
   }, []);
 
-  if (!(students.items && families.items && sessions.items)) {
+  if (!(students.items.result && families.items && sessions.items)) {
     return <div className="p-2">Loading...</div>;
   }
 
@@ -30,7 +31,7 @@ function Dashboard({
       <div className="bg-white w-48 p-2 my-2 rounded border border-gray-400">
         <div className="flex">
           <div className="w-32 font-bold text-gray-800 text-lg">Students</div>
-          <div className="w-10 text-lg">{students.items.length}</div>
+          <div className="w-10 text-lg">{students.items.result.length}</div>
         </div>
         <div className="flex">
           <div className="w-32 font-bold text-gray-800 text-lg">Families</div>
@@ -61,14 +62,11 @@ const mapDispatchToProps = dispatch => {
     getAllProgramData: programId => {
       Promise.all([
         dispatch(getProgramFamilies(programId)),
-        dispatch(getProgramStudents(programId)),
+        dispatch(getStudentsByProgram(programId)),
         dispatch(getProgramSessions(programId))
       ]);
     }
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

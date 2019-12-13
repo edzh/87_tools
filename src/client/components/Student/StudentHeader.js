@@ -1,21 +1,23 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-export default function Student({ studentId, student }) {
-  if (!student.item) return null;
-
-  console.log(student.item[student.byId]);
+export default function Student({ studentId, currentStudent }) {
+  if (!currentStudent.allIds) return null;
 
   return (
     <div>
       <h3 className="text-lg">
-        <Link to={`/program/${student.byId}/students`}>
+        <Link
+          to={`/program/${
+            currentStudent.byId[currentStudent.allIds].program
+          }/students`}
+        >
           <span className="font-bold text-blue-500">{'< '}</span>Students
         </Link>
       </h3>
       <h2 className="pg-header">
-        <Link to={`/student/${student.byId}`}>
-          {student.item[student.byId].name}
+        <Link to={`/student/${currentStudent.allIds}`}>
+          {currentStudent.byId[currentStudent.allIds].name}
         </Link>
       </h2>
       <ul className="flex px-2 py-2 bg-white border border-gray-400 rounded">

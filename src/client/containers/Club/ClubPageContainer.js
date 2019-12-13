@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import {
-  setClub,
-  getCurrentClub,
-  getClubStudents
-} from '../../actions/clubActions';
+import { setClub, getCurrentClub } from '../../actions/clubActions';
+
+import { getStudentsByClub } from '../../actions/studentActions';
+
 import { fetchSessions } from '../../actions/sessionActions';
 
 import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
@@ -21,7 +20,7 @@ function ClubPage(props) {
   }, []);
 
   useEffect(() => {
-    props.getClubStudents(props.clubId);
+    props.getStudentsByClub(props.clubId);
   }, []);
 
   if (!props.currentClub.item) return null;
@@ -58,13 +57,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getCurrentClub: clubId => {
       dispatch(getCurrentClub(clubId));
     },
-    getClubStudents: clubId => {
-      dispatch(getClubStudents(clubId));
+    getStudentsByClub: clubId => {
+      dispatch(getStudentsByClub(clubId));
     }
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ClubPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ClubPage);

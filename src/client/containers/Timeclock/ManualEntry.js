@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 
 import { useDebounce } from 'utils/hooks';
 
-import { getProgramStudents } from '../../actions/programActions';
+import { getStudentsByProgram } from '../../actions/studentActions';
 import { addTimestamp } from '../../actions/timeclockActions';
 
 function ManualEntry({
-  getProgramStudents,
+  getStudentsByProgram,
   currentTimesheet,
   students,
   submitPinTimestamp
@@ -19,7 +19,7 @@ function ManualEntry({
 
   useEffect(() => {
     if (currentTimesheet.item)
-      getProgramStudents(currentTimesheet.item.program);
+      getStudentsByProgram(currentTimesheet.item.program);
   }, [currentTimesheet.isFetching]);
 
   useEffect(() => {
@@ -113,8 +113,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProgramStudents: programId => {
-      dispatch(getProgramStudents(programId));
+    getStudentsByProgram: programId => {
+      dispatch(getStudentsByProgram(programId));
     },
     addTimestamp: timestamp => {
       dispatch(addTimestamp(timestamp));

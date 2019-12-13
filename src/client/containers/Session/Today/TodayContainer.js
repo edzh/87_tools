@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getProgramStudents } from '../../../actions/programActions';
+import { getStudentsByProgram } from '../../../actions/studentActions';
 import { getDateTimesheetTimestamps } from '../../../actions/timeclockActions';
 import { getSessionClubs } from '../../../actions/sessionActions';
 
@@ -19,8 +19,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProgramStudents: programId => {
-      dispatch(getProgramStudents(programId));
+    getStudentsByProgram: programId => {
+      dispatch(getStudentsByProgram(programId));
     },
     getDateTimesheetTimestamps: (date, io) => {
       dispatch(getDateTimesheetTimestamps(date, io));

@@ -1,5 +1,5 @@
 import { apiUrl } from 'config';
-import { fetchStudents } from '../api';
+import { fetchStudents, fetchPrograms } from '../api';
 import * as schema from '../schemas/schema';
 import { normalize } from 'normalizr';
 
@@ -23,11 +23,12 @@ function fetchProgramsFailure(err) {
   };
 }
 
-export function fetchPrograms() {
+export function fetchUserPrograms() {
   return dispatch => {
     dispatch(fetchProgramsRequest());
-    return fetch(`${apiUrl}/api/program`, {
+    return fetch(`${apiUrl}/api/user/programs`, {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
       }
     })
@@ -86,16 +87,9 @@ function getProgramFamiliesSuccess(families) {
 export function getCurrentProgram(programId) {
   return dispatch => {
     dispatch(currentProgramRequest());
-    return fetch(`${apiUrl}/api/program/${programId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(currentProgramSuccess(json.data));
-      });
+    return fetchPrograms.get
+      .one(programId)
+      .then(data => dispatch(currentProgramSuccess(data)));
   };
 }
 
@@ -130,15 +124,6 @@ export function getProgramSessions(programId) {
       .then(json => {
         dispatch(getProgramSessionsSuccess(json.data));
       });
-  };
-}
-
-export function getProgramStudents(programId) {
-  return dispatch => {
-    dispatch(currentProgramRequest());
-    return fetchStudents.get
-      .program(programId)
-      .then(data => dispatch(getProgramStudentsSuccess(data)));
   };
 }
 

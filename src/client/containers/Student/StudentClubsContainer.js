@@ -21,7 +21,8 @@ function StudentClubs({
   updateCurrentStudent
 }) {
   useEffect(() => {
-    currentStudent.item && getProgramSessions(currentStudent.item.program);
+    currentStudent.allIds &&
+      getProgramSessions(currentStudent.byId[currentStudent.allIds].program);
   }, [currentStudent.isFetching]);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ function StudentClubs({
         sessions={sessions}
         getCurrentSession={getCurrentSession}
         getSessionClubs={getSessionClubs}
-        currentStudent={currentStudent}
+        currentStudent={currentStudent.item}
         updateCurrentStudent={updateCurrentStudent}
         currentSession={currentSession}
       />
@@ -49,7 +50,7 @@ function StudentClubs({
 const mapStateToProps = (state, ownProps) => {
   return {
     studentId: ownProps.studentId,
-    currentStudent: state.currentStudent.item,
+    currentStudent: state.currentStudent,
     isAuthenticated: state.user.isAuthenticated,
     currentSession: state.currentSession,
     sessions: state.sessions,

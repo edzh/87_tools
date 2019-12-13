@@ -59,3 +59,26 @@ export const fetchStudents = {
   },
   delete: async studentId => {}
 };
+
+export const fetchPrograms = {
+  get: {
+    user: async userId => {
+      const data = await fetch(`${apiUrl}/api/program/`, {
+        headers
+      })
+        .then(response => response.json())
+        .then(json => json.data);
+
+      return data;
+    },
+    one: async programId => {
+      const data = await fetch(`${apiUrl}/api/program`, {
+        headers
+      })
+        .then(response => response.json())
+        .then(json => json.data);
+
+      return data;
+    }
+  }
+};

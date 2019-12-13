@@ -22,13 +22,15 @@ export default function EditStudentClubs({
   updateCurrentStudent
 }) {
   function findClubWithDay(clubDay) {
-    if (!currentStudent.item.currentClubs) return '';
-    const club = currentStudent.item.clubs
+    if (!currentStudent.byId[currentStudent.allIds].currentClubs) return '';
+    const club = currentStudent.byId[currentStudent.allIds].clubs
       .filter(club => club.day === clubDay)
       .find(club => club.session === currentSession.item._id);
 
     if (club) return club._id;
   }
+
+  if (!currentStudent.allIds) return null;
 
   return (
     <div>
@@ -50,8 +52,8 @@ export default function EditStudentClubs({
           ))}
       </div>
       <div className="p-4">
-        {currentStudent.item.clubs &&
-          currentStudent.item.clubs
+        {currentStudent.byId[currentStudent.allIds].clubs &&
+          currentStudent.byId[currentStudent.allIds].clubs
             .filter(club => club.session === currentSession.item._id)
             .map((club, index) => (
               <div className="flex m-2" key={index}>
@@ -82,7 +84,9 @@ export default function EditStudentClubs({
               values.friday
             ].filter(club => club !== '');
 
-            const sessionClubIds = currentStudent.item.clubs
+            const sessionClubIds = currentStudent.byId[
+              currentStudent.allIds
+            ].clubs
               .filter(club => club.session !== currentSession.item._id)
               .map(club => club._id);
 
@@ -91,7 +95,7 @@ export default function EditStudentClubs({
             ).filter(club => club !== '');
 
             updateCurrentStudent({
-              ...currentStudent.item,
+              ...currentStudent.byId[currentStudent.allIds],
               currentClubs,
               clubs
             });

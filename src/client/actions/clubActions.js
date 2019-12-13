@@ -159,12 +159,3 @@ function getClubStudentsSuccess(students) {
     students
   };
 }
-
-export function getClubStudents(clubId) {
-  return dispatch => {
-    dispatch(fetchCurrentClubRequest());
-    return fetchStudents.get.club(clubId).then(data => {
-      dispatch(getClubStudentsSuccess(data));
-    });
-  };
-}
