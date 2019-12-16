@@ -45,20 +45,21 @@ export function students(state = initialStudentsState, action) {
         id: action.student
       };
     case 'ADD_STUDENT_SUCCESS':
-      function compare(a, b) {
-        if (a.name < b.name) {
-          return -1;
-        }
-        if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
-      }
+      const students = state.items.byId;
+      const studentIds = state.items.allIds;
+
+      const { byId, allIds } = action.payload;
 
       return {
         ...state,
-        items: [action.student, ...state.items].sort(compare),
-        recentStudent: action.student,
+        items: {
+          byId: {
+            ...students,
+            [allIds]: byId[allIds]
+          },
+          allIds: [...studentIds, allIds]
+        },
+        recentStudent: allIds,
         isFetching: false
       };
     case 'STUDENT_ERROR':

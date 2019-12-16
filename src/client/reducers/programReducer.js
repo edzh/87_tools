@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
 
 const initialProgramsState = {
-  items: [],
+  items: {
+    byId: {},
+    allIds: []
+  },
   isFetching: false
 };
 
@@ -22,13 +25,27 @@ export function programs(state = initialProgramsState, action) {
       return {
         ...state,
         isFetching: false,
-        items: action.programs
+        items: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        }
       };
     case 'ADD_PROGRAM_SUCCESS':
+      const programs = state.items.byId;
+      const programIds = state.items.allIds;
+
+      const { byId, allIds } = action.payload;
+
       return {
         ...state,
         isFetching: false,
-        items: [...state.items, action.program]
+        items: {
+          byId: {
+            ...programs,
+            [allIds]: byId[allIds]
+          },
+          allIds: [...programIds, allIds]
+        }
       };
     default:
       return state;
@@ -44,9 +61,11 @@ export function currentProgram(state = initialCurrentProgramState, action) {
       };
     case 'CURRENT_PROGRAM_SUCCESS':
       return {
-        ...state,
         isFetching: false,
-        item: action.program
+        item: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        }
       };
     case 'GET_PROGRAM_SESSIONS_SUCCESS':
       return {
@@ -62,10 +81,3 @@ export function currentProgram(state = initialCurrentProgramState, action) {
       return state;
   }
 }
-
-// const programReducer = combineReducers({
-//   programs,
-//   currentProgram
-// });
-
-// export default programReducer;

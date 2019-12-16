@@ -22,7 +22,7 @@ function Dashboard({
     getAllProgramData(programId);
   }, []);
 
-  if (!(students.items.result && families.items && sessions.items)) {
+  if (!(students.items.allIds.length && families.items && sessions.items)) {
     return <div className="p-2">Loading...</div>;
   }
 
@@ -31,7 +31,7 @@ function Dashboard({
       <div className="bg-white w-48 p-2 my-2 rounded border border-gray-400">
         <div className="flex">
           <div className="w-32 font-bold text-gray-800 text-lg">Students</div>
-          <div className="w-10 text-lg">{students.items.result.length}</div>
+          <div className="w-10 text-lg">{students.items.allIds.length}</div>
         </div>
         <div className="flex">
           <div className="w-32 font-bold text-gray-800 text-lg">Families</div>

@@ -10,9 +10,14 @@ function fetchProgramsRequest() {
 }
 
 function fetchProgramsSuccess(programs) {
+  const normalizedPrograms = normalize(programs, schema.programList);
+
   return {
     type: 'FETCH_PROGRAMS_SUCCESS',
-    programs
+    payload: {
+      byId: normalizedPrograms.entities.program,
+      allIds: normalizedPrograms.result
+    }
   };
 }
 
@@ -26,16 +31,9 @@ function fetchProgramsFailure(err) {
 export function fetchUserPrograms() {
   return dispatch => {
     dispatch(fetchProgramsRequest());
-    return fetch(`${apiUrl}/api/user/programs`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(fetchProgramsSuccess(json.data));
-      });
+    return fetchPrograms.get
+      .user()
+      .then(data => dispatch(fetchProgramsSuccess(data)));
   };
 }
 
@@ -50,16 +48,26 @@ function currentProgramRequest() {
 /* SUCCESS */
 
 function currentProgramSuccess(program) {
+  const normalizedProgram = normalize(program, schema.program);
+
   return {
     type: 'CURRENT_PROGRAM_SUCCESS',
-    program
+    payload: {
+      byId: normalizedProgram.entities.program,
+      allIds: normalizedProgram.result
+    }
   };
 }
 
 function addProgramSuccess(program) {
+  const normalizedProgram = normalize(program, schema.program);
+
   return {
     type: 'ADD_PROGRAM_SUCCESS',
-    program
+    payload: {
+      byId: normalizedProgram.entities.program,
+      allIds: normalizedProgram.result
+    }
   };
 }
 
@@ -67,13 +75,6 @@ function getProgramSessionsSuccess(sessions) {
   return {
     type: 'GET_PROGRAM_SESSIONS_SUCCESS',
     sessions
-  };
-}
-
-function getProgramStudentsSuccess(students) {
-  return {
-    type: 'GET_PROGRAM_STUDENTS_SUCCESS',
-    students: normalize(students, schema.studentList)
   };
 }
 
@@ -130,24 +131,9 @@ export function getProgramSessions(programId) {
 export function addProgram(program) {
   return dispatch => {
     dispatch(fetchProgramsRequest());
-    return fetch(`${apiUrl}/api/program/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(program)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error('Unable to create program!');
-        }
-
-        return response.json();
-      })
-      .then(json => {
-        dispatch(addProgramSuccess(json.data));
-      });
+    return fetchPrograms
+      .add(program)
+      .then(data => dispatch(addProgramSuccess(data)));
   };
 }
 
@@ -170,17 +156,8 @@ export function getProgramFamilies(programId) {
 export function updateCurrentProgram(program) {
   return dispatch => {
     dispatch(currentProgramRequest());
-    return fetch(`${apiUrl}/api/program/${program._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(program)
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(currentProgramSuccess(json.data));
-      });
+    return fetchPrograms
+      .update()
+      .then(data => dispatch(currentProgramSuccess(data)));
   };
 }

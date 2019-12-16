@@ -51,9 +51,14 @@ export function addStudent(student) {
 }
 
 function addStudentSuccess(student) {
+  const normalizedStudent = normalize(student, schema.student);
+
   return {
     type: 'ADD_STUDENT_SUCCESS',
-    student
+    payload: {
+      byId: normalizedStudent.entities.students,
+      allIds: normalizedStudent.result
+    }
   };
 }
 
@@ -95,7 +100,7 @@ export function updateCurrentStudent(student) {
   return dispatch => {
     dispatch(currentStudentRequest());
     return fetchStudents.update(student).then(data => {
-      dispatch(currentStudentSuccess(normalize(data, schema.student)));
+      dispatch(currentStudentSuccess(data));
     });
   };
 }

@@ -10,21 +10,22 @@ export default function ProgramList({
   addProgram
 }) {
   const [showForm, setShowForm] = useState(false);
+  console.log(programs);
 
   return (
     <div>
       <ul className="flex flex-wrap">
-        {programs.items &&
-          programs.items.map(program => (
-            <li key={program._id}>
+        {!!programs.items.allIds.length &&
+          programs.items.allIds.map(programId => (
+            <li key={programId}>
               <Link
                 className="pt-2 pl-4 pb-8 my-2 mr-2 w-64 h-24 btn hover:bg-blue-400 text-lg font-bold"
                 onClick={() =>
-                  updateUser({ ...user, currentProgram: program._id })
+                  updateUser({ ...user, currentProgram: programId })
                 }
-                to={`/program/${program._id}`}
+                to={`/program/${programId}`}
               >
-                {program.name}
+                {programs.items.byId[programId].name}
               </Link>
             </li>
           ))}
