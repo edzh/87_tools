@@ -25,7 +25,7 @@ function ProgramPage(props) {
     <div>
       <ProgramHeader
         programId={props.programId}
-        currentProgram={props.currentProgram}
+        currentProgram={props.currentProgram.item}
       />
       <div className="flex">
         <Dashboard programId={props.programId} />
@@ -65,7 +65,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProgramPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProgramPage);

@@ -9,7 +9,10 @@ const initialProgramsState = {
 };
 
 const initialCurrentProgramState = {
-  item: {},
+  item: {
+    byId: {},
+    allIds: ''
+  },
   sessions: [],
   isFetching: false
 };
@@ -60,11 +63,13 @@ export function currentProgram(state = initialCurrentProgramState, action) {
         isFetching: true
       };
     case 'CURRENT_PROGRAM_SUCCESS':
+      const { byId, allIds } = action.payload;
+
       return {
         isFetching: false,
         item: {
-          byId: action.payload.byId,
-          allIds: action.payload.allIds
+          byId,
+          allIds
         }
       };
     case 'GET_PROGRAM_SESSIONS_SUCCESS':

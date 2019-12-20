@@ -5,17 +5,22 @@ import { connect } from 'react-redux';
 import { addStudent, getStudentsByProgram } from '../../actions/studentActions';
 
 import StudentForm from '../../components/Student/StudentForm';
+import StudentAlert from '../../components/Student/StudentAlert';
 import StudentList from '../../components/Student/StudentList';
 
-function Student(props) {
+function Student({ programId, students, addStudent, getStudentsByProgram }) {
   useEffect(() => {
-    props.getStudentsByProgram(props.programId);
+    getStudentsByProgram(programId);
   }, []);
 
   return (
     <div>
-      <StudentList students={props.students.items} />
-      <StudentForm programId={props.programId} addStudent={props.addStudent} />
+      <StudentList students={students.items} />
+      <StudentAlert
+        students={students.items}
+        recentStudent={students.recentStudent}
+      />
+      <StudentForm programId={programId} addStudent={addStudent} />
     </div>
   );
 }

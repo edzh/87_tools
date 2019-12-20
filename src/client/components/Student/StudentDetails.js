@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
-import EditStudentDetails from './EditStudentDetails';
-import EditStudentFamily from './EditStudentFamily';
 
 const intToGrade = [
   'Kindergarten',
@@ -13,12 +11,11 @@ const intToGrade = [
   '5th Grade'
 ];
 export default function StudentDetails({
-  updateCurrentStudent,
   currentStudent,
-  ...props
+  deleteCurrentStudent,
+  updateCurrentStudent
 }) {
   const [edit, setEdit] = useState(false);
-  console.log(currentStudent);
   if (!currentStudent.allIds) return null;
 
   return (
@@ -86,6 +83,12 @@ export default function StudentDetails({
             </p>
           )}
         </div>
+        <button
+          onClick={() => deleteCurrentStudent(currentStudent.allIds)}
+          className="bg-red p-2"
+        >
+          delete
+        </button>
       </div>
     </div>
   );

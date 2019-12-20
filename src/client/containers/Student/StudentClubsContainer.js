@@ -8,7 +8,7 @@ import {
 import { updateCurrentStudent } from '../../actions/studentActions';
 import { getProgramSessions } from '../../actions/programActions';
 
-import EditStudentClubs from '../../components/Student/EditStudentClubsNew';
+import EditStudentClubs from '../../components/Student/EditStudentClubs';
 
 function StudentClubs({
   currentStudent,
@@ -33,7 +33,6 @@ function StudentClubs({
 
   return (
     <div>
-      {/*currentStudent.item.currentClubs.map(club => club.name)*/}
       <EditStudentClubs
         clubs={clubs}
         sessions={sessions}

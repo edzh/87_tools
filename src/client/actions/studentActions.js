@@ -62,6 +62,27 @@ function addStudentSuccess(student) {
   };
 }
 
+function deleteStudentSuccess(student) {
+  const normalizedStudent = normalize(student, schema.student);
+
+  return {
+    type: 'DELETE_STUDENT_SUCCESS',
+    payload: {
+      byId: normalizedStudent.entities.students,
+      allIds: normalizedStudent.result
+    }
+  };
+}
+
+export function deleteCurrentStudent(studentId) {
+  return dispatch => {
+    dispatch(fetchStudentsRequest());
+    return fetchStudents
+      .delete(studentId)
+      .then(data => dispatch(deleteStudentSuccess(data)));
+  };
+}
+
 export function studentError(error) {
   return {
     type: 'STUDENT_ERROR',

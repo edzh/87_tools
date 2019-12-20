@@ -62,6 +62,19 @@ export function students(state = initialStudentsState, action) {
         recentStudent: allIds,
         isFetching: false
       };
+    case 'DELETE_STUDENT_SUCCESS':
+      return {
+        ...state,
+        items: {
+          byId: {
+            ...state.items.byId,
+            [action.payload.allIds]: null
+          },
+          allIds: state.items.allIds.filter(
+            studentId => studentId !== action.payload.allIds
+          )
+        }
+      };
     case 'STUDENT_ERROR':
       return {
         ...state,

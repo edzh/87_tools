@@ -5,7 +5,8 @@ import { Link, Redirect } from 'react-router-dom';
 import {
   setStudent,
   getCurrentStudent,
-  updateCurrentStudent
+  updateCurrentStudent,
+  deleteCurrentStudent
 } from '../../actions/studentActions';
 import {
   getSessionClubs,
@@ -16,7 +17,6 @@ import { getCurrentProgram } from '../../actions/programActions';
 import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
 import StudentDetails from '../../components/Student/StudentDetails';
-import EditStudent from '../../components/Student/EditStudentNew';
 import StudentClubs from '../../components/Student/StudentClubs';
 import StudentHeader from '../../components/Student/StudentHeader';
 
@@ -25,12 +25,11 @@ function StudentPage({
   currentStudent,
   currentSession,
   updateCurrentStudent,
+  deleteCurrentStudent,
   ...props
 }) {
   const [student, setStudent] = useState(null);
   const [editDetails, setEditDetails] = useState(false);
-  const [editFamily, setEditFamily] = useState(false);
-  const [editClubs, setEditClubs] = useState(false);
 
   useEffect(() => {
     props.getCurrentStudent(props.studentId);
@@ -55,6 +54,7 @@ function StudentPage({
         editDetails={editDetails}
         setEditDetails={setEditDetails}
         updateCurrentStudent={updateCurrentStudent}
+        deleteCurrentStudent={deleteCurrentStudent}
         currentSession={currentSession}
       />
       {props.routes.map(route => (
@@ -90,6 +90,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCurrentProgram: programId => {
       dispatch(getCurrentProgram(programId));
+    },
+    deleteCurrentStudent: studentId => {
+      dispatch(deleteCurrentStudent(studentId));
     }
   };
 };

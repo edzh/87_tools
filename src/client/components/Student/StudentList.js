@@ -23,19 +23,5 @@ export default function Student({ students }) {
         </li>
       ))}
     </ul>
-
-    // props.students.items.map((student, index) => (
-    //   <li
-    //     className="mb-1 rounded border border-gray-400 bg-white px-2 py-1"
-    //     key={student._id}
-    //   >
-    //     <Link
-    //       className="text-blue-600 text-sm hover:text-blue-400"
-    //       to={`/student/${student._id}`}
-    //     >
-    //       {student.name}
-    //     </Link>
-    //   </li>
-    // ))}
   );
 }

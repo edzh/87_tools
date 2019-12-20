@@ -12,7 +12,6 @@ import ClubStudentList from '../../components/Club/ClubStudentList';
 
 function ClubPage(props) {
   const [editDetails, setEditDetails] = useState(false);
-  console.log(props.students);
 
   useEffect(() => {
     props.getCurrentClub(props.clubId);
