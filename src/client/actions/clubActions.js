@@ -1,5 +1,7 @@
 import { apiUrl } from 'config';
-import { fetchStudents } from '../api';
+import { fetchClubs } from '../api';
+import * as schema from '../schemas/schema';
+import { normalize } from 'normalizr';
 
 function fetchClubsRequest() {
   return {
@@ -14,28 +16,15 @@ export function fetchCurrentClubRequest() {
 }
 
 // get many
-export function getClubs() {
-  return dispatch => {
-    dispatch(fetchClubsRequest());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/club`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getClubsSuccess(json.data));
-      })
-      .catch(err => {
-        dispatch(getClubsFailure(err));
-      });
-  };
-}
+function fetchClubsSuccess(clubs) {
+  const normalizedClubs = normalize(clubs, schema.clubList);
 
-function getClubsSuccess(clubs) {
   return {
-    type: 'GET_CLUBS_SUCCESS',
-    clubs
+    type: 'FETCH_CLUBS_SUCCESS',
+    payload: {
+      byId: normalizedClubs.entities.clubs,
+      allIds: normalizedClubs.result
+    }
   };
 }
 
@@ -46,27 +35,34 @@ function getClubsFailure(err) {
   };
 }
 
+export function getClubsBySession(sessionId) {
+  return dispatch => {
+    dispatch(fetchClubsRequest());
+    return fetchClubs.get
+      .session(sessionId)
+      .then(data => dispatch(fetchClubsSuccess(data)));
+  };
+}
+
 // get one
 export function getCurrentClub(clubId) {
   return dispatch => {
     dispatch(fetchCurrentClubRequest());
-    return fetch(`${apiUrl}/api/club/${clubId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getCurrentClubSuccess(json.data));
-      });
+    return fetchClubs.get
+      .one(clubId)
+      .then(data => dispatch(currentClubSuccess(data)));
   };
 }
 
-function getCurrentClubSuccess(club) {
+function currentClubSuccess(club) {
+  const normalizedClubs = normalize(club, schema.club);
+
   return {
-    type: 'GET_CURRENT_CLUB_SUCCESS',
-    club
+    type: 'CURRENT_CLUB_SUCCESS',
+    payload: {
+      byId: normalizedClubs.entities.clubs,
+      allIds: normalizedClubs.result
+    }
   };
 }
 

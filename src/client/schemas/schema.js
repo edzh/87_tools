@@ -16,3 +16,9 @@ export const program = new schema.Entity('program', undefined, {
 });
 
 export const programList = [program];
+
+export const club = new schema.Entity('clubs', undefined, {
+  idAttribute: value => value._id
+});
+
+export const clubList = [club];

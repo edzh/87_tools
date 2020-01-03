@@ -8,10 +8,8 @@ import {
   updateCurrentStudent,
   deleteCurrentStudent
 } from '../../actions/studentActions';
-import {
-  getSessionClubs,
-  getCurrentSession
-} from '../../actions/sessionActions';
+import { getCurrentSession } from '../../actions/sessionActions';
+import { getClubsBySession } from '../../actions/clubActions';
 import { getCurrentProgram } from '../../actions/programActions';
 
 import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
@@ -82,8 +80,8 @@ const mapDispatchToProps = dispatch => {
     updateCurrentStudent: student => {
       dispatch(updateCurrentStudent(student));
     },
-    getSessionClubs: sessionId => {
-      dispatch(getSessionClubs(sessionId));
+    getClubsBySession: sessionId => {
+      dispatch(getClubsBySession(sessionId));
     },
     getCurrentSession: sessionId => {
       dispatch(getCurrentSession(sessionId));

@@ -71,13 +71,6 @@ function addProgramSuccess(program) {
   };
 }
 
-function getProgramSessionsSuccess(sessions) {
-  return {
-    type: 'GET_PROGRAM_SESSIONS_SUCCESS',
-    sessions
-  };
-}
-
 function getProgramFamiliesSuccess(families) {
   return {
     type: 'GET_PROGRAM_FAMILIES_SUCCESS',
@@ -108,22 +101,6 @@ export function setCurrentSession(programId, sessionId) {
       .then(response => response.json())
       .then(json => {
         dispatch(currentProgramSuccess(json.data));
-      });
-  };
-}
-
-export function getProgramSessions(programId) {
-  return dispatch => {
-    dispatch(currentProgramRequest());
-    return fetch(`${apiUrl}/api/program/${programId}/sessions`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getProgramSessionsSuccess(json.data));
       });
   };
 }

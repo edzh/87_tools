@@ -29,24 +29,13 @@ function fetchStudentsFailure(error) {
   };
 }
 
-export function setStudent(student) {
-  return {
-    type: types.SET_STUDENT,
-    student
-  };
-}
-
 export function addStudent(student) {
   return dispatch => {
     dispatch(fetchStudentsRequest());
     return fetchStudents
       .add(student)
-      .then(data => {
-        dispatch(addStudentSuccess(data));
-      })
-      .catch(err => {
-        dispatch(studentError(err));
-      });
+      .then(data => dispatch(addStudentSuccess(data)))
+      .catch(err => dispatch(studentError(err)));
   };
 }
 
@@ -111,18 +100,18 @@ function currentStudentSuccess(student) {
 export function getCurrentStudent(studentId) {
   return dispatch => {
     dispatch(currentStudentRequest());
-    return fetchStudents.get.one(studentId).then(data => {
-      dispatch(currentStudentSuccess(data));
-    });
+    return fetchStudents.get
+      .one(studentId)
+      .then(data => dispatch(currentStudentSuccess(data)));
   };
 }
 
 export function updateCurrentStudent(student) {
   return dispatch => {
     dispatch(currentStudentRequest());
-    return fetchStudents.update(student).then(data => {
-      dispatch(currentStudentSuccess(data));
-    });
+    return fetchStudents
+      .update(student)
+      .then(data => dispatch(currentStudentSuccess(data)));
   };
 }
 

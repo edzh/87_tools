@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
 import { addClub } from '../../actions/clubActions';
-import { getSessionClubs } from '../../actions/sessionActions';
+import { getClubsBySession } from '../../actions/clubActions';
 
 import ClubList from '../../components/Club/ClubList';
 import ClubForm from '../../components/Club/ClubForm';
 
 function Club(props) {
   useEffect(() => {
-    props.getSessionClubs(props.sessionId);
+    props.getClubsBySession(props.sessionId);
   }, []);
 
   if (!props.clubs) {
@@ -19,7 +19,7 @@ function Club(props) {
 
   return (
     <div>
-      <ClubList clubs={props.clubs} sessions={props.sessions} />
+      <ClubList clubs={props.clubs.items} sessions={props.sessions} />
       <ClubForm addClub={props.addClub} sessionId={props.sessionId} />
     </div>
   );
@@ -37,13 +37,10 @@ const mapDispatchToProps = dispatch => {
     addClub: club => {
       dispatch(addClub(club));
     },
-    getSessionClubs: sessionId => {
-      dispatch(getSessionClubs(sessionId));
+    getClubsBySession: sessionId => {
+      dispatch(getClubsBySession(sessionId));
     }
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Club);
+export default connect(mapStateToProps, mapDispatchToProps)(Club);

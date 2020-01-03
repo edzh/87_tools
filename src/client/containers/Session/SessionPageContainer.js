@@ -5,9 +5,9 @@ import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 import {
   setSession,
   getCurrentSession,
-  getSessionClubs,
   addCurrentSessionClub
 } from '../../actions/sessionActions';
+import { getClubsBySession } from '../../actions/clubActions';
 
 import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
 import SessionDetails from '../../components/Session/SessionDetails';
@@ -43,8 +43,8 @@ const mapDispatchToProps = dispatch => {
     getCurrentSession: sessionId => {
       dispatch(getCurrentSession(sessionId));
     },
-    getSessionClubs: sessionId => {
-      dispatch(getSessionClubs(sessionId));
+    getClubsBySession: sessionId => {
+      dispatch(getClubsBySession(sessionId));
     },
     addCurrentSessionClub: (sessionId, club) => {
       dispatch(addCurrentSessionClub(sessionId, club));
@@ -52,7 +52,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SessionPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SessionPage);

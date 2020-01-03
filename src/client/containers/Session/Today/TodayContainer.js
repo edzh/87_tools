@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { getStudentsByProgram } from '../../../actions/studentActions';
 import { getDateTimesheetTimestamps } from '../../../actions/timeclockActions';
-import { getSessionClubs } from '../../../actions/sessionActions';
+import { getClubsBySession } from '../../../actions/clubActions';
 
 import Today from '../../../components/Session/Today/Today';
 
@@ -25,8 +25,8 @@ const mapDispatchToProps = dispatch => {
     getDateTimesheetTimestamps: (date, io) => {
       dispatch(getDateTimesheetTimestamps(date, io));
     },
-    getSessionClubs: sessionId => {
-      dispatch(getSessionClubs(sessionId));
+    getClubsBySession: sessionId => {
+      dispatch(getClubsBySession(sessionId));
     }
   };
 };

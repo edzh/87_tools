@@ -11,9 +11,14 @@ function fetchSessionsRequest() {
 }
 
 function fetchSessionsSuccess(sessions) {
+  const normalizedSessions = normalize(sessions, schema.sessionList);
+
   return {
     type: types.FETCH_SESSIONS_SUCCESS,
-    sessions
+    payload: {
+      byId: normalizedSessions.entities.sessions,
+      allIds: normalizedSessions.result
+    }
   };
 }
 
@@ -24,28 +29,12 @@ function fetchSessionsFailure(err) {
   };
 }
 
-export function fetchSessions() {
+export function getSessionsByProgram(programId) {
   return dispatch => {
     dispatch(fetchSessionsRequest());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/session`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(fetchSessionsSuccess(json.data));
-      })
-      .catch(err => {
-        dispatch(fetchSessionsFailure(err));
-      });
-  };
-}
-
-export function setSession(session) {
-  return {
-    type: types.SET_SESSION,
-    session
+    return fetchSessions.get
+      .program(programId)
+      .then(data => dispatch(fetchSessionsSuccess(data)));
   };
 }
 
@@ -62,13 +51,6 @@ function currentSessionSuccess(session) {
   };
 }
 
-function getSessionClubsSuccess(clubs) {
-  return {
-    type: 'GET_SESSION_CLUBS_SUCCESS',
-    clubs
-  };
-}
-
 function addSessionClubsSuccess(clubs) {
   return {
     type: 'ADD_CURRENT_SESSION_CLUBS_SUCCESS',
@@ -79,63 +61,30 @@ function addSessionClubsSuccess(clubs) {
 export function getCurrentSession(sessionId) {
   return dispatch => {
     dispatch(currentSessionRequest());
-    return fetch(`${apiUrl}/api/session/${sessionId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(currentSessionSuccess(json.data));
-      });
-  };
-}
-
-export function getSessionClubs(sessionId) {
-  return dispatch => {
-    dispatch(currentSessionRequest());
-    return fetch(`${apiUrl}/api/session/${sessionId}/clubs`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getSessionClubsSuccess(json.data));
-      });
+    return fetchSessions.get
+      .one(sessionId)
+      .then(data => dispatch(currentSessionSuccess(data)));
   };
 }
 
 function addSessionSuccess(session) {
+  const normalizedSession = normalize(session, schema.session);
+
   return {
     type: 'ADD_SESSION_SUCCESS',
-    session
+    payload: {
+      byId: normalizedSession.entities.sessions,
+      allIds: normalizedSession.result
+    }
   };
 }
 
 export function addSession(session) {
   return dispatch => {
     dispatch(fetchSessionsRequest());
-    return fetch(`${apiUrl}/api/session/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(session)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error('Unable to create session!');
-        }
-
-        return response.json();
-      })
-      .then(json => {
-        dispatch(addSessionSuccess(json.data));
-      });
+    return fetchSessions
+      .add(session)
+      .then(data => dispatch(addSessionSuccess(data)));
   };
 }
 

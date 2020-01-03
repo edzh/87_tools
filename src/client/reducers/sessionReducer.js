@@ -2,7 +2,10 @@ import { combineReducers } from 'redux';
 import * as types from '../actions/sessionTypes';
 
 const initialSessionState = {
-  items: [],
+  items: {
+    byId: {},
+    allIds: []
+  },
   isFetching: false
 };
 
@@ -19,10 +22,12 @@ export function sessions(state = initialSessionState, action) {
         isFetching: true
       };
     case types.FETCH_SESSIONS_SUCCESS:
-    case 'GET_PROGRAM_SESSIONS_SUCCESS':
       return {
         ...state,
-        items: action.sessions,
+        items: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        },
         isFetching: false
       };
     case types.FETCH_SESSIONS_FAILURE:
@@ -31,10 +36,22 @@ export function sessions(state = initialSessionState, action) {
         isFetching: false
       };
     case 'ADD_SESSION_SUCCESS':
+      const sessions = state.items.byId;
+      const sessionIds = state.items.allIds;
+
+      const { byId, allIds } = action.payload;
+
       return {
         ...state,
         isFetching: false,
-        items: [...state.items, action.session]
+        items: {
+          byId: {
+            ...sessions,
+            [allIds]: byId[allIds]
+          },
+          allIds: [...sessionIds, allIds]
+        },
+        recentSession: allIds
       };
     case types.SET_SESSION:
       return {

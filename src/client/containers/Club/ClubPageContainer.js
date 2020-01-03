@@ -4,37 +4,46 @@ import { setClub, getCurrentClub } from '../../actions/clubActions';
 
 import { getStudentsByClub } from '../../actions/studentActions';
 
-import { fetchSessions } from '../../actions/sessionActions';
+import { getSessionsByProgram } from '../../actions/sessionActions';
 
 import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
 import ClubDetails from '../../components/Club/ClubDetails';
 import ClubStudentList from '../../components/Club/ClubStudentList';
 
-function ClubPage(props) {
+function ClubPage({
+  getCurrentClub,
+  getStudentsByClub,
+  currentClub,
+  clubId,
+  students,
+  sessions
+}) {
   const [editDetails, setEditDetails] = useState(false);
 
   useEffect(() => {
-    props.getCurrentClub(props.clubId);
-    props.fetchSessions();
+    getCurrentClub(clubId);
   }, []);
 
   useEffect(() => {
-    props.getStudentsByClub(props.clubId);
+    getStudentsByClub(clubId);
   }, []);
 
-  if (!props.currentClub.item) return null;
+  console.log(currentClub);
+  if (!currentClub.item.allIds) return null;
 
   return (
     <div>
-      <MainDetailsHeader>{props.currentClub.item.name}</MainDetailsHeader>
+      <MainDetailsHeader>
+        {currentClub.item.byId[currentClub.item.allIds].name}
+      </MainDetailsHeader>
 
       {/*      <ClubDetails
-        club={props.currentClub}
-        sessions={props.sessions}
+        club={currentClub}
+        sessions={sessions}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
       />*/}
-      {<ClubStudentList students={props.students.items} />}
+      {<ClubStudentList students={students.items} />}
     </div>
   );
 }
@@ -50,8 +59,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchSessions: () => {
-      dispatch(fetchSessions());
+    getSessionsByProgram: programId => {
+      dispatch(getSessionsByProgram(programId));
     },
     getCurrentClub: clubId => {
       dispatch(getCurrentClub(clubId));

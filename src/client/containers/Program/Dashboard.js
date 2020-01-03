@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  getProgramFamilies,
-  getProgramSessions
-} from '../../actions/programActions';
+import { getProgramFamilies } from '../../actions/programActions';
+import { getSessionsByProgram } from '../../actions/sessionActions';
 
 import { getStudentsByProgram } from '../../actions/studentActions';
 
@@ -63,7 +61,7 @@ const mapDispatchToProps = dispatch => {
       Promise.all([
         dispatch(getProgramFamilies(programId)),
         dispatch(getStudentsByProgram(programId)),
-        dispatch(getProgramSessions(programId))
+        dispatch(getSessionsByProgram(programId))
       ]);
     }
   };

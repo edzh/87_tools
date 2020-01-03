@@ -18,7 +18,7 @@ export default function EditStudentClubs({
   currentStudent,
   currentSession,
   getCurrentSession,
-  getSessionClubs,
+  getClubsBySession,
   updateCurrentStudent
 }) {
   function findClubWithDay(clubDay) {
@@ -31,25 +31,25 @@ export default function EditStudentClubs({
   }
 
   if (!currentStudent.allIds) return null;
+  if (!sessions.allIds.length) return null;
 
   return (
     <div>
       <h2 className="text-xl font-bold my-2">Clubs</h2>
 
       <div className="flex">
-        {sessions.items &&
-          sessions.items.map(session => (
-            <p
-              key={session._id}
-              className="p-2 mr-2 btn"
-              onClick={() => {
-                getCurrentSession(session._id);
-                getSessionClubs(session._id);
-              }}
-            >
-              {session.name}
-            </p>
-          ))}
+        {sessions.allIds.map(sessionId => (
+          <p
+            key={sessionId}
+            className="p-2 mr-2 btn"
+            onClick={() => {
+              getCurrentSession(sessionId);
+              getClubsBySession(sessionId);
+            }}
+          >
+            {sessions.byId[sessionId].name}
+          </p>
+        ))}
       </div>
       <div className="p-4">
         {currentStudent.byId[currentStudent.allIds].clubs &&
