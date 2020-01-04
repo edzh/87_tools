@@ -39,11 +39,6 @@ export function students(state = initialStudentsState, action) {
         ...state,
         isFetching: false
       };
-    case types.SET_STUDENT:
-      return {
-        ...state,
-        id: action.student
-      };
     case 'ADD_STUDENT_SUCCESS':
       const students = state.items.byId;
       const studentIds = state.items.allIds;

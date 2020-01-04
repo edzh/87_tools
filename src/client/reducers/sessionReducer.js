@@ -10,7 +10,10 @@ const initialSessionState = {
 };
 
 const initialCurrentSessionState = {
-  item: {},
+  item: {
+    byId: {},
+    allIds: ''
+  },
   isFetching: false
 };
 
@@ -53,10 +56,19 @@ export function sessions(state = initialSessionState, action) {
         },
         recentSession: allIds
       };
-    case types.SET_SESSION:
+    case 'DELETE_SESSION_SUCCESS':
       return {
         ...state,
-        id: action.session
+        isFetching: false,
+        items: {
+          byId: {
+            ...state.items.byId,
+            [action.payload.allIds]: null
+          },
+          allIds: state.items.allIds.filter(
+            clubId => clubId !== action.payload.allIds
+          )
+        }
       };
     default:
       return state;

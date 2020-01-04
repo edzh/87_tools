@@ -1,5 +1,10 @@
 import { schema } from 'normalizr';
 
+export const family = new schema.Entity('families', undefined, {
+  idAttribute: value => value._id
+});
+export const familyList = [family];
+
 export const student = new schema.Entity('students', undefined, {
   idAttribute: value => value._id
 });

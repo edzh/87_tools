@@ -2,24 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
-import { setFamily } from '../../actions/familyActions';
+import { setFamily, getCurrentFamily } from '../../actions/familyActions';
 
 import FamilyDetails from '../../components/Family/FamilyDetails';
 import FamilyPins from '../../components/Family/FamilyPins';
 import FamilyDeleteModal from '../../components/Family/FamilyDeleteModal';
 
-function FamilyPage(props) {
+function FamilyPage({ familyId, getCurrentFamily, setFamily }) {
   const [fetchedFamily, setFetchedFamily] = useState('');
   const [editDetails, setEditDetails] = useState(false);
   const [editPickups, setEditPickups] = useState(false);
   const [toFamily, setToFamily] = useState(false);
 
   useEffect(() => {
-    props.setFamily(props.family);
+    setFamily(familyId);
+    getCurrentFamily(familyId);
 
     const fetchFamily = async () => {
       const result = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/family/${props.family}`,
+        `${process.env.REACT_APP_API_URL}/api/family/${familyId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('id_token')}`
@@ -61,7 +62,7 @@ function FamilyPage(props) {
     <div>
       <FamilyDetails
         family={fetchedFamily}
-        familyId={props.family}
+        familyId={familyId}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
       />
@@ -77,7 +78,8 @@ function FamilyPage(props) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    family: ownProps.match.params.id
+    familyId: ownProps.match.params.id,
+    currentFamily: state.currentFamily
   };
 };
 
@@ -85,11 +87,11 @@ const mapDispatchToProps = dispatch => {
   return {
     setFamily: family => {
       dispatch(setFamily(family));
+    },
+    getCurrentFamily: familyId => {
+      dispatch(getCurrentFamily(familyId));
     }
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FamilyPage);
+export default connect(mapStateToProps, mapDispatchToProps)(FamilyPage);

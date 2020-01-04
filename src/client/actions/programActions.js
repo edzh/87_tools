@@ -1,5 +1,5 @@
 import { apiUrl } from 'config';
-import { fetchStudents, fetchPrograms } from '../api';
+import { fetchPrograms } from '../api/fetchPrograms';
 import * as schema from '../schemas/schema';
 import { normalize } from 'normalizr';
 
@@ -114,27 +114,32 @@ export function addProgram(program) {
   };
 }
 
-export function getProgramFamilies(programId) {
-  return dispatch => {
-    dispatch(currentProgramRequest());
-    return fetch(`${apiUrl}/api/program/${programId}/families`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getProgramFamiliesSuccess(json.data));
-      });
-  };
-}
-
 export function updateCurrentProgram(program) {
   return dispatch => {
     dispatch(currentProgramRequest());
     return fetchPrograms
-      .update()
+      .update(program)
       .then(data => dispatch(currentProgramSuccess(data)));
+  };
+}
+
+export function deleteCurrentProgram(programId) {
+  return dispatch => {
+    dispatch(fetchProgramsRequest());
+    return fetchPrograms
+      .delete(programId)
+      .then(data => dispatch(deleteProgramSuccess(data)));
+  };
+}
+
+function deleteProgramSuccess(program) {
+  const normalizedProgram = normalize(program, schema.program);
+
+  return {
+    type: 'DELETE_PROGRAM_SUCCESS',
+    payload: {
+      byId: normalizedProgram.entities.program,
+      allIds: normalizedProgram.result
+    }
   };
 }

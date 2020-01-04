@@ -50,6 +50,20 @@ export function programs(state = initialProgramsState, action) {
           allIds: [...programIds, allIds]
         }
       };
+    case 'DELETE_PROGRAM_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        items: {
+          byId: {
+            ...state.items.byId,
+            [action.payload.allIds]: null
+          },
+          allIds: state.items.allIds.filter(
+            programId => programId !== action.payload.allIds
+          )
+        }
+      };
     default:
       return state;
   }
@@ -71,16 +85,6 @@ export function currentProgram(state = initialCurrentProgramState, action) {
           byId,
           allIds
         }
-      };
-    case 'GET_PROGRAM_SESSIONS_SUCCESS':
-      return {
-        ...state,
-        isFetching: false
-      };
-    case 'GET_PROGRAM_STUDENTS_SUCCESS':
-      return {
-        ...state,
-        isFetching: false
       };
     default:
       return state;

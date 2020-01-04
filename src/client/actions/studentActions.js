@@ -1,6 +1,6 @@
 import 'cross-fetch';
 import { apiUrl } from 'config';
-import { fetchStudents } from '../api';
+import { fetchStudents } from '../api/fetchStudents';
 import * as schema from '../schemas/schema';
 import { normalize } from 'normalizr';
 import * as types from './studentTypes';

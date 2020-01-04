@@ -1,72 +1,102 @@
 import 'cross-fetch';
-import * as types from './familyTypes';
 import { apiUrl } from 'config';
+import { fetchFamilies } from '../api/fetchFamilies';
+import * as schema from '../schemas/schema';
+import { normalize } from 'normalizr';
 
 function fetchFamiliesRequest() {
   return {
-    type: types.FETCH_FAMILIES_REQUEST
+    type: 'FETCH_FAMILIES_REQUEST'
   };
 }
 
 function fetchFamiliesSuccess(families) {
+  const normalizedFamilies = normalize(families, schema.familyList);
+
   return {
-    type: types.FETCH_FAMILIES_SUCCESS,
-    families
+    type: 'FETCH_FAMILIES_SUCCESS',
+    payload: {
+      byId: normalizedFamilies.entities.families,
+      allIds: normalizedFamilies.result
+    }
   };
 }
 
 function fetchFamiliesFailure() {
   return {
-    type: types.FETCH_FAMILIES_FAILURE
-  };
-}
-
-export function fetchFamilies() {
-  return dispatch => {
-    dispatch(fetchFamiliesRequest());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/family`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(fetchFamiliesSuccess(json.data));
-      })
-      .catch(err => {
-        dispatch(fetchFamiliesFailure());
-      });
+    type: 'FETCH_FAMILIES_FAILURE'
   };
 }
 
 export function setFamily(family) {
   return {
-    type: types.SET_FAMILY,
+    type: 'SET_FAMILY',
     family
   };
 }
 
 function addFamilySuccess(family) {
+  const normalizedFamily = normalize(family, schema.family);
+
   return {
     type: 'ADD_FAMILY_SUCCESS',
-    family
+    payload: {
+      byId: normalizedFamily.entities.sessions,
+      allIds: normalizedFamily.result
+    }
   };
 }
 
 export function addFamily(family) {
   return dispatch => {
     dispatch(fetchFamiliesRequest());
-    return fetch(`${apiUrl}/api/family`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(family)
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(addFamilySuccess(json.data));
-      });
+    return fetchFamilies
+      .add(family)
+      .then(data => dispatch(addFamilySuccess(data)));
+  };
+}
+
+export function updateCurrentFamily(family) {
+  return dispatch => {
+    dispatch(currentFamilyRequest());
+    return fetchFamilies
+      .update(family)
+      .then(data => dispatch(currentFamilySuccess(data)));
+  };
+}
+
+function currentFamilyRequest() {
+  return {
+    type: 'CURRENT_FAMILY_REQUEST'
+  };
+}
+
+export function getCurrentFamily(familyId) {
+  return dispatch => {
+    dispatch(currentFamilyRequest());
+    return fetchFamilies.get
+      .one(familyId)
+      .then(data => dispatch(currentFamilySuccess(data)));
+  };
+}
+
+function currentFamilySuccess(family) {
+  const normalizedFamily = normalize(family, schema.family);
+
+  return {
+    type: 'CURRENT_FAMILY_SUCCESS',
+    payload: {
+      byId: normalizedFamily.entities.families,
+      allIds: normalizedFamily.result
+    }
+  };
+}
+
+export function getFamiliesByProgram(programId) {
+  return dispatch => {
+    dispatch(fetchFamiliesRequest());
+    return fetchFamilies.get
+      .program(programId)
+      .then(data => dispatch(fetchFamiliesSuccess(data)));
   };
 }

@@ -1,5 +1,5 @@
 import { apiUrl } from 'config';
-import { fetchSessions } from '../api';
+import { fetchSessions } from '../api/fetchSessions';
 import * as schema from '../schemas/schema';
 import { normalize } from 'normalizr';
 import * as types from './sessionTypes';

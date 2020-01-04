@@ -2,20 +2,20 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getProgramFamilies } from '../../actions/programActions';
+import { getFamiliesByProgram } from '../../actions/familyActions';
 
 import FamilyList from '../../components/Family/FamilyList';
 import FamilyForm from '../../components/Family/FamilyForm';
 
-function Family(props) {
+function Family({ getFamiliesByProgram, families, programId }) {
   useEffect(() => {
-    props.getProgramFamilies(props.programId);
+    getFamiliesByProgram(programId);
   }, []);
 
   return (
     <div>
-      <FamilyList families={props.families} />
-      <FamilyForm programId={props.programId} />
+      <FamilyList families={families.items} />
+      <FamilyForm programId={programId} />
     </div>
   );
 }
@@ -29,13 +29,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProgramFamilies: programId => {
-      dispatch(getProgramFamilies(programId));
+    getFamiliesByProgram: programId => {
+      dispatch(getFamiliesByProgram(programId));
     }
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Family);
+export default connect(mapStateToProps, mapDispatchToProps)(Family);

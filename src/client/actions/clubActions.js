@@ -1,5 +1,5 @@
 import { apiUrl } from 'config';
-import { fetchClubs } from '../api';
+import { fetchClubs } from '../api/fetchClubs';
 import * as schema from '../schemas/schema';
 import { normalize } from 'normalizr';
 
@@ -25,13 +25,6 @@ function fetchClubsSuccess(clubs) {
       byId: normalizedClubs.entities.clubs,
       allIds: normalizedClubs.result
     }
-  };
-}
-
-function getClubsFailure(err) {
-  return {
-    type: 'GET_CLUBS_FAILURE',
-    err
   };
 }
 
@@ -70,88 +63,48 @@ function currentClubSuccess(club) {
 export function addClub(club) {
   return dispatch => {
     dispatch(fetchClubsRequest());
-    return fetch(`${apiUrl}/api/club/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(club)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error('Unable to create club!');
-        }
-
-        return response.json();
-      })
-      .then(json => {
-        dispatch(addClubSuccess(json.data));
-      });
+    return fetchClubs.add(club).then(data => dispatch(addClubSuccess(data)));
   };
 }
 
 function addClubSuccess(club) {
+  const normalizedClub = normalize(club, schema.club);
+
   return {
     type: 'ADD_CLUB_SUCCESS',
-    club
+    payload: {
+      byId: normalizedClub.entities.clubs,
+      allIds: normalizedClub.result
+    }
   };
 }
 
 // update one
-export function updateClub(club) {
+export function updateCurrentClub(club) {
   return dispatch => {
     dispatch(fetchCurrentClubRequest());
-    return fetch(`${apiUrl}/api/club/${club._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(club)
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(updateClubSuccess(club));
-      });
-  };
-}
-
-function updateClubSuccess(club) {
-  return {
-    type: 'UPDATE_CLUB_SUCCESS',
-    club
+    return fetchClubs.update(club).then(data => currentClubSuccess(data));
   };
 }
 
 // delete one
-export function deleteClub(clubId) {
+export function deleteCurrentClub(clubId) {
   return dispatch => {
     dispatch(fetchClubsRequest());
-    return fetch(`${apiUrl}/api/club/${clubId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(deleteClubSuccess(clubId));
-      });
+    return fetchClubs
+      .delete(clubId)
+      .then(data => dispatch(deleteClubSuccess(data)));
   };
 }
 
-function deleteClubSuccess(clubId) {
+function deleteClubSuccess(club) {
+  const normalizedClub = normalize(club, schema.club);
+
   return {
     type: 'DELETE_CLUB_SUCCESS',
-    clubId
-  };
-}
-
-function getClubStudentsSuccess(students) {
-  return {
-    type: 'GET_CLUB_STUDENTS_SUCCESS',
-    students
+    payload: {
+      byId: normalizedClub.entities.clubs,
+      allIds: normalizedClub.result
+    }
   };
 }

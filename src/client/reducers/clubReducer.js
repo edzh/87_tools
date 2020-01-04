@@ -38,16 +38,35 @@ export function clubs(state = initialClubsState, action) {
         isFetching: false
       };
     case 'ADD_CLUB_SUCCESS':
+      const clubs = state.items.byId;
+      const clubIds = state.items.allIds;
+
+      const { byId, allIds } = action.payload;
+
       return {
         ...state,
         isFetching: false,
-        items: [...state.items, action.club]
+        items: {
+          byId: {
+            ...clubs,
+            [allIds]: byId[allIds]
+          },
+          allIds: [...clubIds, allIds]
+        }
       };
     case 'DELETE_CLUB_SUCCESS':
       return {
         ...state,
         isFetching: false,
-        items: state.items.filter(club => club._id !== action.clubId)
+        items: {
+          byId: {
+            ...state.items.byId,
+            [action.payload.allIds]: null
+          },
+          allIds: state.items.allIds.filter(
+            clubId => clubId !== action.payload.allIds
+          )
+        }
       };
     default:
       return state;
@@ -69,18 +88,6 @@ export function currentClub(state = initialCurrentClubState, action) {
           byId: action.payload.byId,
           allIds: action.payload.allIds
         }
-      };
-    case 'GET_CLUB_STUDENTS_SUCCESS':
-      return {
-        ...state,
-        isFetching: false,
-        students: action.students
-      };
-    case 'UPDATE_CLUB_SUCCESS':
-      return {
-        ...state,
-        isFetching: false,
-        item: action.club
       };
     default:
       return state;
