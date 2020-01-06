@@ -38,24 +38,26 @@ export default function Today({
 
   // const createL
 
-  const todayStudents = students.items.filter(student => {
+  const todayStudents = students.allIds.filter(studentId => {
     let exists = false;
-    student.currentClubs.forEach(club => {
+    students.byId[studentId].currentClubs.forEach(club => {
       if (club.day === day) exists = true;
     });
     return exists;
   });
 
   const presentStudents = todayStudents
-    .filter(student => {
+    .filter(studentId => {
       return (
         timestamp.signin &&
-        !!timestamp.signin.find(t => t.student._id === student._id)
+        !!timestamp.signin.find(t => t.student._id === studentId)
       );
     })
     .sort((a, b) => {
-      const clubA = a.currentClubs.find(club => club.day === day).name;
-      const clubB = b.currentClubs.find(club => club.day === day).name;
+      const clubA = students.byId[a].currentClubs.find(club => club.day === day)
+        .name;
+      const clubB = students.byId[b].currentClubs.find(club => club.day === day)
+        .name;
 
       if (clubA < clubB) return -1;
       if (clubA > clubB) return 1;
@@ -70,16 +72,18 @@ export default function Today({
   });
 
   const absentStudents = todayStudents
-    .filter(student => {
+    .filter(studentId => {
       return (
         timestamp.signin &&
-        !timestamp.signin.find(t => t.student._id === student._id)
+        !timestamp.signin.find(t => t.student._id === studentId)
       );
     })
     // .filter(student => student.grade !== 0)
     .sort((a, b) => {
-      const clubA = a.currentClubs.find(club => club.day === day).name;
-      const clubB = b.currentClubs.find(club => club.day === day).name;
+      const clubA = students.byId[a].currentClubs.find(club => club.day === day)
+        .name;
+      const clubB = students.byId[b].currentClubs.find(club => club.day === day)
+        .name;
 
       if (clubA < clubB) return -1;
       if (clubA > clubB) return 1;
@@ -108,11 +112,15 @@ export default function Today({
         <div className="mr-4 p-2">
           <h3 className="font-bold">Absent {absentStudents.length}</h3>
           <div className="overflow-auto" style={{ height: '360px' }}>
-            {absentStudents.map(student => (
-              <div key={student._id} className="flex text-sm">
-                <div className="w-64">{student.name}</div>
+            {absentStudents.map(studentId => (
+              <div key={studentId} className="flex text-sm">
+                <div className="w-64">{students.byId[studentId].name}</div>
                 <div className="w-64">
-                  {student.currentClubs.find(club => club.day === day).name}
+                  {
+                    students.byId[studentId].currentClubs.find(
+                      club => club.day === day
+                    ).name
+                  }
                 </div>
               </div>
             ))}
@@ -121,11 +129,15 @@ export default function Today({
         <div className="p-2">
           <h3 className="font-bold">Present {presentStudents.length}</h3>
           <div className="overflow-auto" style={{ height: '360px' }}>
-            {presentStudents.map(student => (
-              <div key={student._id} className="flex text-sm">
-                <div className="w-64">{student.name}</div>
+            {presentStudents.map(studentId => (
+              <div key={studentId} className="flex text-sm">
+                <div className="w-64">{students.byId[studentId].name}</div>
                 <div className="w-64">
-                  {student.currentClubs.find(club => club.day === day).name}
+                  {
+                    students.byId[studentId].currentClubs.find(
+                      club => club.day === day
+                    ).name
+                  }
                 </div>
               </div>
             ))}

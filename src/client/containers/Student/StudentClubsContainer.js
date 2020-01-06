@@ -34,7 +34,7 @@ function StudentClubs({
   return (
     <div>
       <EditStudentClubs
-        clubs={clubs}
+        clubs={clubs.items}
         sessions={sessions.items}
         getCurrentSession={getCurrentSession}
         getClubsBySession={getClubsBySession}

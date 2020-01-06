@@ -7,7 +7,7 @@ import Today from '../../../components/Session/Today/Today';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    students: state.students,
+    students: state.students.items,
     programId: state.currentSession.item
       ? state.currentSession.item.program
       : null,

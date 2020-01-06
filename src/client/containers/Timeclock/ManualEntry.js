@@ -24,7 +24,11 @@ function ManualEntry({
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      const filtered = search(debouncedSearchTerm, students.items);
+      const filtered = search(
+        debouncedSearchTerm,
+        students.allIds,
+        students.byId
+      );
       setFilteredSuggestions(filtered);
       setShowSuggestions(true);
     } else {
@@ -44,17 +48,17 @@ function ManualEntry({
       />
       <div className="overflow-auto rounded-b bg-white h-64">
         {filteredSuggestions.length !== 0 ? (
-          filteredSuggestions.map((student, index) => (
+          filteredSuggestions.map((studentId, index) => (
             <div
-              key={student._id}
+              key={studentId}
               className="p-1 border-b block w-full flex text-xs"
             >
-              <p className="pl-2 py-1 w-3/4">{student.name}</p>
+              <p className="pl-2 py-1 w-3/4">{students.byId[studentId].name}</p>
               <p className="flex">
                 <button
                   className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
-                    submitPinTimestamp(student.pin, 'Lost');
+                    submitPinTimestamp(students.byId[studentId].pin, 'Lost');
                   }}
                 >
                   Lost
@@ -62,7 +66,7 @@ function ManualEntry({
                 <button
                   className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
-                    submitPinTimestamp(student.pin, 'Home');
+                    submitPinTimestamp(students.byId[studentId].pin, 'Home');
                   }}
                 >
                   Home
@@ -70,7 +74,7 @@ function ManualEntry({
                 <button
                   className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
-                    submitPinTimestamp(student.pin, 'Damaged');
+                    submitPinTimestamp(students.byId[studentId].pin, 'Damaged');
                   }}
                 >
                   Damaged
@@ -78,7 +82,7 @@ function ManualEntry({
                 <button
                   className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
-                    submitPinTimestamp(student.pin, 'DNF');
+                    submitPinTimestamp(students.byId[studentId].pin, 'DNF');
                   }}
                 >
                   DNF
@@ -96,9 +100,11 @@ function ManualEntry({
   );
 }
 
-function search(search, list) {
+function search(search, list, listById) {
   const filtered = list.filter(suggestion => {
-    return suggestion.name.toLowerCase().indexOf(search.toLowerCase()) > -1;
+    return (
+      listById[suggestion].name.toLowerCase().indexOf(search.toLowerCase()) > -1
+    );
   });
 
   return filtered;
@@ -106,7 +112,7 @@ function search(search, list) {
 
 const mapStateToProps = state => {
   return {
-    students: state.students,
+    students: state.students.items,
     currentTimesheet: state.currentTimesheet
   };
 };
