@@ -29,6 +29,15 @@ export const fetchStudents = {
         .then(json => json.data);
 
       return data;
+    },
+    family: async familyId => {
+      const data = await fetch(`${apiUrl}/api/family/${familyId}/students`, {
+        headers
+      })
+        .then(response => response.json())
+        .then(json => json.data);
+
+      return data;
     }
   },
   add: async student => {

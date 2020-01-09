@@ -85,9 +85,9 @@ export default function StudentDetails({
         </div>
         <button
           onClick={() => deleteCurrentStudent(currentStudent.allIds)}
-          className="bg-red p-2"
+          className="bg-red-500 text-white rounded p-2"
         >
-          delete
+          Delete
         </button>
       </div>
     </div>

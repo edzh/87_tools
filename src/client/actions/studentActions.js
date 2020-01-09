@@ -132,3 +132,12 @@ export function getStudentsByClub(clubId) {
       .then(data => dispatch(fetchStudentsSuccess(data)));
   };
 }
+
+export function getStudentsByFamily(familyId) {
+  return dispatch => {
+    dispatch(fetchStudentsRequest());
+    return fetchStudents.get
+      .family(familyId)
+      .then(data => dispatch(fetchStudentsSuccess(data)));
+  };
+}

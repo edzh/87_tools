@@ -51,6 +51,19 @@ export function families(state = initialFamiliesState, action) {
         recentFamily: allIds,
         isFetching: false
       };
+    case 'DELETE_FAMILY_SUCCESS':
+      return {
+        ...state,
+        items: {
+          byId: {
+            ...state.items.byId,
+            [action.payload.allIds]: null
+          },
+          allIds: state.items.allids.filter(
+            studentId => studentId !== action.payload.allIds
+          )
+        }
+      };
     default:
       return state;
   }

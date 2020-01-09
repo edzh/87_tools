@@ -100,3 +100,24 @@ export function getFamiliesByProgram(programId) {
       .then(data => dispatch(fetchFamiliesSuccess(data)));
   };
 }
+
+export function deleteCurrentFamily(familyId) {
+  return dispatch => {
+    dispatch(fetchFamiliesRequest());
+    return fetchFamilies
+      .delete(familyId)
+      .then(data => dispatch(deleteFamilySuccess(data)));
+  };
+}
+
+function deleteFamilySuccess(family) {
+  const normalizedFamily = normalize(family, schema.family);
+
+  return {
+    type: 'DELETE_FAMILY_SUCCESS',
+    payload: {
+      byId: normalizedFamily.entities.families,
+      allIds: normalizedFamily.result
+    }
+  };
+}

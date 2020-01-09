@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default ({ family, removeFamily }) => {
+export default ({ family, deleteCurrentFamily }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -27,7 +27,7 @@ export default ({ family, removeFamily }) => {
               </h3>
               <button
                 className="p-1 bg-red-500 text-white border rounded"
-                onClick={() => removeFamily(family._id)}
+                onClick={() => deleteCurrentFamily(family._id)}
               >
                 Delete
               </button>
