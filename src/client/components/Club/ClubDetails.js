@@ -5,6 +5,7 @@ import EditClub from './EditClub';
 export default ({
   currentClub,
   sessions,
+  students,
   editDetails,
   setEditDetails,
   updateCurrentClub
@@ -47,8 +48,7 @@ export default ({
 
           <h3>Capacity</h3>
           <p className="my-2">
-            {byId[allIds].students ? byId[allIds].students.length : 0}/
-            {byId[allIds].capacity}
+            {students.allIds.length}/{byId[allIds].capacity}
           </p>
         </div>
       )}
