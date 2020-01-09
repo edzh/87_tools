@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
-import { daysOfWeek } from 'utils/constants';
+import { intToDay } from 'utils/constants';
 import EditClub from './EditClub';
 
-export default ({ currentClub, sessions, editDetails, setEditDetails }) => {
+export default ({
+  currentClub,
+  sessions,
+  editDetails,
+  setEditDetails,
+  updateCurrentClub
+}) => {
+  const { allIds, byId } = currentClub;
+
+  if (!allIds) return null;
+
   return (
     <div className="border rounded shadow-md">
       <div className="flex border-b bg-gray-800 w-full">
-        <h2 className="m-4 font-normal text-white">{currentClub}</h2>
+        <h2 className="m-4 text-3xl text-white">{byId[allIds].name}</h2>
         <button
           className={`${
             editDetails ? 'bg-blue-500 text-white' : 'bg-white'
@@ -16,27 +26,32 @@ export default ({ currentClub, sessions, editDetails, setEditDetails }) => {
           Edit
         </button>
       </div>
+      <h2 className="m-4 font-normal">{intToDay[byId[allIds].day]}</h2>
 
-      {/*editDetails ? (
+      {editDetails ? (
         <EditClub
-          currentClub={currentClub.item}
+          currentClub={byId[allIds]}
           sessions={sessions}
           setEditDetails={setEditDetails}
+          updateCurrentClub={updateCurrentClub}
         />
       ) : (
         <div className="m-4">
           <h3>Weekday</h3>
-          <p className="my-2">{daysOfWeek[currentClub.item.day]}</p>
+          <p className="my-2">{intToDay[byId[allIds].day]}</p>
 
           <h3>Session</h3>
-          <p className="my-2">{currentClub.item.session && currentClub.item.session.name}</p>
+          <p className="my-2">
+            {byId[allIds].session && byId[allIds].session.name}
+          </p>
 
           <h3>Capacity</h3>
           <p className="my-2">
-            {currentClub.item.students ? currentClub.item.students.length : 0}/{currentClub.item.capacity}
+            {byId[allIds].students ? byId[allIds].students.length : 0}/
+            {byId[allIds].capacity}
           </p>
         </div>
-      )*/}
+      )}
     </div>
   );
 };

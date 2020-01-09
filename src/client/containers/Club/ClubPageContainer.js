@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { setClub, getCurrentClub } from '../../actions/clubActions';
+import { getCurrentClub, updateCurrentClub } from '../../actions/clubActions';
 
 import { getStudentsByClub } from '../../actions/studentActions';
 
@@ -13,22 +13,24 @@ import ClubStudentList from '../../components/Club/ClubStudentList';
 function ClubPage({
   getCurrentClub,
   getStudentsByClub,
+  getSessionsByProgram,
   currentClub,
   clubId,
   students,
-  sessions
+  sessions,
+  updateCurrentClub,
+  user
 }) {
   const [editDetails, setEditDetails] = useState(false);
-
   useEffect(() => {
     getCurrentClub(clubId);
-  }, []);
-
-  useEffect(() => {
     getStudentsByClub(clubId);
   }, []);
 
-  console.log(currentClub);
+  useEffect(() => {
+    user.currentProgram && getSessionsByProgram(user.currentProgram);
+  }, [user.currentProgram]);
+
   if (!currentClub.item.allIds) return null;
 
   return (
@@ -37,12 +39,16 @@ function ClubPage({
         {currentClub.item.byId[currentClub.item.allIds].name}
       </MainDetailsHeader>
 
-      {/*      <ClubDetails
-        club={currentClub}
-        sessions={sessions}
-        editDetails={editDetails}
-        setEditDetails={setEditDetails}
-      />*/}
+      {
+        <ClubDetails
+          currentClub={currentClub.item}
+          sessions={sessions.items}
+          students={students.items}
+          editDetails={editDetails}
+          setEditDetails={setEditDetails}
+          updateCurrentClub={updateCurrentClub}
+        />
+      }
       {<ClubStudentList students={students.items} />}
     </div>
   );
@@ -53,7 +59,8 @@ const mapStateToProps = (state, ownProps) => {
     clubId: ownProps.match.params.id,
     currentClub: state.currentClub,
     students: state.students,
-    sessions: state.sessions
+    sessions: state.sessions,
+    user: state.user.item
   };
 };
 
@@ -67,6 +74,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     getStudentsByClub: clubId => {
       dispatch(getStudentsByClub(clubId));
+    },
+    updateCurrentClub: club => {
+      dispatch(updateCurrentClub(club));
     }
   };
 };

@@ -55,6 +55,7 @@ export const updateOne = async (req, res) => {
       { new: true, upsert: true, safe: true }
     )
       .lean()
+      .populate('session', '-clubs')
       .exec();
 
     if (!club.session.equals(updatedClub.session)) {

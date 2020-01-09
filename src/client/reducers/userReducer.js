@@ -3,11 +3,18 @@ import * as types from '../actions/userTypes';
 const initialState = {
   isAuthenticated: localStorage.getItem('id_token') ? true : false,
   isFetching: localStorage.getItem('id_token') ? true : false,
-  data: {}
+  item: {
+    _id: ''
+  }
 };
 
 export default function user(state = initialState, action) {
   switch (action.type) {
+    case 'FETCH_USER_SUCCESS':
+      return {
+        ...state,
+        item: action.payload.byId[action.payload.allIds]
+      };
     case types.SIGNIN_REQUEST:
       return {
         ...state,

@@ -48,13 +48,13 @@ export function getCurrentClub(clubId) {
 }
 
 function currentClubSuccess(club) {
-  const normalizedClubs = normalize(club, schema.club);
-
+  const normalizedClub = normalize(club, schema.club);
+  console.log(normalizedClub.result);
   return {
     type: 'CURRENT_CLUB_SUCCESS',
     payload: {
-      byId: normalizedClubs.entities.clubs,
-      allIds: normalizedClubs.result
+      byId: normalizedClub.entities.clubs,
+      allIds: normalizedClub.result
     }
   };
 }
@@ -83,7 +83,9 @@ function addClubSuccess(club) {
 export function updateCurrentClub(club) {
   return dispatch => {
     dispatch(fetchCurrentClubRequest());
-    return fetchClubs.update(club).then(data => currentClubSuccess(data));
+    return fetchClubs
+      .update(club)
+      .then(data => dispatch(currentClubSuccess(data)));
   };
 }
 

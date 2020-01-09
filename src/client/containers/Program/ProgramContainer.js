@@ -11,7 +11,7 @@ import Program from '../../components/Program/Programs';
 const mapStateToProps = state => {
   return {
     programs: state.programs,
-    user: state.user.data,
+    user: state.user.item,
     currentProgram: state.currentSession
   };
 };

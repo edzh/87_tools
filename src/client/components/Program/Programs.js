@@ -19,7 +19,7 @@ export default function Program({
       <h1 className="pg-header">Programs</h1>
       <ProgramList
         {...props}
-        programs={programs}
+        programs={programs.items}
         updateUser={updateUser}
         user={user}
       />

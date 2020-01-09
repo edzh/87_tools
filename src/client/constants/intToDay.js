@@ -1,4 +1,4 @@
-export const intToDay = [
+const intToDay = [
   'Sunday',
   'Monday',
   'Tuesday',
@@ -7,3 +7,5 @@ export const intToDay = [
   'Friday',
   'Saturday'
 ];
+
+export default intToDay;

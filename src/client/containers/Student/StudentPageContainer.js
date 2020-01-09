@@ -68,7 +68,7 @@ const mapStateToProps = (state, ownProps) => {
     currentStudent: state.currentStudent,
     isAuthenticated: state.user.isAuthenticated,
     currentSession: state.currentSession,
-    currentProgramId: state.user.data.currentProgram
+    currentProgramId: state.user.item.currentProgram
   };
 };
 

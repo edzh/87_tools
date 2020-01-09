@@ -32,11 +32,11 @@ function Dashboard({
         </div>
         <div className="flex">
           <div className="w-32 font-bold text-gray-800 text-lg">Families</div>
-          <div className="w-10 text-lg">{families.items.length}</div>
+          <div className="w-10 text-lg">{families.items.allIds.length}</div>
         </div>
         <div className="flex">
           <div className="w-32 font-bold text-gray-800 text-lg">Sessions</div>
-          <div className="w-10 text-lg">{sessions.items.length}</div>
+          <div className="w-10 text-lg">{sessions.items.allIds.length}</div>
         </div>
       </div>
       {/*<Chart />*/}
