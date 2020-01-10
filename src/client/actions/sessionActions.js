@@ -13,7 +13,6 @@ function fetchSessionsRequest() {
 function fetchSessionsSuccess(sessions) {
   const normalizedSessions = normalize(sessions, schema.sessionList);
 
-  console.log(sessions);
   return {
     type: types.FETCH_SESSIONS_SUCCESS,
     payload: {
@@ -35,7 +34,6 @@ export function getSessionsByProgram(programId) {
     dispatch(fetchSessionsRequest());
     return fetchSessions.get.program(programId).then(data => {
       dispatch(fetchSessionsSuccess(data));
-      console.log(data);
     });
   };
 }

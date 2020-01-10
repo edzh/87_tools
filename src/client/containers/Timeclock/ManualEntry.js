@@ -14,7 +14,6 @@ function ManualEntry({
 }) {
   const [query, setQuery] = useState('');
   const debouncedSearchTerm = useDebounce(query, 250);
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
   useEffect(() => {
@@ -30,7 +29,6 @@ function ManualEntry({
         students.byId
       );
       setFilteredSuggestions(filtered);
-      setShowSuggestions(true);
     } else {
       setFilteredSuggestions([]);
     }

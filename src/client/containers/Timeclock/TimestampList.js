@@ -8,8 +8,6 @@ import {
   getTimesheetTimestamps
 } from '../../actions/timeclockActions';
 
-import Filters from '../../components/Timeclock/Filters';
-
 function TimestampList({
   currentTimesheet,
   getTimesheetTimestamps,

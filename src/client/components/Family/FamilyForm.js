@@ -5,7 +5,6 @@ import { useFormInput } from 'utils/hooks';
 export default function FamilyForm(props) {
   const name = useFormInput('');
   const [newFamily, setNewFamily] = useState({ redirect: false, id: '' });
-  console.log(props.programId);
 
   function handleSubmit(e) {
     e.preventDefault();

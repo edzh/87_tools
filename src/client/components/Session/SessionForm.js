@@ -17,7 +17,6 @@ export default function SessionForm(props) {
             end: ''
           }}
           onSubmit={(values, action) => {
-            console.log({ values });
             props.addSession({
               name: values.sessionName,
               start: values.start,

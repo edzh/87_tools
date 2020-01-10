@@ -1,6 +1,3 @@
-import { combineReducers } from 'redux';
-import * as types from '../actions/familyTypes';
-
 const initialFamiliesState = {
   isFetching: false,
   items: {

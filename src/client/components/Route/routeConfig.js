@@ -1,5 +1,3 @@
-import AddStudent from '../Student/AddStudent';
-
 import TimesheetForm from '../Timesheet/TimesheetForm';
 import Timesheet from '../../containers/TimesheetContainer';
 import Timeclock from '../../containers/Timeclock/Timeclock';
@@ -31,11 +29,6 @@ import StreamlineAdd from '../../containers/StreamlineAdd';
 import UserContainer from '../../containers/UserContainer';
 
 const routes = [
-  {
-    path: '/addStudent',
-    auth: true,
-    component: AddStudent
-  },
   {
     path: '/timesheet/new',
     auth: true,

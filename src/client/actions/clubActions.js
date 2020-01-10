@@ -1,4 +1,3 @@
-import { apiUrl } from 'config';
 import { fetchClubs } from '../api/fetchClubs';
 import * as schema from '../schemas/schema';
 import { normalize } from 'normalizr';
@@ -49,7 +48,7 @@ export function getCurrentClub(clubId) {
 
 function currentClubSuccess(club) {
   const normalizedClub = normalize(club, schema.club);
-  console.log(normalizedClub.result);
+
   return {
     type: 'CURRENT_CLUB_SUCCESS',
     payload: {

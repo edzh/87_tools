@@ -12,7 +12,7 @@ export default function Timesheet({
 }) {
   useEffect(() => {
     getSessionTimesheets(sessionId);
-  }, []);
+  }, [getSessionTimesheets, sessionId]);
 
   return (
     <div className="flex mt-2">
