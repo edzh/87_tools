@@ -76,7 +76,7 @@ export default function EditStudentClubs({
             friday: findClubWithDay(5)
           }}
           onSubmit={(values, actions) => {
-            const currentClubs = [
+            const currentClubIds = [
               values.monday,
               values.tuesday,
               values.wednesday,
@@ -91,12 +91,12 @@ export default function EditStudentClubs({
               .map(club => club._id);
 
             const clubs = Array.from(
-              new Set([...sessionClubIds, ...currentClubs])
+              new Set([...sessionClubIds, ...currentClubIds])
             ).filter(club => club !== '');
 
             updateCurrentStudent({
               ...currentStudent.byId[currentStudent.allIds],
-              currentClubs,
+              currentClubIds,
               clubs
             });
           }}
