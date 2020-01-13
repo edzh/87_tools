@@ -14,6 +14,7 @@ import Student from '../../containers/Student/StudentContainer';
 import Club from '../../containers/Club/ClubContainer';
 import ClubPage from '../../containers/Club/ClubPageContainer';
 import ClubForm from '../Club/ClubForm';
+import EditClubStudents from '../../features/clubs/EditClubStudents';
 
 import Program from '../../containers/Program/ProgramContainer';
 import ProgramPage from '../../containers/Program/ProgramPageContainer';
@@ -72,6 +73,11 @@ const routes = [
     path: '/club/:id',
     auth: false,
     component: ClubPage
+  },
+  {
+    path: '/clubtest',
+    auth: false,
+    component: EditClubStudents
   },
   {
     path: '/club/new',
