@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchStudents } from '../../api/fetchStudents';
-import { fetchClubs } from '../../api/fetchClubs';
+import { fetchStudents } from 'client/api/fetchStudents';
+import { fetchClubs } from 'client/api/fetchClubs';
+import { fetchSessions } from 'client/api/fetchSessions';
 import * as schema from '../../schemas/schema';
 import { normalize } from 'normalizr';
 
@@ -10,6 +11,13 @@ const initialState = {
     allIds: ''
   },
   students: {
+    byId: {},
+    allIds: [],
+    isFetching: false,
+    error: false,
+    message: ''
+  },
+  sessions: {
     byId: {},
     allIds: [],
     isFetching: false,
@@ -53,6 +61,21 @@ const clubPageSlice = createSlice({
         error: true,
         message: action.payload
       };
+    },
+    getSessionsSuccess(state, action) {
+      const normalizedSessions = normalize(action.payload, schema.sessionList);
+
+      state.sessions = {
+        byId: normalizedSessions.entities.sessions,
+        allIds: normalizedSessions.result
+      };
+    },
+    getSessionsFailure(state, action) {
+      state.sessions = {
+        error: true,
+        message: action.payload,
+        isFetching: false
+      };
     }
   }
 });
@@ -61,7 +84,9 @@ export const {
   getStudentsSuccess,
   getStudentsFailure,
   getClubByIdSuccess,
-  getClubByIdFailure
+  getClubByIdFailure,
+  getSessionsSuccess,
+  getSessionsFailure
 } = clubPageSlice.actions;
 
 export const fetchStudentsByClub = clubId => async dispatch => {
@@ -79,6 +104,33 @@ export const fetchClubById = clubId => async dispatch => {
     dispatch(getClubByIdSuccess({ club }));
   } catch (err) {
     dispatch(getClubByIdFailure(err.toString()));
+  }
+};
+
+export const fetchSessionsByProgram = programId => async dispatch => {
+  try {
+    const sessions = await fetchSessions.get.program(programId);
+    dispatch(getSessionsSuccess(sessions));
+  } catch (err) {
+    dispatch(getSessionsFailure(err.toString()));
+  }
+};
+
+export const updateCurrentClub = club => async dispatch => {
+  try {
+    const club = await fetchClubs.update(club);
+    dispatch(getClubByIdSuccess({ club }));
+  } catch (err) {
+    dispatch(getClubByIdFailure(err.toString()));
+  }
+};
+
+export const addStudentToCurrentClub = (student, clubId) => async dispatch => {
+  try {
+    const student = await fetchStudents.update(student);
+    dispatch(fetchStudentsByClub(clubId));
+  } catch (err) {
+    dispatch(getStudentsFailure(err.toString()));
   }
 };
 

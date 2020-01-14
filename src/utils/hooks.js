@@ -46,3 +46,46 @@ export function useDebounce(value, delay) {
 
   return debouncedValue;
 }
+
+export function useDebouncedAutocomplete(items, ids, delay) {
+  function search(search, list, listById) {
+    const filtered = list.filter(suggestion => {
+      return (
+        listById[suggestion].name.toLowerCase().indexOf(search.toLowerCase()) >
+        -1
+      );
+    });
+
+    return filtered;
+  }
+
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, delay);
+  const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      const filtered = search(debouncedQuery, ids, items);
+      setSuggestions(filtered);
+    } else {
+      setSuggestions([]);
+    }
+  }, [debouncedQuery]);
+
+  return {
+    input: (
+      <input
+        className="border w-full rounded-t p-1"
+        placeholder="search here..."
+        type="text"
+        onChange={e => setQuery(e.target.value)}
+        value={query}
+      />
+    ),
+    suggestions,
+    query: {
+      get: query,
+      set: setQuery
+    }
+  };
+}

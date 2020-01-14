@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { getCurrentClub, updateCurrentClub } from '../../actions/clubActions';
+import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
+import { getCurrentClub, updateCurrentClub } from '../../actions/clubActions';
 import { getStudentsByClub } from '../../actions/studentActions';
 
 import { getSessionsByProgram } from '../../actions/sessionActions';
@@ -16,6 +17,7 @@ function ClubPage({
   getSessionsByProgram,
   currentClub,
   clubId,
+  routes,
   students,
   sessions,
   updateCurrentClub,
@@ -35,10 +37,6 @@ function ClubPage({
 
   return (
     <div>
-      <MainDetailsHeader>
-        {currentClub.item.byId[currentClub.item.allIds].name}
-      </MainDetailsHeader>
-
       {
         <ClubDetails
           currentClub={currentClub.item}
@@ -49,7 +47,9 @@ function ClubPage({
           updateCurrentClub={updateCurrentClub}
         />
       }
-      {<ClubStudentList students={students.items} />}
+      {routes.map(route => (
+        <RouteWithSubroutes key={route.path} {...route} />
+      ))}
     </div>
   );
 }

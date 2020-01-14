@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { intToDay } from 'utils/constants';
-import EditClub from './EditClub';
 
-export default ({
-  currentClub,
-  sessions,
-  students,
-  editDetails,
-  setEditDetails,
-  updateCurrentClub
-}) => {
-  const { allIds, byId } = currentClub;
-
+export default function ClubDetails() {
+  const clubPage = useSelector(state => state.clubPageReducer);
+  const currentClub = clubPage.item;
+  const { byId, allIds } = currentClub;
+  const { students, sessions } = clubPage;
   if (!allIds) return null;
 
   return (
@@ -36,4 +31,4 @@ export default ({
       </div>
     </div>
   );
-};
+}

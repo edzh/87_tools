@@ -12,9 +12,10 @@ import StudentFamily from '../../containers/Student/StudentFamilyContainer';
 import Student from '../../containers/Student/StudentContainer';
 
 import Club from '../../containers/Club/ClubContainer';
-import ClubPage from '../../containers/Club/ClubPageContainer';
 import ClubForm from '../Club/ClubForm';
-import EditClubStudents from '../../features/clubs/EditClubStudents';
+import ClubPage from '../../features/clubs/ClubPage';
+import ClubDetails from '../../features/clubs/ClubDetails';
+import ClubStudents from '../../features/clubs/ClubStudents';
 
 import Program from '../../containers/Program/ProgramContainer';
 import ProgramPage from '../../containers/Program/ProgramPageContainer';
@@ -63,21 +64,21 @@ const routes = [
     ]
   },
   {
-    path: '/club',
-    auth: true,
-    exact: true,
-    component: Club,
-    routes: []
-  },
-  {
     path: '/club/:id',
     auth: false,
-    component: ClubPage
-  },
-  {
-    path: '/clubtest',
-    auth: false,
-    component: EditClubStudents
+    component: ClubPage,
+    routes: [
+      {
+        path: '/club/:id',
+        exact: true,
+        component: ClubDetails
+      },
+      {
+        path: '/club/:id/students',
+        exact: true,
+        component: ClubStudents
+      }
+    ]
   },
   {
     path: '/club/new',

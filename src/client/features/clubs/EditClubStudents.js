@@ -6,16 +6,18 @@ import {
   fetchClubById
 } from '../../features/clubs/clubSlice';
 
-export default function EditClubStudents() {
+import ClubStudentList from '../../components/Club/ClubStudentList';
+
+export default function EditClubStudents({ match }) {
   const dispatch = useDispatch();
   const clubPage = useSelector(state => state.clubPageReducer);
-  const clubId = '5d7037b1a4034f37a4ff3488';
-  console.log(clubPage);
+  const { students } = clubPage;
+  const clubId = match.params.id;
 
   useEffect(() => {
     dispatch(fetchStudentsByClub(clubId));
     dispatch(fetchClubById(clubId));
   }, [clubId]);
 
-  return <div></div>;
+  return <ClubStudentList students={students} />;
 }
