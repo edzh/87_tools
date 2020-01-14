@@ -86,7 +86,8 @@ export const {
   getClubByIdSuccess,
   getClubByIdFailure,
   getSessionsSuccess,
-  getSessionsFailure
+  getSessionsFailure,
+  addStudentToClubSuccess
 } = clubPageSlice.actions;
 
 export const fetchStudentsByClub = clubId => async dispatch => {
@@ -125,9 +126,10 @@ export const updateCurrentClub = club => async dispatch => {
   }
 };
 
-export const addStudentToCurrentClub = (student, clubId) => async dispatch => {
+export const addStudentToClub = (student, clubId) => async dispatch => {
   try {
-    const student = await fetchStudents.update(student);
+    console.log(student);
+    await fetchStudents.update(student);
     dispatch(fetchStudentsByClub(clubId));
   } catch (err) {
     dispatch(getStudentsFailure(err.toString()));
