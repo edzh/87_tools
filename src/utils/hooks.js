@@ -47,7 +47,7 @@ export function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-export function useDebouncedAutocomplete(items, ids, delay) {
+export function useDebouncedAutocomplete(items, delay) {
   function search(search, list, listById) {
     const filtered = list.filter(suggestion => {
       return (
@@ -65,7 +65,7 @@ export function useDebouncedAutocomplete(items, ids, delay) {
 
   useEffect(() => {
     if (debouncedQuery) {
-      const filtered = search(debouncedQuery, ids, items);
+      const filtered = search(debouncedQuery, items.allIds, items.byId);
       setSuggestions(filtered);
     } else {
       setSuggestions([]);
@@ -73,15 +73,6 @@ export function useDebouncedAutocomplete(items, ids, delay) {
   }, [debouncedQuery]);
 
   return {
-    input: (
-      <input
-        className="border w-full rounded-t p-1"
-        placeholder="search here..."
-        type="text"
-        onChange={e => setQuery(e.target.value)}
-        value={query}
-      />
-    ),
     suggestions,
     query: {
       get: query,

@@ -8,6 +8,9 @@ import {
   updateCurrentClub
 } from '../../features/clubs/clubSlice';
 
+import { getStudentsByProgram } from 'client/actions/studentActions';
+import { getSessionsByProgram } from 'client/actions/sessionActions';
+
 import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 import ClubDetails from '../../components/Club/ClubDetails';
 import ClubStudentList from '../../components/Club/ClubStudentList';
@@ -26,7 +29,9 @@ export default function ClubPage({ match, routes }) {
       try {
         await Promise.all([
           dispatch(fetchStudentsByClub(clubId)),
-          dispatch(fetchClubById(clubId))
+          dispatch(fetchClubById(clubId)),
+          dispatch(getStudentsByProgram(programId)),
+          dispatch(getSessionsByProgram(programId))
         ]);
       } catch (err) {
         console.error(err);

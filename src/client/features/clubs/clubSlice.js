@@ -11,14 +11,12 @@ const initialState = {
     allIds: ''
   },
   students: {
-    byId: {},
     allIds: [],
     isFetching: false,
     error: false,
     message: ''
   },
   sessions: {
-    byId: {},
     allIds: [],
     isFetching: false,
     error: false,
@@ -34,10 +32,7 @@ const clubPageSlice = createSlice({
     getStudentsSuccess(state, action) {
       const normalizedStudents = normalize(action.payload, schema.studentList);
 
-      state.students = {
-        byId: normalizedStudents.entities.students,
-        allIds: normalizedStudents.result
-      };
+      state.students.allIds = normalizedStudents.result;
     },
     getStudentsFailure(state, action) {
       state.students = {
@@ -65,10 +60,7 @@ const clubPageSlice = createSlice({
     getSessionsSuccess(state, action) {
       const normalizedSessions = normalize(action.payload, schema.sessionList);
 
-      state.sessions = {
-        byId: normalizedSessions.entities.sessions,
-        allIds: normalizedSessions.result
-      };
+      state.sessions.allIds = normalizedSessions.result;
     },
     getSessionsFailure(state, action) {
       state.sessions = {
@@ -76,6 +68,14 @@ const clubPageSlice = createSlice({
         message: action.payload,
         isFetching: false
       };
+    },
+    addStudentToClubSuccess(state, action) {
+      const normalizedStudent = normalize(action.payload, schema.student);
+      console.log(normalizedStudent);
+      state.students.allIds = [
+        ...state.students.allIds,
+        normalizedStudent.result
+      ];
     }
   }
 });
@@ -128,9 +128,8 @@ export const updateCurrentClub = club => async dispatch => {
 
 export const addStudentToClub = (student, clubId) => async dispatch => {
   try {
-    console.log(student);
-    await fetchStudents.update(student);
-    dispatch(fetchStudentsByClub(clubId));
+    const newStudent = await fetchStudents.update(student);
+    dispatch(addStudentToClubSuccess(newStudent));
   } catch (err) {
     dispatch(getStudentsFailure(err.toString()));
   }

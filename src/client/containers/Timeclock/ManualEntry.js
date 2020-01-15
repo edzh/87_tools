@@ -12,7 +12,6 @@ function ManualEntry({
   students,
   submitPinTimestamp
 }) {
-  const [query, setQuery] = useState('');
   const debouncedSearchTerm = useDebounce(query, 250);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
@@ -34,16 +33,18 @@ function ManualEntry({
     }
   }, [debouncedSearchTerm]);
 
-  const { input, suggestions } = useDebouncedAutocomplete(
-    students.byId,
-    students.allIds,
-    250
-  );
+  const { suggestions, query } = useDebouncedAutocomplete(students, 250);
 
   return (
     <div className="mt-2 p-2 bg-white border border-gray-200 shadow rounded">
       <h3 className="text-lg font-gray-800 my-2">Manual Entry</h3>
-      {input}
+      <input
+        className="mb-0 p-2 rounded-l w-full border border-gray-200"
+        placeholder="search here..."
+        type="text"
+        onChange={e => query.set(e.target.value)}
+        value={query.get}
+      />
       <div className="overflow-auto rounded-b bg-white h-64">
         {suggestions.length !== 0 ? (
           suggestions.map((studentId, index) => (

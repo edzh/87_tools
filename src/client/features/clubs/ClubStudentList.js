@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function ClubStudentList() {
-  const students = useSelector(state => state.clubPageReducer.students);
+  const students = useSelector(state => state.students.items);
+  const studentIds = useSelector(
+    state => state.clubPageReducer.students.allIds
+  );
   if (!students.allIds.length) return null;
 
   return (
     <div className="m-4">
-      {students.allIds.map(studentId => (
+      {studentIds.map(studentId => (
         <Link
           key={studentId}
           className="block no-underline text-blue-500 hover:text-blue-400"
