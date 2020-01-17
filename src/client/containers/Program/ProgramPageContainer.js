@@ -33,7 +33,7 @@ function ProgramPage(props) {
       />
       <div className="flex">
         <Dashboard programId={props.programId} />
-        {props.currentSession.item.allIds && (
+        {props.currentSession.item.byId[sessionId] && (
           <Link
             className="btn m-2 hover:bg-blue-400"
             to={`/session/${sessionId}/timesheets`}

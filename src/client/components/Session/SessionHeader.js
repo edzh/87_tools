@@ -7,7 +7,11 @@ export default function SessionHeader({ sessionId, session }) {
   return (
     <div>
       <h3 className="text-lg">
-        <Link to={`/program/${session.item.program}/sessions`}>
+        <Link
+          to={`/program/${
+            session.item.byId[session.item.allIds].program
+          }/sessions`}
+        >
           <span className="font-bold text-blue-500">{'< '}</span>Program
         </Link>
       </h3>

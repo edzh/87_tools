@@ -79,7 +79,7 @@ function Timeclock({
 
       addTimestamp({
         student: fetchedPin._id,
-        club: studentClub ? studentClub : null,
+        club: studentClub[0] ? studentClub[0] : null,
         fobStatus,
         timesheet: timesheetId
       });

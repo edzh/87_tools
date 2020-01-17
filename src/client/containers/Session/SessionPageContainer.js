@@ -26,7 +26,6 @@ function SessionPage(props) {
       {props.routes.map(route => (
         <RouteWithSubroutes key={route.path} {...route} />
       ))}
-      {/*<SessionDetails {...props} session={props.session} />*/}
     </div>
   );
 }

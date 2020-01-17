@@ -39,26 +39,37 @@ function TimestampList({
       <ul data-testid="timestamp-ul">
         {timestamps &&
           timestamps.map(timestamp => (
-            <li className="border-b text-sm" key={timestamp._id}>
+            <li
+              className="border-b border-gray-200 py-1 text-sm hover:bg-gray-100"
+              key={timestamp._id}
+            >
               <ul className="flex">
                 <li className="w-24">
                   {format(parseISO(timestamp.datetime), 'hh:mm a')}
                 </li>
                 <li className="w-64">
-                  <Link
-                    className="text-blue-500 hover:text-blue-400"
-                    to={`/student/${timestamp.student._id}`}
-                  >
-                    {timestamp.student.name}
-                  </Link>
+                  {timestamp.student ? (
+                    <Link
+                      className="text-blue-500 hover:text-blue-400"
+                      to={`/student/${timestamp.student._id}`}
+                    >
+                      {timestamp.student.name}
+                    </Link>
+                  ) : (
+                    'Student not found!'
+                  )}
                 </li>
                 <li className="w-64">
-                  <Link
-                    className="text-blue-500 hover:text-blue-400"
-                    to={`/club/${timestamp.club && timestamp.club._id}`}
-                  >
-                    {timestamp.club && timestamp.club.name}
-                  </Link>
+                  {timestamp.club ? (
+                    <Link
+                      className="text-blue-500 hover:text-blue-400"
+                      to={`/club/${timestamp.club._id}`}
+                    >
+                      {timestamp.club.name}
+                    </Link>
+                  ) : (
+                    'No club'
+                  )}
                 </li>
                 <li className="w-8">{timestamp.fobStatus}</li>
                 <li

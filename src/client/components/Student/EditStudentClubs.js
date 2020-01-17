@@ -25,7 +25,7 @@ export default function EditStudentClubs({
     if (!currentStudent.byId[currentStudent.allIds].currentClubs) return '';
     const club = currentStudent.byId[currentStudent.allIds].clubs
       .filter(club => club.day === clubDay)
-      .find(club => club.session === currentSession.item._id);
+      .find(club => club.session === currentSession.item.allIds);
 
     if (club) return club._id;
   }
@@ -54,7 +54,7 @@ export default function EditStudentClubs({
       <div className="p-4">
         {currentStudent.byId[currentStudent.allIds].clubs &&
           currentStudent.byId[currentStudent.allIds].clubs
-            .filter(club => club.session === currentSession.item._id)
+            .filter(club => club.session === currentSession.item.allIds)
             .map((club, index) => (
               <div className="flex m-2" key={index}>
                 <p className="w-32 capitalize">{intToDay[club.day]}</p>
@@ -65,7 +65,7 @@ export default function EditStudentClubs({
             ))}
       </div>
 
-      {currentSession.item._id && (
+      {currentSession.item.allIds && (
         <Formik
           enableReinitialize
           initialValues={{
@@ -87,7 +87,7 @@ export default function EditStudentClubs({
             const sessionClubIds = currentStudent.byId[
               currentStudent.allIds
             ].clubs
-              .filter(club => club.session !== currentSession.item._id)
+              .filter(club => club.session !== currentSession.item.allIds)
               .map(club => club._id);
 
             const clubs = Array.from(

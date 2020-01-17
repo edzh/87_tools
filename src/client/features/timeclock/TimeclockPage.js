@@ -12,7 +12,7 @@ import {
   getStudentsByClub
 } from 'client/actions/studentActions';
 import { getClubsBySession } from 'client/actions/clubActions';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export default function TimeclockPage({ match }) {
   const dispatch = useDispatch();
@@ -62,23 +62,40 @@ export default function TimeclockPage({ match }) {
   }
 
   return (
-    <>
-      <select
-        onChange={e => setCurrentClub(clubs.byId[e.target.value])}
-        type="select"
-      >
-        <option value="">---</option>
-        {clubs.allIds.length !== 0 &&
-          clubsToday.allIds.map(clubId => (
-            <option value={clubId}>{clubs.byId[clubId].name}</option>
-          ))}
-      </select>
-      <div>
+    <div className="p-4 bg-white rounded shadow">
+      <h2 className="text-2xl font-bold text-gray-700">Attendance</h2>
+      {currentTimesheet && (
+        <h3 className="">
+          {format(parseISO(currentTimesheet.date), 'EEEE, MMMM dd, yyyy')}
+        </h3>
+      )}
+      <div className="flex">
+        <select
+          onChange={e => setCurrentClub(clubs.byId[e.target.value])}
+          type="select"
+          className="rounded p-1 border mt-2"
+        >
+          <option value="">---</option>
+          {clubs.allIds.length !== 0 &&
+            clubsToday.allIds.map(clubId => (
+              <option key={clubId} value={clubId}>
+                {clubs.byId[clubId].name}
+              </option>
+            ))}
+        </select>
+        <div className="block flex mt-3 ml-2">
+          <div className="bg-green-500 w-4 h-4 rounded-full mt-1 mx-2"></div>
+          <p>Present</p>
+          <div className="bg-red-500 w-4 h-4 rounded-full mt-1 ml-6 mr-2"></div>
+          <p>Absent</p>
+        </div>
+      </div>
+      <div className="mt-2 border-t border-l border-r rounded">
         {students.allIds.map(studentId =>
           timestamps.studentIds.indexOf(studentId) > -1 ? (
             <div
               key={studentId}
-              className="text-green-500"
+              className="py-1 px-2 hover:bg-gray-200 border-b border-gray-400 text-green-500 cursor-pointer"
               onClick={() => handleRemoveTimestamp(studentId)}
             >
               {students.byId[studentId].name}
@@ -86,7 +103,7 @@ export default function TimeclockPage({ match }) {
           ) : (
             <div
               key={studentId}
-              className="text-red-500"
+              className="py-1 px-2 hover:bg-gray-200 border-b border-gray-400 text-red-500 cursor-pointer"
               onClick={() => handleTimestamp(studentId)}
             >
               {students.byId[studentId].name}
@@ -94,6 +111,6 @@ export default function TimeclockPage({ match }) {
           )
         )}
       </div>
-    </>
+    </div>
   );
 }

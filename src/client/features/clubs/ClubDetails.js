@@ -25,7 +25,7 @@ export default function ClubDetails() {
         <div className="flex">
           <h3 className="font-bold text-xl text-gray-700 w-24">Capacity</h3>
           <p className="mt-1">
-            {students.allIds.length} /{byId[allIds].capacity || ' N/A'}
+            {students.allIds.length}/{byId[allIds].capacity || 'N/A'}
           </p>
         </div>
       </div>
