@@ -50,11 +50,9 @@ const timeclockSlice = createSlice({
       };
     },
     getTimestampsFailure(state, action) {
-      state.timestamps = {
-        error: true,
-        message: action.payload,
-        isFetching: false
-      };
+      state.timestamps.error = true;
+      state.timestamps.message = action.payload;
+      state.timestamps.isFetching = false;
     },
     getClubsSuccess(state, action) {
       const normalizedClubs = normalize(action.payload, schema.clubList);
@@ -87,6 +85,45 @@ const timeclockSlice = createSlice({
         message: action.payload,
         isFetching: false
       };
+    },
+    addTimestampSuccess(state, action) {
+      const normalizedTimestamp = normalize(action.payload, schema.timestamp);
+      const normalizedStudent = normalize(
+        action.payload,
+        schema.timestampStudent
+      );
+      state.timestamps.byId = {
+        ...state.timestamps.byId,
+        [normalizedTimestamp.result]:
+          normalizedTimestamp.entities.timestamps[normalizedTimestamp.result]
+      };
+      state.timestamps.allIds.push(normalizedTimestamp.result);
+      state.timestamps.studentIds.push(normalizedStudent.result);
+    },
+    addTimestampFailure(state, action) {
+      state.timestamps.error = true;
+      state.timestamps.message = action.payload;
+      state.timestamps.isFetching = false;
+    },
+    deleteTimestampSuccess(state, action) {
+      const normalizedTimestamp = normalize(action.payload, schema.timestamp);
+      const normalizedStudent = normalize(
+        action.payload,
+        schema.timestampStudent
+      );
+
+      state.timestamps.byId[normalizedTimestamp.result] = null;
+      state.timestamps.allIds = state.timestamps.allIds.filter(
+        timestampId => timestampId !== normalizedTimestamp.result
+      );
+      state.timestamps.studentIds = state.timestamps.studentIds.filter(
+        studentId => normalizedStudent.result !== studentId
+      );
+    },
+    deleteTimestampFailure(state, action) {
+      state.timestamps.error = true;
+      state.timestamps.message = action.payload;
+      state.timestamps.isFetching = false;
     }
   }
 });
@@ -97,7 +134,11 @@ export const {
   getClubsSuccess,
   getClubsFailure,
   getTimesheetByIdSuccess,
-  getTimesheetByIdFailure
+  getTimesheetByIdFailure,
+  addTimestampSuccess,
+  addTimestampFailure,
+  deleteTimestampSuccess,
+  deleteTimestampFailure
 } = timeclockSlice.actions;
 
 export const getTimestampsByTimesheet = timesheetId => async dispatch => {
@@ -124,6 +165,24 @@ export const getTimesheetById = timesheetId => async dispatch => {
     dispatch(getTimesheetByIdSuccess(timesheet));
   } catch (err) {
     dispatch(getTimesheetByIdFailure(err.toString));
+  }
+};
+
+export const addTimestamp = timestamp => async dispatch => {
+  try {
+    const newTimestamp = await fetchTimestamps.add(timestamp);
+    dispatch(addTimestampSuccess(newTimestamp));
+  } catch (err) {
+    dispatch(addTimestampFailure(err.toString()));
+  }
+};
+
+export const deleteTimestamp = timestampId => async dispatch => {
+  try {
+    const timestamp = await fetchTimestamps.delete(timestampId);
+    dispatch(deleteTimestampSuccess(timestamp));
+  } catch (err) {
+    dispatch(deleteTimestampFailure(err.toString()));
   }
 };
 

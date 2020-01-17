@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export default function Today({
   students,
@@ -9,7 +9,7 @@ export default function Today({
   getDateTimesheetTimestamps
 }) {
   const day = +format(new Date(), 'd');
-  const date = format(new Date(), 'YYYY-MM-DDT') + '05:00:00Z';
+  const date = format(new Date(), "yyyy-MM-dd'T'05:00:00.000xxx");
   // const [date, setDate] = useState('2019-09-24T04:00:00Z');
   const [refresh, setRefresh] = useState(false);
 
@@ -104,7 +104,7 @@ export default function Today({
   return (
     <div>
       <h2 className="p-2 text-xl font-bold">
-        {format(date, 'dddd, MMMM DD, YYYY')}
+        {format(parseISO(date), 'EEEE, MMMM dd, yyyy')}
       </h2>
       <div className="flex">
         <div className="mr-4 p-2">

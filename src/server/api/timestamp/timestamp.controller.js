@@ -77,7 +77,16 @@ export const updateOne = async (req, res) => {
 
 export const removeOne = async (req, res) => {
   try {
-    const removed = await Timestamp.findOneAndRemove({ _id: req.params.id });
+    const removed = await Timestamp.findOneAndRemove({ _id: req.params.id })
+      .populate({
+        path: 'student',
+        select: 'name'
+      })
+      .populate({
+        path: 'club',
+        select: 'name day'
+      })
+      .exec();
 
     const updatedTimesheet = await Timesheet.findOneAndUpdate(
       { _id: removed.timesheet },
