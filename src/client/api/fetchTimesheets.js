@@ -1,11 +1,11 @@
 import { apiUrl } from 'config';
 import headers from './headers';
 
-export const fetchClubs = {
+export const fetchTimesheets = {
   get: {
-    session: async (sessionId, day) => {
+    session: async sessionId => {
       const data = await fetch(
-        `${apiUrl}/api/session/${sessionId}/clubs${day ? `?day=${day}` : ''}`,
+        `${apiUrl}/api/session/${sessionId}/timesheets`,
         {
           headers
         }
@@ -15,17 +15,8 @@ export const fetchClubs = {
 
       return data;
     },
-    student: async studentId => {
-      const data = await fetch(`${apiUrl}/api/student/${studentId}/clubs`, {
-        headers
-      })
-        .then(response => response.json())
-        .then(json => json.data);
-
-      return data;
-    },
-    one: async clubId => {
-      const data = await fetch(`${apiUrl}/api/club/${clubId}`, {
+    one: async timesheetId => {
+      const data = await fetch(`${apiUrl}/api/timesheet/${timesheetId}`, {
         headers
       })
         .then(response => response.json())
@@ -34,30 +25,30 @@ export const fetchClubs = {
       return data;
     }
   },
-  add: async club => {
-    const data = await fetch(`${apiUrl}/api/club/`, {
+  add: async timesheet => {
+    const data = await fetch(`${apiUrl}/api/timesheet/`, {
       method: 'POST',
       headers,
-      body: JSON.stringify(club)
+      body: JSON.stringify(timesheet)
     })
       .then(response => response.json())
       .then(json => json.data);
 
     return data;
   },
-  update: async club => {
-    const data = await fetch(`${apiUrl}/api/club/${club._id}`, {
+  update: async timesheet => {
+    const data = await fetch(`${apiUrl}/api/timesheet/${timesheet._id}`, {
       method: 'PUT',
       headers,
-      body: JSON.stringify(club)
+      body: JSON.stringify(timesheet)
     })
       .then(response => response.json())
       .then(json => json.data);
 
     return data;
   },
-  delete: async clubId => {
-    const data = await fetch(`${apiUrl}/api/club/${clubId}`, {
+  delete: async timesheetId => {
+    const data = await fetch(`${apiUrl}/api/timesheet/${timesheetId}`, {
       method: 'DELETE',
       headers
     })

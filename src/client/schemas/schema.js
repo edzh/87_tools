@@ -31,3 +31,20 @@ export const clubList = [club];
 export const user = new schema.Entity('user', undefined, {
   idAttribute: value => value._id
 });
+
+export const timestamp = new schema.Entity('timestamps', undefined, {
+  idAttribute: value => value._id
+});
+
+export const timestampList = [timestamp];
+
+export const timestampStudent = new schema.Entity('timestamps', undefined, {
+  idAttribute: value => value.student._id
+});
+export const timestampListStudents = [timestampStudent];
+
+export const timesheet = new schema.Entity('timesheets', undefined, {
+  idAttribute: value => value._id
+});
+
+export const timesheetList = [timesheet];

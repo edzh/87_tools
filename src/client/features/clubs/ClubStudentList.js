@@ -4,9 +4,7 @@ import { useSelector } from 'react-redux';
 
 export default function ClubStudentList() {
   const students = useSelector(state => state.students.items);
-  const studentIds = useSelector(
-    state => state.clubPageReducer.students.allIds
-  );
+  const studentIds = useSelector(state => state.clubPage.students.allIds);
   if (!students.allIds.length) return null;
 
   return (

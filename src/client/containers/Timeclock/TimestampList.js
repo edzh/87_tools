@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 import {
   deleteTimestamp,
@@ -42,7 +42,7 @@ function TimestampList({
             <li className="border-b text-sm" key={timestamp._id}>
               <ul className="flex">
                 <li className="w-24">
-                  {format(timestamp.datetime, 'hh:mm a')}
+                  {format(parseISO(timestamp.datetime), 'hh:mm a')}
                 </li>
                 <li className="w-64">
                   <Link

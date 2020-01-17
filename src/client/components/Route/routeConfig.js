@@ -1,6 +1,7 @@
 import TimesheetForm from '../Timesheet/TimesheetForm';
 import Timesheet from '../../containers/TimesheetContainer';
 import Timeclock from '../../containers/Timeclock/Timeclock';
+import TimeclockPage from '../../features/timeclock/TimeclockPage';
 
 import Family from '../../containers/Family/FamilyContainer';
 import FamilyPage from '../../containers/Family/FamilyPageContainer';
@@ -40,6 +41,11 @@ const routes = [
     path: '/timesheet/:id',
     auth: true,
     component: Timeclock
+  },
+  {
+    path: '/timeclock/:id',
+    auth: true,
+    component: TimeclockPage
   },
   {
     path: '/family/:id',

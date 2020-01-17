@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { intToDay } from 'utils/constants';
 
 export default function ClubDetails() {
-  const clubPage = useSelector(state => state.clubPageReducer);
+  const clubPage = useSelector(state => state.clubPage);
   const currentClub = clubPage.item;
   const { byId, allIds } = currentClub;
   const { students, sessions } = clubPage;

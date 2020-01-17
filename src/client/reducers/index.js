@@ -5,7 +5,8 @@ import { programs, currentProgram } from './programReducer';
 import { sessions, currentSession } from './sessionReducer';
 import { students, currentStudent } from './studentReducer';
 import { timesheets, currentTimesheet } from './timesheetReducer';
-import clubPageReducer from '../features/clubs/clubSlice';
+import clubPage from '../features/clubs/clubSlice';
+import timeclock from '../features/timeclock/timeclockSlice';
 import timestamp from './timestampReducer';
 import user from './userReducer';
 
@@ -17,12 +18,13 @@ export default combineReducers({
   currentStudent,
   currentTimesheet,
   clubs,
-  clubPageReducer,
+  clubPage,
   families,
   programs,
   sessions,
   students,
   timesheets,
+  timeclock,
   timestamp,
   user
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 import SessionForm from './SessionForm';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
@@ -27,8 +27,8 @@ export default ({ sessions, currentProgram }) => {
               </Link>
             </div>
             <div>
-              {format(sessions.byId[sessionId].start, 'MMM DD YYYY')} -{' '}
-              {format(sessions.byId[sessionId].end, 'MMM DD YYYY')}
+              {format(parseISO(sessions.byId[sessionId].start), 'MMM dd yyyy')}{' '}
+              - {format(parseISO(sessions.byId[sessionId].end), 'MMM dd yyyy')}
             </div>
             {currentProgram.byId[currentProgram.allIds].currentSession ===
             sessionId ? (

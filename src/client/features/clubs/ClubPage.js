@@ -19,7 +19,7 @@ import ClubHeader from './ClubHeader';
 export default function ClubPage({ match, routes }) {
   const [editDetails, setEditDetails] = useState(false);
   const dispatch = useDispatch();
-  const clubPage = useSelector(state => state.clubPageReducer);
+  const clubPage = useSelector(state => state.clubPage);
   const programId = useSelector(state => state.user.item.currentProgram);
   const { students, sessions } = clubPage;
   const clubId = match.params.id;

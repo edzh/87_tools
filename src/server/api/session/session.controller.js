@@ -82,7 +82,7 @@ export const removeOne = async (req, res) => {
 export const getClubs = async (req, res) => {
   try {
     const session = await Session.findOne({ _id: req.params.id });
-    const clubs = await Club.find({ session: session.id });
+    const clubs = await Club.find({ session: session.id, ...req.query });
 
     return res.status(200).json({ data: clubs });
   } catch (e) {

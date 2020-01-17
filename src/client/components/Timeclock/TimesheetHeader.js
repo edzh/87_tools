@@ -1,5 +1,5 @@
 import React from 'react';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export default function TimesheetHeader({ currentTimesheet }) {
   if (!currentTimesheet.item) {
@@ -8,7 +8,7 @@ export default function TimesheetHeader({ currentTimesheet }) {
 
   return (
     <h2>
-      {format(currentTimesheet.item.date, 'dddd, MMMM D')} Sign{' '}
+      {format(parseISO(currentTimesheet.item.date), 'EEEE, MMMM d')} Sign{' '}
       {currentTimesheet.item.io} Timesheet
     </h2>
   );

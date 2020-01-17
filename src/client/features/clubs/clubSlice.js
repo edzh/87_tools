@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchStudents } from 'client/api/fetchStudents';
 import { fetchClubs } from 'client/api/fetchClubs';
 import { fetchSessions } from 'client/api/fetchSessions';
+import { fetchStudents } from 'client/api/fetchStudents';
 import * as schema from '../../schemas/schema';
 import { normalize } from 'normalizr';
 
@@ -71,7 +71,7 @@ const clubPageSlice = createSlice({
     },
     addStudentToClubSuccess(state, action) {
       const normalizedStudent = normalize(action.payload, schema.student);
-      console.log(normalizedStudent);
+
       state.students.allIds = [
         ...state.students.allIds,
         normalizedStudent.result

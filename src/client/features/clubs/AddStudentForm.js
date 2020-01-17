@@ -12,7 +12,7 @@ export default function AddStudentForm() {
   const programId = useSelector(state => state.user.item.currentProgram);
   const students = useSelector(state => state.students.items);
   const clubs = useSelector(state => state.clubs.items);
-  const currentClub = useSelector(state => state.clubPageReducer.item);
+  const currentClub = useSelector(state => state.clubPage.item);
   const sessions = useSelector(state => state.sessions.items);
   const sessionId = currentClub.allIds
     ? currentClub.byId[currentClub.allIds].session._id
@@ -33,7 +33,6 @@ export default function AddStudentForm() {
   }, [sessionId]);
 
   function replaceClub(studentId) {
-    console.log(studentId);
     const studentClubs = students.byId[studentId].clubs;
     const oldClubs = studentClubs.filter(clubId => {
       if (clubs.byId[clubId]) {
@@ -57,7 +56,7 @@ export default function AddStudentForm() {
     <div className="m-2">
       <form onSubmit={handleSubmit}>
         <input
-          className="mb-0 p-2 rounded-l border border-gray-200"
+          className="mb-0 p-2 rounded-l border border-gray-400"
           type="text"
           onChange={e => query.set(e.target.value)}
           value={query.get}
