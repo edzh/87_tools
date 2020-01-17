@@ -45,9 +45,14 @@ function currentSessionRequest() {
 }
 
 function currentSessionSuccess(session) {
+  const normalizedSession = normalize(session, schema.session);
+
   return {
     type: 'CURRENT_SESSION_SUCCESS',
-    session
+    payload: {
+      byId: normalizedSession.entities.sessions,
+      allIds: normalizedSession.result
+    }
   };
 }
 

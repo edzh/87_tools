@@ -85,7 +85,10 @@ export function currentSession(state = initialCurrentSessionState, action) {
       return {
         ...state,
         isFetching: false,
-        item: action.session
+        item: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        }
       };
     case 'CURRENT_SESSION_CLUBS_SUCCESS':
       return {
