@@ -19,7 +19,8 @@ export default function Timesheet({
       <TimesheetList timesheets={timesheets} />
       <TimesheetForm
         addTimesheet={addTimesheet}
-        currentSession={currentSession}
+        currentSession={currentSession.item}
+        sessionId={sessionId}
       />
     </div>
   );
