@@ -67,18 +67,16 @@ export default function TimeclockPage({ match }) {
   }
 
   return (
-    <div className="p-4 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold text-gray-700">Attendance</h2>
-      {currentTimesheet && (
-        <h3 className="">
-          {format(parseISO(currentTimesheet.date), 'EEEE, MMMM dd, yyyy')}
-        </h3>
-      )}
+    <div className="p-4 bg-white rounded shadow mt-2">
       <div className="flex">
+        <label className="mt-3 mr-4 text-gray-700" htmlFor="club">
+          Club{' '}
+        </label>
         <select
           onChange={e => setCurrentClub(clubs.byId[e.target.value])}
           type="select"
           className="rounded p-1 border mt-2"
+          id="club"
         >
           <option value="">---</option>
           {clubs.allIds.length !== 0 &&
@@ -99,25 +97,26 @@ export default function TimeclockPage({ match }) {
         className="mt-2 border rounded overflow-auto"
         style={{ maxHeight: '720px' }}
       >
-        {students.allIds.map(studentId =>
-          timestamps.studentIds.indexOf(studentId) > -1 ? (
-            <div
-              key={studentId}
-              className="py-2 px-2 hover:bg-gray-200 border-b border-gray-400 text-green-500 cursor-pointer"
-              onClick={() => handleRemoveTimestamp(studentId)}
-            >
-              {students.byId[studentId].name}
-            </div>
-          ) : (
-            <div
-              key={studentId}
-              className="py-2 px-2 hover:bg-gray-200 border-b border-gray-400 text-red-500 cursor-pointer"
-              onClick={() => handleTimestamp(studentId)}
-            >
-              {students.byId[studentId].name}
-            </div>
-          )
-        )}
+        {currentClub &&
+          students.allIds.map(studentId =>
+            timestamps.studentIds.indexOf(studentId) > -1 ? (
+              <div
+                key={studentId}
+                className="py-2 px-2 hover:bg-gray-200 border-b border-gray-400 text-green-500 cursor-pointer"
+                onClick={() => handleRemoveTimestamp(studentId)}
+              >
+                {students.byId[studentId].name}
+              </div>
+            ) : (
+              <div
+                key={studentId}
+                className="py-2 px-2 hover:bg-gray-200 border-b border-gray-400 text-red-500 cursor-pointer"
+                onClick={() => handleTimestamp(studentId)}
+              >
+                {students.byId[studentId].name}
+              </div>
+            )
+          )}
       </div>
     </div>
   );
