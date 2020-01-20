@@ -6,7 +6,7 @@ import {
   getTimesheetById,
   addTimestamp,
   deleteTimestamp
-} from 'client/features/timeclock/timeclockSlice';
+} from './timeclockSlice';
 import {
   getStudentsByProgram,
   getStudentsByClub

@@ -6,7 +6,7 @@ import { sessions, currentSession } from './sessionReducer';
 import { students, currentStudent } from './studentReducer';
 import { timesheets, currentTimesheet } from './timesheetReducer';
 import clubPage from '../features/clubs/clubSlice';
-import timeclock from '../features/timeclock/timeclockSlice';
+import timeclock from '../features/timesheet/timeclockSlice';
 import timestamp from './timestampReducer';
 import user from './userReducer';
 

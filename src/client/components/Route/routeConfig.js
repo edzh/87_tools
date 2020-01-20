@@ -1,8 +1,8 @@
 import TimesheetForm from '../Timesheet/TimesheetForm';
 import Timesheet from '../../containers/TimesheetContainer';
 import Timeclock from '../../containers/Timeclock/Timeclock';
-import TimesheetPage from '../../features/timeclock/TimesheetPage';
-import Attendance from '../../features/timeclock/Attendance';
+import TimesheetPage from '../../features/timesheet/TimesheetPage';
+import Attendance from '../../features/timesheet/Attendance';
 
 import Family from '../../containers/Family/FamilyContainer';
 import FamilyPage from '../../containers/Family/FamilyPageContainer';
