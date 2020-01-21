@@ -1,10 +1,12 @@
 import { apiUrl } from 'config';
-import headers from './headers';
 
 export const fetchUser = {
   get: async () => {
     const data = await fetch(`${apiUrl}/api/user`, {
-      headers
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
     })
       .then(response => response.json())
       .then(json => json.data);
@@ -14,7 +16,10 @@ export const fetchUser = {
   add: async user => {
     const data = await fetch(`${apiUrl}/api/user`, {
       method: 'POST',
-      headers,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
       body: JSON.stringify(user)
     })
       .then(response => response.json())
@@ -25,7 +30,10 @@ export const fetchUser = {
   update: async user => {
     const data = await fetch(`${apiUrl}/api/user`, {
       method: 'PUT',
-      headers,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      },
       body: JSON.stringify(user)
     })
       .then(response => response.json())
@@ -36,7 +44,10 @@ export const fetchUser = {
   delete: async userId => {
     const data = await fetch(`${apiUrl}/api/user/${userId}`, {
       method: 'DELETE',
-      headers
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('id_token')}`
+      }
     })
       .then(response => response.json())
       .then(json => json.data);

@@ -38,8 +38,8 @@ export function signIn(email, password) {
     })
       .then(response => response.json())
       .then(json => {
-        getUser();
         localStorage.setItem('id_token', json.token);
+        dispatch(getUser());
       })
       .catch(error => dispatch(signInFailure(error)));
   };
@@ -78,8 +78,8 @@ export function signUp(email, password) {
     })
       .then(response => response.json())
       .then(response => {
-        dispatch(getUser());
         localStorage.setItem('id_token', response.token);
+        dispatch(getUser());
       })
       .catch(error => dispatch(signUpFailure(error)));
   };
@@ -131,7 +131,10 @@ export function fetchUserSuccess(user) {
 export function getUser() {
   return dispatch => {
     dispatch(updateUserRequest());
-    return fetchUser.get().then(data => dispatch(fetchUserSuccess(data)));
+    return fetchUser
+      .get()
+      .then(data => dispatch(fetchUserSuccess(data)))
+      .catch(err => console.error(err));
   };
 }
 

@@ -8,7 +8,7 @@ import { getCurrentProgram } from '../actions/programActions';
 
 function UserContainer(props) {
   useEffect(() => {
-    props.getUser();
+    props.user.isAuthenticated && props.getUser();
   }, []);
 
   return <div>{props.children}</div>;

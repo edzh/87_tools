@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import SignOut from '../../containers/SignOutContainer';
 
 export default function NavbarAuth({ isAuthenticated, isFetching, user }) {
-  if (!user._id) return null;
+  if (!user._id === '') return null;
 
   return !isAuthenticated ? (
     <div className="bg-gray-400 mb-4 px-4 py-2">

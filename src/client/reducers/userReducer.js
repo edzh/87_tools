@@ -13,6 +13,8 @@ export default function user(state = initialState, action) {
     case 'FETCH_USER_SUCCESS':
       return {
         ...state,
+        isAuthenticated: true,
+        isFetching: false,
         item: action.payload.byId[action.payload.allIds]
       };
     case types.SIGNIN_REQUEST:
@@ -23,7 +25,7 @@ export default function user(state = initialState, action) {
     case types.SIGNIN_SUCCESS:
       return {
         ...state,
-        data: action.data,
+        item: action.item,
         isFetching: false,
         isAuthenticated: true
       };
@@ -43,7 +45,7 @@ export default function user(state = initialState, action) {
     case types.SIGNUP_SUCCESS:
       return {
         ...state,
-        data: action.data,
+        item: action.item,
         isFetching: false,
         isAuthenticated: true
       };
@@ -59,7 +61,7 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: false,
-        data: {}
+        item: {}
       };
     default:
       return state;
