@@ -3,7 +3,8 @@ const initialFamiliesState = {
   items: {
     byId: {},
     allIds: []
-  }
+  },
+  recentFamily: ''
 };
 
 const initialCurrentFamilyState = {
@@ -25,12 +26,13 @@ export function families(state = initialFamiliesState, action) {
       return {
         ...state,
         items: {
+          ...state.items,
           byId: action.payload.byId,
           allIds: action.payload.allIds
         },
         isFetching: false
       };
-    case 'ADD_STUDENT_SUCCESS':
+    case 'ADD_FAMILY_SUCCESS':
       const families = state.items.byId;
       const familyIds = state.items.allIds;
 

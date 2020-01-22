@@ -41,7 +41,7 @@ function addFamilySuccess(family) {
   return {
     type: 'ADD_FAMILY_SUCCESS',
     payload: {
-      byId: normalizedFamily.entities.sessions,
+      byId: normalizedFamily.entities.families,
       allIds: normalizedFamily.result
     }
   };

@@ -10,6 +10,7 @@ function fetchProgramsRequest() {
 }
 
 function fetchProgramsSuccess(programs) {
+  console.log(programs);
   const normalizedPrograms = normalize(programs, schema.programList);
 
   return {

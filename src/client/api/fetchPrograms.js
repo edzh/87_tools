@@ -4,8 +4,11 @@ import headers from './headers';
 export const fetchPrograms = {
   get: {
     user: async () => {
-      const data = await fetch(`${apiUrl}/api/program/`, {
-        headers
+      const data = await fetch(`${apiUrl}/api/user/programs/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('id_token')}`
+        }
       })
         .then(response => response.json())
         .then(json => json.data);
