@@ -1,13 +1,18 @@
-import { combineReducers } from 'redux';
-
 import * as types from '../actions/studentTypes';
 
 const initialStudentsState = {
-  items: [],
+  items: {
+    byId: {},
+    allIds: []
+  },
   isFetching: false
 };
 
 const initialCurrentStudentState = {
+  item: {
+    byId: {},
+    allIds: ''
+  },
   isFetching: false
 };
 
@@ -18,12 +23,13 @@ export function students(state = initialStudentsState, action) {
         ...state,
         isFetching: true
       };
-    // case types.FETCH_STUDENTS_SUCCESS:
-    case 'GET_CLUB_STUDENTS_SUCCESS':
-    case 'GET_PROGRAM_STUDENTS_SUCCESS':
+    case types.FETCH_STUDENTS_SUCCESS:
       return {
         ...state,
-        items: action.students,
+        items: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        },
         isFetching: false
       };
     case types.FETCH_STUDENTS_FAILURE:
@@ -31,27 +37,36 @@ export function students(state = initialStudentsState, action) {
         ...state,
         isFetching: false
       };
-    case types.SET_STUDENT:
-      return {
-        ...state,
-        id: action.student
-      };
     case 'ADD_STUDENT_SUCCESS':
-      function compare(a, b) {
-        if (a.name < b.name) {
-          return -1;
-        }
-        if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
-      }
+      const students = state.items.byId;
+      const studentIds = state.items.allIds;
+
+      const { byId, allIds } = action.payload;
 
       return {
         ...state,
-        items: [action.student, ...state.items].sort(compare),
-        recentStudent: action.student,
+        items: {
+          byId: {
+            ...students,
+            [allIds]: byId[allIds]
+          },
+          allIds: [...studentIds, allIds]
+        },
+        recentStudent: allIds,
         isFetching: false
+      };
+    case 'DELETE_STUDENT_SUCCESS':
+      return {
+        ...state,
+        items: {
+          byId: {
+            ...state.items.byId,
+            [action.payload.allIds]: null
+          },
+          allIds: state.items.allIds.filter(
+            studentId => studentId !== action.payload.allIds
+          )
+        }
       };
     case 'STUDENT_ERROR':
       return {
@@ -74,7 +89,10 @@ export function currentStudent(state = initialCurrentStudentState, action) {
     case 'CURRENT_STUDENT_SUCCESS':
       return {
         isFetching: false,
-        item: action.student
+        item: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        }
       };
     default:
       return state;

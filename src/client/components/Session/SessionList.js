@@ -1,40 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 import SessionForm from './SessionForm';
 import MainDetailsHeader from '../Details/MainDetailsHeader';
 import DefaultSessionButton from '../../containers/Session/DefaultSessionButton';
 
-export default props => {
+export default ({ sessions, currentProgram }) => {
+  if (!sessions.allIds.length) return null;
+  if (!currentProgram.allIds) return null;
+
   return (
     <div>
       <ul className="bg-gray-100 border-t border-b border-gray-400">
-        {props.sessions.items &&
-          props.sessions.items.map(session => (
-            <li
-              className="flex border my-2 border-gray-400 rounded p-2 bg-white"
-              key={session._id}
-            >
-              <div className="w-64">
-                <Link
-                  className="text-blue-500 hover:text-blue-400"
-                  to={`/session/${session._id}`}
-                >
-                  {session.name}
-                </Link>
-              </div>
-              <div>
-                {format(session.start, 'MMM DD YYYY')} -{' '}
-                {format(session.end, 'MMM DD YYYY')}
-              </div>
-              {props.currentProgramSession === session._id ? (
-                <div className="text-sm mx-6 my-auto">Default Session</div>
-              ) : (
-                <DefaultSessionButton sessionId={session._id} />
-              )}
-            </li>
-          ))}
+        {sessions.allIds.map(sessionId => (
+          <li
+            className="flex border my-2 border-gray-400 rounded p-2 bg-white"
+            key={sessionId}
+          >
+            <div className="w-64">
+              <Link
+                className="text-blue-500 hover:text-blue-400"
+                to={`/session/${sessionId}`}
+              >
+                {sessions.byId[sessionId].name}
+              </Link>
+            </div>
+            <div>
+              {format(parseISO(sessions.byId[sessionId].start), 'MMM dd yyyy')}{' '}
+              - {format(parseISO(sessions.byId[sessionId].end), 'MMM dd yyyy')}
+            </div>
+            {currentProgram.byId[currentProgram.allIds].currentSession ===
+            sessionId ? (
+              <div className="text-sm mx-6 my-auto">Default Session</div>
+            ) : (
+              <DefaultSessionButton sessionId={sessionId} />
+            )}
+          </li>
+        ))}
       </ul>
     </div>
   );

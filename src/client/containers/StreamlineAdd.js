@@ -19,7 +19,6 @@ function StreamlineAdd({
 
   return (
     <div>
-      <StreamlineFamilyForm addFamily={addFamily} programId={programId} />
       <StreamlineStudentForm
         addStudent={addStudent}
         programId={programId}
@@ -49,7 +48,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StreamlineAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(StreamlineAdd);

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchPrograms, addProgram } from '../../actions/programActions';
+import { fetchUserPrograms, addProgram } from '../../actions/programActions';
 import { getCurrentSession } from '../../actions/sessionActions';
 import { updateUser } from '../../actions/userActions';
 
@@ -11,15 +11,15 @@ import Program from '../../components/Program/Programs';
 const mapStateToProps = state => {
   return {
     programs: state.programs,
-    user: state.user.data,
+    user: state.user.item,
     currentProgram: state.currentSession
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchPrograms: () => {
-      dispatch(fetchPrograms());
+    fetchUserPrograms: () => {
+      dispatch(fetchUserPrograms());
     },
     updateUser: user => {
       dispatch(updateUser(user));
@@ -30,7 +30,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Program);
+export default connect(mapStateToProps, mapDispatchToProps)(Program);

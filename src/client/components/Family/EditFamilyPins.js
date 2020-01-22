@@ -4,11 +4,10 @@ import { useFetchPin } from 'utils/hooks';
 import { useFormInput } from 'utils/hooks';
 
 export default ({
-  family,
-  pickups,
-  setPickups,
+  currentFamily,
   setMessage,
   editPickups,
+  updateCurrentFamily,
   setEditPickups
 }) => {
   const pickupName = useFormInput('');
@@ -30,18 +29,15 @@ export default ({
       .catch(() => setMessage({ status: 'Success', message: 'Pin added.' }));
 
     if (!pinCheck) {
-      const newPins = [...pickups, { name: pickupName.value, pin: pin.value }];
+      const newPins = [
+        ...currentFamily.byId[currentFamily.allIds].pickups,
+        { name: pickupName.value, pin: pin.value }
+      ];
 
-      fetch(`${process.env.REACT_APP_API_URL}/api/family/${family._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
-        },
-        body: JSON.stringify({ pickups: newPins })
-      })
-        .then(() => setPickups(newPins))
-        .then(() => {});
+      updateCurrentFamily({
+        ...currentFamily.byId[currentFamily.allIds],
+        pickups: newPins
+      });
     } else {
       setMessage({
         status: 'Error',

@@ -12,14 +12,15 @@ export default function Timesheet({
 }) {
   useEffect(() => {
     getSessionTimesheets(sessionId);
-  }, []);
+  }, [getSessionTimesheets, sessionId]);
 
   return (
     <div className="flex mt-2">
       <TimesheetList timesheets={timesheets} />
       <TimesheetForm
         addTimesheet={addTimesheet}
-        currentSession={currentSession}
+        currentSession={currentSession.item}
+        sessionId={sessionId}
       />
     </div>
   );

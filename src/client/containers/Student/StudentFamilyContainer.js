@@ -6,11 +6,9 @@ import { updateCurrentStudent } from '../../actions/studentActions';
 import StudentFamilyDetails from '../../components/Student/StudentFamilyDetails';
 
 function StudentFamily({ currentStudent, updateCurrentStudent }) {
-  if (!currentStudent.item) return null;
-
   return (
     <div>
-      <StudentFamilyDetails student={currentStudent} />
+      <StudentFamilyDetails currentStudent={currentStudent.item} />
     </div>
   );
 }

@@ -11,13 +11,17 @@ import ProgramHeader from '../../components/Program/ProgramHeader';
 import Dashboard from '../Program/Dashboard';
 
 function ProgramPage(props) {
+  const sessionId = props.currentProgram.item.allIds
+    ? props.currentProgram.item.byId[props.currentProgram.item.allIds]
+        .currentSession
+    : undefined;
   useEffect(() => {
     props.getCurrentProgram(props.programId);
   }, []);
 
   useEffect(() => {
-    props.currentSessionId && props.getCurrentSession(props.currentSessionId);
-  }, [props.currentSessionId]);
+    sessionId && props.getCurrentSession(sessionId);
+  }, [sessionId]);
 
   if (!props.currentProgram) return null;
 
@@ -25,16 +29,16 @@ function ProgramPage(props) {
     <div>
       <ProgramHeader
         programId={props.programId}
-        currentProgram={props.currentProgram}
+        currentProgram={props.currentProgram.item}
       />
       <div className="flex">
         <Dashboard programId={props.programId} />
-        {props.currentSession.item._id && (
+        {props.currentSession.item.byId[sessionId] && (
           <Link
             className="btn m-2 hover:bg-blue-400"
-            to={`/session/${props.currentSession.item._id}/timesheets`}
+            to={`/session/${sessionId}/timesheets`}
           >
-            {props.currentSession.item.name} Timestamps
+            {props.currentSession.item.byId[sessionId].name} Timestamps
           </Link>
         )}
       </div>
@@ -49,7 +53,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
     currentProgram: state.currentProgram,
-    currentSessionId: state.currentProgram.item.currentSession,
+    // currentSessionId: state.currentProgram.item.byId[state.currentProgram.item.allIds].currentSession,
     currentSession: state.currentSession
   };
 };
@@ -65,7 +69,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProgramPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProgramPage);

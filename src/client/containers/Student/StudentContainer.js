@@ -2,21 +2,25 @@ import React, { useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { connect } from 'react-redux';
 
-import { addStudent } from '../../actions/studentActions';
-import { getProgramStudents } from '../../actions/programActions';
+import { addStudent, getStudentsByProgram } from '../../actions/studentActions';
 
 import StudentForm from '../../components/Student/StudentForm';
+import StudentAlert from '../../components/Student/StudentAlert';
 import StudentList from '../../components/Student/StudentList';
 
-function Student(props) {
+function Student({ programId, students, addStudent, getStudentsByProgram }) {
   useEffect(() => {
-    props.getProgramStudents(props.programId);
+    getStudentsByProgram(programId);
   }, []);
 
   return (
     <div>
-      <StudentList students={props.students} />
-      <StudentForm programId={props.programId} addStudent={props.addStudent} />
+      <StudentList students={students.items} />
+      <StudentAlert
+        students={students.items}
+        recentStudent={students.recentStudent}
+      />
+      <StudentForm programId={programId} addStudent={addStudent} />
     </div>
   );
 }
@@ -30,8 +34,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProgramStudents: programId => {
-      dispatch(getProgramStudents(programId));
+    getStudentsByProgram: programId => {
+      dispatch(getStudentsByProgram(programId));
     },
     addStudent: student => {
       dispatch(addStudent(student));
@@ -39,9 +43,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const StudentContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Student);
+const StudentContainer = connect(mapStateToProps, mapDispatchToProps)(Student);
 
 export default StudentContainer;

@@ -21,7 +21,6 @@ export default ({ addClub, sessionId }) => {
           day: ''
         }}
         onSubmit={(values, action) => {
-          console.log(values);
           addClub({
             name: values.clubName,
             day: values.day,

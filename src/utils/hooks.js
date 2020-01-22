@@ -46,3 +46,37 @@ export function useDebounce(value, delay) {
 
   return debouncedValue;
 }
+
+export function useDebouncedAutocomplete(items, delay) {
+  function search(search, list, listById) {
+    const filtered = list.filter(suggestion => {
+      return (
+        listById[suggestion].name.toLowerCase().indexOf(search.toLowerCase()) >
+        -1
+      );
+    });
+
+    return filtered;
+  }
+
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, delay);
+  const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      const filtered = search(debouncedQuery, items.allIds, items.byId);
+      setSuggestions(filtered);
+    } else {
+      setSuggestions([]);
+    }
+  }, [debouncedQuery]);
+
+  return {
+    suggestions,
+    query: {
+      get: query,
+      set: setQuery
+    }
+  };
+}

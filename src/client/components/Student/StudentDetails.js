@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
-import EditStudentDetails from './EditStudentDetails';
-import EditStudentFamily from './EditStudentFamily';
 
 const intToGrade = [
   'Kindergarten',
@@ -13,15 +11,12 @@ const intToGrade = [
   '5th Grade'
 ];
 export default function StudentDetails({
-  updateCurrentStudent,
-  student,
-  ...props
+  currentStudent,
+  deleteCurrentStudent,
+  updateCurrentStudent
 }) {
   const [edit, setEdit] = useState(false);
-
-  if (!student) {
-    return null;
-  }
+  if (!currentStudent.allIds) return null;
 
   return (
     <div className="">
@@ -38,7 +33,9 @@ export default function StudentDetails({
       <div className="bg-gray-100">
         <div className="m-4 flex">
           <h3 className="w-32 text-xl">Grade</h3>
-          <p className="text-xl">{intToGrade[student.grade]}</p>
+          <p className="text-xl">
+            {intToGrade[currentStudent.byId[currentStudent.allIds].grade]}
+          </p>
         </div>
         <div className="m-4 flex">
           <h3 className="w-32 text-xl">PIN</h3>
@@ -46,13 +43,13 @@ export default function StudentDetails({
           {edit ? (
             <Formik
               initialValues={{
-                studentName: student.name,
-                grade: student.grade,
-                pin: student.pin
+                studentName: currentStudent.byId[currentStudent.allIds].name,
+                grade: currentStudent.byId[currentStudent.allIds].grade,
+                pin: currentStudent.byId[currentStudent.allIds].pin
               }}
               onSubmit={values => {
                 updateCurrentStudent({
-                  ...student,
+                  ...currentStudent.byId[currentStudent.allIds],
                   name: values.studentName,
                   grade: values.grade,
                   pin: values.pin
@@ -81,9 +78,17 @@ export default function StudentDetails({
               )}
             </Formik>
           ) : (
-            <p className="text-xl">{student.pin}</p>
+            <p className="text-xl">
+              {currentStudent.byId[currentStudent.allIds].pin}
+            </p>
           )}
         </div>
+        <button
+          onClick={() => deleteCurrentStudent(currentStudent.allIds)}
+          className="bg-red-500 text-white rounded p-2"
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

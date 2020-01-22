@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getProgramSessions } from '../../actions/programActions';
+import { getSessionsByProgram } from '../../actions/sessionActions';
 import { addSession } from '../../actions/sessionActions';
 
 import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
@@ -11,14 +11,14 @@ import SessionForm from '../../components/Session/SessionForm';
 
 function Session(props) {
   useEffect(() => {
-    props.getProgramSessions(props.programId);
+    props.getSessionsByProgram(props.programId);
   }, []);
 
   return (
     <div>
       <SessionList
-        sessions={props.sessions}
-        currentProgramSession={props.currentProgramSession}
+        sessions={props.sessions.items}
+        currentProgram={props.currentProgram.item}
       />
       <SessionForm programId={props.programId} addSession={props.addSession} />
     </div>
@@ -29,14 +29,14 @@ const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
     sessions: state.sessions,
-    currentProgramSession: state.currentProgram.item.currentSession
+    currentProgram: state.currentProgram
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProgramSessions: programId => {
-      dispatch(getProgramSessions(programId));
+    getSessionsByProgram: programId => {
+      dispatch(getSessionsByProgram(programId));
     },
     addSession: session => {
       dispatch(addSession(session));
@@ -44,7 +44,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Session);
+export default connect(mapStateToProps, mapDispatchToProps)(Session);

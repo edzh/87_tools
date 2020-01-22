@@ -2,56 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
-import { setFamily } from '../../actions/familyActions';
+import {
+  getCurrentFamily,
+  deleteCurrentFamily,
+  updateCurrentFamily
+} from '../../actions/familyActions';
+import { getStudentsByFamily } from '../../actions/studentActions';
 
 import FamilyDetails from '../../components/Family/FamilyDetails';
 import FamilyPins from '../../components/Family/FamilyPins';
 import FamilyDeleteModal from '../../components/Family/FamilyDeleteModal';
 
-function FamilyPage(props) {
+function FamilyPage({
+  currentFamily,
+  familyId,
+  students,
+  getCurrentFamily,
+  deleteCurrentFamily,
+  getStudentsByFamily,
+  updateCurrentFamily
+}) {
   const [fetchedFamily, setFetchedFamily] = useState('');
   const [editDetails, setEditDetails] = useState(false);
   const [editPickups, setEditPickups] = useState(false);
   const [toFamily, setToFamily] = useState(false);
 
   useEffect(() => {
-    props.setFamily(props.family);
-
-    const fetchFamily = async () => {
-      const result = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/family/${props.family}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('id_token')}`
-          }
-        }
-      )
-        .then(response => response.json())
-        .then(json => json.data);
-
-      setFetchedFamily(result);
-    };
-
-    fetchFamily();
-  }, [editDetails]);
-
-  const removeFamily = async familyId => {
-    try {
-      const family = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/family/${familyId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('id_token')}`
-          }
-        }
-      ).then(() => {
-        setToFamily(true);
-      });
-    } catch (e) {
-      return Promise.reject();
-    }
-  };
+    getCurrentFamily(familyId);
+    getStudentsByFamily(familyId);
+  }, []);
 
   if (toFamily === true) {
     return <Redirect to={`/program/${fetchedFamily.program}/families`} />;
@@ -60,36 +39,48 @@ function FamilyPage(props) {
   return (
     <div>
       <FamilyDetails
-        family={fetchedFamily}
-        familyId={props.family}
+        currentFamily={currentFamily.item}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
+        students={students.items}
       />
       <FamilyPins
-        family={fetchedFamily}
+        currentFamily={currentFamily.item}
         editPickups={editPickups}
         setEditPickups={setEditPickups}
+        updateCurrentFamily={updateCurrentFamily}
       />
-      <FamilyDeleteModal family={fetchedFamily} removeFamily={removeFamily} />
+      <FamilyDeleteModal
+        family={fetchedFamily}
+        deleteCurrentFamily={deleteCurrentFamily}
+      />
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    family: ownProps.match.params.id
+    familyId: ownProps.match.params.id,
+    currentFamily: state.currentFamily,
+    students: state.students
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setFamily: family => {
-      dispatch(setFamily(family));
+    getCurrentFamily: familyId => {
+      dispatch(getCurrentFamily(familyId));
+    },
+    deleteCurrentFamily: familyId => {
+      dispatch(deleteCurrentFamily(familyId));
+    },
+    getStudentsByFamily: familyId => {
+      dispatch(getStudentsByFamily(familyId));
+    },
+    updateCurrentFamily: family => {
+      dispatch(updateCurrentFamily(family));
     }
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FamilyPage);
+export default connect(mapStateToProps, mapDispatchToProps)(FamilyPage);

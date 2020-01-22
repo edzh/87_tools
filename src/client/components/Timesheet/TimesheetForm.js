@@ -3,21 +3,21 @@ import { Redirect } from 'react-router';
 import { format } from 'date-fns';
 import { Formik, Form, Field } from 'formik';
 
-export default function Timesheet({ currentSession, addTimesheet }) {
+export default function Timesheet({ currentSession, addTimesheet, sessionId }) {
   return (
     <div className="p-8 form ml-2">
       <h3 className="mb-2 text-lg font-bold">New Timesheet</h3>
       <Formik
         initialValues={{
-          date: `${format(new Date(), 'YYYY-MM-DD')}T05:00:00.000Z`,
+          date: `${format(new Date(), 'yyyy-MM-dd')}T05:00:00.000Z`,
           io: ''
         }}
         onSubmit={(values, actions) => {
           addTimesheet({
             date: values.date,
             io: values.io,
-            session: currentSession.item._id,
-            program: currentSession.item.program
+            session: sessionId,
+            program: currentSession.byId[sessionId].program
           });
         }}
       >

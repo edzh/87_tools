@@ -6,8 +6,6 @@ import { select, scaleLinear, max, scaleBand, axisLeft, axisBottom } from 'd3';
 export default function Chart() {
   const [timestampData, setTimestampData] = useState();
 
-  console.log(timestampData);
-
   useEffect(() => {
     const fetchData = async () => {
       const fetchedTimestamps = await fetch(

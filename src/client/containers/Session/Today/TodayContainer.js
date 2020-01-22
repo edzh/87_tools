@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
-import { getProgramStudents } from '../../../actions/programActions';
+import { getStudentsByProgram } from '../../../actions/studentActions';
 import { getDateTimesheetTimestamps } from '../../../actions/timeclockActions';
-import { getSessionClubs } from '../../../actions/sessionActions';
+import { getClubsBySession } from '../../../actions/clubActions';
 
 import Today from '../../../components/Session/Today/Today';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    students: state.students,
+    students: state.students.items,
     programId: state.currentSession.item
       ? state.currentSession.item.program
       : null,
@@ -19,14 +19,14 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProgramStudents: programId => {
-      dispatch(getProgramStudents(programId));
+    getStudentsByProgram: programId => {
+      dispatch(getStudentsByProgram(programId));
     },
     getDateTimesheetTimestamps: (date, io) => {
       dispatch(getDateTimesheetTimestamps(date, io));
     },
-    getSessionClubs: sessionId => {
-      dispatch(getSessionClubs(sessionId));
+    getClubsBySession: sessionId => {
+      dispatch(getClubsBySession(sessionId));
     }
   };
 };

@@ -1,60 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { useDebounce } from 'utils/hooks';
+import { useDebounce, useDebouncedAutocomplete } from 'utils/hooks';
 
-import { getProgramStudents } from '../../actions/programActions';
+import { getStudentsByProgram } from '../../actions/studentActions';
 import { addTimestamp } from '../../actions/timeclockActions';
 
 function ManualEntry({
-  getProgramStudents,
+  getStudentsByProgram,
   currentTimesheet,
   students,
   submitPinTimestamp
 }) {
-  const [query, setQuery] = useState('');
   const debouncedSearchTerm = useDebounce(query, 250);
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
   useEffect(() => {
     if (currentTimesheet.item)
-      getProgramStudents(currentTimesheet.item.program);
+      getStudentsByProgram(currentTimesheet.item.program);
   }, [currentTimesheet.isFetching]);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      const filtered = search(debouncedSearchTerm, students.items);
+      const filtered = search(
+        debouncedSearchTerm,
+        students.allIds,
+        students.byId
+      );
       setFilteredSuggestions(filtered);
-      setShowSuggestions(true);
     } else {
       setFilteredSuggestions([]);
     }
   }, [debouncedSearchTerm]);
 
+  const { suggestions, query } = useDebouncedAutocomplete(students, 250);
+
   return (
     <div className="mt-2 p-2 bg-white border border-gray-200 shadow rounded">
       <h3 className="text-lg font-gray-800 my-2">Manual Entry</h3>
       <input
-        className="border w-full rounded-t p-1"
+        className="mb-0 p-2 rounded-l w-full border border-gray-200"
         placeholder="search here..."
         type="text"
-        onChange={e => setQuery(e.target.value)}
-        value={query}
+        onChange={e => query.set(e.target.value)}
+        value={query.get}
       />
       <div className="overflow-auto rounded-b bg-white h-64">
-        {filteredSuggestions.length !== 0 ? (
-          filteredSuggestions.map((student, index) => (
+        {suggestions.length !== 0 ? (
+          suggestions.map((studentId, index) => (
             <div
-              key={student._id}
+              key={studentId}
               className="p-1 border-b block w-full flex text-xs"
             >
-              <p className="pl-2 py-1 w-3/4">{student.name}</p>
+              <p className="pl-2 py-1 w-3/4">{students.byId[studentId].name}</p>
               <p className="flex">
                 <button
                   className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
-                    submitPinTimestamp(student.pin, 'Lost');
+                    submitPinTimestamp(students.byId[studentId].pin, 'Lost');
                   }}
                 >
                   Lost
@@ -62,7 +65,7 @@ function ManualEntry({
                 <button
                   className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
-                    submitPinTimestamp(student.pin, 'Home');
+                    submitPinTimestamp(students.byId[studentId].pin, 'Home');
                   }}
                 >
                   Home
@@ -70,7 +73,7 @@ function ManualEntry({
                 <button
                   className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
-                    submitPinTimestamp(student.pin, 'Damaged');
+                    submitPinTimestamp(students.byId[studentId].pin, 'Damaged');
                   }}
                 >
                   Damaged
@@ -78,7 +81,7 @@ function ManualEntry({
                 <button
                   className="border hover:text-white hover:bg-blue-500 text-xs p-1 mr-1 rounded"
                   onClick={() => {
-                    submitPinTimestamp(student.pin, 'DNF');
+                    submitPinTimestamp(students.byId[studentId].pin, 'DNF');
                   }}
                 >
                   DNF
@@ -96,9 +99,11 @@ function ManualEntry({
   );
 }
 
-function search(search, list) {
+function search(search, list, listById) {
   const filtered = list.filter(suggestion => {
-    return suggestion.name.toLowerCase().indexOf(search.toLowerCase()) > -1;
+    return (
+      listById[suggestion].name.toLowerCase().indexOf(search.toLowerCase()) > -1
+    );
   });
 
   return filtered;
@@ -106,15 +111,15 @@ function search(search, list) {
 
 const mapStateToProps = state => {
   return {
-    students: state.students,
+    students: state.students.items,
     currentTimesheet: state.currentTimesheet
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProgramStudents: programId => {
-      dispatch(getProgramStudents(programId));
+    getStudentsByProgram: programId => {
+      dispatch(getStudentsByProgram(programId));
     },
     addTimestamp: timestamp => {
       dispatch(addTimestamp(timestamp));

@@ -14,19 +14,20 @@ export default function ProgramList({
   return (
     <div>
       <ul className="flex flex-wrap">
-        {programs.items.map(program => (
-          <li key={program._id}>
-            <Link
-              className="pt-2 pl-4 pb-8 my-2 mr-2 w-64 h-24 btn hover:bg-blue-400 text-lg font-bold"
-              onClick={() =>
-                updateUser({ ...user, currentProgram: program._id })
-              }
-              to={`/program/${program._id}`}
-            >
-              {program.name}
-            </Link>
-          </li>
-        ))}
+        {!!programs.allIds.length &&
+          programs.allIds.map(programId => (
+            <li key={programId}>
+              <Link
+                className="pt-2 pl-4 pb-8 my-2 mr-2 w-64 h-24 btn hover:bg-blue-400 text-lg font-bold"
+                onClick={() =>
+                  updateUser({ ...user, currentProgram: programId })
+                }
+                to={`/program/${programId}`}
+              >
+                {programs.byId[programId].name}
+              </Link>
+            </li>
+          ))}
 
         {showForm ? (
           <li className="h-24">

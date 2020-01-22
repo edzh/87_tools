@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { addTimesheet, setTimesheet } from '../actions/timesheetActions';
+import { addTimesheet } from '../actions/timesheetActions';
 import { getSessionTimesheets } from '../actions/sessionActions';
 
 import Timesheet from '../components/Timesheet/Timesheet';
@@ -25,7 +24,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Timesheet);
+export default connect(mapStateToProps, mapDispatchToProps)(Timesheet);

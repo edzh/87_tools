@@ -1,9 +1,8 @@
-import AddStudent from '../Student/AddStudent';
-import PinLookup from '../../containers/PinLookup';
-
 import TimesheetForm from '../Timesheet/TimesheetForm';
 import Timesheet from '../../containers/TimesheetContainer';
 import Timeclock from '../../containers/Timeclock/Timeclock';
+import TimesheetPage from '../../features/timesheet/TimesheetPage';
+import Attendance from '../../features/timesheet/Attendance';
 
 import Family from '../../containers/Family/FamilyContainer';
 import FamilyPage from '../../containers/Family/FamilyPageContainer';
@@ -15,8 +14,10 @@ import StudentFamily from '../../containers/Student/StudentFamilyContainer';
 import Student from '../../containers/Student/StudentContainer';
 
 import Club from '../../containers/Club/ClubContainer';
-import ClubPage from '../../containers/Club/ClubPageContainer';
 import ClubForm from '../Club/ClubForm';
+import ClubPage from '../../features/clubs/ClubPage';
+import ClubDetails from '../../features/clubs/ClubDetails';
+import ClubStudents from '../../features/clubs/ClubStudents';
 
 import Program from '../../containers/Program/ProgramContainer';
 import ProgramPage from '../../containers/Program/ProgramPageContainer';
@@ -33,11 +34,6 @@ import UserContainer from '../../containers/UserContainer';
 
 const routes = [
   {
-    path: '/addStudent',
-    auth: true,
-    component: AddStudent
-  },
-  {
     path: '/timesheet/new',
     auth: true,
     component: TimesheetForm
@@ -45,7 +41,19 @@ const routes = [
   {
     path: '/timesheet/:id',
     auth: true,
-    component: Timeclock
+    component: TimesheetPage,
+    routes: [
+      {
+        path: '/timesheet/:id/timeclock',
+        exact: true,
+        component: Timeclock
+      },
+      {
+        path: '/timesheet/:id/attendance',
+        exact: true,
+        component: Attendance
+      }
+    ]
   },
   {
     path: '/family/:id',
@@ -70,16 +78,21 @@ const routes = [
     ]
   },
   {
-    path: '/club',
-    auth: true,
-    exact: true,
-    component: Club,
-    routes: []
-  },
-  {
     path: '/club/:id',
     auth: false,
-    component: ClubPage
+    component: ClubPage,
+    routes: [
+      {
+        path: '/club/:id',
+        exact: true,
+        component: ClubDetails
+      },
+      {
+        path: '/club/:id/students',
+        exact: true,
+        component: ClubStudents
+      }
+    ]
   },
   {
     path: '/club/new',

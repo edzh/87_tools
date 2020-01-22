@@ -55,6 +55,7 @@ export const updateOne = async (req, res) => {
       { new: true, upsert: true, safe: true }
     )
       .lean()
+      .populate('session', '-clubs')
       .exec();
 
     if (!club.session.equals(updatedClub.session)) {
@@ -100,7 +101,9 @@ export const removeOne = async (req, res) => {
 export const getStudents = async (req, res) => {
   try {
     const club = await Club.findOne({ _id: req.params.id });
-    const students = await Student.find({ clubs: club.id });
+    const students = await Student.find({ clubs: club.id })
+      .sort({ name: 1 })
+      .exec();
 
     return res.status(200).json({ data: students });
   } catch (e) {

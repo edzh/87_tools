@@ -1,44 +1,44 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  getSessionClubs,
-  getCurrentSession
-} from '../../actions/sessionActions';
+import { getCurrentSession } from '../../actions/sessionActions';
+import { getClubsBySession } from '../../actions/clubActions';
 import { updateCurrentStudent } from '../../actions/studentActions';
-import { getProgramSessions } from '../../actions/programActions';
+import { getSessionsByProgram } from '../../actions/sessionActions';
 
-import EditStudentClubs from '../../components/Student/EditStudentClubsNew';
+import EditStudentClubs from '../../components/Student/EditStudentClubs';
 
 function StudentClubs({
   currentStudent,
   currentSession,
   clubs,
   sessions,
-  getProgramSessions,
-  getSessionClubs,
+  getSessionsByProgram,
+  getClubsBySession,
   getCurrentSession,
   updateCurrentStudent
 }) {
   useEffect(() => {
-    currentStudent.item && getProgramSessions(currentStudent.item.program);
+    currentStudent.item.allIds &&
+      getSessionsByProgram(
+        currentStudent.item.byId[currentStudent.item.allIds].program
+      );
   }, [currentStudent.isFetching]);
 
   useEffect(() => {
-    currentSession.item._id && getSessionClubs(currentSession.item._id);
-  }, [currentSession.item._id]);
+    currentSession.item.allIds && getClubsBySession(currentSession.item.allIds);
+  }, [currentSession.item.allIds]);
 
   if (!currentStudent.item) return null;
 
   return (
     <div>
-      {/*currentStudent.item.currentClubs.map(club => club.name)*/}
       <EditStudentClubs
-        clubs={clubs}
-        sessions={sessions}
+        clubs={clubs.items}
+        sessions={sessions.items}
         getCurrentSession={getCurrentSession}
-        getSessionClubs={getSessionClubs}
-        currentStudent={currentStudent}
+        getClubsBySession={getClubsBySession}
+        currentStudent={currentStudent.item}
         updateCurrentStudent={updateCurrentStudent}
         currentSession={currentSession}
       />
@@ -59,14 +59,14 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSessionClubs: sessionId => {
-      dispatch(getSessionClubs(sessionId));
+    getClubsBySession: sessionId => {
+      dispatch(getClubsBySession(sessionId));
     },
     getCurrentSession: sessionId => {
       dispatch(getCurrentSession(sessionId));
     },
-    getProgramSessions: programId => {
-      dispatch(getProgramSessions(programId));
+    getSessionsByProgram: programId => {
+      dispatch(getSessionsByProgram(programId));
     },
     updateCurrentStudent: student => {
       dispatch(updateCurrentStudent(student));
@@ -74,7 +74,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StudentClubs);
+export default connect(mapStateToProps, mapDispatchToProps)(StudentClubs);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';
 import { Formik, Field, Form } from 'formik';
 import { apiUrl } from 'config';
@@ -10,6 +10,8 @@ import {
   addTimestampFailure,
   getDateTimesheetTimestamps
 } from '../../actions/timeclockActions';
+
+import { getClubsBySession } from '../../actions/clubActions';
 
 import TimestampList from './TimestampList';
 import Alert from '../../components/Alert';
@@ -29,6 +31,11 @@ function Timeclock({
   alert,
   signInTimestamps
 }) {
+  const dispatch = useDispatch();
+  const clubs = useSelector(state => state.clubs.items);
+  const sessionId = currentTimesheet.item
+    ? currentTimesheet.item.session
+    : undefined;
   const [multiStudent, setMultiStudent] = useState({ students: [] });
   const pinInputRef = useRef();
   useEffect(() => {
@@ -39,6 +46,7 @@ function Timeclock({
   useEffect(() => {
     if (currentTimesheet.item && currentTimesheet.item.io === 'out')
       getDateTimesheetTimestamps(currentTimesheet.item.date, 'in');
+    sessionId && dispatch(getClubsBySession(sessionId));
   }, [currentTimesheet.isFetching]);
 
   async function submitPinTimestamp(pin, fobStatus) {
@@ -60,15 +68,18 @@ function Timeclock({
 
     // Sign student in
     if (fetchedPin.type === 'student') {
-      const studentClub = fetchedPin.currentClubs.find(
-        club =>
-          club.day ===
-          parseInt(format(new Date(currentTimesheet.item.date), 'E'))
-      );
+      const studentClub = fetchedPin.clubs.filter(clubId => {
+        if (clubs.byId[clubId]) {
+          return (
+            clubs.byId[clubId].day ===
+            +format(new Date(currentTimesheet.item.date), 'i')
+          );
+        }
+      });
 
       addTimestamp({
         student: fetchedPin._id,
-        club: studentClub ? studentClub._id : null,
+        club: studentClub[0] ? studentClub[0] : null,
         fobStatus,
         timesheet: timesheetId
       });
@@ -115,7 +126,7 @@ function Timeclock({
   }
 
   return (
-    <div className="flex">
+    <div className="flex mt-2">
       <div className="w-1/3 mr-2">
         <PinInput
           submitPinTimestamp={submitPinTimestamp}

@@ -2,12 +2,16 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
 export default function SessionHeader({ sessionId, session }) {
-  if (!session.item) return null;
+  if (!session.item.allIds) return null;
 
   return (
     <div>
       <h3 className="text-lg">
-        <Link to={`/program/${session.item.program}/sessions`}>
+        <Link
+          to={`/program/${
+            session.item.byId[session.item.allIds].program
+          }/sessions`}
+        >
           <span className="font-bold text-blue-500">{'< '}</span>Program
         </Link>
       </h3>

@@ -5,18 +5,16 @@ import { Link, Redirect } from 'react-router-dom';
 import {
   setStudent,
   getCurrentStudent,
-  updateCurrentStudent
+  updateCurrentStudent,
+  deleteCurrentStudent
 } from '../../actions/studentActions';
-import {
-  getSessionClubs,
-  getCurrentSession
-} from '../../actions/sessionActions';
+import { getCurrentSession } from '../../actions/sessionActions';
+import { getClubsBySession } from '../../actions/clubActions';
 import { getCurrentProgram } from '../../actions/programActions';
 
 import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
 import StudentDetails from '../../components/Student/StudentDetails';
-import EditStudent from '../../components/Student/EditStudentNew';
 import StudentClubs from '../../components/Student/StudentClubs';
 import StudentHeader from '../../components/Student/StudentHeader';
 
@@ -25,12 +23,11 @@ function StudentPage({
   currentStudent,
   currentSession,
   updateCurrentStudent,
+  deleteCurrentStudent,
   ...props
 }) {
   const [student, setStudent] = useState(null);
   const [editDetails, setEditDetails] = useState(false);
-  const [editFamily, setEditFamily] = useState(false);
-  const [editClubs, setEditClubs] = useState(false);
 
   useEffect(() => {
     props.getCurrentStudent(props.studentId);
@@ -46,12 +43,16 @@ function StudentPage({
 
   return (
     <div>
-      <StudentHeader student={currentStudent} studentId={props.studentId} />
+      <StudentHeader
+        currentStudent={currentStudent.item}
+        studentId={props.studentId}
+      />
       <StudentDetails
-        student={currentStudent.item}
+        currentStudent={currentStudent.item}
         editDetails={editDetails}
         setEditDetails={setEditDetails}
         updateCurrentStudent={updateCurrentStudent}
+        deleteCurrentStudent={deleteCurrentStudent}
         currentSession={currentSession}
       />
       {props.routes.map(route => (
@@ -67,7 +68,7 @@ const mapStateToProps = (state, ownProps) => {
     currentStudent: state.currentStudent,
     isAuthenticated: state.user.isAuthenticated,
     currentSession: state.currentSession,
-    currentProgramId: state.user.data.currentProgram
+    currentProgramId: state.user.item.currentProgram
   };
 };
 
@@ -79,14 +80,17 @@ const mapDispatchToProps = dispatch => {
     updateCurrentStudent: student => {
       dispatch(updateCurrentStudent(student));
     },
-    getSessionClubs: sessionId => {
-      dispatch(getSessionClubs(sessionId));
+    getClubsBySession: sessionId => {
+      dispatch(getClubsBySession(sessionId));
     },
     getCurrentSession: sessionId => {
       dispatch(getCurrentSession(sessionId));
     },
     getCurrentProgram: programId => {
       dispatch(getCurrentProgram(programId));
+    },
+    deleteCurrentStudent: studentId => {
+      dispatch(deleteCurrentStudent(studentId));
     }
   };
 };
