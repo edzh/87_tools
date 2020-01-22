@@ -50,7 +50,7 @@ export default function StreamlineStudentForm({
               <option value="5">5</option>
             </Field>
             <Field placeholder="PIN" name="pin" className="border rounded" />
-            {familyExists ? (
+            {familyExists && (
               <div>
                 <Field
                   name="family"
@@ -68,13 +68,6 @@ export default function StreamlineStudentForm({
                   Create New Family
                 </button>
               </div>
-            ) : (
-              <div>
-                <StreamlineFamilyForm programId={programId} />
-                <button className="btn" onClick={() => setFamilyExists(true)}>
-                  Use Existing Family
-                </button>
-              </div>
             )}
             <button className="btn" type="submit">
               Create Student
@@ -82,6 +75,18 @@ export default function StreamlineStudentForm({
           </Form>
         )}
       </Formik>
+      {!familyExists && (
+        <div>
+          <StreamlineFamilyForm programId={programId} />
+          <button
+            type="button"
+            className="btn"
+            onClick={() => setFamilyExists(true)}
+          >
+            Use Existing Family
+          </button>
+        </div>
+      )}
       {recentStudent && (
         <Link to={`/student/${recentStudent}`}>
           {students.byId[recentStudent].name}
