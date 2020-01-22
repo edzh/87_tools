@@ -59,7 +59,7 @@ export default function StreamlineStudentForm({
                 >
                   <option value="">---</option>
                   {families.allIds.map(familyId => (
-                    <option value={familyId}>
+                    <option key={familyId} value={familyId}>
                       {families.byId[familyId].name}
                     </option>
                   ))}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
 
 export default function MultiStudent({
@@ -10,7 +11,7 @@ export default function MultiStudent({
   signInTimestamps
 }) {
   const [selectedStudents, setSelectedStudents] = useState([]);
-
+  const clubs = useSelector(state => state.clubs.items);
   useEffect(() => {
     setSelectedStudents(
       multiStudent.students.reduce((selected, student) => {
@@ -22,14 +23,14 @@ export default function MultiStudent({
           selected.push({
             _id: student._id,
             name: student.name,
-            currentClubs: student.currentClubs,
+            clubs: student.clubs,
             selected: true
           });
         } else {
           selected.push({
             _id: student._id,
             name: student.name,
-            currentClubs: student.currentClubs,
+            clubs: student.clubs,
             selected: false
           });
         }
@@ -43,11 +44,15 @@ export default function MultiStudent({
     selectedStudents
       .filter(student => student.selected === true)
       .forEach(student => {
-        const studentClub = student.currentClubs.find(
-          club =>
-            club.day ===
-            parseInt(format(new Date(currentTimesheet.item.date), 'E'))
-        );
+        const studentClub = student.clubs.find(clubId => {
+          if (clubs.byId[clubId]) {
+            return (
+              clubs.byId[clubId].day ===
+              +format(new Date(currentTimesheet.item.date), 'i')
+            );
+          }
+        });
+
         addTimestamp({
           student: student._id,
           pickup: {
@@ -55,7 +60,7 @@ export default function MultiStudent({
             pickup: multiStudent.pickup.name,
             pin: multiStudent.pickup.pin
           },
-          club: studentClub ? studentClub._id : null,
+          club: studentClub ? studentClub : null,
           timesheet: currentTimesheet.item._id
         });
       });
