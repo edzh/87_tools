@@ -1,6 +1,9 @@
 import 'cross-fetch';
 import * as types from './userTypes';
+import { fetchUser } from '../api/fetchUser';
 import { apiUrl } from 'config';
+import * as schema from '../schemas/schema';
+import { normalize } from 'normalizr';
 
 export function signInRequest() {
   return {
@@ -34,9 +37,9 @@ export function signIn(email, password) {
       body: JSON.stringify({ email, password })
     })
       .then(response => response.json())
-      .then(response => {
-        dispatch(fetchUserInfo(signInSuccess, signInFailure, response.token));
-        localStorage.setItem('id_token', response.token);
+      .then(json => {
+        localStorage.setItem('id_token', json.token);
+        dispatch(getUser());
       })
       .catch(error => dispatch(signInFailure(error)));
   };
@@ -75,8 +78,8 @@ export function signUp(email, password) {
     })
       .then(response => response.json())
       .then(response => {
-        dispatch(fetchUserInfo(signUpSuccess, signUpFailure, response.token));
         localStorage.setItem('id_token', response.token);
+        dispatch(getUser());
       })
       .catch(error => dispatch(signUpFailure(error)));
   };
@@ -95,21 +98,6 @@ export function signOutRequest() {
   };
 }
 
-export function fetchUserInfo(success, failure, token) {
-  return dispatch => {
-    return fetch(`${apiUrl}/api/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(success(json.data));
-      })
-      .catch(error => dispatch(failure(error)));
-  };
-}
-
 function updateUserRequest() {
   return {
     type: 'UPDATE_USER_REQUEST'
@@ -117,26 +105,44 @@ function updateUserRequest() {
 }
 
 function updateUserSuccess(user) {
+  const normalizedUser = normalize(user, schema.user);
+
   return {
     type: 'UPDATE_USER_SUCCESS',
-    user
+    payload: {
+      byId: normalizedUser.entities.user,
+      allIds: normalizedUser.result
+    }
+  };
+}
+
+export function fetchUserSuccess(user) {
+  const normalizedUser = normalize(user, schema.user);
+
+  return {
+    type: 'FETCH_USER_SUCCESS',
+    payload: {
+      byId: normalizedUser.entities.user,
+      allIds: normalizedUser.result
+    }
+  };
+}
+
+export function getUser() {
+  return dispatch => {
+    dispatch(updateUserRequest());
+    return fetchUser
+      .get()
+      .then(data => dispatch(fetchUserSuccess(data)))
+      .catch(err => console.error(err));
   };
 }
 
 export function updateUser(user) {
   return dispatch => {
     dispatch(updateUserRequest());
-    return fetch(`${apiUrl}/api/user`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(user)
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(updateUserSuccess(json.data));
-      });
+    return fetchUser
+      .update(user)
+      .then(data => dispatch(updateUserSuccess(data)));
   };
 }

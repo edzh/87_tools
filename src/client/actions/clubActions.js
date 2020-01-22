@@ -1,4 +1,6 @@
-import { apiUrl } from 'config';
+import { fetchClubs } from '../api/fetchClubs';
+import * as schema from '../schemas/schema';
+import { normalize } from 'normalizr';
 
 function fetchClubsRequest() {
   return {
@@ -13,35 +15,24 @@ export function fetchCurrentClubRequest() {
 }
 
 // get many
-export function getClubs() {
+function fetchClubsSuccess(clubs) {
+  const normalizedClubs = normalize(clubs, schema.clubList);
+
+  return {
+    type: 'FETCH_CLUBS_SUCCESS',
+    payload: {
+      byId: normalizedClubs.entities.clubs,
+      allIds: normalizedClubs.result
+    }
+  };
+}
+
+export function getClubsBySession(sessionId) {
   return dispatch => {
     dispatch(fetchClubsRequest());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/club`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getClubsSuccess(json.data));
-      })
-      .catch(err => {
-        dispatch(getClubsFailure(err));
-      });
-  };
-}
-
-function getClubsSuccess(clubs) {
-  return {
-    type: 'GET_CLUBS_SUCCESS',
-    clubs
-  };
-}
-
-function getClubsFailure(err) {
-  return {
-    type: 'GET_CLUBS_FAILURE',
-    err
+    return fetchClubs.get
+      .session(sessionId)
+      .then(data => dispatch(fetchClubsSuccess(data)));
   };
 }
 
@@ -49,23 +40,21 @@ function getClubsFailure(err) {
 export function getCurrentClub(clubId) {
   return dispatch => {
     dispatch(fetchCurrentClubRequest());
-    return fetch(`${apiUrl}/api/club/${clubId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getCurrentClubSuccess(json.data));
-      });
+    return fetchClubs.get
+      .one(clubId)
+      .then(data => dispatch(currentClubSuccess(data)));
   };
 }
 
-function getCurrentClubSuccess(club) {
+function currentClubSuccess(club) {
+  const normalizedClub = normalize(club, schema.club);
+
   return {
-    type: 'GET_CURRENT_CLUB_SUCCESS',
-    club
+    type: 'CURRENT_CLUB_SUCCESS',
+    payload: {
+      byId: normalizedClub.entities.clubs,
+      allIds: normalizedClub.result
+    }
   };
 }
 
@@ -73,104 +62,50 @@ function getCurrentClubSuccess(club) {
 export function addClub(club) {
   return dispatch => {
     dispatch(fetchClubsRequest());
-    return fetch(`${apiUrl}/api/club/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(club)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error('Unable to create club!');
-        }
-
-        return response.json();
-      })
-      .then(json => {
-        dispatch(addClubSuccess(json.data));
-      });
+    return fetchClubs.add(club).then(data => dispatch(addClubSuccess(data)));
   };
 }
 
 function addClubSuccess(club) {
+  const normalizedClub = normalize(club, schema.club);
+
   return {
     type: 'ADD_CLUB_SUCCESS',
-    club
+    payload: {
+      byId: normalizedClub.entities.clubs,
+      allIds: normalizedClub.result
+    }
   };
 }
 
 // update one
-export function updateClub(club) {
+export function updateCurrentClub(club) {
   return dispatch => {
     dispatch(fetchCurrentClubRequest());
-    return fetch(`${apiUrl}/api/club/${club._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify(club)
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(updateClubSuccess(club));
-      });
-  };
-}
-
-function updateClubSuccess(club) {
-  return {
-    type: 'UPDATE_CLUB_SUCCESS',
-    club
+    return fetchClubs
+      .update(club)
+      .then(data => dispatch(currentClubSuccess(data)));
   };
 }
 
 // delete one
-export function deleteClub(clubId) {
+export function deleteCurrentClub(clubId) {
   return dispatch => {
     dispatch(fetchClubsRequest());
-    return fetch(`${apiUrl}/api/club/${clubId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(deleteClubSuccess(clubId));
-      });
+    return fetchClubs
+      .delete(clubId)
+      .then(data => dispatch(deleteClubSuccess(data)));
   };
 }
 
-function deleteClubSuccess(clubId) {
+function deleteClubSuccess(club) {
+  const normalizedClub = normalize(club, schema.club);
+
   return {
     type: 'DELETE_CLUB_SUCCESS',
-    clubId
-  };
-}
-
-function getClubStudentsSuccess(students) {
-  return {
-    type: 'GET_CLUB_STUDENTS_SUCCESS',
-    students
-  };
-}
-
-export function getClubStudents(clubId) {
-  return dispatch => {
-    dispatch(fetchCurrentClubRequest());
-    return fetch(`${apiUrl}/api/club/${clubId}/students`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getClubStudentsSuccess(json.data));
-      });
+    payload: {
+      byId: normalizedClub.entities.clubs,
+      allIds: normalizedClub.result
+    }
   };
 }

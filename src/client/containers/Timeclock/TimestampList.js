@@ -1,60 +1,84 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 import {
   deleteTimestamp,
   getTimesheetTimestamps
 } from '../../actions/timeclockActions';
 
-import Filters from '../../components/Timeclock/Filters';
-
 function TimestampList({
   currentTimesheet,
   getTimesheetTimestamps,
   timestamps,
   clubs,
-  deleteTimestamp,
-  isFetching
+  deleteTimestamp
 }) {
-  if (!currentTimesheet.item || currentTimesheet.isFetching) {
-    return <p>Loading...</p>;
-  }
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    getTimesheetTimestamps(currentTimesheet.item._id);
-  }, []);
+    currentTimesheet.item && getTimesheetTimestamps(currentTimesheet.item._id);
+    setRefresh(false);
+  }, [refresh, currentTimesheet.item]);
+
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      setRefresh(true);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [refresh]);
+
+  if (!currentTimesheet.item || currentTimesheet.isFetching) {
+    return <div data-testid="load">Loading...</div>;
+  }
 
   return (
     <div>
-      <h2>
-        {format(currentTimesheet.item.date, 'dddd, MMMM D')} Sign{' '}
-        {currentTimesheet.item.io} Timesheet
-      </h2>
-      <Filters />
-      <ul className="">
+      <ul data-testid="timestamp-ul">
         {timestamps &&
           timestamps.map(timestamp => (
-            <li className="border-b flex text-sm" key={timestamp._id}>
-              <p className="w-24">{format(timestamp.datetime, 'hh:mm a')}</p>
-              <p className="w-64">
-                <Link to={`/student/${timestamp.student._id}`}>
-                  {timestamp.student.name}
-                </Link>
-              </p>
-              <p className="w-64">
-                <Link to={`/club/${timestamp.club && timestamp.club._id}`}>
-                  {timestamp.club && timestamp.club.name}
-                </Link>
-              </p>
-              <p className="w-8">{timestamp.fobStatus}</p>
-              <p
-                className={`cursor-pointer text-lg text-red-200 font-bold -my-1 ml-auto hover:text-red-500 rounded`}
-                onClick={() => deleteTimestamp(timestamp._id)}
-              >
-                ×
-              </p>
+            <li
+              className="border-b border-gray-200 py-1 text-sm hover:bg-gray-100"
+              key={timestamp._id}
+            >
+              <ul className="flex">
+                <li className="w-24">
+                  {format(parseISO(timestamp.datetime), 'hh:mm a')}
+                </li>
+                <li className="w-64">
+                  {timestamp.student ? (
+                    <Link
+                      className="text-blue-500 hover:text-blue-400"
+                      to={`/student/${timestamp.student._id}`}
+                    >
+                      {timestamp.student.name}
+                    </Link>
+                  ) : (
+                    'Student not found!'
+                  )}
+                </li>
+                <li className="w-64">
+                  {timestamp.club ? (
+                    <Link
+                      className="text-blue-500 hover:text-blue-400"
+                      to={`/club/${timestamp.club._id}`}
+                    >
+                      {timestamp.club.name}
+                    </Link>
+                  ) : (
+                    'No club'
+                  )}
+                </li>
+                <li className="w-8">{timestamp.fobStatus}</li>
+                <li
+                  className={`cursor-pointer text-lg text-red-200 font-bold -my-1 ml-auto hover:text-red-500 rounded`}
+                  onClick={() => deleteTimestamp(timestamp._id)}
+                >
+                  ×
+                </li>
+              </ul>
             </li>
           ))}
       </ul>
@@ -70,6 +94,10 @@ function getFilteredTimestamps(timestamps, filter) {
       return timestamps.filter(timestamp => timestamp.fobStatus === 'Lost');
     case 'SHOW_DAMAGED':
       return timestamps.filter(timestamp => timestamp.fobStatus === 'Damaged');
+    case 'SHOW_HOME':
+      return timestamps.filter(timestamp => timestamp.fobStatus === 'Home');
+    case 'SHOW_DNF':
+      return timestamps.filter(timestamp => timestamp.fobStatus === 'DNF');
     default:
       throw new Error('Unknown filter: ' + filter);
   }
@@ -77,13 +105,12 @@ function getFilteredTimestamps(timestamps, filter) {
 
 const mapStateToProps = state => {
   return {
-    clubs: state.club.clubs,
+    clubs: state.clubs,
     timestamps: getFilteredTimestamps(
       state.timestamp.items,
       state.timestamp.filter
     ),
-    isFetching: state.timestamp.isFetching,
-    currentTimesheet: state.timesheet.currentTimesheet
+    currentTimesheet: state.currentTimesheet
   };
 };
 
@@ -98,7 +125,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TimestampList);
+export default connect(mapStateToProps, mapDispatchToProps)(TimestampList);

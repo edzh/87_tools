@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 import * as types from '../actions/timesheetTypes';
 
 const initialTimesheetState = {
@@ -10,7 +8,7 @@ const initialCurrentTimesheetState = {
   isFetching: false
 };
 
-function timesheets(state = initialTimesheetState, action) {
+export function timesheets(state = initialTimesheetState, action) {
   switch (action.type) {
     case types.FETCH_TIMESHEETS_REQUEST:
       return {
@@ -45,7 +43,7 @@ function timesheets(state = initialTimesheetState, action) {
   }
 }
 
-function currentTimesheet(state = initialCurrentTimesheetState, action) {
+export function currentTimesheet(state = initialCurrentTimesheetState, action) {
   switch (action.type) {
     case 'CURRENT_TIMESHEET_REQUEST':
       return {
@@ -62,8 +60,3 @@ function currentTimesheet(state = initialCurrentTimesheetState, action) {
       return state;
   }
 }
-
-export default combineReducers({
-  timesheets,
-  currentTimesheet
-});

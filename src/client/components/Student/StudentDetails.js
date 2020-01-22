@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
-import EditStudentDetails from './EditStudentDetails';
 
 const intToGrade = [
   'Kindergarten',
@@ -10,44 +10,86 @@ const intToGrade = [
   '4th Grade',
   '5th Grade'
 ];
-
 export default function StudentDetails({
-  editDetails,
-  setEditDetails,
-  student
+  currentStudent,
+  deleteCurrentStudent,
+  updateCurrentStudent
 }) {
-  console.log(student);
+  const [edit, setEdit] = useState(false);
+  if (!currentStudent.allIds) return null;
+
   return (
-    <div className="border rounded shadow-md">
-      <div className="flex border-b bg-gray-800 w-full">
-        <h2 className="m-4 font-normal text-white">{student.name}</h2>
+    <div className="">
+      <div className="flex">
         <button
           className={`${
-            editDetails ? 'bg-blue-500 text-white' : 'bg-white'
-          } m-4 ml-auto text-xs border rounded shadow p-1`}
-          onClick={() => setEditDetails(!editDetails)}
+            edit ? 'bg-blue-500 text-white' : 'bg-white'
+          } ml-auto text-xs border rounded shadow p-1`}
+          onClick={() => setEdit(!edit)}
         >
           Edit
         </button>
       </div>
-      {editDetails ? (
-        <EditStudentDetails
-          student={student}
-          editDetails={editDetails}
-          setEditDetails={setEditDetails}
-        />
-      ) : (
-        <div>
-          <div className="m-4 flex">
-            <h3 className="w-32 text-xl">Grade</h3>
-            <p className="text-xl">{intToGrade[student.grade]}</p>
-          </div>
-          <div className="m-4 flex">
-            <h3 className="w-32 text-xl">PIN</h3>
-            <p className="text-xl">{student.pin}</p>
-          </div>
+      <div className="bg-gray-100">
+        <div className="m-4 flex">
+          <h3 className="w-32 text-xl">Grade</h3>
+          <p className="text-xl">
+            {intToGrade[currentStudent.byId[currentStudent.allIds].grade]}
+          </p>
         </div>
-      )}
+        <div className="m-4 flex">
+          <h3 className="w-32 text-xl">PIN</h3>
+
+          {edit ? (
+            <Formik
+              initialValues={{
+                studentName: currentStudent.byId[currentStudent.allIds].name,
+                grade: currentStudent.byId[currentStudent.allIds].grade,
+                pin: currentStudent.byId[currentStudent.allIds].pin
+              }}
+              onSubmit={values => {
+                updateCurrentStudent({
+                  ...currentStudent.byId[currentStudent.allIds],
+                  name: values.studentName,
+                  grade: values.grade,
+                  pin: values.pin
+                });
+                setEdit(false);
+              }}
+            >
+              {() => (
+                <Form>
+                  <Field name="studentName" className="border rounded" />
+                  <Field
+                    component="select"
+                    name="grade"
+                    className="border rounded"
+                  >
+                    <option value="0">Kindergarten</option>
+                    <option value="1">1st Grade</option>
+                    <option value="2">2nd Grade</option>
+                    <option value="3">3rd Grade</option>
+                    <option value="4">4th Grade</option>
+                    <option value="5">5th Grade</option>
+                  </Field>
+                  <Field name="pin" className="border rounded" />
+                  <button type="submit">Submit</button>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <p className="text-xl">
+              {currentStudent.byId[currentStudent.allIds].pin}
+            </p>
+          )}
+        </div>
+        <button
+          onClick={() => deleteCurrentStudent(currentStudent.allIds)}
+          className="bg-red-500 text-white rounded p-2"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 }

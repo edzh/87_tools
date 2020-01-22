@@ -77,6 +77,13 @@ function getSigninTimesheetTimestampsSuccess(timestamps) {
   };
 }
 
+function getSignoutTimesheetTimestampsSuccess(timestamps) {
+  return {
+    type: 'GET_SIGNOUT_TIMESHEET_TIMESTAMPS_SUCCESS',
+    timestamps
+  };
+}
+
 export function getTimesheetTimestamps(timesheetId) {
   return dispatch => {
     dispatch(getTimesheetTimestampsRequest());
@@ -93,10 +100,10 @@ export function getTimesheetTimestamps(timesheetId) {
   };
 }
 
-export function getSigninTimesheetTimestamps(date) {
+export function getDateTimesheetTimestamps(date, io) {
   return dispatch => {
     dispatch(getTimesheetTimestampsRequest());
-    return fetch(`${apiUrl}/api/timesheet?io=in&date=${date}`, {
+    return fetch(`${apiUrl}/api/timesheet?io=${io}&date=${date}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('id_token')}`
@@ -113,7 +120,9 @@ export function getSigninTimesheetTimestamps(date) {
         })
           .then(response => response.json())
           .then(json => {
-            dispatch(getSigninTimesheetTimestampsSuccess(json.data));
+            io === 'in'
+              ? dispatch(getSigninTimesheetTimestampsSuccess(json.data))
+              : dispatch(getSignoutTimesheetTimestampsSuccess(json.data));
           });
       })
       .catch(err => console.error(err));

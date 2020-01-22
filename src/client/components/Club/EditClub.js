@@ -3,51 +3,48 @@ import { Formik, Form, Field } from 'formik';
 import { useFormInput } from 'utils/hooks';
 import { apiUrl } from 'config';
 
-export default ({ setEditDetails, club, sessions }) => {
-  const name = useFormInput(club.name);
-  const start = useFormInput(club.start);
-  const end = useFormInput(club.end);
-  const capacity = useFormInput(club.capacity);
-
+export default function EditClub({
+  updateCurrentClub,
+  setEditDetails,
+  currentClub,
+  sessions
+}) {
   function handleSubmit(values, action) {
-    fetch(`${apiUrl}/api/club/${club._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify({
-        name: values.clubName,
-        session: values.session,
-        capacity: values.capacity
-      })
-    }).then(() => setEditDetails(false));
+    const { session, capacity } = values;
+    updateCurrentClub({
+      ...currentClub,
+      name: values.name,
+      session,
+      capacity
+    });
   }
+
+  if (!currentClub) return null;
 
   return (
     <Formik
       initialValues={{
-        clubName: club.name,
-        session: club.session,
-        capacity: club.capacity
+        clubName: currentClub.name,
+        session: currentClub.session,
+        capacity: currentClub.capacity
       }}
       onSubmit={handleSubmit}
     >
       <Form>
         <Field
           name="clubName"
-          placeHolder="Club Name"
+          placeholder="Club Name"
           className="p-2 my-2 border rounded"
         />
         <Field component="select" name="session">
-          <option>Current session ({club.session.name})</option>
-          {sessions.map(session => (
-            <option value={session._id}>{session.name}</option>
+          <option>Current session ({currentClub.session.name})</option>
+          {sessions.allIds.map(sessionId => (
+            <option value={sessionId}>{sessions.byId[sessionId].name}</option>
           ))}
         </Field>
         <Field
           name="capacity"
-          placeHolder="Capacity"
+          placeholder="Capacity"
           className="p-2 my-2 border rounded"
         />
         <button
@@ -59,4 +56,4 @@ export default ({ setEditDetails, club, sessions }) => {
       </Form>
     </Formik>
   );
-};
+}

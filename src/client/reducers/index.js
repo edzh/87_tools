@@ -1,21 +1,30 @@
 import { combineReducers } from 'redux';
-import postcareLocations from './postcareLocationsReducer';
-import club from './clubReducer';
-import family from './familyReducer';
-import program from './programReducer';
-import session from './sessionReducer';
-import student from './studentReducer';
-import timesheet from './timesheetReducer';
+import { clubs, currentClub } from './clubReducer';
+import { families, currentFamily } from './familyReducer';
+import { programs, currentProgram } from './programReducer';
+import { sessions, currentSession } from './sessionReducer';
+import { students, currentStudent } from './studentReducer';
+import { timesheets, currentTimesheet } from './timesheetReducer';
+import clubPage from '../features/clubs/clubSlice';
+import timeclock from '../features/timesheet/timeclockSlice';
 import timestamp from './timestampReducer';
 import user from './userReducer';
 
 export default combineReducers({
-  club,
-  family,
-  program,
-  session,
-  student,
-  timesheet,
+  currentClub,
+  currentFamily,
+  currentProgram,
+  currentSession,
+  currentStudent,
+  currentTimesheet,
+  clubs,
+  clubPage,
+  families,
+  programs,
+  sessions,
+  students,
+  timesheets,
+  timeclock,
   timestamp,
   user
 });

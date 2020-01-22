@@ -3,24 +3,40 @@ import { Formik, Form, Field } from 'formik';
 
 import { apiUrl } from 'config';
 
-export default function ProgramForm(props) {
+export default function ProgramForm({ setShowForm, addProgram, user }) {
   return (
-    <div>
+    <div className="w-64 form p-2 h-24 mt-2">
       <Formik
         initialValues={{
           programName: ''
         }}
         onSubmit={(values, action) => {
-          props.addProgram({
+          addProgram({
             name: values.programName,
-            owner: props.user._id
+            owner: user._id
           });
         }}
       >
         {() => (
           <Form>
-            <Field name="programName" className="p-2 my-2 border rounded" />
-            <button type="submit">Submit</button>
+            <label htmlFor="programName"></label>
+            <Field
+              name="programName"
+              placeholder="Program Name"
+              className="form-input w-full"
+            />
+            <div className="flex">
+              <button className="btn hover:bg-blue-400" type="submit">
+                Submit
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowForm(false)}
+                className="ml-auto text-blue-500 hover:text-blue-400"
+              >
+                Cancel
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

@@ -1,4 +1,4 @@
-export const daysOfWeek = [
+export const intToDay = [
   'Sunday',
   'Monday',
   'Tuesday',

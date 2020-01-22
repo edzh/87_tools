@@ -5,7 +5,7 @@ import TimesheetListRow from './TimesheetListRow';
 
 export default function TimesheetList({ timesheets }) {
   if (timesheets.isFetching && !timesheets.items) {
-    return <p>Loading...</p>;
+    return <div>Loading...</div>;
   }
 
   let indexedTimesheets;
@@ -36,32 +36,21 @@ export default function TimesheetList({ timesheets }) {
   }
 
   return (
-    <div className="border rounded shadow-md">
-      <h2 className="p-4 border-b rounded-t font-normal bg-gray-800 text-white shadow">
-        Timesheets
-      </h2>
-      <table
-        className="overflow-auto block"
-        style={{ WebkitOverflowScrolling: 'touch' }}
-      >
-        <thead className="w-full block">
-          <tr className="px-4 py-2 border-b w-full block border-gray-400 flex">
-            <th className="text-left block w-1/4">Date</th>
-            <th className="text-left block w-1/4">Type</th>
-            <th className="text-left block w-1/4"># of Students In</th>
-            <th className="text-left block w-1/4"># of Students Out</th>
-          </tr>
-        </thead>
-        <tbody className="block" style={{ height: '480px' }}>
-          {timesheetsByDate &&
-            timesheetsByDate.map((timesheetsDate, index) => (
-              <TimesheetListRow
-                key={timesheetsDate.date}
-                timesheetsDate={timesheetsDate}
-              />
-            ))}
-        </tbody>
-      </table>
-    </div>
+    <ul
+      className="overflow-auto block bg-white w-1/3 border border-gray-400 rounded"
+      style={{ WebkitOverflowScrolling: 'touch', height: '480px' }}
+    >
+      <li className="px-4 py-2 border-b w-full block bg-gray-200 border-gray-400 flex">
+        <div className="w-40">Date</div>
+        <div className="">Type</div>
+      </li>
+      {timesheetsByDate &&
+        timesheetsByDate.map((timesheetsDate, index) => (
+          <TimesheetListRow
+            key={timesheetsDate.date}
+            timesheetsDate={timesheetsDate}
+          />
+        ))}
+    </ul>
   );
 }

@@ -1,49 +1,21 @@
-import { combineReducers } from 'redux';
-import * as types from '../actions/familyTypes';
-
-const initialState = {
-  families: [],
-  isFetching: false
-};
-
 const initialFamiliesState = {
   isFetching: false,
-  items: []
+  items: {
+    byId: {},
+    allIds: []
+  },
+  recentFamily: ''
 };
 
 const initialCurrentFamilyState = {
-  isFetching: false
+  isFetching: false,
+  item: {
+    byId: {},
+    allIds: ''
+  }
 };
 
-function family(state = initialState, action) {
-  switch (action.type) {
-    case types.FETCH_FAMILIES_REQUEST:
-      return {
-        ...state,
-        isFetching: true
-      };
-    case types.FETCH_FAMILIES_SUCCESS:
-      return {
-        ...state,
-        families: action.families,
-        isFetching: false
-      };
-    case types.FETCH_FAMILIES_FAILURE:
-      return {
-        ...state,
-        isFetching: false
-      };
-    case types.SET_FAMILY:
-      return {
-        ...state,
-        id: action.family
-      };
-    default:
-      return state;
-  }
-}
-
-function families(state = initialFamiliesState, action) {
+export function families(state = initialFamiliesState, action) {
   switch (action.type) {
     case 'FETCH_FAMILIES_REQUEST':
       return {
@@ -51,32 +23,67 @@ function families(state = initialFamiliesState, action) {
         isFetching: true
       };
     case 'FETCH_FAMILIES_SUCCESS':
-    case 'GET_PROGRAM_FAMILIES_SUCCESS':
       return {
         ...state,
-        items: action.families,
+        items: {
+          ...state.items,
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        },
         isFetching: false
       };
     case 'ADD_FAMILY_SUCCESS':
-      function compare(a, b) {
-        if (a.name < b.name) {
-          return -1;
-        }
-        if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
-      }
+      const families = state.items.byId;
+      const familyIds = state.items.allIds;
+
+      const { byId, allIds } = action.payload;
 
       return {
         ...state,
-        items: [action.family, ...state.items].sort(compare),
-        recentFamily: action.family,
+        items: {
+          byId: {
+            ...families,
+            [allIds]: byId[allIds]
+          },
+          allIds: [...familyIds, allIds]
+        },
+        recentFamily: allIds,
         isFetching: false
+      };
+    case 'DELETE_FAMILY_SUCCESS':
+      return {
+        ...state,
+        items: {
+          byId: {
+            ...state.items.byId,
+            [action.payload.allIds]: null
+          },
+          allIds: state.items.allids.filter(
+            studentId => studentId !== action.payload.allIds
+          )
+        }
       };
     default:
       return state;
   }
 }
 
-export default combineReducers({ family, families });
+export function currentFamily(state = initialCurrentFamilyState, action) {
+  switch (action.type) {
+    case 'CURRENT_FAMILY_REQUEST':
+      return {
+        ...state,
+        isFetching: true
+      };
+    case 'CURRENT_FAMILY_SUCCESS':
+      return {
+        isFetching: false,
+        item: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        }
+      };
+    default:
+      return state;
+  }
+}

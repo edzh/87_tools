@@ -5,12 +5,6 @@ const timesheetSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  // timestamp: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'timestamp'
-  //   }
-  // ],
   io: {
     type: String,
     required: true

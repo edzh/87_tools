@@ -1,25 +1,33 @@
-import { combineReducers } from 'redux';
-
 const initialClubsState = {
+  items: {
+    byId: {},
+    allIds: []
+  },
   isFetching: false
 };
 
 const initialCurrentClubState = {
+  item: {
+    byId: {},
+    allIds: ''
+  },
   isFetching: false
 };
 
-function clubs(state = initialClubsState, action) {
+export function clubs(state = initialClubsState, action) {
   switch (action.type) {
     case 'FETCH_CLUBS_REQUEST':
       return {
         ...state,
         isFetching: true
       };
-    case 'GET_CLUBS_SUCCESS':
-    case 'GET_SESSION_CLUBS_SUCCESS':
+    case 'FETCH_CLUBS_SUCCESS':
       return {
         ...state,
-        items: action.clubs,
+        items: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        },
         isFetching: false
       };
     case 'GET_CLUBS_FAILURE':
@@ -28,52 +36,58 @@ function clubs(state = initialClubsState, action) {
         isFetching: false
       };
     case 'ADD_CLUB_SUCCESS':
+      const clubs = state.items.byId;
+      const clubIds = state.items.allIds;
+
+      const { byId, allIds } = action.payload;
+
       return {
         ...state,
         isFetching: false,
-        items: [...state.items, action.club]
+        items: {
+          byId: {
+            ...clubs,
+            [allIds]: byId[allIds]
+          },
+          allIds: [...clubIds, allIds]
+        }
       };
     case 'DELETE_CLUB_SUCCESS':
       return {
         ...state,
         isFetching: false,
-        items: state.items.filter(club => club._id !== action.clubId)
+        items: {
+          byId: {
+            ...state.items.byId,
+            [action.payload.allIds]: null
+          },
+          allIds: state.items.allIds.filter(
+            clubId => clubId !== action.payload.allIds
+          )
+        }
       };
     default:
       return state;
   }
 }
 
-function currentClub(state = { isFetching: false }, action) {
+export function currentClub(state = initialCurrentClubState, action) {
   switch (action.type) {
     case 'FETCH_CURRENT_CLUB_REQUEST':
       return {
         ...state,
         isFetching: true
       };
-    case 'GET_CURRENT_CLUB_SUCCESS':
-      return {
-        isFetching: false,
-        item: action.club
-      };
-    case 'GET_CLUB_STUDENTS_SUCCESS':
+    case 'CURRENT_CLUB_SUCCESS':
       return {
         ...state,
         isFetching: false,
-        students: action.students
-      };
-    case 'UPDATE_CLUB_SUCCESs':
-      return {
-        ...state,
-        isFetching: false,
-        item: action.club
+        item: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        }
       };
     default:
       return state;
   }
 }
-
-export default combineReducers({
-  clubs,
-  currentClub
-});

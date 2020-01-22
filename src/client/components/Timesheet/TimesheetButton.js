@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 
 export default ({ timesheet }) => {
   return (
-    <Link to={`/timesheet/${timesheet._id}`}>
-      <button className="p-2 mx-2 shadow border rounded hover:bg-gray-200">{`${
-        timesheet.io === 'in' ? 'Sign in' : 'Sign out'
-      }`}</button>
+    <Link
+      className="mr-2 py-1 px-2 bg-gray-100 hover:bg-gray-200 rounded border border-gray-400"
+      to={`/timesheet/${timesheet._id}`}
+    >
+      {`${timesheet.io === 'in' ? 'Sign in' : 'Sign out'}`}
     </Link>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TimesheetButton from './TimesheetButton';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export default ({ timesheetsDate }) => {
   const [inExists, setInExists] = useState(
@@ -11,25 +11,15 @@ export default ({ timesheetsDate }) => {
   );
 
   return (
-    <tr className="py-2 px-4 group bg-transparent border-b border-gray-400 flex block">
-      <td className="my-auto w-1/4 block">
-        {format(timesheetsDate.date, 'MMMM DD')}
-      </td>
-      <td className="my-auto w-1/4 block">
+    <li className="py-2 px-4 group bg-transparent border-b border-gray-400 flex block">
+      <div className="my-auto w-40 block">
+        {format(parseISO(timesheetsDate.date), 'MMMM dd')}
+      </div>
+      <div className="my-auto flex block">
         {timesheetsDate.timesheets.map(timesheet => (
           <TimesheetButton key={timesheet._id} timesheet={timesheet} />
         ))}
-      </td>
-      <td className="my-auto w-1/4 block text-left">
-        {/*inExists &&
-          timesheetsDate.timesheets.find(timesheet => timesheet.io === 'in')
-            .amount*/}
-      </td>
-      <td className="my-auto w-1/4 block text-left">
-        {/*outExists &&
-          timesheetsDate.timesheets.find(timesheet => timesheet.io === 'out')
-            .amount*/}
-      </td>
-    </tr>
+      </div>
+    </li>
   );
 };

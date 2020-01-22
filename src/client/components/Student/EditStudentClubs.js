@@ -1,162 +1,139 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+import { Link } from 'react-router-dom';
 
 const intToDay = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday'
 ];
 
-export default function EditStudentClubs({ student, editClubs, setEditClubs }) {
-  const [fetchedClubs, setFetchedClubs] = useState([]);
-  const [initialClubs, setInitialClubs] = useState([]);
-  const [clubs, setClubs] = useState([]);
+export default function EditStudentClubs({
+  clubs,
+  sessions,
+  currentStudent,
+  currentSession,
+  getCurrentSession,
+  getClubsBySession,
+  updateCurrentStudent
+}) {
+  function findClubWithDay(clubDay) {
+    if (!currentStudent.byId[currentStudent.allIds].currentClubs) return '';
+    const club = currentStudent.byId[currentStudent.allIds].clubs
+      .filter(club => club.day === clubDay)
+      .find(club => club.session === currentSession.item.allIds);
 
-  useEffect(() => {
-    const studentClubs = student.clubs.reduce(
-      (club, line) => {
-        club[line.day - 1] = line._id;
-        return club;
-      },
-      ['', '', '', '', '']
-    );
-
-    setClubs(studentClubs);
-    setInitialClubs(studentClubs);
-  }, []);
-
-  useEffect(() => {
-    const fetchClubs = async () => {
-      const result = await fetch(`${process.env.REACT_APP_API_URL}/api/club`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
-        }
-      })
-        .then(response => response.json())
-        .then(json => json.data);
-
-      setFetchedClubs(result);
-    };
-
-    fetchClubs();
-  }, []);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    editStudent();
+    if (club) return club._id;
   }
 
-  function editStudent() {
-    const removeClubs = initialClubs.filter(club => !clubs.includes(club));
-    const addClubs = clubs.filter(club => !initialClubs.includes(club));
-
-    swapStudentFromClubs(student._id, removeClubs, addClubs);
-
-    fetch(`${process.env.REACT_APP_API_URL}/api/student/${student._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('id_token')}`
-      },
-      body: JSON.stringify({
-        clubs: clubs.filter(club => club !== '')
-      })
-    }).then(() => setEditClubs(!editClubs));
-  }
-
-  function swapStudentFromClubs(student, oldClubs, newClubs) {
-    oldClubs.forEach(async club => {
-      const clubStudents = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/club/${club}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('id_token')}`
-          }
-        }
-      )
-        .then(response => response.json())
-        .then(json => json.data.students);
-
-      fetch(`${process.env.REACT_APP_API_URL}/api/club/${club}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
-        },
-        body: JSON.stringify({
-          students: clubStudents
-            .map(clubStudent => clubStudent._id)
-            .filter(clubStudent => clubStudent !== student)
-        })
-      });
-    });
-
-    newClubs.forEach(async club => {
-      const clubStudents = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/club/${club}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('id_token')}`
-          }
-        }
-      )
-        .then(response => response.json())
-        .then(json => json.data.students);
-
-      fetch(`${process.env.REACT_APP_API_URL}/api/club/${club}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('id_token')}`
-        },
-        body: JSON.stringify({
-          students: clubStudents
-            ? clubStudents.map(clubStudent => clubStudent._id).concat(student)
-            : [student]
-        })
-      });
-    });
-  }
-
-  function handleClubChange(day, club) {
-    const newClub = [...clubs];
-    newClub[day] = club;
-    setClubs(newClub);
-  }
+  if (!currentStudent.allIds) return null;
+  if (!sessions.allIds.length) return null;
 
   return (
-    <form className="p-4" onSubmit={handleSubmit}>
-      {clubs.map((club, index) => {
-        const day = index + 1;
-        const clubsByDay = fetchedClubs.filter(
-          fetchedClub => fetchedClub.day === day
-        );
-        return (
-          <div className="flex m-2">
-            <h3 className="w-32">{intToDay[day]}</h3>
-            <select
-              className="border rounded block"
-              value={club}
-              onChange={e => handleClubChange(index, e.target.value)}
-            >
-              <option value="">---</option>
-              {clubsByDay
-                .filter(clubByDay => clubByDay.day === day)
-                .map((clubByDay, index) => (
-                  <option key={clubByDay._id} value={clubByDay._id}>
-                    {clubByDay.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        );
-      })}
-      <button className="p-2 border rounded" type="submit">
-        Save
-      </button>
-    </form>
+    <div>
+      <h2 className="text-xl font-bold my-2">Clubs</h2>
+
+      <div className="flex">
+        {sessions.allIds.map(sessionId => (
+          <p
+            key={sessionId}
+            className="p-2 mr-2 btn"
+            onClick={() => {
+              getCurrentSession(sessionId);
+              getClubsBySession(sessionId);
+            }}
+          >
+            {sessions.byId[sessionId].name}
+          </p>
+        ))}
+      </div>
+      <div className="p-4">
+        {currentStudent.byId[currentStudent.allIds].clubs &&
+          currentStudent.byId[currentStudent.allIds].clubs
+            .filter(club => club.session === currentSession.item.allIds)
+            .map((club, index) => (
+              <div className="flex m-2" key={index}>
+                <p className="w-32 capitalize">{intToDay[club.day]}</p>
+                <Link className="no-underline" to={`/club/${club._id}`}>
+                  <p className="text-blue-600  hover:text-blue">{club.name}</p>
+                </Link>
+              </div>
+            ))}
+      </div>
+
+      {currentSession.item.allIds && (
+        <Formik
+          enableReinitialize
+          initialValues={{
+            monday: findClubWithDay(1),
+            tuesday: findClubWithDay(2),
+            wednesday: findClubWithDay(3),
+            thursday: findClubWithDay(4),
+            friday: findClubWithDay(5)
+          }}
+          onSubmit={(values, actions) => {
+            const currentClubIds = [
+              values.monday,
+              values.tuesday,
+              values.wednesday,
+              values.thursday,
+              values.friday
+            ].filter(club => club !== '');
+
+            const sessionClubIds = currentStudent.byId[
+              currentStudent.allIds
+            ].clubs
+              .filter(club => club.session !== currentSession.item.allIds)
+              .map(club => club._id);
+
+            const clubs = Array.from(
+              new Set([...sessionClubIds, ...currentClubIds])
+            ).filter(club => club !== '');
+
+            updateCurrentStudent({
+              ...currentStudent.byId[currentStudent.allIds],
+              currentClubIds,
+              clubs
+            });
+          }}
+        >
+          {() => (
+            <Form>
+              {intToDay.map((day, index) => (
+                <div className="flex" key={day}>
+                  <label
+                    className="my-auto font-bold w-24 capitalize"
+                    htmlFor={day}
+                  >
+                    {day}
+                  </label>
+                  <Field
+                    className="block p-2 rounded border border-gray-400 my-2"
+                    name={day}
+                    component="select"
+                  >
+                    <option value="">---</option>
+                    {clubs.allIds
+                      .filter(clubId => clubs.byId[clubId].day === index)
+                      .map(clubId => (
+                        <option className="block" key={clubId} value={clubId}>
+                          {clubs.byId[clubId].name}
+                        </option>
+                      ))}
+                  </Field>
+                </div>
+              ))}
+              <button className="btn hover:bg-blue-400" type="submit">
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
+      )}
+    </div>
   );
 }

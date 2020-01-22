@@ -19,7 +19,6 @@ function StreamlineAdd({
 
   return (
     <div>
-      <StreamlineFamilyForm addFamily={addFamily} programId={programId} />
       <StreamlineStudentForm
         addStudent={addStudent}
         programId={programId}
@@ -33,8 +32,8 @@ function StreamlineAdd({
 const mapStateToProps = (state, ownProps) => {
   return {
     programId: ownProps.match.params.id,
-    recentStudent: state.student.students.recentStudent,
-    recentFamily: state.family.families.recentFamily
+    recentStudent: state.students.recentStudent,
+    recentFamily: state.families.recentFamily
   };
 };
 
@@ -49,7 +48,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StreamlineAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(StreamlineAdd);

@@ -15,7 +15,7 @@ export default function FamilyForm(props) {
         Authorization: `Bearer ${localStorage.getItem('id_token')}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ name: name.value })
+      body: JSON.stringify({ name: name.value, program: props.programId })
     })
       .then(response => response.json())
       .then(json => {
@@ -28,9 +28,23 @@ export default function FamilyForm(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input className="p-2 border rounded" type="text" {...name} />
-      <button type="submit">Create new family</button>
-    </form>
+    <div>
+      <h3 className="text-lg mx-2 mt-2 font-bold text-gray-600">
+        Create New Family
+      </h3>
+      <div className="p-8 form mt-2 w-64 rounded">
+        <form onSubmit={handleSubmit}>
+          <input
+            className="form-input py-1 px-2 my-2"
+            placeholder="Name"
+            type="text"
+            {...name}
+          />
+          <button className="btn" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }

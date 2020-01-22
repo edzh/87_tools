@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import EditStudentClubs from './EditStudentClubs';
-
 const intToDay = [
   'Sunday',
   'Monday',
@@ -27,25 +25,6 @@ export default ({ student, editClubs, setEditClubs }) => {
           Edit
         </button>
       </div>
-      {editClubs ? (
-        <EditStudentClubs
-          student={student}
-          editClubs={editClubs}
-          setEditClubs={setEditClubs}
-        />
-      ) : (
-        <div className="p-4">
-          {student.clubs &&
-            student.clubs.map((club, index) => (
-              <div className="flex m-2" key={index}>
-                <p className="w-32">{intToDay[club.day]}</p>
-                <Link className="no-underline" to={`/club/id/${club._id}`}>
-                  <p className="text-blue-600  hover:text-blue">{club.name}</p>
-                </Link>
-              </div>
-            ))}
-        </div>
-      )}
     </div>
   );
 };

@@ -1,15 +1,22 @@
-import { combineReducers } from 'redux';
 import * as types from '../actions/sessionTypes';
 
 const initialSessionState = {
+  items: {
+    byId: {},
+    allIds: []
+  },
   isFetching: false
 };
 
 const initialCurrentSessionState = {
+  item: {
+    byId: {},
+    allIds: ''
+  },
   isFetching: false
 };
 
-function sessions(state = initialSessionState, action) {
+export function sessions(state = initialSessionState, action) {
   switch (action.type) {
     case types.FETCH_SESSIONS_REQUEST:
       return {
@@ -17,10 +24,12 @@ function sessions(state = initialSessionState, action) {
         isFetching: true
       };
     case types.FETCH_SESSIONS_SUCCESS:
-    case 'GET_PROGRAM_SESSIONS_SUCCESS':
       return {
         ...state,
-        items: action.sessions,
+        items: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        },
         isFetching: false
       };
     case types.FETCH_SESSIONS_FAILURE:
@@ -29,22 +38,43 @@ function sessions(state = initialSessionState, action) {
         isFetching: false
       };
     case 'ADD_SESSION_SUCCESS':
+      const sessions = state.items.byId;
+      const sessionIds = state.items.allIds;
+
+      const { byId, allIds } = action.payload;
+
       return {
         ...state,
         isFetching: false,
-        items: [...state.items, action.session]
+        items: {
+          byId: {
+            ...sessions,
+            [allIds]: byId[allIds]
+          },
+          allIds: [...sessionIds, allIds]
+        },
+        recentSession: allIds
       };
-    case types.SET_SESSION:
+    case 'DELETE_SESSION_SUCCESS':
       return {
         ...state,
-        id: action.session
+        isFetching: false,
+        items: {
+          byId: {
+            ...state.items.byId,
+            [action.payload.allIds]: null
+          },
+          allIds: state.items.allIds.filter(
+            clubId => clubId !== action.payload.allIds
+          )
+        }
       };
     default:
       return state;
   }
 }
 
-function currentSession(state = initialCurrentSessionState, action) {
+export function currentSession(state = initialCurrentSessionState, action) {
   switch (action.type) {
     case 'CURRENT_SESSION_REQUEST':
       return {
@@ -55,7 +85,10 @@ function currentSession(state = initialCurrentSessionState, action) {
       return {
         ...state,
         isFetching: false,
-        item: action.session
+        item: {
+          byId: action.payload.byId,
+          allIds: action.payload.allIds
+        }
       };
     case 'CURRENT_SESSION_CLUBS_SUCCESS':
       return {
@@ -67,14 +100,9 @@ function currentSession(state = initialCurrentSessionState, action) {
       return {
         ...state,
         isFetching: false,
-        clubs: [...state.clubs, action.clubs]
+        clubs: [...state, action.clubs]
       };
     default:
       return state;
   }
 }
-
-export default combineReducers({
-  sessions,
-  currentSession
-});

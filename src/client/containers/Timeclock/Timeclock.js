@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';
 import { Formik, Field, Form } from 'formik';
 import { apiUrl } from 'config';
@@ -8,18 +8,22 @@ import { getCurrentTimesheet } from '../../actions/timesheetActions';
 import {
   addTimestamp,
   addTimestampFailure,
-  getSigninTimesheetTimestamps
+  getDateTimesheetTimestamps
 } from '../../actions/timeclockActions';
+
+import { getClubsBySession } from '../../actions/clubActions';
 
 import TimestampList from './TimestampList';
 import Alert from '../../components/Alert';
 import PinInput from '../../components/Timeclock/PinInput';
 import MultiStudent from '../../components/Timeclock/MultiStudent';
 import ManualEntry from './ManualEntry';
+import Filters from '../../components/Timeclock/Filters';
+import TimesheetHeader from '../../components/Timeclock/TimesheetHeader';
 
 function Timeclock({
   getCurrentTimesheet,
-  getSigninTimesheetTimestamps,
+  getDateTimesheetTimestamps,
   currentTimesheet,
   addTimestamp,
   addTimestampFailure,
@@ -27,6 +31,11 @@ function Timeclock({
   alert,
   signInTimestamps
 }) {
+  const dispatch = useDispatch();
+  const clubs = useSelector(state => state.clubs.items);
+  const sessionId = currentTimesheet.item
+    ? currentTimesheet.item.session
+    : undefined;
   const [multiStudent, setMultiStudent] = useState({ students: [] });
   const pinInputRef = useRef();
   useEffect(() => {
@@ -36,7 +45,8 @@ function Timeclock({
 
   useEffect(() => {
     if (currentTimesheet.item && currentTimesheet.item.io === 'out')
-      getSigninTimesheetTimestamps(currentTimesheet.item.date);
+      getDateTimesheetTimestamps(currentTimesheet.item.date, 'in');
+    sessionId && dispatch(getClubsBySession(sessionId));
   }, [currentTimesheet.isFetching]);
 
   async function submitPinTimestamp(pin, fobStatus) {
@@ -58,15 +68,18 @@ function Timeclock({
 
     // Sign student in
     if (fetchedPin.type === 'student') {
-      const studentClub = fetchedPin.currentClubs.find(
-        club =>
-          club.day ===
-          parseInt(format(new Date(currentTimesheet.item.date), 'E'))
-      );
+      const studentClub = fetchedPin.clubs.filter(clubId => {
+        if (clubs.byId[clubId]) {
+          return (
+            clubs.byId[clubId].day ===
+            +format(new Date(currentTimesheet.item.date), 'i')
+          );
+        }
+      });
 
       addTimestamp({
         student: fetchedPin._id,
-        club: studentClub ? studentClub._id : null,
+        club: studentClub[0] ? studentClub[0] : null,
         fobStatus,
         timesheet: timesheetId
       });
@@ -113,23 +126,31 @@ function Timeclock({
   }
 
   return (
-    <div>
-      <PinInput
-        submitPinTimestamp={submitPinTimestamp}
-        addTimestampFailure={addTimestampFailure}
-        pinInputRef={pinInputRef}
-      />
-      <Alert alert={alert} />
-      <MultiStudent
-        multiStudent={multiStudent}
-        setMultiStudent={setMultiStudent}
-        addTimestamp={addTimestamp}
-        currentTimesheet={currentTimesheet}
-        pinInputRef={pinInputRef}
-        signInTimestamps={signInTimestamps}
-      />
-      <ManualEntry submitPinTimestamp={submitPinTimestamp} />
-      <TimestampList />
+    <div className="flex mt-2">
+      <div className="w-1/3 mr-2">
+        <PinInput
+          submitPinTimestamp={submitPinTimestamp}
+          addTimestampFailure={addTimestampFailure}
+          pinInputRef={pinInputRef}
+        />
+        <Alert alert={alert} />
+        <MultiStudent
+          multiStudent={multiStudent}
+          setMultiStudent={setMultiStudent}
+          addTimestamp={addTimestamp}
+          currentTimesheet={currentTimesheet}
+          pinInputRef={pinInputRef}
+          signInTimestamps={signInTimestamps}
+        />
+        <ManualEntry submitPinTimestamp={submitPinTimestamp} />
+      </div>
+      <div className="w-2/3 border rounded p-2 bg-white shadow">
+        <TimesheetHeader currentTimesheet={currentTimesheet} />
+        <Filters />
+        <div style={{ height: '540px' }} className="overflow-auto">
+          <TimestampList />
+        </div>
+      </div>
     </div>
   );
 }
@@ -137,7 +158,7 @@ function Timeclock({
 const mapStateToProps = (state, ownProps) => {
   return {
     timesheetId: ownProps.match.params.id,
-    currentTimesheet: state.timesheet.currentTimesheet,
+    currentTimesheet: state.currentTimesheet,
     alert: state.timestamp.alert,
     signInTimestamps: state.timestamp.signin
   };
@@ -154,13 +175,10 @@ const mapDispatchToProps = dispatch => {
     getCurrentTimesheet: timesheetId => {
       dispatch(getCurrentTimesheet(timesheetId));
     },
-    getSigninTimesheetTimestamps: date => {
-      dispatch(getSigninTimesheetTimestamps(date));
+    getDateTimesheetTimestamps: (date, io) => {
+      dispatch(getDateTimesheetTimestamps(date, io));
     }
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Timeclock);
+export default connect(mapStateToProps, mapDispatchToProps)(Timeclock);
