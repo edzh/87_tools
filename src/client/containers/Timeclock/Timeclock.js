@@ -68,7 +68,7 @@ function Timeclock({
 
     // Sign student in
     if (fetchedPin.type === 'student') {
-      const studentClub = fetchedPin.clubs.filter(clubId => {
+      const studentClub = fetchedPin.clubs.find(clubId => {
         if (clubs.byId[clubId]) {
           return (
             clubs.byId[clubId].day ===
@@ -79,7 +79,7 @@ function Timeclock({
 
       addTimestamp({
         student: fetchedPin._id,
-        club: studentClub[0] ? studentClub[0] : null,
+        club: studentClub ? studentClub : null,
         fobStatus,
         timesheet: timesheetId
       });
@@ -98,11 +98,15 @@ function Timeclock({
       );
 
       if (familyStudents.length === 1) {
-        const studentClub = familyStudents[0].currentClubs.find(
-          club =>
-            club.day ===
-            parseInt(format(new Date(currentTimesheet.item.date), 'E'))
-        );
+        const studentClub = familyStudents[0].clubs.find(clubId => {
+          if (clubs.byId[clubId]) {
+            return (
+              clubs.byId[clubId].day ===
+              +format(new Date(currentTimesheet.item.date), 'i')
+            );
+          }
+        });
+
         addTimestamp({
           student: familyStudents[0]._id,
           timesheet: timesheetId,
@@ -111,7 +115,7 @@ function Timeclock({
             pickup: pickup.name,
             pin: pickup.pin
           },
-          club: studentClub ? studentClub._id : null
+          club: studentClub ? studentClub : null
         });
       } else {
         setMultiStudent({
