@@ -6,6 +6,7 @@ import { sessions, currentSession } from './sessionReducer';
 import { students, currentStudent } from './studentReducer';
 import { timesheets, currentTimesheet } from './timesheetReducer';
 import clubPage from '../features/clubs/clubSlice';
+import pin from '../features/pin/pinSlice';
 import timeclock from '../features/timesheet/timeclockSlice';
 import timestamp from './timestampReducer';
 import user from './userReducer';
@@ -26,5 +27,6 @@ export default combineReducers({
   timesheets,
   timeclock,
   timestamp,
+  pin,
   user
 });

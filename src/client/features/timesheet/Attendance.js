@@ -48,6 +48,22 @@ export default function TimeclockPage({ match }) {
     currentClub && dispatch(getStudentsByClub(currentClub._id));
   }, [currentClub, clubs]);
 
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    currentTimesheet &&
+      dispatch(getTimestampsByTimesheet(currentTimesheet._id));
+    setRefresh(false);
+  }, [refresh, currentTimesheet]);
+
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      setRefresh(true);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [refresh]);
+
   function handleTimestamp(studentId) {
     dispatch(
       addTimestamp({

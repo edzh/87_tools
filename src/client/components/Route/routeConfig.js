@@ -21,6 +21,9 @@ import ClubStudents from '../../features/clubs/ClubStudents';
 
 import Program from '../../containers/Program/ProgramContainer';
 import ProgramPage from '../../containers/Program/ProgramPageContainer';
+import Dashboard from '../../containers/Program/Dashboard';
+
+import PinPage from 'client/features/pin/PinPage';
 
 import Session from '../../containers/Session/SessionContainer';
 import SessionPage from '../../containers/Session/SessionPageContainer';
@@ -111,6 +114,11 @@ const routes = [
     component: ProgramPage,
     routes: [
       {
+        path: '/program/:id',
+        exact: true,
+        component: Dashboard
+      },
+      {
         path: '/program/:id/students',
         exact: true,
         component: Student
@@ -129,6 +137,11 @@ const routes = [
         path: '/program/:id/families',
         exact: true,
         component: Family
+      },
+      {
+        path: '/program/:id/pin',
+        exact: true,
+        component: PinPage
       }
     ]
   },

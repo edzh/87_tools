@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function FamilyList({ families }) {
   return (
     <ul
-      className="overflow-auto pr-4 border-t border-b border-gray-400"
+      className="overflow-auto pr-4 py-2 border-t border-b border-gray-400"
       style={{ height: '360px' }}
     >
       {families.allIds.map(familyId => (

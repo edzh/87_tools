@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Switch } from 'react-router-dom';
 import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
 import { getCurrentProgram } from '../../actions/programActions';
@@ -32,19 +32,20 @@ function ProgramPage(props) {
         currentProgram={props.currentProgram.item}
       />
       <div className="flex">
-        <Dashboard programId={props.programId} />
         {props.currentSession.item.byId[sessionId] && (
           <Link
-            className="btn m-2 hover:bg-blue-400"
+            className="btn my-2 hover:bg-blue-400"
             to={`/session/${sessionId}/timesheets`}
           >
             {props.currentSession.item.byId[sessionId].name} Timestamps
           </Link>
         )}
       </div>
-      {props.routes.map(route => (
-        <RouteWithSubroutes key={route.path} {...route} />
-      ))}
+      <Switch>
+        {props.routes.map(route => (
+          <RouteWithSubroutes key={route.path} {...route} />
+        ))}
+      </Switch>
     </div>
   );
 }

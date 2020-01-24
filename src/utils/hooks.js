@@ -80,3 +80,19 @@ export function useDebouncedAutocomplete(items, delay) {
     }
   };
 }
+
+export const usePolling = (func, delay) => {
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      setRefresh(true);
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  });
+
+  useEffect(() => {
+    func();
+  }, [refresh]);
+};

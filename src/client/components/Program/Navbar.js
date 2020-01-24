@@ -31,17 +31,24 @@ export default function Navbar({ programId }) {
           Families
         </NavLink>
       </li>
-      {
-        <li>
-          <NavLink
-            className="px-2 py-2 mx-1"
-            to={`/program/${programId}/streamline`}
-            activeClassName="border-b-2 border-blue-400"
-          >
-            Streamline
-          </NavLink>
-        </li>
-      }
+      <li>
+        <NavLink
+          className="px-2 py-2 mx-1"
+          to={`/program/${programId}/streamline`}
+          activeClassName="border-b-2 border-blue-400"
+        >
+          Streamline
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className="px-2 py-2 mx-1"
+          to={`/program/${programId}/pin`}
+          activeClassName="border-b-2 border-blue-400"
+        >
+          PIN
+        </NavLink>
+      </li>
     </ul>
   );
 }

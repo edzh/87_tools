@@ -1,46 +1,50 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
+import { addStudent } from '../../actions/studentActions';
 import StreamlineFamilyForm from './StreamlineFamilyForm';
+import FamilyInput from './FamilyInput';
 
-export default function StreamlineStudentForm({
-  recentStudent,
-  addStudent,
-  programId
-}) {
+export default function StreamlineStudentForm({ programId }) {
+  const dispatch = useDispatch();
   const [familyExists, setFamilyExists] = useState(true);
-
   const families = useSelector(state => state.families.items);
   const recentFamily = useSelector(state => state.families.recentFamily);
+  const recentStudent = useSelector(state => state.students.recentStudent);
   const students = useSelector(state => state.students.items);
 
   return (
-    <div>
+    <div className="form p-8">
       <Formik
         initialValues={{
           studentName: '',
           grade: '',
-          pin: ''
+          pin: '',
+          family: recentFamily ? recentFamily : ''
         }}
         onSubmit={values => {
-          addStudent({
-            name: values.studentName,
-            grade: values.grade,
-            program: programId,
-            pin: values.pin,
-            family: familyExists ? values.family : recentFamily
-          });
+          dispatch(
+            addStudent({
+              name: values.studentName,
+              grade: values.grade,
+              program: programId,
+              pin: values.pin,
+              family: familyExists ? values.family : recentFamily
+            })
+          );
         }}
       >
-        {() => (
-          <Form>
+        {({ values, setFieldValue }) => (
+          <Form className="">
+            <label htmlFor="studentName">Name</label>
             <Field
-              placeholder="Student Name"
+              placeholder="Name"
               name="studentName"
-              className="border rounded"
+              className="form-input"
             />
-            <Field name="grade" component="select" className="border rounded">
+            <label htmlFor="grade">Grade</label>
+            <Field name="grade" component="select" className="form-input">
               <option value="">---</option>
               <option value="0">K</option>
               <option value="1">1</option>
@@ -49,25 +53,13 @@ export default function StreamlineStudentForm({
               <option value="4">4</option>
               <option value="5">5</option>
             </Field>
-            <Field placeholder="PIN" name="pin" className="border rounded" />
+            <label htmlFor="pin">PIN</label>
+            <Field placeholder="PIN" name="pin" className="form-input" />
             {familyExists && (
-              <div>
-                <Field
-                  name="family"
-                  className="border rounded"
-                  component="select"
-                >
-                  <option value="">---</option>
-                  {families.allIds.map(familyId => (
-                    <option key={familyId} value={familyId}>
-                      {families.byId[familyId].name}
-                    </option>
-                  ))}
-                </Field>
-                <button className="btn" onClick={() => setFamilyExists(false)}>
-                  Create New Family
-                </button>
-              </div>
+              <FamilyInput
+                value={values.family}
+                setFieldValue={setFieldValue}
+              />
             )}
             <button className="btn" type="submit">
               Create Student
@@ -75,19 +67,7 @@ export default function StreamlineStudentForm({
           </Form>
         )}
       </Formik>
-      {!familyExists && (
-        <div>
-          <StreamlineFamilyForm programId={programId} />
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setFamilyExists(true)}
-          >
-            Use Existing Family
-          </button>
-        </div>
-      )}
-      {recentStudent && (
+      {recentStudent && students.byId[recentStudent] && (
         <Link to={`/student/${recentStudent}`}>
           {students.byId[recentStudent].name}
         </Link>

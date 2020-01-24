@@ -6,7 +6,7 @@ export default function Student({ students }) {
 
   return (
     <ul
-      className="overflow-auto pr-4 border-t border-b border-gray-400"
+      className="overflow-auto pr-4 py-2 border-t border-b border-gray-400"
       style={{ height: '360px' }}
     >
       {students.allIds.map(studentId => (

@@ -46,7 +46,7 @@ function Dashboard({
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    programId: ownProps.programId,
+    programId: ownProps.match.params.id,
     currentProgram: state.currentProgram,
     students: state.students,
     families: state.families,
