@@ -31,21 +31,21 @@ export default function SessionForm(props) {
               <Field
                 name="sessionName"
                 placeholder="Session Name"
-                className="form-input w-full"
+                className="form-input block w-full"
               />
               <label htmlFor="start"></label>
               <Field
                 name="start"
                 placeholder="Start Date"
-                className="form-input w-full"
+                className="form-input block w-full"
               />
               <label htmlFor="end"></label>
               <Field
                 name="end"
                 placeholder="End Date"
-                className="form-input w-full"
+                className="form-input block w-full"
               />
-              <button className="btn" type="submit">
+              <button className="btn block" type="submit">
                 Submit
               </button>
             </Form>

@@ -29,13 +29,13 @@ export default function StudentForm(props) {
               <Field
                 name="studentName"
                 placeholder="Name"
-                className="form-input py-1 px-2 my-2"
+                className="form-input block py-1 px-2 my-2"
               />
               <label htmlFor="grade"></label>
               <Field
                 name="grade"
                 component="select"
-                className="p-1 my-2 form-input"
+                className="p-1 my-2 form-input block"
               >
                 <option value="">---</option>
                 <option value="0">K</option>
@@ -49,10 +49,10 @@ export default function StudentForm(props) {
               <Field
                 name="pin"
                 placeholder="PIN"
-                className="form-input py-1 px-2 my-2"
+                className="form-input block py-1 px-2 my-2"
               />
               <div className="flex"></div>
-              <button type="submit" className="btn">
+              <button type="submit" className="btn block">
                 Submit
               </button>
             </Form>

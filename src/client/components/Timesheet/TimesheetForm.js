@@ -23,13 +23,13 @@ export default function Timesheet({ currentSession, addTimesheet, sessionId }) {
       >
         {() => (
           <Form>
-            <Field className="form-input" name="date" />
-            <Field className="form-input" name="io" component="select">
+            <Field className="form-input block" name="date" />
+            <Field className="form-input block" name="io" component="select">
               <option value="">---</option>
               <option value="in">Sign in</option>
               <option value="out">Sign out</option>
             </Field>
-            <button className="btn hover:bg-blue-400" type="submit">
+            <button className="btn block hover:bg-blue-400" type="submit">
               Submit
             </button>
           </Form>

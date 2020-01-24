@@ -11,7 +11,7 @@ export default function FamilyInput({ value, setFieldValue }) {
       <label htmlFor="Family">Family</label>
       <input
         id="family"
-        className="form-input"
+        className="form-input block"
         placeholder="Family"
         type="text"
         onChange={e => {

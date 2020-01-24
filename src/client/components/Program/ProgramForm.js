@@ -23,10 +23,10 @@ export default function ProgramForm({ setShowForm, addProgram, user }) {
             <Field
               name="programName"
               placeholder="Program Name"
-              className="form-input w-full"
+              className="form-input block w-full"
             />
             <div className="flex">
-              <button className="btn hover:bg-blue-400" type="submit">
+              <button className="btn block hover:bg-blue-400" type="submit">
                 Submit
               </button>
               <button

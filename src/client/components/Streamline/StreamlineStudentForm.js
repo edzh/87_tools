@@ -41,10 +41,10 @@ export default function StreamlineStudentForm({ programId }) {
             <Field
               placeholder="Name"
               name="studentName"
-              className="form-input"
+              className="form-input block"
             />
             <label htmlFor="grade">Grade</label>
-            <Field name="grade" component="select" className="form-input">
+            <Field name="grade" component="select" className="form-input block">
               <option value="">---</option>
               <option value="0">K</option>
               <option value="1">1</option>
@@ -54,14 +54,14 @@ export default function StreamlineStudentForm({ programId }) {
               <option value="5">5</option>
             </Field>
             <label htmlFor="pin">PIN</label>
-            <Field placeholder="PIN" name="pin" className="form-input" />
+            <Field placeholder="PIN" name="pin" className="form-input block" />
             {familyExists && (
               <FamilyInput
                 value={values.family}
                 setFieldValue={setFieldValue}
               />
             )}
-            <button className="btn" type="submit">
+            <button className="btn block" type="submit">
               Create Student
             </button>
           </Form>

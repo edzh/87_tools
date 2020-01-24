@@ -31,13 +31,13 @@ export default ({ addClub, sessionId }) => {
         {() => (
           <Form>
             <label htmlFor="clubName"></label>
-            <Field id="clubName" name="clubName" className="form-input" />
+            <Field id="clubName" name="clubName" className="form-input block" />
             <label htmlFor="day"></label>
             <Field
               id="day"
               name="day"
               component="select"
-              className="form-input"
+              className="form-input block"
             >
               <option value="">---</option>
               <option value="1">Monday</option>
@@ -47,7 +47,7 @@ export default ({ addClub, sessionId }) => {
               <option value="5">Friday</option>
             </Field>
             <label htmlFor="session"></label>
-            <button className="btn hover:bg-blue-400" type="submit">
+            <button className="btn block hover:bg-blue-400" type="submit">
               Submit
             </button>
           </Form>

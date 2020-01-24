@@ -35,12 +35,12 @@ export default function FamilyForm(props) {
       <div className="p-8 form mt-2 w-64 rounded">
         <form onSubmit={handleSubmit}>
           <input
-            className="form-input py-1 px-2 my-2"
+            className="form-input block py-1 px-2 my-2"
             placeholder="Name"
             type="text"
             {...name}
           />
-          <button className="btn" type="submit">
+          <button className="btn block" type="submit">
             Submit
           </button>
         </form>
