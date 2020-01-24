@@ -10,7 +10,7 @@ export default function PinPage() {
 
   return (
     <div>
-      <h2>Check Pin</h2>
+      <h2 className="text-gray-600 text-lg font-bold">Check Pin</h2>
       <Formik
         initialValues={{
           pin: ''
