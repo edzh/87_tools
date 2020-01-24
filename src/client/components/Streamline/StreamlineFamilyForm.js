@@ -26,9 +26,9 @@ export default function StreamlineFamilyForm({ programId }) {
             <Field
               placeholder="Family Name"
               name="familyName"
-              className="form-input"
+              className="form-input block"
             />
-            <button className="btn" type="submit">
+            <button className="btn block" type="submit">
               Create Family
             </button>
           </Form>

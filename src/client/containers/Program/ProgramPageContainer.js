@@ -34,7 +34,7 @@ function ProgramPage(props) {
       <div className="flex">
         {props.currentSession.item.byId[sessionId] && (
           <Link
-            className="btn my-2 hover:bg-blue-400"
+            className="btn block my-2 hover:bg-blue-400"
             to={`/session/${sessionId}/timesheets`}
           >
             {props.currentSession.item.byId[sessionId].name} Timestamps

@@ -41,7 +41,7 @@ export default function EditStudentClubs({
         {sessions.allIds.map(sessionId => (
           <p
             key={sessionId}
-            className="p-2 mr-2 btn"
+            className="p-2 mr-2 btn block"
             onClick={() => {
               getCurrentSession(sessionId);
               getClubsBySession(sessionId);
@@ -127,7 +127,7 @@ export default function EditStudentClubs({
                   </Field>
                 </div>
               ))}
-              <button className="btn hover:bg-blue-400" type="submit">
+              <button className="btn block hover:bg-blue-400" type="submit">
                 Submit
               </button>
             </Form>

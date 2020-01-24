@@ -18,7 +18,7 @@ export default function ProgramList({
           programs.allIds.map(programId => (
             <li key={programId}>
               <Link
-                className="pt-2 pl-4 pb-8 my-2 mr-2 w-64 h-24 btn hover:bg-blue-400 text-lg font-bold"
+                className="pt-2 pl-4 pb-8 my-2 mr-2 w-64 h-24 btn block hover:bg-blue-400 text-lg font-bold"
                 onClick={() =>
                   updateUser({ ...user, currentProgram: programId })
                 }
