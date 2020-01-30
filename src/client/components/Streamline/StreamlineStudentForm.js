@@ -8,7 +8,6 @@ import FamilyInput from './FamilyInput';
 
 export default function StreamlineStudentForm({ programId }) {
   const dispatch = useDispatch();
-  const [familyExists, setFamilyExists] = useState(true);
   const families = useSelector(state => state.families.items);
   const recentFamily = useSelector(state => state.families.recentFamily);
   const recentStudent = useSelector(state => state.students.recentStudent);
@@ -30,20 +29,24 @@ export default function StreamlineStudentForm({ programId }) {
               grade: values.grade,
               program: programId,
               pin: values.pin,
-              family: familyExists ? values.family : recentFamily
+              family: values.family || recentFamily
             })
           );
         }}
       >
         {({ values, setFieldValue }) => (
           <Form className="">
-            <label htmlFor="studentName">Name</label>
+            <label className="sr-only" htmlFor="studentName">
+              Name
+            </label>
             <Field
               placeholder="Name"
               name="studentName"
               className="form-input block"
             />
-            <label htmlFor="grade">Grade</label>
+            <label className="sr-only" htmlFor="grade">
+              Grade
+            </label>
             <Field name="grade" component="select" className="form-input block">
               <option value="">---</option>
               <option value="0">K</option>
@@ -53,14 +56,15 @@ export default function StreamlineStudentForm({ programId }) {
               <option value="4">4</option>
               <option value="5">5</option>
             </Field>
-            <label htmlFor="pin">PIN</label>
+            <label className="sr-only" htmlFor="pin">
+              PIN
+            </label>
             <Field placeholder="PIN" name="pin" className="form-input block" />
-            {familyExists && (
-              <FamilyInput
-                value={values.family}
-                setFieldValue={setFieldValue}
-              />
-            )}
+            <FamilyInput
+              value={values.family}
+              setFieldValue={setFieldValue}
+              programId={programId}
+            />
             <button className="btn block" type="submit">
               Create Student
             </button>
@@ -68,9 +72,15 @@ export default function StreamlineStudentForm({ programId }) {
         )}
       </Formik>
       {recentStudent && students.byId[recentStudent] && (
-        <Link to={`/student/${recentStudent}`}>
-          {students.byId[recentStudent].name}
-        </Link>
+        <div>
+          <Link
+            className="text-blue-500 hover:text-blue-400"
+            to={`/student/${recentStudent}`}
+          >
+            {students.byId[recentStudent].name}
+          </Link>
+          {' has been created'}
+        </div>
       )}
     </div>
   );

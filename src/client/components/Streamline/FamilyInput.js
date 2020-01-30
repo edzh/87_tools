@@ -1,19 +1,28 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useDebouncedAutocomplete } from 'utils/hooks';
+import { getFamiliesByProgram } from 'client/actions/familyActions';
 
-export default function FamilyInput({ value, setFieldValue }) {
+export default function FamilyInput({ value, setFieldValue, programId }) {
   const families = useSelector(state => state.families.items);
+  const dispatch = useDispatch();
   const { suggestions, query } = useDebouncedAutocomplete(families, 200);
+
+  useEffect(() => {
+    dispatch(getFamiliesByProgram(programId));
+  }, [programId]);
 
   return (
     <div>
-      <label htmlFor="Family">Family</label>
+      <label className="sr-only" htmlFor="Family">
+        Family
+      </label>
       <input
         id="family"
         className="form-input block"
         placeholder="Family"
         type="text"
+        autocomplete="none"
         onChange={e => {
           if (value) {
             setFieldValue('family', '');

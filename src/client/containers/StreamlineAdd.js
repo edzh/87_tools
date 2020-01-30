@@ -5,15 +5,16 @@ import { Formik, Form, Field } from 'formik';
 import StreamlineStudentForm from '../components/Streamline/StreamlineStudentForm';
 import StreamlineFamilyForm from '../components/Streamline/StreamlineFamilyForm';
 
-function StreamlineAdd({ programId }) {
+function StreamlineAdd({ match }) {
   const [createStudent, setCreateStudent] = useState(false);
   const [createFamily, setCreateFamily] = useState(false);
+  const programId = match.params.id;
 
   return (
     <div>
       {(createStudent || createFamily) && (
         <button
-          className="cursor-pointer"
+          className="cursor-pointer text-lg text-gray-600 hover:text-gray-800 border p-1 rounded border-gray-400"
           onClick={() => {
             setCreateStudent(false);
             setCreateFamily(false);
@@ -38,7 +39,7 @@ function StreamlineAdd({ programId }) {
           </div>
         </div>
       )}
-      {createStudent && (
+      {createStudent && !createFamily && (
         <div>
           <h2 className="text-xl font-bold text-gray-600">Create Student</h2>
           <StreamlineStudentForm programId={programId} />
@@ -47,7 +48,11 @@ function StreamlineAdd({ programId }) {
       {createFamily && (
         <div>
           <h2 className="text-xl font-bold text-gray-600">Create Family</h2>
-          <StreamlineFamilyForm programId={programId} />
+          <StreamlineFamilyForm
+            createStudent={createStudent}
+            setCreateStudent={setCreateStudent}
+            programId={programId}
+          />
         </div>
       )}
     </div>

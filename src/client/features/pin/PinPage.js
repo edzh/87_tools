@@ -21,7 +21,7 @@ export default function PinPage() {
       >
         {() => (
           <Form>
-            <Field name="pin" className="form-input" />
+            <Field name="pin" autoComplete="off" className="form-input" />
             <button className="btn">Submit</button>
           </Form>
         )}
