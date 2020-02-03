@@ -7,7 +7,7 @@ import ClubStudentList from './ClubStudentList';
 
 export default function ClubStudents() {
   return (
-    <div className="border rounded shadow-md">
+    <div className="border rounded shadow bg-white">
       <div className="flex border-b">
         <h3 className="m-4">Students</h3>
       </div>

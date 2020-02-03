@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { intToDay } from 'utils/constants';
+import { deleteCurrentClub } from 'client/actions/clubActions';
 
 export default function ClubDetails() {
+  const dispatch = useDispatch();
   const clubPage = useSelector(state => state.clubPage);
   const currentClub = clubPage.item;
   const { byId, allIds } = currentClub;
@@ -10,7 +12,7 @@ export default function ClubDetails() {
   if (!allIds) return null;
 
   return (
-    <div className="border rounded shadow-md">
+    <div className="border rounded shadow bg-white">
       <div className="m-4">
         <div className="flex">
           <h3 className="font-bold text-xl text-gray-700 w-24">Weekday</h3>
@@ -28,6 +30,13 @@ export default function ClubDetails() {
             {students.allIds.length}/{byId[allIds].capacity || 'N/A'}
           </p>
         </div>
+        <button
+          type="button"
+          className="bg-red-500 hover:bg-red-400 text-white p-1 mt-2 rounded"
+          onClick={() => dispatch(deleteCurrentClub(allIds))}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );
