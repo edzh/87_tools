@@ -15,6 +15,15 @@ export const fetchTimestamps = {
 
       return data;
     },
+    club: async clubId => {
+      const data = await fetch(`${apiUrl}/api/timestamp?club=${clubId}`, {
+        headers
+      })
+        .then(response => response.json())
+        .then(json => json.data);
+
+      return data;
+    },
     student: async studentId => {
       const data = await fetch(
         `${apiUrl}/api/student/${studentId}/timestamps`,

@@ -18,6 +18,7 @@ import ClubForm from '../Club/ClubForm';
 import ClubPage from '../../features/clubs/ClubPage';
 import ClubDetails from '../../features/clubs/ClubDetails';
 import ClubStudents from '../../features/clubs/ClubStudents';
+import ClubAttendance from '../../features/clubs/ClubAttendance';
 
 import Program from '../../containers/Program/ProgramContainer';
 import ProgramPage from '../../containers/Program/ProgramPageContainer';
@@ -82,7 +83,7 @@ const routes = [
   },
   {
     path: '/club/:id',
-    auth: false,
+    auth: true,
     component: ClubPage,
     routes: [
       {
@@ -94,6 +95,11 @@ const routes = [
         path: '/club/:id/students',
         exact: true,
         component: ClubStudents
+      },
+      {
+        path: '/club/:id/attendance',
+        exact: true,
+        component: ClubAttendance
       }
     ]
   },
@@ -147,13 +153,13 @@ const routes = [
   },
   {
     path: '/session',
-    auth: false,
+    auth: true,
     exact: true,
     component: Session
   },
   {
     path: '/session/:id',
-    auth: false,
+    auth: true,
     component: SessionPage,
     routes: [
       {

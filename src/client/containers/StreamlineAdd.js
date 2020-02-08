@@ -49,8 +49,8 @@ function StreamlineAdd({ match }) {
         <div>
           <h2 className="text-xl font-bold text-gray-600">Create Family</h2>
           <StreamlineFamilyForm
-            createStudent={createStudent}
             setCreateStudent={setCreateStudent}
+            setCreateFamily={setCreateFamily}
             programId={programId}
           />
         </div>

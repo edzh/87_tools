@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchClubs } from 'client/api/fetchClubs';
 import { fetchSessions } from 'client/api/fetchSessions';
 import { fetchStudents } from 'client/api/fetchStudents';
+import { fetchTimestamps } from 'client/api/fetchTimestamps';
 import * as schema from '../../schemas/schema';
 import { normalize } from 'normalizr';
 
@@ -17,6 +18,12 @@ const initialState = {
     message: ''
   },
   sessions: {
+    allIds: [],
+    isFetching: false,
+    error: false,
+    message: ''
+  },
+  timestamps: {
     allIds: [],
     isFetching: false,
     error: false,
@@ -42,7 +49,7 @@ const clubPageSlice = createSlice({
       };
     },
     getClubByIdSuccess(state, action) {
-      const normalizedClub = normalize(action.payload, schema.clubList);
+      const normalizedClub = normalize(action.payload, schema.club);
 
       state.isFetching = false;
       state.item = {
@@ -76,6 +83,25 @@ const clubPageSlice = createSlice({
         ...state.students.allIds,
         normalizedStudent.result
       ];
+    },
+    getTimestampsSuccess(state, action) {
+      const normalizedTimestamps = normalize(
+        action.payload,
+        schema.timestampList
+      );
+
+      state.timestamps = {
+        byId: normalizedTimestamps.entities.timestamps,
+        allIds: normalizedTimestamps.result,
+        isFetching: false
+      };
+    },
+    getTimestampsFailure(state, action) {
+      state.timestamps = {
+        error: true,
+        message: action.payload,
+        isFetching: false
+      };
     }
   }
 });
@@ -87,7 +113,9 @@ export const {
   getClubByIdFailure,
   getSessionsSuccess,
   getSessionsFailure,
-  addStudentToClubSuccess
+  addStudentToClubSuccess,
+  getTimestampsSuccess,
+  getTimestampsFailure
 } = clubPageSlice.actions;
 
 export const fetchStudentsByClub = clubId => async dispatch => {
@@ -102,7 +130,7 @@ export const fetchStudentsByClub = clubId => async dispatch => {
 export const fetchClubById = clubId => async dispatch => {
   try {
     const club = await fetchClubs.get.one(clubId);
-    dispatch(getClubByIdSuccess({ club }));
+    dispatch(getClubByIdSuccess(club));
   } catch (err) {
     dispatch(getClubByIdFailure(err.toString()));
   }
@@ -132,6 +160,15 @@ export const addStudentToClub = (student, clubId) => async dispatch => {
     dispatch(addStudentToClubSuccess(newStudent));
   } catch (err) {
     dispatch(getStudentsFailure(err.toString()));
+  }
+};
+
+export const fetchTimestampsByClub = clubId => async dispatch => {
+  try {
+    const timestamps = await fetchTimestamps.get.club(clubId);
+    dispatch(getTimestampsSuccess(timestamps));
+  } catch (err) {
+    dispatch(getTimestampsFailure(err.toString()));
   }
 };
 

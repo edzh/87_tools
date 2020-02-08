@@ -109,7 +109,6 @@ export const getWeek = async (req, res) => {
   try {
     const date = new Date(req.params.date);
     const weekLater = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
-    console.log(date, weekLater);
 
     const timestamps = await Timestamp.find({
       datetime: { $gte: date, $lt: weekLater }

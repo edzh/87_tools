@@ -20,6 +20,13 @@ export default function Navbar({ clubId }) {
         >
           Students
         </NavLink>
+        <NavLink
+          className="px-2 py-2 mx-1"
+          activeClassName="border-b-2 border-blue-400"
+          to={`/club/${clubId}/attendance`}
+        >
+          Attendance
+        </NavLink>
       </li>
     </ul>
   );
