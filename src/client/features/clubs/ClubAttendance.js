@@ -1,21 +1,30 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { format } from 'date-fns';
+import { format, startOfDay } from 'date-fns';
 
 import { fetchTimestampsByClub } from './clubSlice';
 import { getCurrentSession } from 'client/actions/sessionActions';
 
 export default function ClubAttendance({ match }) {
   const dispatch = useDispatch();
+  const clubPage = useSelector(state => state.clubPage);
   const clubId = match.params.id;
+  const club = clubPage.item;
   const timestamps = useSelector(state => state.clubPage.timestamps);
   const students = useSelector(state => state.students.items);
-  const clubPage = useSelector(state => state.clubPage);
-  const club = clubPage.item;
   const session = useSelector(state => state.currentSession.item);
+  const timesheetIds = timestamps.allIds.reduce((timesheets, timestampId) => {
+    const timesheet = timestamps.byId[timestampId].timesheet;
+    if (timesheets.indexOf(timesheet) > -1) {
+      return timesheets;
+    }
+    timesheets.push(timesheet);
+    return timesheets;
+  }, []);
+
+  console.log(timesheetIds);
 
   useEffect(() => {
-    // console.log(club.byId[club.allIds])
     async function fetchData() {
       try {
         await Promise.all([
@@ -41,7 +50,7 @@ export default function ClubAttendance({ match }) {
       </div>
       <div>
         {timestamps.allIds
-          // .reduce(())
+          // .filter(timestampId => t)
           .map(timestampId => {
             const timestamp = timestamps.byId[timestampId];
             const student = students.byId[timestamp.student];

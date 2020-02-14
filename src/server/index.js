@@ -22,7 +22,7 @@ import { signup, signin, protect } from './utils/auth';
 
 export const app = express();
 
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
