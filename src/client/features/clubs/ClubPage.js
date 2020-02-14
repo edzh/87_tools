@@ -12,8 +12,8 @@ import { getStudentsByProgram } from 'client/actions/studentActions';
 import { getSessionsByProgram } from 'client/actions/sessionActions';
 
 import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
-import ClubDetails from '../../components/Club/ClubDetails';
-import ClubStudentList from '../../components/Club/ClubStudentList';
+import ClubDetails from './ClubDetails';
+import ClubStudentList from './ClubStudentList';
 import ClubHeader from './ClubHeader';
 
 export default function ClubPage({ match, routes }) {
