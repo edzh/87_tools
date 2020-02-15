@@ -2,6 +2,7 @@ import { apiUrl } from 'config';
 
 export const fetchUser = {
   get: async () => {
+    console.log(localStorage.getItem('id_token'));
     const data = await fetch(`${apiUrl}/api/user`, {
       headers: {
         'Content-Type': 'application/json',
