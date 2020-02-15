@@ -64,7 +64,7 @@ export const signin = async (req, res) => {
 export const protect = async (req, res, next) => {
   const bearer = req.headers.authorization;
   console.log(req.headers);
-  console.log(req);
+  console.log(req['access-control-allow-credentials']);
   if (!bearer || !bearer.startsWith('Bearer ')) {
     console.log('no bearer');
     return res.status(401).end();
