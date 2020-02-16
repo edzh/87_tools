@@ -5,7 +5,6 @@ import cors from 'cors';
 import path from 'path';
 import '@babel/polyfill';
 import passport from 'passport';
-import { Strategy as LocalStrategy } from 'passport-local';
 
 import { connect } from './utils/db';
 import config from './config';
