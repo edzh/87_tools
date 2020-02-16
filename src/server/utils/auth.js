@@ -44,12 +44,14 @@ export const signin = async (req, res) => {
       .exec();
 
     if (!user) {
+      console.log('user');
       return res.status(401).send(invalid);
     }
 
     const match = await user.checkPassword(req.body.password);
 
     if (!match) {
+      console.log('match');
       return res.status(401).send(invalid);
     }
 
