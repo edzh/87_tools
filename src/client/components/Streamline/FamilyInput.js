@@ -22,7 +22,7 @@ export default function FamilyInput({ value, setFieldValue, programId }) {
         className="form-input block"
         placeholder="Family"
         type="text"
-        autocomplete="none"
+        autoComplete="none"
         onChange={e => {
           if (value) {
             setFieldValue('family', '');
