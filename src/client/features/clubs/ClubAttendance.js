@@ -1,67 +1,75 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { format, startOfDay } from 'date-fns';
+import { format, parseISO, startOfDay, getDay } from 'date-fns';
 
-import { fetchTimestampsByClub } from './clubSlice';
+import { fetchTimestampsByClub, fetchTimesheetsBySession } from './clubSlice';
 import { getCurrentSession } from 'client/actions/sessionActions';
 
 export default function ClubAttendance({ match }) {
+  const [timesheet, setTimesheet] = useState('');
   const dispatch = useDispatch();
   const clubPage = useSelector(state => state.clubPage);
   const clubId = match.params.id;
   const club = clubPage.item;
   const timestamps = useSelector(state => state.clubPage.timestamps);
+  const timesheets = clubPage.timesheets;
+  const timesheetsByClubDay = timesheets.allIds.filter(
+    timesheetId =>
+      getDay(parseISO(timesheets.byId[timesheetId].date)) ===
+        +club.byId[club.allIds].day && timesheets.byId[timesheetId].io === 'in'
+  );
   const students = useSelector(state => state.students.items);
   const session = useSelector(state => state.currentSession.item);
-  const timesheetIds = timestamps.allIds.reduce((timesheets, timestampId) => {
-    const timesheet = timestamps.byId[timestampId].timesheet;
-    if (timesheets.indexOf(timesheet) > -1) {
-      return timesheets;
-    }
-    timesheets.push(timesheet);
-    return timesheets;
-  }, []);
-
-  console.log(timesheetIds);
+  const timestampsByClub = clubPage.timestamps;
+  const clubStudentsByTimesheet = timestampsByClub.allIds
+    .filter(
+      timestampId => timestampsByClub.byId[timestampId].timesheet === timesheet
+    )
+    .map(timestampId => timestampsByClub.byId[timestampId].student);
 
   useEffect(() => {
     async function fetchData() {
       try {
         await Promise.all([
           dispatch(fetchTimestampsByClub(clubId)),
-          dispatch(getCurrentSession(club.byId[club.allIds].session._id))
+          dispatch(fetchTimesheetsBySession(club.byId[clubId].session._id)),
+          dispatch(getCurrentSession(club.byId[clubId].session._id))
         ]);
       } catch (err) {
         console.error(err);
       }
     }
-    fetchData();
+    club.byId[clubId] && fetchData();
   }, [clubId, club]);
 
-  if (!timestamps.allIds.length) return null;
   if (!students.allIds.length) return null;
 
   return (
-    <div className="flex">
-      <div>
-        {clubPage.students.allIds.map(studentId => (
-          <div>{students.byId[studentId].name}</div>
+    <div>
+      <select onChange={e => setTimesheet(e.target.value)}>
+        <option value="">---</option>
+        {timesheetsByClubDay.map(timesheetId => (
+          <option key={timesheetId} value={timesheetId}>
+            {format(
+              parseISO(timesheets.byId[timesheetId].date),
+              'MMM dd, yyyy'
+            )}
+          </option>
         ))}
-      </div>
+      </select>
       <div>
-        {timestamps.allIds
-          // .filter(timestampId => t)
-          .map(timestampId => {
-            const timestamp = timestamps.byId[timestampId];
-            const student = students.byId[timestamp.student];
-            if (!timestamp.pickup) {
-              return (
-                <div className="flex">
-                  <div>{timestamp.datetime}</div>
-                </div>
-              );
-            }
-          })}
+        {clubPage.students.allIds.map(studentId => {
+          const isSignedIn = clubStudentsByTimesheet.indexOf(studentId) > -1;
+
+          return (
+            <div
+              className={isSignedIn ? 'text-green-500' : 'text-red-500'}
+              key={studentId}
+            >
+              {students.byId[studentId].name}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

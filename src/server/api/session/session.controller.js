@@ -94,7 +94,10 @@ export const getClubs = async (req, res) => {
 export const getTimesheets = async (req, res) => {
   try {
     const session = await Session.findOne({ _id: req.params.id });
-    const timesheets = await Timesheet.find({ session: session.id });
+    const timesheets = await Timesheet.find({
+      session: session.id,
+      ...req.query
+    });
 
     return res.status(200).json({ data: timesheets });
   } catch (e) {

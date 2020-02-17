@@ -3,6 +3,7 @@ import { fetchClubs } from 'client/api/fetchClubs';
 import { fetchSessions } from 'client/api/fetchSessions';
 import { fetchStudents } from 'client/api/fetchStudents';
 import { fetchTimestamps } from 'client/api/fetchTimestamps';
+import { fetchTimesheets } from 'client/api/fetchTimesheets';
 import * as schema from '../../schemas/schema';
 import { normalize } from 'normalizr';
 
@@ -24,6 +25,13 @@ const initialState = {
     message: ''
   },
   timestamps: {
+    byId: {},
+    allIds: [],
+    isFetching: false,
+    error: false,
+    message: ''
+  },
+  timesheets: {
     allIds: [],
     isFetching: false,
     error: false,
@@ -102,6 +110,25 @@ const clubPageSlice = createSlice({
         message: action.payload,
         isFetching: false
       };
+    },
+    getTimesheetsSuccess(state, action) {
+      const normalizedTimesheets = normalize(
+        action.payload,
+        schema.timesheetList
+      );
+
+      state.timesheets = {
+        byId: normalizedTimesheets.entities.timesheets,
+        allIds: normalizedTimesheets.result,
+        isFetching: false
+      };
+    },
+    getTimesheetsFailure(state, action) {
+      state.timesheets = {
+        error: true,
+        message: action.payload,
+        isFetching: false
+      };
     }
   }
 });
@@ -115,7 +142,9 @@ export const {
   getSessionsFailure,
   addStudentToClubSuccess,
   getTimestampsSuccess,
-  getTimestampsFailure
+  getTimestampsFailure,
+  getTimesheetsSuccess,
+  getTimesheetsFailure
 } = clubPageSlice.actions;
 
 export const fetchStudentsByClub = clubId => async dispatch => {
@@ -169,6 +198,15 @@ export const fetchTimestampsByClub = clubId => async dispatch => {
     dispatch(getTimestampsSuccess(timestamps));
   } catch (err) {
     dispatch(getTimestampsFailure(err.toString()));
+  }
+};
+
+export const fetchTimesheetsBySession = sessionId => async dispatch => {
+  try {
+    const timesheets = await fetchTimesheets.get.session(sessionId);
+    dispatch(getTimesheetsSuccess(timesheets));
+  } catch (err) {
+    dispatch(getTimesheetsFailure(err.toString()));
   }
 };
 
