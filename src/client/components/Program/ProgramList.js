@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import MainDetailsHeader from '../Details/MainDetailsHeader';
 import ProgramForm from './ProgramForm';
 
 export default function ProgramList({

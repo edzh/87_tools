@@ -7,10 +7,7 @@ import {
   addTimestamp,
   deleteTimestamp
 } from './timeclockSlice';
-import {
-  getStudentsByProgram,
-  getStudentsByClub
-} from 'client/actions/studentActions';
+import { getStudentsByClub } from 'client/actions/studentActions';
 import { getClubsBySession } from 'client/actions/clubActions';
 import { format, parseISO } from 'date-fns';
 
@@ -42,7 +39,7 @@ export default function TimeclockPage({ match }) {
       sessionId && dispatch(getClubsBySession(sessionId)),
       dispatch(getTimesheetById(timesheetId))
     ]);
-  }, [timesheetId, sessionId, programId]);
+  }, [timesheetId, sessionId, programId, currentTimesheet.date, dispatch]);
 
   useEffect(() => {
     currentClub && dispatch(getStudentsByClub(currentClub._id));

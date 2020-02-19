@@ -23,7 +23,12 @@ function StudentClubs({
       getSessionsByProgram(
         currentStudent.item.byId[currentStudent.item.allIds].program
       );
-  }, [currentStudent.isFetching]);
+  }, [
+    currentStudent.isFetching,
+    currentStudent.item.allIds,
+    currentStudent.item.byId,
+    getSessionsByProgram
+  ]);
 
   useEffect(() => {
     currentSession.item.allIds && getClubsBySession(currentSession.item.allIds);

@@ -1,8 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { Form, Formik, Field } from 'formik';
-
-import Alert from '../Alert';
-import StudentSelector from './StudentSelector';
 
 export default function PinInput({
   submitPinTimestamp,

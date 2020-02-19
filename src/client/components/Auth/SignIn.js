@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormInput } from 'utils/hooks';
 import { Redirect } from 'react-router';
 

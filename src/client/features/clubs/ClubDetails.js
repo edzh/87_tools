@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { intToDay } from 'utils/constants';
 import { deleteCurrentClub } from 'client/actions/clubActions';
@@ -8,7 +8,7 @@ export default function ClubDetails() {
   const clubPage = useSelector(state => state.clubPage);
   const currentClub = clubPage.item;
   const { byId, allIds } = currentClub;
-  const { students, sessions } = clubPage;
+  const { students } = clubPage;
   if (!allIds) return null;
 
   return (

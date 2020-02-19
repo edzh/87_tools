@@ -10,7 +10,7 @@ export default function FamilyInput({ value, setFieldValue, programId }) {
 
   useEffect(() => {
     dispatch(getFamiliesByProgram(programId));
-  }, [programId]);
+  }, [programId, dispatch]);
 
   return (
     <div>

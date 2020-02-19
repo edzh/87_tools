@@ -1,18 +1,4 @@
-import * as types from './timeclockTypes';
 import { apiUrl } from 'config';
-
-function fetchOutTimesheetSuccess(outTimesheet) {
-  return {
-    type: types.FETCH_OUT_TIMESHEET_SUCCESS,
-    outTimesheet
-  };
-}
-
-function fetchOutTimesheetFailure() {
-  return {
-    type: types.FETCH_OUT_TIMESHEET_FAILURE
-  };
-}
 
 function addTimestampSuccess(timestamp) {
   return {

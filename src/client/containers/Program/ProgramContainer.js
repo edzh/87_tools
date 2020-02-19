@@ -1,11 +1,6 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import { fetchUserPrograms, addProgram } from '../../actions/programActions';
-import { getCurrentSession } from '../../actions/sessionActions';
 import { updateUser } from '../../actions/userActions';
-
 import Program from '../../components/Program/Programs';
 
 const mapStateToProps = state => {

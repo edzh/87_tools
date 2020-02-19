@@ -176,8 +176,8 @@ export const fetchSessionsByProgram = programId => async dispatch => {
 
 export const updateCurrentClub = club => async dispatch => {
   try {
-    const club = await fetchClubs.update(club);
-    dispatch(getClubByIdSuccess({ club }));
+    const newClub = await fetchClubs.update(club);
+    dispatch(getClubByIdSuccess({ newClub }));
   } catch (err) {
     dispatch(getClubByIdFailure(err.toString()));
   }

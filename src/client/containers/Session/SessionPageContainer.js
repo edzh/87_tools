@@ -9,7 +9,6 @@ import {
 } from '../../actions/sessionActions';
 import { getClubsBySession } from '../../actions/clubActions';
 
-import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
 import SessionDetails from '../../components/Session/SessionDetails';
 import SessionHeader from '../../components/Session/SessionHeader';
 

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { getSessionsByProgram } from '../../actions/sessionActions';
 import { addSession } from '../../actions/sessionActions';
 
-import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
 import SessionList from '../../components/Session/SessionList';
 import SessionForm from '../../components/Session/SessionForm';
 

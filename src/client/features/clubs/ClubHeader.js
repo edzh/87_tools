@@ -8,7 +8,7 @@ export default function ClubHeader({ currentClub, clubId }) {
   return (
     <div className="mb-4">
       <h2 className="pg-header">
-        <NavLink to={`/program/${clubId}`}>
+        <NavLink to={`/club/${clubId}`}>
           {currentClub.byId[currentClub.allIds].name}
         </NavLink>
       </h2>

@@ -12,26 +12,12 @@ function ManualEntry({
   students,
   submitPinTimestamp
 }) {
-  const debouncedSearchTerm = useDebounce(query, 250);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
   useEffect(() => {
     if (currentTimesheet.item)
       getStudentsByProgram(currentTimesheet.item.program);
   }, [currentTimesheet.isFetching]);
-
-  useEffect(() => {
-    if (debouncedSearchTerm) {
-      const filtered = search(
-        debouncedSearchTerm,
-        students.allIds,
-        students.byId
-      );
-      setFilteredSuggestions(filtered);
-    } else {
-      setFilteredSuggestions([]);
-    }
-  }, [debouncedSearchTerm]);
 
   const { suggestions, query } = useDebouncedAutocomplete(students, 250);
 

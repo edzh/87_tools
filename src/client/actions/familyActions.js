@@ -1,5 +1,3 @@
-import 'cross-fetch';
-import { apiUrl } from 'config';
 import { fetchFamilies } from '../api/fetchFamilies';
 import * as schema from '../schemas/schema';
 import { normalize } from 'normalizr';

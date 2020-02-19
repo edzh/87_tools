@@ -30,7 +30,7 @@ function FamilyPage({
   useEffect(() => {
     getCurrentFamily(familyId);
     getStudentsByFamily(familyId);
-  }, []);
+  }, [getCurrentFamily, getStudentsByFamily, familyId]);
 
   if (toFamily === true) {
     return <Redirect to={`/program/${fetchedFamily.program}/families`} />;
