@@ -44,6 +44,15 @@ export const fetchTimestamps = {
         .then(json => json.data);
 
       return data;
+    },
+    dateRange: async (start, end) => {
+      const data = await fetch(`${apiUrl}/api/timestamp/date/${start}/${end}`, {
+        headers
+      })
+        .then(response => response.json())
+        .then(json => json.data);
+
+      return data;
     }
   },
   add: async timestamp => {

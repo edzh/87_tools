@@ -9,6 +9,11 @@ module.exports = {
       lg: '1024px',
       xl: '1280px',
     },
+    extend: {
+      screens: {
+        'print': {'raw': 'print'}
+      }
+    },
     colors: {
       transparent: 'transparent',
 

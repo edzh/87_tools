@@ -121,13 +121,30 @@ export const getWeek = async (req, res) => {
   }
 };
 
+export const dateRange = async (req, res) => {
+  try {
+    const start = new Date(req.params.start);
+    const end = new Date(req.params.end);
+
+    const timestamps = await Timestamp.find({
+      datetime: { $gte: start, $lt: end }
+    });
+
+    return res.status(200).json({ data: timestamps });
+  } catch (e) {
+    console.error(e);
+    res.status(400).end();
+  }
+};
+
 const controller = {
   getOne,
   getMany,
   createOne,
   updateOne,
   removeOne,
-  getWeek
+  getWeek,
+  dateRange
 };
 
 export default controller;

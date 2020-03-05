@@ -35,6 +35,7 @@ import SignUp from '../../containers/SignUpContainer';
 
 import StreamlineAdd from '../../containers/StreamlineAdd';
 import UserContainer from '../../containers/UserContainer';
+import Audit from '../../features/audit/Audit';
 
 const routes = [
   {
@@ -188,6 +189,11 @@ const routes = [
     path: '/signup',
     auth: false,
     component: SignUp
+  },
+  {
+    path: '/audit/:start/:end',
+    auth: false,
+    component: Audit
   }
 ];
 
