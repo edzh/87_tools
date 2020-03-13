@@ -17,5 +17,6 @@ router
   .delete(controller.removeOne);
 
 router.route('/week/:date').get(controller.getWeek);
+router.route('/date/:start/:end').get(controller.dateRange);
 
 export default router;

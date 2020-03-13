@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormInput } from 'utils/hooks';
 import { Redirect } from 'react-router';
 
@@ -12,9 +12,9 @@ export default function(props) {
     props.signIn(email.value, password.value);
   }
 
-  // if (props.isAuthenticated) {
-  //   return <Redirect to="/program" />;
-  // }
+  if (props.isAuthenticated) {
+    return <Redirect to="/program" />;
+  }
 
   return (
     <div className="p-4 border shadow-md w-64">

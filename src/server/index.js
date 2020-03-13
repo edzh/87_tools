@@ -4,21 +4,12 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 import '@babel/polyfill';
+import passport from 'passport';
 
 import { connect } from './utils/db';
 import config from './config';
-
-import clubRouter from './api/club/club.router';
-import familyRouter from './api/family/family.router';
-import pinRouter from './api/pin/pin.router';
-import programRouter from './api/program/program.router';
-import sessionRouter from './api/session/session.router';
-import studentRouter from './api/student/student.router';
-import timesheetRouter from './api/timesheet/timesheet.router';
-import timestampRouter from './api/timestamp/timestamp.router';
-
-import userRouter from './api/user/user.router';
-import { signup, signin, protect } from './utils/auth';
+import routes from './utils/routes';
+import { signup, signin, protect, passportLocalStrategy } from './utils/auth';
 
 export const app = express();
 
@@ -26,23 +17,27 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+app.use(passport.initialize());
+app.use(passport.session());
 app.set('json spaces', 2);
+
+passport.use(passportLocalStrategy);
+
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'));
 }
 
-app.use('/api/club', clubRouter);
-app.use('/api/family', familyRouter);
-app.use('/api/pin', pinRouter);
-app.use('/api/program', programRouter);
-app.use('/api/session', sessionRouter);
-app.use('/api/student', studentRouter);
-app.use('/api/timesheet', timesheetRouter);
-app.use('/api/timestamp', timestampRouter);
-app.use('/api/user', protect, userRouter);
+app.use('/api', routes);
 app.post('/api/signup', signup);
-app.post('/api/signin', signin);
+app.post('/api/signin', passport.authenticate('local'), signin);
 
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, './index.html'), function(err) {

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router';
+import React from 'react';
 import { format } from 'date-fns';
 import { Formik, Form, Field } from 'formik';
 

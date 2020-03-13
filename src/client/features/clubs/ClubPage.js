@@ -30,8 +30,8 @@ export default function ClubPage({ match, routes }) {
         await Promise.all([
           dispatch(fetchStudentsByClub(clubId)),
           dispatch(fetchClubById(clubId)),
-          dispatch(getStudentsByProgram(programId)),
-          dispatch(getSessionsByProgram(programId))
+          programId && dispatch(getStudentsByProgram(programId)),
+          programId && dispatch(getSessionsByProgram(programId))
         ]);
       } catch (err) {
         console.error(err);

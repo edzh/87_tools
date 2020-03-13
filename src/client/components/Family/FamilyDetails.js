@@ -1,10 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-import FamilyDeleteModal from './FamilyDeleteModal';
-import FamilyPins from './FamilyPins';
-import EditFamily from './EditFamily';
 
 export default ({ currentFamily, editDetails, students, setEditDetails }) => {
   if (!currentFamily.allIds) return null;
@@ -25,11 +20,6 @@ export default ({ currentFamily, editDetails, students, setEditDetails }) => {
       </div>
 
       {editDetails ? (
-        // <EditFamily
-        //   family={family}
-        //   editDetails={editDetails}
-        //   setEditDetails={setEditDetails}
-        // />
         <div></div>
       ) : (
         <div className="m-4">

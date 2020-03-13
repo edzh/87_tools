@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 
 import SessionForm from './SessionForm';
-import MainDetailsHeader from '../Details/MainDetailsHeader';
 import DefaultSessionButton from '../../containers/Session/DefaultSessionButton';
 
 export default ({ sessions, currentProgram }) => {

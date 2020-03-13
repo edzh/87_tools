@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { intToDay } from 'utils/constants';
 
-import MainDetailsHeader from '../Details/MainDetailsHeader';
-
 export default function ClubList({ clubs }) {
   const [day, setDay] = useState(1);
   if (!clubs.allIds.length) return null;

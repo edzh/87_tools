@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MainDetailsHeader from '../Details/MainDetailsHeader';
 
 export default function ProgramDetails({ program, sessions, students }) {
   return (

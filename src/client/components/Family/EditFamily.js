@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useFetchPin } from 'utils/hooks';
-
+import React from 'react';
 import { useFormInput } from 'utils/hooks';
 
 export default ({ setEditDetails, family }) => {
   const name = useFormInput(family.name);
-  const pickupName = useFormInput('');
-  const pin = useFormInput('');
-  const [pickups, setPickups] = useState(family.pickups);
 
   function handleSubmit(e) {
     e.preventDefault();

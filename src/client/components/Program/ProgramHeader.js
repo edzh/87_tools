@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import MainDetailsHeader from '../Details/MainDetailsHeader';
 import Navbar from './Navbar';
 
 export default function ProgramHeader({ currentProgram, programId }) {

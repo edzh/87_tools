@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Navbar from './Navbar';
@@ -11,7 +11,7 @@ export default function TimeclockHeader({ timesheetId }) {
 
   useEffect(() => {
     dispatch(getTimesheetById(timesheetId));
-  }, [timesheetId]);
+  }, [timesheetId, dispatch]);
 
   if (currentTimesheet.allIds !== timesheetId) return null;
 

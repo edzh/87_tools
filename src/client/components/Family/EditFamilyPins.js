@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useFetchPin } from 'utils/hooks';
-
+import React from 'react';
 import { useFormInput } from 'utils/hooks';
 
 export default ({

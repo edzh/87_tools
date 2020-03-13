@@ -15,7 +15,6 @@ import { getCurrentProgram } from '../../actions/programActions';
 import RouteWithSubroutes from '../../components/Route/RouteWithSubroutes';
 
 import StudentDetails from '../../components/Student/StudentDetails';
-import StudentClubs from '../../components/Student/StudentClubs';
 import StudentHeader from '../../components/Student/StudentHeader';
 
 function StudentPage({

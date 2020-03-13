@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import { addStudent } from '../../actions/studentActions';
-import StreamlineFamilyForm from './StreamlineFamilyForm';
 import FamilyInput from './FamilyInput';
 
 export default function StreamlineStudentForm({ programId }) {
   const dispatch = useDispatch();
-  const families = useSelector(state => state.families.items);
   const recentFamily = useSelector(state => state.families.recentFamily);
   const recentStudent = useSelector(state => state.students.recentStudent);
   const students = useSelector(state => state.students.items);

@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 export const useFetchPin = async pin => {
   const pinExists = await fetch(
@@ -35,14 +33,16 @@ export function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+    if (value.length !== 1) {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value]);
+      return () => {
+        clearTimeout(handler);
+      };
+    }
+  }, [value, delay]);
 
   return debouncedValue;
 }
@@ -70,7 +70,7 @@ export function useDebouncedAutocomplete(items, delay) {
     } else {
       setSuggestions([]);
     }
-  }, [debouncedQuery]);
+  }, [debouncedQuery, items.allIds, items.byId]);
 
   return {
     suggestions,
@@ -94,5 +94,5 @@ export const usePolling = (func, delay) => {
 
   useEffect(() => {
     func();
-  }, [refresh]);
+  }, [refresh, func]);
 };

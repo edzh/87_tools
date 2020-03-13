@@ -7,7 +7,6 @@ import { getStudentsByClub } from '../../actions/studentActions';
 
 import { getSessionsByProgram } from '../../actions/sessionActions';
 
-import MainDetailsHeader from '../../components/Details/MainDetailsHeader';
 import ClubDetails from '../../components/Club/ClubDetails';
 import ClubStudentList from '../../components/Club/ClubStudentList';
 

@@ -32,6 +32,15 @@ export const fetchClubs = {
         .then(json => json.data);
 
       return data;
+    },
+    all: async () => {
+      const data = await fetch(`${apiUrl}/api/club`, {
+        headers
+      })
+        .then(response => response.json())
+        .then(json => json.data);
+
+      return data;
     }
   },
   add: async club => {

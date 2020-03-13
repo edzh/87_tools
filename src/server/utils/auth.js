@@ -1,4 +1,6 @@
 import config from '../config';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from '../api/user/user.model';
 import jwt from 'jsonwebtoken';
 
@@ -31,39 +33,34 @@ export const signup = async (req, res) => {
   }
 };
 
-export const signin = async (req, res) => {
-  if (!req.body.email || !req.body.password) {
-    return res.status(400).send({ message: 'need email and password' });
-  }
-
-  const invalid = { message: 'Invalid email and passoword combination' };
-
-  try {
-    const user = await User.findOne({ email: req.body.email })
-      .select('email password')
-      .exec();
-
-    if (!user) {
-      return res.status(401).send(invalid);
-    }
-
-    const match = await user.checkPassword(req.body.password);
-
-    if (!match) {
-      return res.status(401).send(invalid);
-    }
-
-    const token = newToken(user);
-    return res.status(201).send({ token });
-  } catch (e) {
-    console.error(e);
-    res.status(500).end();
-  }
+export const signin = (req, res) => {
+  const token = newToken(req.user);
+  return res.status(201).send({ token });
 };
+
+export const passportLocalStrategy = new LocalStrategy(
+  { usernameField: 'email' },
+  function(username, password, done) {
+    User.findOne({ email: username }, async function(err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect email.' });
+      }
+
+      const match = await user.checkPassword(password);
+      if (!match) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+);
 
 export const protect = async (req, res, next) => {
   const bearer = req.headers.authorization;
-  console.log(req.headers.authorization);
+
   if (!bearer || !bearer.startsWith('Bearer ')) {
     console.log('no bearer');
     return res.status(401).end();

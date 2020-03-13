@@ -8,17 +8,19 @@ import * as schema from '../../schemas/schema';
 import { normalize } from 'normalizr';
 
 const initialState = {
-  item: {
+  clubs: {
     byId: {},
-    allIds: ''
+    allIds: []
   },
   students: {
+    byId: {},
     allIds: [],
     isFetching: false,
     error: false,
     message: ''
   },
   sessions: {
+    byId: {},
     allIds: [],
     isFetching: false,
     error: false,
@@ -32,6 +34,7 @@ const initialState = {
     message: ''
   },
   timesheets: {
+    byId: {},
     allIds: [],
     isFetching: false,
     error: false,
@@ -40,14 +43,16 @@ const initialState = {
   isFetching: false
 };
 
-const clubPageSlice = createSlice({
-  name: 'clubPage',
+const auditPageSlice = createSlice({
+  name: 'auditPage',
   initialState,
   reducers: {
     getStudentsSuccess(state, action) {
       const normalizedStudents = normalize(action.payload, schema.studentList);
 
       state.students.allIds = normalizedStudents.result;
+      state.students.byId = normalizedStudents.entities.students;
+      state.students.isFetching = false;
     },
     getStudentsFailure(state, action) {
       state.students = {
@@ -56,16 +61,14 @@ const clubPageSlice = createSlice({
         isFetching: false
       };
     },
-    getClubByIdSuccess(state, action) {
-      const normalizedClub = normalize(action.payload, schema.club);
+    getClubsSuccess(state, action) {
+      const normalizedClubs = normalize(action.payload, schema.clubList);
 
-      state.isFetching = false;
-      state.item = {
-        byId: normalizedClub.entities.clubs,
-        allIds: normalizedClub.result
-      };
+      state.clubs.allIds = normalizedClubs.result;
+      state.clubs.byId = normalizedClubs.entities.clubs;
+      state.clubs.isFetching = false;
     },
-    getClubByIdFailure(state, action) {
+    getClubsFailure(state, action) {
       state.isFetching = false;
       state.item = {
         error: true,
@@ -76,6 +79,8 @@ const clubPageSlice = createSlice({
       const normalizedSessions = normalize(action.payload, schema.sessionList);
 
       state.sessions.allIds = normalizedSessions.result;
+      state.sessions.byId = normalizedSessions.entities.sessions;
+      state.sessions.isFetching = false;
     },
     getSessionsFailure(state, action) {
       state.sessions = {
@@ -83,14 +88,6 @@ const clubPageSlice = createSlice({
         message: action.payload,
         isFetching: false
       };
-    },
-    addStudentToClubSuccess(state, action) {
-      const normalizedStudent = normalize(action.payload, schema.student);
-
-      state.students.allIds = [
-        ...state.students.allIds,
-        normalizedStudent.result
-      ];
     },
     getTimestampsSuccess(state, action) {
       const normalizedTimestamps = normalize(
@@ -136,32 +133,31 @@ const clubPageSlice = createSlice({
 export const {
   getStudentsSuccess,
   getStudentsFailure,
-  getClubByIdSuccess,
-  getClubByIdFailure,
+  getClubsSuccess,
+  getClubsFailure,
   getSessionsSuccess,
   getSessionsFailure,
-  addStudentToClubSuccess,
   getTimestampsSuccess,
   getTimestampsFailure,
   getTimesheetsSuccess,
   getTimesheetsFailure
-} = clubPageSlice.actions;
+} = auditPageSlice.actions;
 
-export const fetchStudentsByClub = clubId => async dispatch => {
+export const fetchStudentsByProgram = programId => async dispatch => {
   try {
-    const students = await fetchStudents.get.club(clubId);
+    const students = await fetchStudents.get.program(programId);
     dispatch(getStudentsSuccess(students));
   } catch (err) {
     dispatch(getStudentsFailure(err.toString()));
   }
 };
 
-export const fetchClubById = clubId => async dispatch => {
+export const fetchAllClubs = () => async dispatch => {
   try {
-    const club = await fetchClubs.get.one(clubId);
-    dispatch(getClubByIdSuccess(club));
+    const club = await fetchClubs.get.all();
+    dispatch(getClubsSuccess(club));
   } catch (err) {
-    dispatch(getClubByIdFailure(err.toString()));
+    dispatch(getClubsFailure(err.toString()));
   }
 };
 
@@ -177,37 +173,28 @@ export const fetchSessionsByProgram = programId => async dispatch => {
 export const updateCurrentClub = club => async dispatch => {
   try {
     const newClub = await fetchClubs.update(club);
-    dispatch(getClubByIdSuccess({ newClub }));
+    dispatch(getClubsSuccess({ newClub }));
   } catch (err) {
-    dispatch(getClubByIdFailure(err.toString()));
+    dispatch(getClubsFailure(err.toString()));
   }
 };
 
-export const addStudentToClub = (student, clubId) => async dispatch => {
+export const fetchTimestampsByDateRange = (start, end) => async dispatch => {
   try {
-    const newStudent = await fetchStudents.update(student);
-    dispatch(addStudentToClubSuccess(newStudent));
-  } catch (err) {
-    dispatch(getStudentsFailure(err.toString()));
-  }
-};
-
-export const fetchTimestampsByClub = clubId => async dispatch => {
-  try {
-    const timestamps = await fetchTimestamps.get.club(clubId);
+    const timestamps = await fetchTimestamps.get.dateRange(start, end);
     dispatch(getTimestampsSuccess(timestamps));
   } catch (err) {
     dispatch(getTimestampsFailure(err.toString()));
   }
 };
 
-export const fetchTimesheetsBySession = sessionId => async dispatch => {
+export const fetchAllTimesheets = () => async dispatch => {
   try {
-    const timesheets = await fetchTimesheets.get.session(sessionId);
+    const timesheets = await fetchTimesheets.get.all();
     dispatch(getTimesheetsSuccess(timesheets));
   } catch (err) {
     dispatch(getTimesheetsFailure(err.toString()));
   }
 };
 
-export default clubPageSlice.reducer;
+export default auditPageSlice.reducer;

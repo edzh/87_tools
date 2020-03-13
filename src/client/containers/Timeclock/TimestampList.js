@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { usePolling } from 'utils/hooks';
+import Modal from 'client/components/Modal';
 
 import {
   deleteTimestamp,
@@ -17,6 +18,7 @@ function TimestampList({
   deleteTimestamp
 }) {
   const [refresh, setRefresh] = useState(false);
+  const [live, setLive] = useState(true);
 
   useEffect(() => {
     currentTimesheet.item && getTimesheetTimestamps(currentTimesheet.item._id);
@@ -25,11 +27,11 @@ function TimestampList({
 
   useEffect(() => {
     let timeout = setTimeout(() => {
-      setRefresh(true);
+      live && setRefresh(true);
     }, 5000);
 
     return () => clearTimeout(timeout);
-  }, [refresh]);
+  }, [live, refresh]);
 
   if (!currentTimesheet.item || currentTimesheet.isFetching) {
     return <div data-testid="load">Loading...</div>;
@@ -37,6 +39,15 @@ function TimestampList({
 
   return (
     <div>
+      <div
+        className="flex cursor-pointer w-24 mt-1 border-t border-b"
+        onClick={() => setLive(!live)}
+      >
+        Live Reload{' '}
+        {live ? (
+          <div className="w-2 h-2 bg-red-500 ml-1 rounded-full my-auto"></div>
+        ) : null}
+      </div>
       <ul data-testid="timestamp-ul">
         {timestamps &&
           timestamps.map(timestamp => (
@@ -73,12 +84,15 @@ function TimestampList({
                   )}
                 </li>
                 <li className="w-8">{timestamp.fobStatus}</li>
-                <li
-                  className={`cursor-pointer text-lg text-red-200 font-bold -my-1 ml-auto hover:text-red-500 rounded`}
-                  onClick={() => deleteTimestamp(timestamp._id)}
-                >
-                  ×
-                </li>
+
+                {live ? null : (
+                  <li
+                    className={`cursor-pointer text-lg text-red-200 font-bold -my-1 ml-auto hover:text-red-500 rounded`}
+                    onClick={() => deleteTimestamp(timestamp._id)}
+                  >
+                    ×
+                  </li>
+                )}
               </ul>
             </li>
           ))}
