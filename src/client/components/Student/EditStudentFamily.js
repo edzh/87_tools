@@ -48,7 +48,7 @@ export default props => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <select className="p-2 mt-4 ml-4 text-sm border rounded" {...family}>
+      <select className="p-2 mt-4 text-sm border rounded" {...family}>
         <option value="">---</option>
         {fetchedFamilies
           .sort((a, b) => {
@@ -66,8 +66,8 @@ export default props => {
             </option>
           ))}
       </select>
-      <button className="p-2 m-4 block border rounded" type="submit">
-        Save
+      <button className="p-2 my-4 btn hover:bg-blue-400 block" type="submit">
+        Submit
       </button>
     </form>
   );

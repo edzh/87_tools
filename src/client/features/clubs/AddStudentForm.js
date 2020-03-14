@@ -67,12 +67,12 @@ export default function AddStudentForm() {
       </form>
       {suggestions.length !== 0 && (
         <div
-          className="absolute bg-white overflow-auto"
+          className="absolute bg-white overflow-auto shadow rounded-b border border-gray-400"
           style={{ maxHeight: '16rem', minWidth: '12rem' }}
         >
           {suggestions.map((studentId, index) => (
             <div
-              className="px-2 py-1 border border-b border-gray-200 text-sm hover:bg-gray-200"
+              className="px-2 py-1 border border-b border-gray-200 text-sm hover:bg-gray-200 cursor-pointer"
               key={studentId}
               onClick={() => replaceClub(studentId)}
             >

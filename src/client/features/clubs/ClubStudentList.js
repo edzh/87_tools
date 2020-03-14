@@ -8,16 +8,18 @@ export default function ClubStudentList() {
   if (!students.allIds.length) return null;
 
   return (
-    <div className="m-4">
+    <ul className="m-4">
       {studentIds.map(studentId => (
-        <Link
-          key={studentId}
-          className="block no-underline text-blue-500 hover:text-blue-400"
-          to={`/student/${studentId}`}
-        >
-          {students.byId[studentId].name}
-        </Link>
+        <li>
+          <Link
+            key={studentId}
+            className="no-underline text-blue-500 hover:text-blue-400"
+            to={`/student/${studentId}`}
+          >
+            {students.byId[studentId].name}
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

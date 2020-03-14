@@ -36,7 +36,7 @@ export default function EditStudentClubs({
   if (!sessions.allIds.length) return null;
 
   return (
-    <div className="p-4 bg-white rounded border border-gray-400 mt-2">
+    <div className="detail-card">
       <button
         onClick={() => setEdit(!edit)}
         className={`${
