@@ -30,6 +30,7 @@ export default function user(state = initialState, action) {
         isAuthenticated: true
       };
     case types.SIGNIN_FAILURE:
+      console.log(action.error);
       return {
         ...state,
         isAuthenticated: false,

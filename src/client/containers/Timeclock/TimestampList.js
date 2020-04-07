@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
-import { usePolling } from 'utils/hooks';
-import Modal from 'client/components/Modal';
 
 import {
   deleteTimestamp,
@@ -23,7 +21,7 @@ function TimestampList({
   useEffect(() => {
     currentTimesheet.item && getTimesheetTimestamps(currentTimesheet.item._id);
     setRefresh(false);
-  }, [refresh, currentTimesheet.item]);
+  }, [refresh, currentTimesheet.item, getTimesheetTimestamps]);
 
   useEffect(() => {
     let timeout = setTimeout(() => {

@@ -5,7 +5,7 @@ import { getFamiliesByProgram } from '../../actions/familyActions';
 import { getSessionsByProgram } from '../../actions/sessionActions';
 import { getStudentsByProgram } from '../../actions/studentActions';
 
-import Chart from '../../components/Dashboard/Chart';
+// import Chart from '../../components/Dashboard/Chart';
 
 function Dashboard({
   programId,
@@ -17,7 +17,7 @@ function Dashboard({
 }) {
   useEffect(() => {
     getAllProgramData(programId);
-  }, []);
+  }, [getAllProgramData, programId]);
 
   if (!(students.items.allIds.length && families.items && sessions.items)) {
     return <div className="p-2">Loading...</div>;

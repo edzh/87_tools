@@ -41,7 +41,9 @@ export function signIn(email, password) {
         localStorage.setItem('id_token', json.token);
         dispatch(getUser());
       })
-      .catch(error => dispatch(signInFailure(error)));
+      .catch(error => {
+        dispatch(signInFailure('Could not sign in'));
+      });
   };
 }
 

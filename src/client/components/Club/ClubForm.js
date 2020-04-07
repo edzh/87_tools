@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Redirect } from 'react-router';
 import { useFormInput } from 'utils/hooks';
-import { apiUrl } from 'config';
 
 export default ({ addClub, sessionId }) => {
-  const name = useFormInput('');
-  const day = useFormInput('');
-  const [newClub, setNewClub] = useState({ redirect: false, id: '' });
+  const [newClub] = useState({ redirect: false, id: '' });
 
   if (newClub.redirect === true) {
     return <Redirect to={`/club/id/${newClub.id}`} />;
@@ -40,11 +37,13 @@ export default ({ addClub, sessionId }) => {
               className="form-input block"
             >
               <option value="">---</option>
+              <option value="0">Sunday</option>
               <option value="1">Monday</option>
               <option value="2">Tuesday</option>
               <option value="3">Wednesday</option>
               <option value="4">Thursday</option>
               <option value="5">Friday</option>
+              <option value="6">Saturday</option>
             </Field>
             <label htmlFor="session"></label>
             <button className="btn block hover:bg-blue-400" type="submit">

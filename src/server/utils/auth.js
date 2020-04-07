@@ -33,9 +33,14 @@ export const signup = async (req, res) => {
   }
 };
 
-export const signin = (req, res) => {
-  const token = newToken(req.user);
-  return res.status(201).send({ token });
+export const signin = async (req, res) => {
+  try {
+    const token = newToken(req.user);
+    return res.status(201).send({ token });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).end();
+  }
 };
 
 export const passportLocalStrategy = new LocalStrategy(
@@ -46,12 +51,16 @@ export const passportLocalStrategy = new LocalStrategy(
         return done(err);
       }
       if (!user) {
-        return done(null, false, { message: 'Incorrect email.' });
+        return done(null, false, {
+          message: 'Username or password does not exist.'
+        });
       }
 
       const match = await user.checkPassword(password);
       if (!match) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, {
+          message: 'Username or password does not exist.'
+        });
       }
       return done(null, user);
     });

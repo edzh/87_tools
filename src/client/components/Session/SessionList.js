@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 
-import SessionForm from './SessionForm';
 import DefaultSessionButton from '../../containers/Session/DefaultSessionButton';
 
 export default ({ sessions, currentProgram }) => {

@@ -2,12 +2,12 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-function withAuth(props) {
-  if (!props.isAuthenticated) {
+function withAuth({ isAuthenticated, children }) {
+  if (!isAuthenticated) {
     return <Redirect to={'/signin'} />;
   }
 
-  return props.children;
+  return children;
 }
 
 export default connect(state => {
