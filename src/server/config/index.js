@@ -17,10 +17,10 @@ switch (env) {
     config = {
       port: process.env.PORT || 3001,
       secrets: {
-        jwtExp: '100d',
-        jwt: 'default'
+        jwtExp: '7d',
+        jwt: process.env.JWT_SECRET
       },
-      dbUrl: 'mongodb://edzh:password1@ds261616.mlab.com:61616/aftercaremanage'
+      dbUrl: `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`
     };
     break;
   default:
