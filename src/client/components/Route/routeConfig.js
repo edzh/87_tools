@@ -28,6 +28,7 @@ import PinPage from 'client/features/pin/PinPage';
 import Session from '../../containers/Session/SessionContainer';
 import SessionPage from '../../containers/Session/SessionPageContainer';
 import Today from '../../containers/Session/Today/TodayContainer';
+import Analytics from '../../features/analytics/Chart';
 
 import SignIn from '../../containers/SignInContainer';
 import SignUp from '../../containers/SignUpContainer';
@@ -175,6 +176,11 @@ const routes = [
         path: '/session/:id/timesheets',
         exact: true,
         component: Timesheet
+      },
+      {
+        path: '/session/:id/analytics',
+        exact: true,
+        component: Analytics
       }
     ]
   },

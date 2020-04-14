@@ -44,6 +44,15 @@ export default function SessionHeader({ sessionId, session }) {
             Timesheets
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            className="px-2 py-2 mx-1"
+            activeClassName="border-b-2 border-blue-400"
+            to={`/session/${sessionId}/analytics`}
+          >
+            Analytics
+          </NavLink>
+        </li>
       </ul>
     </div>
   );

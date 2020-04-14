@@ -11,6 +11,7 @@ import auditPage from '../features/audit/auditSlice';
 import timeclock from '../features/timesheet/timeclockSlice';
 import timestamp from './timestampReducer';
 import user from './userReducer';
+import analytics from '../features/analytics/analyticsSlice';
 
 export default combineReducers({
   currentClub,
@@ -30,5 +31,6 @@ export default combineReducers({
   timeclock,
   timestamp,
   pin,
-  user
+  user,
+  analytics
 });

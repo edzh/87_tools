@@ -32,6 +32,15 @@ export const fetchTimesheets = {
         .then(json => json.data);
 
       return data;
+    },
+    dateRange: async (start, end) => {
+      const data = await fetch(`${apiUrl}/api/timesheet/date/${start}/${end}`, {
+        headers
+      })
+        .then(response => response.json())
+        .then(json => json.data);
+
+      return data;
     }
   },
   add: async timesheet => {

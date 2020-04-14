@@ -80,6 +80,21 @@ export const removeOne = async (req, res) => {
   }
 };
 
+export const dateRange = async (req, res) => {
+  try {
+    const start = new Date(req.params.start);
+    const end = new Date(req.params.end);
+
+    const timesheets = await Timesheet.find({
+      date: { $gte: start, $lt: end }
+    });
+    return res.status(200).json({ data: timesheets });
+  } catch (e) {
+    console.error(e);
+    res.status(400).end();
+  }
+};
+
 export const getTimestamps = async (req, res) => {
   try {
     const timesheet = await Timesheet.findOne({ _id: req.params.id });
@@ -109,7 +124,8 @@ const controller = {
   createOne,
   updateOne,
   removeOne,
-  getTimestamps
+  getTimestamps,
+  dateRange
 };
 
 export default controller;
